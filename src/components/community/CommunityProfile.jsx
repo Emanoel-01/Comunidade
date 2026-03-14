@@ -146,7 +146,7 @@ export default function CommunityProfile({ userId, currentUser, currentProfile, 
           </div>
           <div className="mt-4">
             <h2 className="text-2xl font-extrabold text-slate-900 flex items-center gap-2">
-              {isOwn ? currentUser?.full_name : 'Membro da Comunidade'}
+              {isOwn ? currentUser?.full_name : (viewedUserName || 'Membro')}
               {profile.role_label?.toLowerCase().includes('docente') && <ShieldCheck size={20} className="text-indigo-500" title="Verificado" />}
             </h2>
             <p className="text-sm font-bold text-indigo-600 mt-1">{profile.role_label}</p>
