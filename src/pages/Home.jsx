@@ -251,6 +251,9 @@ export default function Home() {
 
       {/* INSTITUIÇÕES - seção removida daqui, movida para logo após o Hero */}
 
+      {/* BLOG - artigos recentes */}
+      <RecentBlogPosts />
+
       {/* DEPOIMENTOS */}
       <section className="bg-slate-100 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
