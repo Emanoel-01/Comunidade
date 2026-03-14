@@ -361,20 +361,44 @@ export default function Home() {
                   <div className="flex flex-col items-center justify-center min-h-[300px] text-center animate-in fade-in zoom-in duration-300">
                     <div className="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mb-4"><CheckCircle2 size={40} /></div>
                     <h4 className="text-2xl font-bold text-slate-900 mb-2">Depoimento Enviado!</h4>
-                    <button onClick={() => setTestimonialsModalView('gallery')} className="text-white bg-indigo-900 hover:bg-indigo-800 px-6 py-2 rounded-lg font-bold mt-4">Ver na Galeria</button>
+                    <p className="text-slate-500 text-sm">Seu depoimento será analisado e publicado em breve.</p>
+                    <button onClick={() => { setTestimonialsModalView('gallery'); setTestimonialFormSubmitted(false); }} className="text-white bg-indigo-900 hover:bg-indigo-800 px-6 py-2 rounded-lg font-bold mt-4">Voltar à Galeria</button>
                   </div>
                 ) : (
                   <form className="space-y-4" onSubmit={handleTestimonialSubmit}>
-                    <div><label className="block text-sm font-medium text-slate-700 mb-1">Nome Completo *</label><input type="text" required value={testimonialForm.name} onChange={e => setTestimonialForm({...testimonialForm, name: e.target.value})} className="w-full border border-slate-300 rounded-lg px-4 py-2.5 outline-none focus:ring-2 focus:ring-indigo-500" /></div>
-                    <div><label className="block text-sm font-medium text-slate-700 mb-1">Seu Relato *</label><textarea rows="4" required value={testimonialForm.text} onChange={e => setTestimonialForm({...testimonialForm, text: e.target.value})} className="w-full border border-slate-300 rounded-lg px-4 py-2.5 outline-none focus:ring-2 focus:ring-indigo-500 resize-none"></textarea></div>
                     <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-1">Sua Foto *</label>
-                      <div className="w-full border-2 border-dashed border-slate-300 rounded-lg px-4 py-4 hover:bg-slate-50 flex justify-center cursor-pointer relative">
-                        <input type="file" onChange={handleFileChange} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" accept="image/*" />
-                        {testimonialForm.photo ? <div className="text-emerald-600 font-bold">Foto Anexada! (Clique para Trocar)</div> : <div className="text-slate-500 flex items-center gap-2"><Upload size={20}/> Anexar Imagem</div>}
+                      <label className="block text-sm font-medium text-slate-700 mb-1">Nome Completo ou Empresa *</label>
+                      <input type="text" required placeholder="Como deseja ser identificado?" value={testimonialForm.name} onChange={e => setTestimonialForm({...testimonialForm, name: e.target.value})} className="w-full border border-slate-300 rounded-lg px-4 py-2.5 outline-none focus:ring-2 focus:ring-indigo-500 placeholder-slate-400" />
+                    </div>
+                    <div className="grid sm:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm font-medium text-slate-700 mb-1">E-mail *</label>
+                        <input type="email" required placeholder="seu@email.com" value={testimonialForm.email} onChange={e => setTestimonialForm({...testimonialForm, email: e.target.value})} className="w-full border border-slate-300 rounded-lg px-4 py-2.5 outline-none focus:ring-2 focus:ring-indigo-500 placeholder-slate-400" />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-slate-700 mb-1">Telefone *</label>
+                        <input type="tel" required placeholder="(81) 90000-0000" value={testimonialForm.phone} onChange={e => setTestimonialForm({...testimonialForm, phone: e.target.value})} className="w-full border border-slate-300 rounded-lg px-4 py-2.5 outline-none focus:ring-2 focus:ring-indigo-500 placeholder-slate-400" />
                       </div>
                     </div>
-                    <button type="submit" className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-lg font-bold flex justify-center gap-2 mt-4">Enviar Avaliação <Send size={16} /></button>
+                    <div>
+                      <label className="block text-sm font-medium text-slate-700 mb-1">Seu Relato *</label>
+                      <textarea rows="4" required placeholder="Conte-nos como foi sua experiência com nossos serviços ou ferramentas..." value={testimonialForm.text} onChange={e => setTestimonialForm({...testimonialForm, text: e.target.value})} className="w-full border border-slate-300 rounded-lg px-4 py-2.5 outline-none focus:ring-2 focus:ring-indigo-500 resize-none placeholder-slate-400"></textarea>
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-slate-700 mb-1">Sua Foto (Obrigatória) *</label>
+                      <div className="w-full border-2 border-dashed border-slate-300 rounded-lg px-4 py-6 hover:bg-slate-50 flex flex-col items-center justify-center cursor-pointer relative gap-2">
+                        <input type="file" onChange={handleFileChange} className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" accept="image/*" />
+                        {testimonialForm.photo ? (
+                          <div className="text-emerald-600 font-bold flex items-center gap-2"><CheckCircle2 size={18} /> Foto Anexada! (Clique para Trocar)</div>
+                        ) : (
+                          <>
+                            <Upload size={24} className="text-slate-400" />
+                            <span className="text-slate-500 text-sm">Clique para anexar imagem</span>
+                          </>
+                        )}
+                      </div>
+                    </div>
+                    <button type="submit" className="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3.5 rounded-lg font-bold flex justify-center gap-2 mt-2 text-base">Enviar Avaliação <Send size={18} /></button>
                   </form>
                 )}
               </div>
