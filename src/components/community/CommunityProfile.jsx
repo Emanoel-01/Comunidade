@@ -212,16 +212,99 @@ export default function CommunityProfile({ userId, currentUser, currentProfile, 
 
       {/* Formulário de Edição */}
       {editing && isOwn && (
-        <div className="bg-white rounded-2xl border border-indigo-200 shadow-md p-6 space-y-4">
-          <h3 className="font-bold text-slate-900">Editar Perfil</h3>
-          <div><label className="block text-xs font-bold text-slate-600 mb-1">Cargo / Especialidade</label><input value={editForm.role_label || ''} onChange={e => setEditForm({ ...editForm, role_label: e.target.value })} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" /></div>
-          <div><label className="block text-xs font-bold text-slate-600 mb-1">Bio</label><textarea rows={3} value={editForm.bio || ''} onChange={e => setEditForm({ ...editForm, bio: e.target.value })} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 resize-none" /></div>
-          <div><label className="block text-xs font-bold text-slate-600 mb-1">URL da Foto de Perfil</label><input value={editForm.avatar_url || ''} onChange={e => setEditForm({ ...editForm, avatar_url: e.target.value })} placeholder="https://..." className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" /></div>
-          <div><label className="block text-xs font-bold text-slate-600 mb-1">URL do Banner</label><input value={editForm.banner_url || ''} onChange={e => setEditForm({ ...editForm, banner_url: e.target.value })} placeholder="https://..." className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" /></div>
-          <div className="grid sm:grid-cols-3 gap-4">
-            <div><label className="block text-xs font-bold text-slate-600 mb-1">LinkedIn</label><input value={editForm.linkedin || ''} onChange={e => setEditForm({ ...editForm, linkedin: e.target.value })} placeholder="https://linkedin.com/in/..." className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" /></div>
-            <div><label className="block text-xs font-bold text-slate-600 mb-1">Instagram</label><input value={editForm.instagram || ''} onChange={e => setEditForm({ ...editForm, instagram: e.target.value })} placeholder="https://instagram.com/..." className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" /></div>
-            <div><label className="block text-xs font-bold text-slate-600 mb-1">WhatsApp</label><input value={editForm.whatsapp || ''} onChange={e => setEditForm({ ...editForm, whatsapp: e.target.value })} placeholder="5581999..." className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" /></div>
+        <div className="bg-white rounded-2xl border border-indigo-200 shadow-md p-6 space-y-5">
+          <h3 className="font-bold text-slate-900 text-lg">Editar Perfil</h3>
+
+          {/* Fotos */}
+          <div className="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-xs font-bold text-slate-600 mb-2">Foto de Perfil</label>
+              <div className="flex items-center gap-3">
+                <div className="w-16 h-16 rounded-full overflow-hidden bg-indigo-100 flex items-center justify-center shrink-0">
+                  {editForm.avatar_url ? <img src={editForm.avatar_url} className="w-full h-full object-cover" alt="" /> : <span className="text-indigo-700 font-bold text-2xl">{currentUser?.full_name?.charAt(0)}</span>}
+                </div>
+                <label className={`flex items-center gap-2 px-4 py-2 border-2 border-dashed border-indigo-300 text-indigo-600 rounded-lg text-sm font-bold cursor-pointer hover:bg-indigo-50 ${uploadingAvatar ? 'opacity-50' : ''}`}>
+                  <Upload size={15} /> {uploadingAvatar ? 'Enviando...' : 'Fazer Upload'}
+                  <input type="file" accept="image/*" onChange={handleAvatarUpload} className="hidden" disabled={uploadingAvatar} />
+                </label>
+              </div>
+            </div>
+            <div>
+              <label className="block text-xs font-bold text-slate-600 mb-2">Imagem do Banner</label>
+              <div className="h-16 rounded-lg overflow-hidden bg-slate-200 relative flex items-center justify-center">
+                {editForm.banner_url ? <img src={editForm.banner_url} className="w-full h-full object-cover" alt="" /> : <span className="text-slate-400 text-xs">Sem banner</span>}
+                <label className="absolute inset-0 flex items-center justify-center bg-black/30 opacity-0 hover:opacity-100 cursor-pointer transition-opacity rounded-lg">
+                  <span className="text-white text-xs font-bold flex items-center gap-1"><Upload size={13} /> Upload</span>
+                  <input type="file" accept="image/*" onChange={handleBannerUpload} className="hidden" disabled={uploadingAvatar} />
+                </label>
+              </div>
+            </div>
+          </div>
+
+          {/* Identificação */}
+          <div className="border-t border-slate-100 pt-4">
+            <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Identificação</p>
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-bold text-slate-600 mb-1">Tipo de Perfil</label>
+                <select value={editForm.role_type || 'aluno'} onChange={e => setEditForm({ ...editForm, role_type: e.target.value })} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">
+                  {[['aluno','Aluno / Estudante'],['engenheiro','Engenheiro Civil'],['arquiteto','Arquiteto'],['docente','Docente / Professor'],['parceiro','Parceiro Comercial'],['gestor_condominial','Gestor Condominial'],['consultor_bim','Consultor BIM'],['perito_judicial','Perito Judicial'],['corretor','Corretor de Imóveis'],['investidor','Investidor']].map(([v,l]) => <option key={v} value={v}>{l}</option>)}
+                </select>
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-slate-600 mb-1">Título / Cargo</label>
+                <input value={editForm.role_label || ''} onChange={e => setEditForm({ ...editForm, role_label: e.target.value })} placeholder="Ex: Engenheiro Sênior" className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
+              </div>
+              <div className="sm:col-span-2">
+                <label className="block text-xs font-bold text-slate-600 mb-1">Bio</label>
+                <textarea rows={3} value={editForm.bio || ''} onChange={e => setEditForm({ ...editForm, bio: e.target.value })} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 resize-none" />
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-slate-600 mb-1"><MapPin size={11} className="inline mr-1" />Cidade / Estado</label>
+                <input value={editForm.location || ''} onChange={e => setEditForm({ ...editForm, location: e.target.value })} placeholder="Recife, PE" className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-slate-600 mb-1"><Link2 size={11} className="inline mr-1" />Website / Portfólio</label>
+                <input value={editForm.website || ''} onChange={e => setEditForm({ ...editForm, website: e.target.value })} placeholder="https://..." className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
+              </div>
+            </div>
+          </div>
+
+          {/* Formação e Experiência */}
+          <div className="border-t border-slate-100 pt-4">
+            <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Formação & Experiência</p>
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-xs font-bold text-slate-600 mb-1"><GraduationCap size={11} className="inline mr-1" />Formação Acadêmica</label>
+                <input value={editForm.formation || ''} onChange={e => setEditForm({ ...editForm, formation: e.target.value })} placeholder="Ex: Engenharia Civil" className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-slate-600 mb-1">Instituição</label>
+                <input value={editForm.institution || ''} onChange={e => setEditForm({ ...editForm, institution: e.target.value })} placeholder="Ex: UFPE, ESUDA..." className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-slate-600 mb-1">CREA / CAU</label>
+                <input value={editForm.crea_cau || ''} onChange={e => setEditForm({ ...editForm, crea_cau: e.target.value })} placeholder="Ex: CREA-PE 123456" className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-slate-600 mb-1"><Briefcase size={11} className="inline mr-1" />Anos de Experiência</label>
+                <input type="number" min={0} value={editForm.experience_years || ''} onChange={e => setEditForm({ ...editForm, experience_years: Number(e.target.value) })} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
+              </div>
+              <div className="sm:col-span-2">
+                <label className="block text-xs font-bold text-slate-600 mb-1">Especialização / Pós-graduação</label>
+                <input value={editForm.specialization || ''} onChange={e => setEditForm({ ...editForm, specialization: e.target.value })} placeholder="Ex: Gestão de Obras, BIM, Direito Imobiliário..." className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
+              </div>
+            </div>
+          </div>
+
+          {/* Redes Sociais */}
+          <div className="border-t border-slate-100 pt-4">
+            <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Redes Sociais</p>
+            <div className="grid sm:grid-cols-3 gap-4">
+              <div><label className="block text-xs font-bold text-slate-600 mb-1">LinkedIn</label><input value={editForm.linkedin || ''} onChange={e => setEditForm({ ...editForm, linkedin: e.target.value })} placeholder="https://linkedin.com/in/..." className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" /></div>
+              <div><label className="block text-xs font-bold text-slate-600 mb-1">Instagram</label><input value={editForm.instagram || ''} onChange={e => setEditForm({ ...editForm, instagram: e.target.value })} placeholder="https://instagram.com/..." className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" /></div>
+              <div><label className="block text-xs font-bold text-slate-600 mb-1">WhatsApp</label><input value={editForm.whatsapp || ''} onChange={e => setEditForm({ ...editForm, whatsapp: e.target.value })} placeholder="5581999..." className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" /></div>
+            </div>
           </div>
           <div>
             <label className="block text-xs font-bold text-slate-600 mb-2">Habilidades</label>
