@@ -275,7 +275,9 @@ export default function Home() {
                 ></iframe>
               </div>
               <div className="p-4 border-t border-slate-100">
-                <p className="font-bold text-slate-900 text-sm">Emanoel Amorim</p>
+                <p className="font-bold text-slate-900 text-sm">Annah Paula Freire</p>
+                <p className="text-slate-500 text-xs mt-1">Arquiteta Paisagista • Especialista em Transformação de Pessoas</p>
+                <p className="text-slate-600 text-xs mt-1 italic line-clamp-3">"Com diplomacia e competência, Emanoel conseguiu adequar os perfis profissionais, com prazo e a melhor forma de atender o cliente."</p>
               </div>
             </div>
             {testimonials.map((t, idx) => (
