@@ -201,6 +201,16 @@ export default function CommunityProfile({ userId, currentUser, currentProfile, 
             <div className="text-center"><p className="font-extrabold text-slate-900">{(profile.following || []).length}</p><p className="text-slate-500">Seguindo</p></div>
           </div>
 
+          {/* Info extras */}
+          <div className="flex flex-wrap gap-x-4 gap-y-1 mt-3 text-xs text-slate-500">
+            {profile.location && <span className="flex items-center gap-1"><MapPin size={11} />{profile.location}</span>}
+            {profile.formation && <span className="flex items-center gap-1"><GraduationCap size={11} />{profile.formation}{profile.institution ? ` — ${profile.institution}` : ''}</span>}
+            {profile.crea_cau && <span className="flex items-center gap-1 font-mono bg-slate-100 px-1.5 py-0.5 rounded">{profile.crea_cau}</span>}
+            {profile.experience_years > 0 && <span className="flex items-center gap-1"><Briefcase size={11} />{profile.experience_years} anos de exp.</span>}
+            {profile.specialization && <span className="flex items-center gap-1"><Award size={11} />{profile.specialization}</span>}
+            {profile.website && <a href={profile.website} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-indigo-600 hover:underline"><Link2 size={11} />Portfólio</a>}
+          </div>
+
           {/* Redes Sociais */}
           <div className="flex gap-3 mt-4">
             {profile.linkedin && <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" className="w-9 h-9 rounded-full bg-blue-50 text-blue-700 flex items-center justify-center hover:bg-blue-100 transition-colors"><Linkedin size={16} /></a>}
