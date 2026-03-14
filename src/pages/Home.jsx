@@ -249,17 +249,19 @@ export default function Home() {
               <button onClick={() => setTestimonialsModalView('gallery')} className="text-indigo-600 hover:text-indigo-800 font-medium flex items-center gap-1 group">Ver Galeria Completa <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform"/></button>
             </div>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              { type: 'image', src: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&q=80', label: 'Clodomir' },
-              { type: 'image', src: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80', label: 'Amanda Airyes' },
-              { type: 'image', src: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80', label: 'Campos CRC' },
-              { type: 'image', src: 'https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=400&q=80', label: 'Depoimento' },
-            ].map((item, idx) => (
-              <div key={idx} className="bg-white p-2 rounded-2xl shadow-md hover:shadow-xl transition-shadow overflow-hidden aspect-square relative group cursor-pointer" onClick={() => setZoomedMedia(item)}>
-                <img src={item.src} alt="Depoimento" className="w-full h-full object-cover rounded-xl border border-slate-100" />
-                <div className="absolute inset-2 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none rounded-xl">
-                  <span className="text-white font-bold bg-slate-900/70 px-4 py-2 rounded-lg flex items-center gap-2 backdrop-blur-sm shadow-lg"><Search size={18}/> Ampliar</span>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {testimonials.map((t, idx) => (
+              <div key={idx} className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow overflow-hidden relative group cursor-pointer" onClick={() => setZoomedMedia({ src: t.author_photo, text: t.text, name: t.author_name })}>
+                <div className="aspect-square overflow-hidden">
+                  <img src={t.author_photo} alt={t.author_name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-5 pointer-events-none">
+                  <p className="text-white font-bold text-sm">{t.author_name}</p>
+                  <p className="text-slate-300 text-xs mt-1 line-clamp-3">{t.text}</p>
+                </div>
+                <div className="p-4 border-t border-slate-100">
+                  <p className="font-bold text-slate-900 text-sm">{t.author_name}</p>
+                  <p className="text-slate-500 text-xs mt-1 line-clamp-2">{t.text}</p>
                 </div>
               </div>
             ))}
