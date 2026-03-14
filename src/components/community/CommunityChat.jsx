@@ -127,11 +127,18 @@ function ChatWindow({ conversation, currentUser, currentProfile, onBack }) {
   );
 }
 
-export default function CommunityChat({ user, profile }) {
+export default function CommunityChat({ user, profile, initialConversation, onClearInitialConversation }) {
   const [conversations, setConversations] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [activeConv, setActiveConv] = useState(null);
+  const [activeConv, setActiveConv] = useState(initialConversation || null);
   const [search, setSearch] = useState('');
+
+  useEffect(() => {
+    if (initialConversation) {
+      setActiveConv(initialConversation);
+      if (onClearInitialConversation) onClearInitialConversation();
+    }
+  }, [initialConversation]);
 
   useEffect(() => {
     loadConversations();
