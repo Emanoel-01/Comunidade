@@ -3,12 +3,12 @@ import { LayoutDashboard, Briefcase, Download, Calendar, UserCircle, Bell, LogOu
 import { base44 } from '@/api/base44Client';
 
 const tabs = [
-  { id: 'feed', icon: LayoutDashboard, label: 'Fórum e Feed' },
-  { id: 'vagas', icon: Briefcase, label: 'Vagas e Contratos' },
-  { id: 'materiais', icon: Download, label: 'Materiais Exclusivos' },
-  { id: 'eventos', icon: Calendar, label: 'Calendário de Eventos' },
-  { id: 'notificacoes', icon: Bell, label: 'Notificações' },
-  { id: 'perfil', icon: UserCircle, label: 'Meu Perfil' },
+  { id: 'feed', TabIcon: LayoutDashboard, label: 'Fórum e Feed' },
+  { id: 'vagas', TabIcon: Briefcase, label: 'Vagas e Contratos' },
+  { id: 'materiais', TabIcon: Download, label: 'Materiais Exclusivos' },
+  { id: 'eventos', TabIcon: Calendar, label: 'Calendário de Eventos' },
+  { id: 'notificacoes', TabIcon: Bell, label: 'Notificações' },
+  { id: 'perfil', TabIcon: UserCircle, label: 'Meu Perfil' },
 ];
 
 export default function CommunitySidebar({ user, profile, activeTab, onTabChange }) {
@@ -39,13 +39,13 @@ export default function CommunitySidebar({ user, profile, activeTab, onTabChange
 
       {/* Menu */}
       <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-2">
-        {tabs.map(({ id, icon: Icon, label }) => (
+        {tabs.map(({ id, TabIcon, label }) => (
           <button
             key={id}
             onClick={() => onTabChange(id)}
             className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-colors text-sm ${activeTab === id ? 'bg-indigo-50 text-indigo-700 font-bold' : 'text-slate-600 hover:bg-slate-50'}`}
           >
-            <Icon size={18} /> {label}
+            <TabIcon size={18} /> {label}
           </button>
         ))}
         <div className="border-t border-slate-100 mt-2 pt-2">

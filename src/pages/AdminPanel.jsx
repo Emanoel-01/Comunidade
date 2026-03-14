@@ -1,179 +1,541 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { base44 } from '@/api/base44Client';
 import {
-  ShieldCheck, LayoutDashboard, BarChart3, Edit3, Users, FileText, Eye, ThumbsUp, Share2,
-  Plus, Bell, CheckCircle2, X, UserPlus, Award, PenTool, ImageIcon, Bold, Italic, Upload, Send,
-  LinkIcon
+  ShieldCheck, LayoutDashboard, BarChart3, Edit3, Users, FileText, Eye, ThumbsUp,
+  Plus, Bell, CheckCircle2, X, UserPlus, Award, PenTool, Bold, Italic, Upload, Send,
+  Briefcase, Download, Calendar, Trash2, Save, AlertTriangle, RefreshCw
 } from 'lucide-react';
 import { createPageUrl } from '@/utils';
 import { Link } from 'react-router-dom';
+import { format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 
-const initialPosts = [
-  { id: 1, title: 'Como planejar um canteiro de obras verdadeiramente eficiente usando IA', views: 1245 },
-  { id: 2, title: 'Gestão de manutenção em edifícios públicos: O Case do Palácio', views: 890 },
-  { id: 3, title: 'Erros comuns em laudos cautelares e como a tecnologia pode ajudar', views: 1560 },
-];
-
-const communityUsers = [
-  { id: 'u1', name: 'Emanoel Amorim', roleLabel: 'Docente & Mentor', avatar: 'https://i.ibb.co/TDC35Hqf/Emanoel-Silva-de-Amorim.jpg', followers: 1542 },
-  { id: 'u2', name: 'Mariana Silva', roleLabel: 'Aluna ESUDA (Turma 2025)', avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150', followers: 120 },
-  { id: 'u3', name: 'Construtora Alpha', roleLabel: 'Parceiro Comercial', avatar: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=150', followers: 530 },
-];
+const BLANK_POST = { title: '', content: '', excerpt: '', cover_image: '', category: 'Gestão 4.0', tags: [], author_name: 'Emanoel Amorim', author_role: 'CEO Amorim Tech', author_avatar: 'https://i.ibb.co/TDC35Hqf/Emanoel-Silva-de-Amorim.jpg', read_time: '5 min', status: 'draft' };
 
 export default function AdminPanel() {
   const [adminTab, setAdminTab] = useState('dashboard');
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    base44.auth.me().then(setUser);
+  }, []);
+
+  if (user && user.role !== 'admin') {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-100">
+        <div className="bg-white p-10 rounded-2xl border border-slate-200 text-center shadow-xl max-w-md">
+          <AlertTriangle size={48} className="text-amber-500 mx-auto mb-4" />
+          <h2 className="text-2xl font-bold text-slate-900 mb-2">Acesso Restrito</h2>
+          <p className="text-slate-600 mb-6">Esta área é exclusiva para administradores do sistema.</p>
+          <Link to={createPageUrl('Home')} className="bg-indigo-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-indigo-700 transition-colors">Voltar ao Início</Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="bg-slate-100 min-h-screen animate-in fade-in flex flex-col md:flex-row">
+    <div className="bg-slate-100 min-h-screen flex flex-col md:flex-row">
       {/* Sidebar */}
-      <aside className="w-full md:w-64 bg-slate-900 text-slate-300 flex flex-col">
+      <aside className="w-full md:w-64 bg-slate-900 text-slate-300 flex flex-col shrink-0">
         <div className="p-6 border-b border-slate-800">
-          <h2 className="text-xl font-bold text-white flex items-center gap-2"><ShieldCheck size={20} className="text-indigo-500"/> Modo Admin</h2>
+          <h2 className="text-xl font-bold text-white flex items-center gap-2"><ShieldCheck size={20} className="text-indigo-400" /> Painel Admin</h2>
           <p className="text-xs text-slate-500 mt-1">Gestão do Ecossistema</p>
         </div>
-        <nav className="p-4 flex flex-col gap-2">
-          <button onClick={() => setAdminTab('dashboard')} className={`flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors ${adminTab === 'dashboard' ? 'bg-indigo-600 text-white' : 'hover:bg-slate-800 hover:text-white'}`}><LayoutDashboard size={18} /> Visão Geral</button>
-          <div className="mt-4 mb-2 px-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Gestão do Blog</div>
-          <button onClick={() => setAdminTab('blog_analytics')} className={`flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors ${adminTab === 'blog_analytics' ? 'bg-indigo-600 text-white' : 'hover:bg-slate-800 hover:text-white'}`}><BarChart3 size={18} /> Analítico (Posts)</button>
-          <button onClick={() => setAdminTab('blog_editor')} className={`flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors ${adminTab === 'blog_editor' ? 'bg-indigo-600 text-white' : 'hover:bg-slate-800 hover:text-white'}`}><Edit3 size={18} /> Criar Novo Artigo</button>
-          <div className="mt-4 mb-2 px-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Acesso Restrito</div>
-          <button onClick={() => setAdminTab('community_mgmt')} className={`flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-colors ${adminTab === 'community_mgmt' ? 'bg-emerald-600 text-white' : 'hover:bg-slate-800 hover:text-white'}`}><Users size={18} /> Comunidade & Membros</button>
+        <nav className="p-3 flex flex-col gap-1 flex-grow overflow-y-auto">
+          <NavItem id="dashboard" label="Visão Geral" icon={LayoutDashboard} active={adminTab} onClick={setAdminTab} />
+          <div className="mt-3 mb-1 px-3 text-[10px] font-bold text-slate-500 uppercase tracking-wider">Blog</div>
+          <NavItem id="blog_list" label="Posts Publicados" icon={FileText} active={adminTab} onClick={setAdminTab} />
+          <NavItem id="blog_editor" label="Novo Artigo" icon={PenTool} active={adminTab} onClick={setAdminTab} />
+          <div className="mt-3 mb-1 px-3 text-[10px] font-bold text-slate-500 uppercase tracking-wider">Comunidade</div>
+          <NavItem id="community_users" label="Membros" icon={Users} active={adminTab} onClick={setAdminTab} />
+          <NavItem id="community_jobs" label="Vagas" icon={Briefcase} active={adminTab} onClick={setAdminTab} />
+          <NavItem id="community_materials" label="Materiais" icon={Download} active={adminTab} onClick={setAdminTab} />
+          <NavItem id="community_events" label="Eventos" icon={Calendar} active={adminTab} onClick={setAdminTab} />
+          <NavItem id="notifications_send" label="Enviar Notificação" icon={Bell} active={adminTab} onClick={setAdminTab} />
         </nav>
-        <div className="p-4 mt-auto">
+        <div className="p-4 border-t border-slate-800">
           <Link to={createPageUrl('Home')} className="flex items-center gap-2 text-sm text-slate-500 hover:text-white transition-colors">← Voltar ao Site</Link>
         </div>
       </aside>
 
       {/* Conteúdo */}
-      <div className="flex-grow p-6 md:p-10">
-        {adminTab === 'dashboard' && (
-          <div className="animate-in fade-in">
-            <h2 className="text-2xl font-bold text-slate-900 mb-6">Bem-vindo ao Painel de Controle</h2>
-            <div className="grid md:grid-cols-3 gap-6">
-              <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-center cursor-pointer hover:border-indigo-500" onClick={() => setAdminTab('blog_analytics')}>
-                <FileText className="text-indigo-500 mb-2" size={24} />
-                <p className="text-slate-500 text-sm font-medium">Artigos Publicados</p>
-                <p className="text-3xl font-extrabold text-slate-900">12</p>
+      <div className="flex-grow p-5 md:p-8 overflow-auto">
+        {adminTab === 'dashboard' && <AdminDashboard onNavigate={setAdminTab} />}
+        {adminTab === 'blog_list' && <AdminBlogList onEdit={(post) => setAdminTab('blog_editor')} />}
+        {adminTab === 'blog_editor' && <AdminBlogEditor onBack={() => setAdminTab('blog_list')} />}
+        {adminTab === 'community_users' && <AdminUsers />}
+        {adminTab === 'community_jobs' && <AdminJobs />}
+        {adminTab === 'community_materials' && <AdminMaterials />}
+        {adminTab === 'community_events' && <AdminEvents />}
+        {adminTab === 'notifications_send' && <AdminSendNotification />}
+      </div>
+    </div>
+  );
+}
+
+function NavItem({ id, label, icon: Icon, active, onClick }) {
+  return (
+    <button onClick={() => onClick(id)} className={`flex items-center gap-3 px-3 py-2.5 rounded-lg font-medium text-sm transition-colors w-full text-left ${active === id ? 'bg-indigo-600 text-white' : 'hover:bg-slate-800 hover:text-white'}`}>
+      <Icon size={16} /> {label}
+    </button>
+  );
+}
+
+function AdminDashboard({ onNavigate }) {
+  const [stats, setStats] = useState({ posts: 0, members: 0, jobs: 0, events: 0 });
+  useEffect(() => {
+    Promise.all([
+      base44.entities.BlogPost.filter({ status: 'published' }),
+      base44.entities.UserProfile.list(),
+      base44.entities.JobListing.filter({ status: 'active' }),
+      base44.entities.CommunityEvent.list(),
+    ]).then(([posts, members, jobs, events]) => setStats({ posts: posts.length, members: members.length, jobs: jobs.length, events: events.length }));
+  }, []);
+
+  return (
+    <div className="animate-in fade-in space-y-6">
+      <h2 className="text-2xl font-bold text-slate-900">Visão Geral</h2>
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        {[
+          { label: 'Artigos Publicados', value: stats.posts, icon: FileText, color: 'indigo', tab: 'blog_list' },
+          { label: 'Membros', value: stats.members, icon: Users, color: 'emerald', tab: 'community_users' },
+          { label: 'Vagas Ativas', value: stats.jobs, icon: Briefcase, color: 'amber', tab: 'community_jobs' },
+          { label: 'Eventos', value: stats.events, icon: Calendar, color: 'purple', tab: 'community_events' },
+        ].map((s, i) => (
+          <div key={i} className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm cursor-pointer hover:shadow-md transition-shadow" onClick={() => onNavigate(s.tab)}>
+            <s.icon className={`text-${s.color}-500 mb-2`} size={24} />
+            <p className="text-slate-500 text-sm font-medium">{s.label}</p>
+            <p className="text-3xl font-extrabold text-slate-900">{s.value}</p>
+          </div>
+        ))}
+      </div>
+      <div className="bg-indigo-50 border border-indigo-100 rounded-2xl p-6">
+        <h3 className="font-bold text-indigo-900 mb-2">Ações Rápidas</h3>
+        <div className="flex flex-wrap gap-3 mt-3">
+          <button onClick={() => onNavigate('blog_editor')} className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold px-4 py-2 rounded-lg"><Plus size={14} /> Novo Artigo</button>
+          <button onClick={() => onNavigate('community_jobs')} className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold px-4 py-2 rounded-lg"><Plus size={14} /> Nova Vaga</button>
+          <button onClick={() => onNavigate('community_events')} className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white text-sm font-bold px-4 py-2 rounded-lg"><Plus size={14} /> Novo Evento</button>
+          <button onClick={() => onNavigate('notifications_send')} className="flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white text-sm font-bold px-4 py-2 rounded-lg"><Bell size={14} /> Enviar Aviso</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function AdminBlogList() {
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [editingPost, setEditingPost] = useState(null);
+
+  useEffect(() => { loadPosts(); }, []);
+
+  const loadPosts = async () => {
+    setLoading(true);
+    const data = await base44.entities.BlogPost.list('-created_date');
+    setPosts(data);
+    setLoading(false);
+  };
+
+  const toggleStatus = async (post) => {
+    const newStatus = post.status === 'published' ? 'draft' : 'published';
+    await base44.entities.BlogPost.update(post.id, { status: newStatus });
+    setPosts(prev => prev.map(p => p.id === post.id ? { ...p, status: newStatus } : p));
+  };
+
+  const deletePost = async (id) => {
+    if (!confirm('Excluir este artigo?')) return;
+    await base44.entities.BlogPost.delete(id);
+    setPosts(prev => prev.filter(p => p.id !== id));
+  };
+
+  if (editingPost) return <AdminBlogEditor post={editingPost} onBack={() => { setEditingPost(null); loadPosts(); }} />;
+
+  return (
+    <div className="animate-in fade-in space-y-5">
+      <div className="flex justify-between items-center">
+        <h2 className="text-2xl font-bold text-slate-900">Posts do Blog</h2>
+        <button onClick={() => setEditingPost(BLANK_POST)} className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-4 py-2 rounded-lg text-sm shadow-sm"><Plus size={16} /> Novo Artigo</button>
+      </div>
+      {loading ? (
+        <div className="space-y-3">{[1,2,3].map(i => <div key={i} className="bg-white rounded-xl h-16 animate-pulse border border-slate-200"></div>)}</div>
+      ) : (
+        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+          <table className="w-full text-sm min-w-[600px]">
+            <thead className="bg-slate-50 border-b border-slate-200 text-slate-600 font-bold">
+              <tr><th className="px-5 py-3 text-left">Título</th><th className="px-5 py-3 text-center">Views</th><th className="px-5 py-3 text-center">Status</th><th className="px-5 py-3 text-center">Ações</th></tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {posts.map(post => (
+                <tr key={post.id} className="hover:bg-slate-50">
+                  <td className="px-5 py-3 font-medium text-slate-900 max-w-xs truncate">{post.title}</td>
+                  <td className="px-5 py-3 text-center text-slate-600">{post.views || 0}</td>
+                  <td className="px-5 py-3 text-center">
+                    <span className={`px-2 py-1 rounded text-xs font-bold ${post.status === 'published' ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-600'}`}>{post.status === 'published' ? 'Publicado' : 'Rascunho'}</span>
+                  </td>
+                  <td className="px-5 py-3 text-center">
+                    <div className="flex items-center justify-center gap-2">
+                      <button onClick={() => setEditingPost(post)} className="text-indigo-600 hover:text-indigo-800 font-bold text-xs">Editar</button>
+                      <button onClick={() => toggleStatus(post)} className="text-amber-600 hover:text-amber-800 font-bold text-xs">{post.status === 'published' ? 'Ocultar' : 'Publicar'}</button>
+                      <button onClick={() => deletePost(post.id)} className="text-red-500 hover:text-red-700"><Trash2 size={14} /></button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          {posts.length === 0 && <div className="text-center py-12 text-slate-400"><FileText size={36} className="mx-auto mb-2 opacity-30" /><p>Nenhum artigo criado ainda.</p></div>}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function AdminBlogEditor({ post: initialPost, onBack }) {
+  const [form, setForm] = useState(initialPost || BLANK_POST);
+  const [saving, setSaving] = useState(false);
+  const [tagInput, setTagInput] = useState('');
+
+  const save = async (status) => {
+    setSaving(true);
+    const data = { ...form, status };
+    if (form.id) {
+      await base44.entities.BlogPost.update(form.id, data);
+    } else {
+      await base44.entities.BlogPost.create(data);
+    }
+    setSaving(false);
+    if (onBack) onBack();
+  };
+
+  const addTag = () => {
+    if (!tagInput.trim()) return;
+    setForm(f => ({ ...f, tags: [...(f.tags || []), tagInput.trim()] }));
+    setTagInput('');
+  };
+
+  const removeTag = (idx) => setForm(f => ({ ...f, tags: f.tags.filter((_, i) => i !== idx) }));
+
+  return (
+    <div className="animate-in fade-in space-y-5">
+      <div className="flex items-center justify-between">
+        <button onClick={onBack} className="text-indigo-600 font-bold hover:underline text-sm flex items-center gap-1">← Voltar</button>
+        <div className="flex gap-2">
+          <button onClick={() => save('draft')} disabled={saving} className="px-4 py-2 border border-slate-300 text-slate-700 font-bold rounded-lg text-sm hover:bg-slate-50 disabled:opacity-50">Salvar Rascunho</button>
+          <button onClick={() => save('published')} disabled={saving} className="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg text-sm flex items-center gap-2 disabled:opacity-50"><Send size={14} /> {saving ? 'Salvando...' : 'Publicar'}</button>
+        </div>
+      </div>
+
+      <div className="grid lg:grid-cols-3 gap-5">
+        <div className="lg:col-span-2 space-y-4">
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 space-y-4">
+            <input type="text" placeholder="Título do artigo..." value={form.title} onChange={e => setForm({ ...form, title: e.target.value })} className="w-full text-2xl font-extrabold text-slate-900 border-none outline-none bg-transparent placeholder-slate-300" />
+            <input type="text" placeholder="Resumo (aparece nos cards do blog)..." value={form.excerpt} onChange={e => setForm({ ...form, excerpt: e.target.value })} className="w-full text-slate-600 border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
+            <textarea
+              placeholder="Escreva o conteúdo do artigo aqui... (use linha em branco para separar parágrafos)"
+              value={form.content}
+              onChange={e => setForm({ ...form, content: e.target.value })}
+              rows={16}
+              className="w-full border border-slate-200 rounded-xl px-4 py-3 text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-400 resize-none text-sm leading-relaxed"
+            />
+          </div>
+        </div>
+        <div className="space-y-4">
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 space-y-4">
+            <h3 className="font-bold text-slate-800 text-sm">Configurações</h3>
+            <div>
+              <label className="block text-xs font-bold text-slate-600 mb-1">Categoria</label>
+              <select value={form.category} onChange={e => setForm({ ...form, category: e.target.value })} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">
+                {['Gestão 4.0', 'Manutenção Predial', 'Tecnologia BIM', 'Engenharia Legal', 'Carreira'].map(c => <option key={c}>{c}</option>)}
+              </select>
+            </div>
+            <div>
+              <label className="block text-xs font-bold text-slate-600 mb-1">URL da Capa</label>
+              <input value={form.cover_image} onChange={e => setForm({ ...form, cover_image: e.target.value })} placeholder="https://..." className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
+              {form.cover_image && <img src={form.cover_image} className="mt-2 w-full aspect-video object-cover rounded-lg" alt="" />}
+            </div>
+            <div>
+              <label className="block text-xs font-bold text-slate-600 mb-1">Tempo de Leitura</label>
+              <input value={form.read_time} onChange={e => setForm({ ...form, read_time: e.target.value })} placeholder="5 min de leitura" className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
+            </div>
+            <div>
+              <label className="block text-xs font-bold text-slate-600 mb-1">Tags</label>
+              <div className="flex flex-wrap gap-1 mb-2">
+                {(form.tags || []).map((tag, idx) => (
+                  <span key={idx} className="flex items-center gap-1 bg-indigo-50 text-indigo-700 text-xs px-2 py-1 rounded-full font-bold">
+                    {tag} <button onClick={() => removeTag(idx)} className="hover:text-red-500"><X size={10} /></button>
+                  </span>
+                ))}
               </div>
-              <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-center cursor-pointer hover:border-emerald-500" onClick={() => setAdminTab('community_mgmt')}>
-                <Users className="text-emerald-500 mb-2" size={24} />
-                <p className="text-slate-500 text-sm font-medium">Membros na Comunidade</p>
-                <p className="text-3xl font-extrabold text-slate-900">458</p>
-              </div>
-              <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-center">
-                <Eye className="text-blue-500 mb-2" size={24} />
-                <p className="text-slate-500 text-sm font-medium">Visualizações Totais</p>
-                <p className="text-3xl font-extrabold text-slate-900">3.695</p>
+              <div className="flex gap-2">
+                <input value={tagInput} onChange={e => setTagInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && (e.preventDefault(), addTag())} placeholder="Adicionar tag..." className="flex-grow border border-slate-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
+                <button onClick={addTag} className="px-3 py-1.5 bg-indigo-600 text-white rounded-lg text-xs font-bold hover:bg-indigo-700"><Plus size={14} /></button>
               </div>
             </div>
           </div>
-        )}
-
-        {adminTab === 'community_mgmt' && (
-          <div className="animate-in fade-in">
-            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-8 border-b border-slate-200 pb-4">
-              <div><h2 className="text-2xl font-bold text-slate-900">Gestão da Comunidade</h2><p className="text-slate-600">Aprovações, Convites e Gerenciamento de Selos</p></div>
-              <div className="flex gap-3">
-                <button className="bg-white border border-slate-300 text-slate-700 hover:bg-slate-50 font-bold px-4 py-2 rounded-lg flex items-center gap-2 shadow-sm text-sm"><LinkIcon size={16}/> Link Convite</button>
-                <button className="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-2 rounded-lg flex items-center gap-2 shadow-md text-sm"><UserPlus size={16}/> Criar Usuário</button>
-              </div>
-            </div>
-            <h3 className="font-bold text-slate-800 mb-4 flex items-center gap-2"><Bell size={18} className="text-amber-500"/> Solicitações de Acesso Pendentes</h3>
-            <div className="grid md:grid-cols-2 gap-4 mb-10">
-              <div className="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 bg-slate-100 rounded-full flex items-center justify-center text-slate-500 font-bold">L</div>
-                  <div><p className="font-bold text-slate-900">Lucas Mendes</p><p className="text-xs text-slate-500">lucas.mendes@eng.com.br • Aluno ESUDA</p></div>
-                </div>
-                <div className="flex gap-2">
-                  <button className="p-2 text-red-500 hover:bg-red-50 rounded" title="Rejeitar"><X size={18}/></button>
-                  <button className="p-2 text-emerald-600 hover:bg-emerald-50 rounded bg-emerald-50" title="Aprovar"><CheckCircle2 size={18}/></button>
-                </div>
-              </div>
-            </div>
-            <h3 className="font-bold text-slate-800 mb-4">Membros Ativos ({communityUsers.length})</h3>
-            <div className="bg-white rounded-2xl border border-slate-200 overflow-x-auto shadow-sm">
-              <table className="w-full text-left text-sm text-slate-600 min-w-[700px]">
-                <thead className="bg-slate-50 text-slate-700 font-bold border-b border-slate-200"><tr><th className="px-6 py-4">Usuário</th><th className="px-6 py-4">Tipo (Role)</th><th className="px-6 py-4">Seguidores</th><th className="px-6 py-4 text-center">Ações</th></tr></thead>
-                <tbody className="divide-y divide-slate-100">
-                  {communityUsers.map(user => (
-                    <tr key={user.id} className="hover:bg-slate-50">
-                      <td className="px-6 py-4"><div className="flex items-center gap-3"><img src={user.avatar} className="w-8 h-8 rounded-full object-cover" alt=""/><span className="font-bold text-slate-900">{user.name}</span></div></td>
-                      <td className="px-6 py-4"><span className="bg-slate-100 text-slate-700 px-2 py-1 rounded text-xs font-bold">{user.roleLabel}</span></td>
-                      <td className="px-6 py-4 font-medium">{user.followers}</td>
-                      <td className="px-6 py-4 text-center"><button className="text-indigo-600 hover:text-indigo-800 text-xs font-bold flex items-center justify-center w-full gap-1"><Award size={14}/> Atribuir Selo</button></td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 space-y-3">
+            <h3 className="font-bold text-slate-800 text-sm">Autor</h3>
+            <div><label className="block text-xs font-bold text-slate-600 mb-1">Nome</label><input value={form.author_name} onChange={e => setForm({ ...form, author_name: e.target.value })} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" /></div>
+            <div><label className="block text-xs font-bold text-slate-600 mb-1">Cargo</label><input value={form.author_role} onChange={e => setForm({ ...form, author_role: e.target.value })} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" /></div>
+            <div><label className="block text-xs font-bold text-slate-600 mb-1">URL do Avatar</label><input value={form.author_avatar} onChange={e => setForm({ ...form, author_avatar: e.target.value })} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" /></div>
           </div>
-        )}
+        </div>
+      </div>
+    </div>
+  );
+}
 
-        {adminTab === 'blog_analytics' && (
-          <div className="animate-in fade-in">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold text-slate-900">Desempenho do Blog</h2>
-              <button onClick={() => setAdminTab('blog_editor')} className="bg-indigo-900 hover:bg-indigo-800 text-white font-bold px-4 py-2 rounded-lg flex items-center gap-2 shadow-md"><Plus size={18} /> Novo Artigo</button>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-10">
-              <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm"><Eye className="text-blue-500 mb-2" size={24} /><p className="text-slate-500 text-sm font-medium">Visualizações Totais</p><p className="text-3xl font-extrabold text-slate-900">3.695</p></div>
-              <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm"><ThumbsUp className="text-emerald-500 mb-2" size={24} /><p className="text-slate-500 text-sm font-medium">Curtidas</p><p className="text-3xl font-extrabold text-slate-900">969</p></div>
-              <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm"><Share2 className="text-purple-500 mb-2" size={24} /><p className="text-slate-500 text-sm font-medium">Compartilhamentos</p><p className="text-3xl font-extrabold text-slate-900">254</p></div>
-            </div>
-            <h3 className="text-xl font-bold text-slate-900 mb-4">Artigos Publicados</h3>
-            <div className="bg-white rounded-2xl border border-slate-200 overflow-x-auto shadow-sm">
-              <table className="w-full text-left text-sm text-slate-600 min-w-[600px]">
-                <thead className="bg-slate-50 text-slate-700 font-bold border-b border-slate-200"><tr><th className="px-6 py-4">Título do Post</th><th className="px-6 py-4 text-center">Views</th><th className="px-6 py-4 text-center">Ações</th></tr></thead>
-                <tbody className="divide-y divide-slate-100">
-                  {initialPosts.map(post => (
-                    <tr key={post.id} className="hover:bg-slate-50">
-                      <td className="px-6 py-4 font-medium text-slate-900 truncate max-w-[300px]">{post.title}</td>
-                      <td className="px-6 py-4 text-center font-bold">{post.views}</td>
-                      <td className="px-6 py-4 text-center"><button className="text-indigo-600 hover:underline text-xs font-bold">Editar</button></td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        )}
+function AdminUsers() {
+  const [profiles, setProfiles] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [badgeInput, setBadgeInput] = useState({});
 
-        {adminTab === 'blog_editor' && (
-          <div className="bg-white rounded-2xl border border-slate-200 shadow-xl overflow-hidden animate-in fade-in flex flex-col min-h-[800px]">
-            <div className="bg-slate-50 px-6 py-4 border-b border-slate-200 flex flex-col sm:flex-row justify-between sm:items-center gap-4">
-              <div className="flex items-center gap-2 text-slate-800 font-bold"><PenTool className="text-indigo-600" /> Editor Profissional</div>
-              <div className="flex gap-3">
-                <button className="px-4 py-2 text-sm font-bold text-slate-600 hover:bg-slate-200 rounded-lg border border-slate-300">Salvar Rascunho</button>
-                <button className="px-6 py-2 text-sm font-bold bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg shadow-md flex items-center gap-2"><Send size={16}/> Publicar</button>
-              </div>
-            </div>
-            <div className="p-6 grid lg:grid-cols-3 gap-8 flex-grow">
-              <div className="lg:col-span-2 flex flex-col gap-6">
-                <input type="text" placeholder="Título impactante..." className="w-full text-3xl font-extrabold text-slate-900 border-none outline-none bg-transparent" />
-                <div className="sticky top-0 z-10 flex flex-wrap gap-1 bg-slate-900 p-2 rounded-xl">
-                  <button className="p-2 text-slate-300 hover:text-white rounded"><Bold size={18}/></button>
-                  <button className="p-2 text-slate-300 hover:text-white rounded"><Italic size={18}/></button>
-                  <div className="w-px h-6 bg-slate-700 mx-1"></div>
-                  <button className="p-2 text-slate-300 hover:text-white rounded flex items-center gap-1 text-sm"><ImageIcon size={18}/> Mídia</button>
+  useEffect(() => {
+    base44.entities.UserProfile.list('-created_date').then(data => { setProfiles(data); setLoading(false); });
+  }, []);
+
+  const addBadge = async (profile) => {
+    const badge = badgeInput[profile.id]?.trim();
+    if (!badge) return;
+    const newBadges = [...(profile.badges || []), badge];
+    await base44.entities.UserProfile.update(profile.id, { badges: newBadges });
+    setProfiles(prev => prev.map(p => p.id === profile.id ? { ...p, badges: newBadges } : p));
+    setBadgeInput(prev => ({ ...prev, [profile.id]: '' }));
+  };
+
+  const removeBadge = async (profile, idx) => {
+    const newBadges = profile.badges.filter((_, i) => i !== idx);
+    await base44.entities.UserProfile.update(profile.id, { badges: newBadges });
+    setProfiles(prev => prev.map(p => p.id === profile.id ? { ...p, badges: newBadges } : p));
+  };
+
+  return (
+    <div className="animate-in fade-in space-y-5">
+      <h2 className="text-2xl font-bold text-slate-900">Membros da Comunidade</h2>
+      {loading ? (
+        <div className="space-y-3">{[1,2,3].map(i => <div key={i} className="bg-white rounded-xl h-16 animate-pulse border border-slate-200"></div>)}</div>
+      ) : (
+        <div className="space-y-4">
+          {profiles.map(profile => (
+            <div key={profile.id} className="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-lg shrink-0 overflow-hidden">
+                  {profile.avatar_url ? <img src={profile.avatar_url} className="w-full h-full object-cover" alt="" /> : profile.user_id?.charAt(0)?.toUpperCase()}
                 </div>
-                <textarea placeholder="Escreva o conteúdo técnico..." className="w-full h-full min-h-[400px] text-lg text-slate-700 border-none outline-none resize-none bg-transparent leading-relaxed"></textarea>
-              </div>
-              <div className="bg-slate-50 p-6 rounded-xl border border-slate-200 h-fit space-y-6">
-                <div>
-                  <label className="block text-sm font-bold text-slate-800 mb-2">Capa</label>
-                  <div className="w-full aspect-video border-2 border-dashed border-slate-300 rounded-lg flex flex-col items-center justify-center text-slate-400 cursor-pointer bg-slate-100/50">
-                    <Upload size={24} className="mb-2" /><span className="text-sm font-medium">Upload</span>
+                <div className="flex-grow">
+                  <p className="font-bold text-slate-900">{profile.role_label || 'Membro'}</p>
+                  <p className="text-xs text-slate-500 mb-3">ID: {profile.user_id}</p>
+                  <div className="flex flex-wrap gap-2 mb-3">
+                    {(profile.badges || []).map((badge, idx) => (
+                      <span key={idx} className="flex items-center gap-1 bg-amber-50 border border-amber-200 text-amber-700 text-xs font-bold px-2 py-1 rounded-full">
+                        <Award size={11} />{badge}
+                        <button onClick={() => removeBadge(profile, idx)} className="ml-1 hover:text-red-500"><X size={10} /></button>
+                      </span>
+                    ))}
+                  </div>
+                  <div className="flex gap-2">
+                    <input
+                      value={badgeInput[profile.id] || ''}
+                      onChange={e => setBadgeInput(prev => ({ ...prev, [profile.id]: e.target.value }))}
+                      onKeyDown={e => e.key === 'Enter' && addBadge(profile)}
+                      placeholder="Adicionar selo..."
+                      className="border border-slate-300 rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-amber-400 w-40"
+                    />
+                    <button onClick={() => addBadge(profile)} className="px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-white rounded-lg text-xs font-bold"><Award size={12} /></button>
                   </div>
                 </div>
-                <div>
-                  <label className="block text-sm font-bold text-slate-800 mb-2">Resumo (SEO)</label>
-                  <textarea rows="3" className="w-full border border-slate-300 rounded-lg p-3 text-sm focus:ring-2 focus:ring-indigo-500 outline-none resize-none"></textarea>
-                </div>
               </div>
             </div>
-          </div>
-        )}
+          ))}
+          {profiles.length === 0 && <div className="text-center py-12 text-slate-400"><Users size={36} className="mx-auto mb-2 opacity-30" /><p>Nenhum membro registrado.</p></div>}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function AdminJobs() {
+  const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    base44.entities.JobListing.list('-created_date').then(data => { setJobs(data); setLoading(false); });
+  }, []);
+
+  const toggleStatus = async (job) => {
+    const newStatus = job.status === 'active' ? 'closed' : 'active';
+    await base44.entities.JobListing.update(job.id, { status: newStatus });
+    setJobs(prev => prev.map(j => j.id === job.id ? { ...j, status: newStatus } : j));
+  };
+
+  const deleteJob = async (id) => {
+    if (!confirm('Excluir esta vaga?')) return;
+    await base44.entities.JobListing.delete(id);
+    setJobs(prev => prev.filter(j => j.id !== id));
+  };
+
+  return (
+    <div className="animate-in fade-in space-y-5">
+      <h2 className="text-2xl font-bold text-slate-900">Gerenciar Vagas</h2>
+      <p className="text-sm text-slate-500">Vagas publicadas na comunidade. Para criar novas vagas, acesse a aba Comunidade.</p>
+      {loading ? <div className="h-32 bg-white rounded-xl animate-pulse border border-slate-200"></div> : (
+        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-x-auto">
+          <table className="w-full text-sm min-w-[500px]">
+            <thead className="bg-slate-50 border-b border-slate-200 text-slate-600 font-bold"><tr><th className="px-5 py-3 text-left">Vaga</th><th className="px-5 py-3 text-center">Status</th><th className="px-5 py-3 text-center">Ações</th></tr></thead>
+            <tbody className="divide-y divide-slate-100">
+              {jobs.map(job => (
+                <tr key={job.id} className="hover:bg-slate-50">
+                  <td className="px-5 py-3"><p className="font-medium text-slate-900">{job.title}</p><p className="text-xs text-slate-500">{job.company} • {job.type}</p></td>
+                  <td className="px-5 py-3 text-center"><span className={`px-2 py-1 rounded text-xs font-bold ${job.status === 'active' ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700'}`}>{job.status === 'active' ? 'Ativa' : 'Encerrada'}</span></td>
+                  <td className="px-5 py-3 text-center"><div className="flex items-center justify-center gap-2"><button onClick={() => toggleStatus(job)} className="text-amber-600 hover:text-amber-800 font-bold text-xs">{job.status === 'active' ? 'Encerrar' : 'Reativar'}</button><button onClick={() => deleteJob(job.id)} className="text-red-500 hover:text-red-700"><Trash2 size={14} /></button></div></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          {jobs.length === 0 && <div className="text-center py-10 text-slate-400"><Briefcase size={32} className="mx-auto mb-2 opacity-30" /><p>Nenhuma vaga cadastrada.</p></div>}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function AdminMaterials() {
+  const [materials, setMaterials] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    base44.entities.Material.list('-created_date').then(data => { setMaterials(data); setLoading(false); });
+  }, []);
+
+  const deleteMaterial = async (id) => {
+    if (!confirm('Excluir este material?')) return;
+    await base44.entities.Material.delete(id);
+    setMaterials(prev => prev.filter(m => m.id !== id));
+  };
+
+  return (
+    <div className="animate-in fade-in space-y-5">
+      <h2 className="text-2xl font-bold text-slate-900">Gerenciar Materiais</h2>
+      {loading ? <div className="h-32 bg-white rounded-xl animate-pulse border border-slate-200"></div> : (
+        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-x-auto">
+          <table className="w-full text-sm min-w-[500px]">
+            <thead className="bg-slate-50 border-b border-slate-200 text-slate-600 font-bold"><tr><th className="px-5 py-3 text-left">Material</th><th className="px-5 py-3 text-center">Downloads</th><th className="px-5 py-3 text-center">Excluir</th></tr></thead>
+            <tbody className="divide-y divide-slate-100">
+              {materials.map(m => (
+                <tr key={m.id} className="hover:bg-slate-50">
+                  <td className="px-5 py-3"><p className="font-medium text-slate-900">{m.title}</p><p className="text-xs text-slate-500">{m.category}</p></td>
+                  <td className="px-5 py-3 text-center font-bold text-slate-700">{m.downloads || 0}</td>
+                  <td className="px-5 py-3 text-center"><button onClick={() => deleteMaterial(m.id)} className="text-red-500 hover:text-red-700"><Trash2 size={16} /></button></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          {materials.length === 0 && <div className="text-center py-10 text-slate-400"><Download size={32} className="mx-auto mb-2 opacity-30" /><p>Nenhum material cadastrado.</p></div>}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function AdminEvents() {
+  const [events, setEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    base44.entities.CommunityEvent.list('-event_date').then(data => { setEvents(data); setLoading(false); });
+  }, []);
+
+  const deleteEvent = async (id) => {
+    if (!confirm('Excluir este evento?')) return;
+    await base44.entities.CommunityEvent.delete(id);
+    setEvents(prev => prev.filter(e => e.id !== id));
+  };
+
+  return (
+    <div className="animate-in fade-in space-y-5">
+      <h2 className="text-2xl font-bold text-slate-900">Gerenciar Eventos</h2>
+      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-x-auto">
+        <table className="w-full text-sm min-w-[500px]">
+          <thead className="bg-slate-50 border-b border-slate-200 text-slate-600 font-bold"><tr><th className="px-5 py-3 text-left">Evento</th><th className="px-5 py-3 text-center">Data</th><th className="px-5 py-3 text-center">Inscritos</th><th className="px-5 py-3 text-center">Ações</th></tr></thead>
+          <tbody className="divide-y divide-slate-100">
+            {events.map(ev => (
+              <tr key={ev.id} className="hover:bg-slate-50">
+                <td className="px-5 py-3"><p className="font-medium text-slate-900">{ev.title}</p><p className="text-xs text-slate-500">{ev.type}</p></td>
+                <td className="px-5 py-3 text-center text-xs text-slate-600">{ev.event_date ? format(new Date(ev.event_date), 'dd/MM/yy HH:mm', { locale: ptBR }) : '-'}</td>
+                <td className="px-5 py-3 text-center font-bold">{(ev.registrations || []).length}</td>
+                <td className="px-5 py-3 text-center"><button onClick={() => deleteEvent(ev.id)} className="text-red-500 hover:text-red-700"><Trash2 size={14} /></button></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        {events.length === 0 && <div className="text-center py-10 text-slate-400"><Calendar size={32} className="mx-auto mb-2 opacity-30" /><p>Nenhum evento cadastrado.</p></div>}
       </div>
+    </div>
+  );
+}
+
+function AdminSendNotification() {
+  const [profiles, setProfiles] = useState([]);
+  const [form, setForm] = useState({ target: 'all', user_id: '', type: 'admin', title: '', message: '' });
+  const [sending, setSending] = useState(false);
+  const [sent, setSent] = useState(false);
+
+  useEffect(() => {
+    base44.entities.UserProfile.list().then(setProfiles);
+  }, []);
+
+  const handleSend = async (e) => {
+    e.preventDefault();
+    setSending(true);
+    const targets = form.target === 'all' ? profiles.map(p => p.user_id) : [form.user_id];
+    await Promise.all(targets.map(uid => base44.entities.Notification.create({
+      user_id: uid,
+      type: form.type,
+      title: form.title,
+      message: form.message,
+      read: false
+    })));
+    setSent(true);
+    setSending(false);
+    setForm({ target: 'all', user_id: '', type: 'admin', title: '', message: '' });
+    setTimeout(() => setSent(false), 3000);
+  };
+
+  return (
+    <div className="animate-in fade-in space-y-5 max-w-2xl">
+      <h2 className="text-2xl font-bold text-slate-900">Enviar Notificação</h2>
+      {sent && <div className="bg-emerald-50 border border-emerald-200 text-emerald-700 p-4 rounded-xl font-bold flex items-center gap-2"><CheckCircle2 size={18} /> Notificação enviada com sucesso!</div>}
+      <form onSubmit={handleSend} className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-4">
+        <div>
+          <label className="block text-sm font-bold text-slate-700 mb-2">Destinatário</label>
+          <div className="flex gap-4">
+            <label className="flex items-center gap-2 text-sm font-medium cursor-pointer"><input type="radio" value="all" checked={form.target === 'all'} onChange={() => setForm({ ...form, target: 'all' })} /> Todos os Membros</label>
+            <label className="flex items-center gap-2 text-sm font-medium cursor-pointer"><input type="radio" value="single" checked={form.target === 'single'} onChange={() => setForm({ ...form, target: 'single' })} /> Membro Específico</label>
+          </div>
+          {form.target === 'single' && (
+            <select value={form.user_id} onChange={e => setForm({ ...form, user_id: e.target.value })} required className="mt-2 w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">
+              <option value="">Selecionar membro...</option>
+              {profiles.map(p => <option key={p.id} value={p.user_id}>{p.role_label || p.user_id}</option>)}
+            </select>
+          )}
+        </div>
+        <div>
+          <label className="block text-sm font-bold text-slate-700 mb-1">Tipo</label>
+          <select value={form.type} onChange={e => setForm({ ...form, type: e.target.value })} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">
+            {['admin', 'event', 'job', 'material', 'mention'].map(t => <option key={t} value={t}>{t}</option>)}
+          </select>
+        </div>
+        <div>
+          <label className="block text-sm font-bold text-slate-700 mb-1">Título *</label>
+          <input required value={form.title} onChange={e => setForm({ ...form, title: e.target.value })} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
+        </div>
+        <div>
+          <label className="block text-sm font-bold text-slate-700 mb-1">Mensagem *</label>
+          <textarea required rows={3} value={form.message} onChange={e => setForm({ ...form, message: e.target.value })} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 resize-none" />
+        </div>
+        <button type="submit" disabled={sending} className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-xl flex items-center justify-center gap-2 disabled:opacity-50">
+          <Bell size={16} /> {sending ? 'Enviando...' : 'Enviar Notificação'}
+        </button>
+      </form>
     </div>
   );
 }
