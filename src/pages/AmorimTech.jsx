@@ -98,7 +98,7 @@ export default function AmorimTech() {
               </ul>
               <div className="mt-4 pt-6 border-t border-slate-100 flex justify-end gap-3">
                 <button onClick={() => setSelectedTechApp(null)} className="px-6 py-3 text-slate-600 font-bold hover:bg-slate-100 rounded-lg">Fechar</button>
-                <a href="https://wa.me/5581991298803" target="_blank" rel="noopener noreferrer" className="px-8 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg shadow-md">Solicitar Acesso</a>
+                <a href="https://wa.me/5581991298803" target="_blank" rel="noopener noreferrer" className="px-8 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg shadow-md">Agendar Demonstração de 15 Minutos</a>
               </div>
             </div>
           </div>
