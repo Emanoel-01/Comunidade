@@ -26,11 +26,63 @@ export default function CommunityProfile({ userId, currentUser, currentProfile, 
       setProfile(profiles[0]);
       setEditForm(profiles[0]);
     }
-    // Tenta carregar dados do usuário atual
-    if (isOwn) {
-      setUserData(currentUser);
+    // Carrega o nome do usuário visualizado via lista de usuários
+    if (!isOwn) {
+      const users = await base44.entities.User.list();
+      const found = users.find(u => u.id === userId);
+      if (found) setViewedUserName(found.full_name);
     }
     setLoading(false);
+  };
+
+  const handleFollowToggle = async () => {
+    if (!currentProfile) return;
+    setFollowLoading(true);
+    const currentFollowing = currentProfile.following || [];
+    const targetFollowers = profile.followers || [];
+
+    let newFollowing, newFollowers;
+    if (isFollowing) {
+      newFollowing = currentFollowing.filter(id => id !== userId);
+      newFollowers = targetFollowers.filter(id => id !== currentUser.id);
+    } else {
+      newFollowing = [...currentFollowing, userId];
+      newFollowers = [...targetFollowers, currentUser.id];
+    }
+
+    // Atualiza perfil do usuário atual
+    await base44.entities.UserProfile.update(currentProfile.id, { following: newFollowing });
+    if (onProfileUpdate) onProfileUpdate({ ...currentProfile, following: newFollowing });
+
+    // Atualiza perfil do visualizado
+    await base44.entities.UserProfile.update(profile.id, { followers: newFollowers });
+    setProfile(prev => ({ ...prev, followers: newFollowers }));
+    setFollowLoading(false);
+  };
+
+  const handleStartChat = async () => {
+    if (!onStartChat) return;
+    // Verifica se já existe conversa
+    const all = await base44.entities.ChatConversation.list();
+    const existing = all.find(c =>
+      c.participant_ids?.includes(currentUser.id) && c.participant_ids?.includes(userId)
+    );
+    if (existing) {
+      onStartChat(existing);
+      return;
+    }
+    // Cria nova conversa
+    const myIdx = 0;
+    const otherIdx = 1;
+    const avatars = [currentProfile?.avatar_url || '', profile?.avatar_url || ''];
+    const names = [currentUser.full_name, viewedUserName || 'Membro'];
+    const conv = await base44.entities.ChatConversation.create({
+      participant_ids: [currentUser.id, userId],
+      participant_names: names,
+      participant_avatars: avatars,
+      unread_by: []
+    });
+    onStartChat(conv);
   };
 
   const handleSave = async () => {
