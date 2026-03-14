@@ -153,6 +153,20 @@ export default function Home() {
         </div>
       </section>
 
+      {/* INSTITUIÇÕES - logo após o Hero */}
+      <section className="bg-white py-12 border-b border-slate-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <p className="text-xs font-bold tracking-widest text-slate-400 uppercase mb-6">Instituições que Confiam no Nosso Trabalho</p>
+          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 gap-6 items-center justify-items-center opacity-70">
+            {clientes.map((cliente, idx) => (
+              <a key={idx} href={cliente.url} target="_blank" rel="noreferrer" className="w-full max-w-[120px] aspect-[3/2] flex items-center justify-center p-2 rounded-xl hover:bg-slate-50 hover:shadow-sm hover:opacity-100 transition-all grayscale hover:grayscale-0">
+                <img src={cliente.img} alt={cliente.name} className="max-w-full max-h-full object-contain" />
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* SOBRE */}
       <section className="bg-white py-16 border-b border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
