@@ -158,10 +158,10 @@ export default function Home() {
             </div>
           </div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 bg-slate-50 rounded-2xl p-6 sm:p-8 border border-slate-100">
-            <div className="text-center px-2 sm:px-4 border-b lg:border-b-0 lg:border-r border-slate-200 pb-4 lg:pb-0"><p className="text-3xl sm:text-4xl font-extrabold text-indigo-600 mb-2">+15 anos</p><p className="text-slate-600 font-medium text-xs sm:text-sm">experiência</p></div>
-            <div className="text-center px-2 sm:px-4 border-b lg:border-b-0 lg:border-r border-slate-200 pb-4 lg:pb-0"><p className="text-3xl sm:text-4xl font-extrabold text-indigo-600 mb-2">+100</p><p className="text-slate-600 font-medium text-xs sm:text-sm">projetos e laudos</p></div>
-            <div className="text-center px-2 sm:px-4 border-b lg:border-b-0 lg:border-r border-slate-200 pb-4 lg:pb-0"><p className="text-3xl sm:text-4xl font-extrabold text-indigo-600 mb-2">+200.000m²</p><p className="text-slate-600 font-medium text-xs sm:text-sm">gerenciados</p></div>
-            <div className="text-center px-2 sm:px-4"><p className="text-3xl sm:text-4xl font-extrabold text-indigo-600 mb-2">+70</p><p className="text-slate-600 font-medium text-xs sm:text-sm">produções científicas</p></div>
+            <div className="text-center px-2 sm:px-4 border-b lg:border-b-0 lg:border-r border-slate-200 pb-4 lg:pb-0"><p className="text-3xl sm:text-4xl font-extrabold text-indigo-600 mb-1">+15 anos</p><p className="text-slate-600 font-medium text-xs sm:text-sm">de experiência e atuação na construção civil</p></div>
+            <div className="text-center px-2 sm:px-4 border-b lg:border-b-0 lg:border-r border-slate-200 pb-4 lg:pb-0"><p className="text-3xl sm:text-4xl font-extrabold text-indigo-600 mb-1">+100</p><p className="text-slate-600 font-medium text-xs sm:text-sm">projetos e laudos executados</p></div>
+            <div className="text-center px-2 sm:px-4 border-b lg:border-b-0 lg:border-r border-slate-200 pb-4 lg:pb-0"><p className="text-3xl sm:text-4xl font-extrabold text-indigo-600 mb-1">+200.000m²</p><p className="text-slate-600 font-medium text-xs sm:text-sm">de empreendimentos gerenciados</p></div>
+            <div className="text-center px-2 sm:px-4"><p className="text-3xl sm:text-4xl font-extrabold text-indigo-600 mb-1">+70</p><p className="text-slate-600 font-medium text-xs sm:text-sm">produções científicas</p></div>
           </div>
         </div>
       </section>
