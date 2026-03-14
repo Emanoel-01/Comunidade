@@ -2,16 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
 import { ChevronLeft, Edit3, UserPlus, UserMinus, Award, ShieldCheck, Linkedin, Instagram, MessageCircle, Save, X, Plus } from 'lucide-react';
 
-export default function CommunityProfile({ userId, currentUser, currentProfile, onBack, onProfileUpdate }) {
+export default function CommunityProfile({ userId, currentUser, currentProfile, onBack, onProfileUpdate, onStartChat }) {
   const [profile, setProfile] = useState(null);
-  const [userData, setUserData] = useState(null);
+  const [viewedUserName, setViewedUserName] = useState('');
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(false);
   const [editForm, setEditForm] = useState({});
   const [saving, setSaving] = useState(false);
   const [newSkill, setNewSkill] = useState('');
+  const [followLoading, setFollowLoading] = useState(false);
 
   const isOwn = userId === currentUser?.id;
+  const isFollowing = (currentProfile?.following || []).includes(userId);
 
   useEffect(() => {
     loadProfile();
