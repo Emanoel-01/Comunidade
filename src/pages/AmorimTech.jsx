@@ -74,9 +74,9 @@ export default function AmorimTech() {
 
       {/* CTA */}
       <div className="bg-indigo-50 border border-indigo-100 rounded-2xl p-8 text-center mt-12">
-        <h3 className="text-xl font-bold text-slate-800 mb-2">Precisa de uma solução customizada?</h3>
-        <p className="text-slate-600 mb-6">Nossa equipe de engenheiros de software pode desenvolver o aplicativo ideal para a sua construtora ou administradora.</p>
-        <a href="https://wa.me/5581991298803" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition-colors shadow-md">Falar com a Equipe Tech</a>
+        <h3 className="text-xl font-bold text-slate-800 mb-2">Precisa de uma solução customizada para sua empresa?</h3>
+        <p className="text-slate-600 mb-6">Síndicos, construtoras e administradoras — agende uma demonstração de 15 minutos e veja o sistema funcionando na prática, aplicado ao seu cenário real.</p>
+        <a href="https://wa.me/5581991298803" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition-colors shadow-md">Agendar Demonstração de 15 Minutos</a>
       </div>
 
       {/* MODAL APP */}
