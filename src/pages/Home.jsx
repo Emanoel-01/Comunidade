@@ -249,20 +249,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* INSTITUIÇÕES */}
-      <section ref={instituicoesRef} className="bg-white py-20 border-b border-slate-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold text-slate-900 mb-4">Instituições que Confiam no Nosso Trabalho</h2>
-          <p className="text-slate-600 max-w-2xl mx-auto mb-12">Temos o orgulho de prestar serviços de excelência para grandes organizações públicas e privadas.</p>
-          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 gap-6 items-center justify-items-center opacity-70">
-            {clientes.map((cliente, idx) => (
-              <a key={idx} href={cliente.url} target="_blank" rel="noreferrer" className="w-full max-w-[120px] aspect-[3/2] flex items-center justify-center p-2 rounded-xl hover:bg-slate-50 hover:shadow-sm hover:opacity-100 transition-all grayscale hover:grayscale-0">
-                <img src={cliente.img} alt={cliente.name} className="max-w-full max-h-full object-contain" />
-              </a>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* INSTITUIÇÕES - seção removida daqui, movida para logo após o Hero */}
 
       {/* DEPOIMENTOS */}
       <section className="bg-slate-100 py-20">
