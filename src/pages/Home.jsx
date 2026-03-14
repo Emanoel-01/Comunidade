@@ -5,6 +5,7 @@ import {
   Award, Wifi, Briefcase, MessageCircle
 } from 'lucide-react';
 import { createPageUrl } from '@/utils';
+import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
 
 function RecentBlogPosts() {
