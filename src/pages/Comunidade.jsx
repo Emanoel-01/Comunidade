@@ -10,6 +10,7 @@ import CommunityProfile from '../components/community/CommunityProfile';
 import CommunitySidebar from '../components/community/CommunitySidebar';
 import CommunityNotifications from '../components/community/CommunityNotifications';
 import CommunityChat from '../components/community/CommunityChat';
+import CommunityForum from '../components/community/CommunityForum';
 
 export default function Comunidade() {
   const [user, setUser] = useState(null);
