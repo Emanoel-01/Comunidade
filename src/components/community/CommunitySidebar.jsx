@@ -1,5 +1,5 @@
 import React from 'react';
-import { LayoutDashboard, Briefcase, Download, Calendar, UserCircle, Bell, LogOut } from 'lucide-react';
+import { LayoutDashboard, Briefcase, Download, Calendar, UserCircle, Bell, LogOut, MessageSquare } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
 
 const tabs = [
@@ -7,6 +7,7 @@ const tabs = [
   { id: 'vagas', TabIcon: Briefcase, label: 'Vagas e Contratos' },
   { id: 'materiais', TabIcon: Download, label: 'Materiais Exclusivos' },
   { id: 'eventos', TabIcon: Calendar, label: 'Calendário de Eventos' },
+  { id: 'chat', TabIcon: MessageSquare, label: 'Mensagens' },
   { id: 'notificacoes', TabIcon: Bell, label: 'Notificações' },
   { id: 'perfil', TabIcon: UserCircle, label: 'Meu Perfil' },
 ];
