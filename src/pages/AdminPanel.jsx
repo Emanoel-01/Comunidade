@@ -3,12 +3,13 @@ import { base44 } from '@/api/base44Client';
 import {
   ShieldCheck, LayoutDashboard, BarChart3, Edit3, Users, FileText, Eye, ThumbsUp,
   Plus, Bell, CheckCircle2, X, UserPlus, Award, PenTool, Bold, Italic, Upload, Send,
-  Briefcase, Download, Calendar, Trash2, Save, AlertTriangle, RefreshCw
+  Briefcase, Download, Calendar, Trash2, Save, AlertTriangle, RefreshCw, LogOut, LogIn
 } from 'lucide-react';
 import { createPageUrl } from '@/utils';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import AdminInviteUsers from '../components/admin/AdminInviteUsers';
 
 const BLANK_POST = { title: '', content: '', excerpt: '', cover_image: '', category: 'Gestão 4.0', tags: [], author_name: 'Emanoel Amorim', author_role: 'CEO Amorim Tech', author_avatar: 'https://i.ibb.co/TDC35Hqf/Emanoel-Silva-de-Amorim.jpg', read_time: '5 min', status: 'draft' };
 
@@ -52,9 +53,18 @@ export default function AdminPanel() {
           <NavItem id="community_materials" label="Materiais" icon={Download} active={adminTab} onClick={setAdminTab} />
           <NavItem id="community_events" label="Eventos" icon={Calendar} active={adminTab} onClick={setAdminTab} />
           <NavItem id="notifications_send" label="Enviar Notificação" icon={Bell} active={adminTab} onClick={setAdminTab} />
+          <NavItem id="invite_users" label="Convites e Acessos" icon={UserPlus} active={adminTab} onClick={setAdminTab} />
         </nav>
-        <div className="p-4 border-t border-slate-800">
-          <Link to={createPageUrl('Home')} className="flex items-center gap-2 text-sm text-slate-500 hover:text-white transition-colors">← Voltar ao Site</Link>
+        <div className="p-4 border-t border-slate-800 space-y-2">
+          <Link to={createPageUrl('Home')} className="flex items-center gap-2 text-sm text-slate-500 hover:text-white transition-colors px-2 py-1.5 rounded-lg hover:bg-slate-800 w-full">
+            ← Voltar ao Site
+          </Link>
+          <button
+            onClick={() => base44.auth.logout('/')}
+            className="flex items-center gap-2 text-sm text-red-400 hover:text-red-300 hover:bg-red-900/30 transition-colors px-2 py-1.5 rounded-lg w-full"
+          >
+            <LogOut size={15} /> Sair da Conta
+          </button>
         </div>
       </aside>
 
@@ -68,6 +78,7 @@ export default function AdminPanel() {
         {adminTab === 'community_materials' && <AdminMaterials />}
         {adminTab === 'community_events' && <AdminEvents />}
         {adminTab === 'notifications_send' && <AdminSendNotification />}
+        {adminTab === 'invite_users' && <AdminInviteUsers />}
       </div>
     </div>
   );
