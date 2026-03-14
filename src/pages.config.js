@@ -47,8 +47,30 @@
  *
  * The mainPage value must match a key in the PAGES object exactly.
  */
+import Home from './pages/Home';
+import AmorimArquitetura from './pages/AmorimArquitetura';
+import AmorimTech from './pages/AmorimTech';
+import AcademiaEsuda from './pages/AcademiaEsuda';
+import Blog from './pages/Blog';
+import Comunidade from './pages/Comunidade';
+import AdminPanel from './pages/AdminPanel';
+import Contato from './pages/Contato';
+import __Layout from './Layout.jsx';
 
-export const pagesConfig = {
-	Pages: {}
+
+export const PAGES = {
+    "Home": Home,
+    "AmorimArquitetura": AmorimArquitetura,
+    "AmorimTech": AmorimTech,
+    "AcademiaEsuda": AcademiaEsuda,
+    "Blog": Blog,
+    "Comunidade": Comunidade,
+    "AdminPanel": AdminPanel,
+    "Contato": Contato,
 }
 
+export const pagesConfig = {
+    mainPage: "Home",
+    Pages: PAGES,
+    Layout: __Layout,
+};
