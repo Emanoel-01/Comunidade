@@ -11,8 +11,8 @@ export default function Contato() {
         <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">Como podemos ajudar hoje?</h2>
       </div>
 
-      <div className="grid lg:grid-cols-5 gap-8 bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-100">
-        <div className="lg:col-span-3 p-8 md:p-12">
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-0 bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-100">
+        <div className="lg:col-span-3 p-6 sm:p-8 md:p-12">
           <h3 className="text-2xl font-bold text-slate-800 mb-6">Envie sua mensagem</h3>
           <form className="space-y-5" onSubmit={(e) => { e.preventDefault(); alert('Mensagem enviada com sucesso!'); }}>
             <div>
@@ -48,7 +48,7 @@ export default function Contato() {
             </div>
           </form>
         </div>
-        <div className="lg:col-span-2 bg-slate-900 p-8 md:p-12 text-white flex flex-col justify-between relative">
+        <div className="lg:col-span-2 bg-slate-900 p-6 sm:p-8 md:p-12 text-white flex flex-col justify-between relative">
           <div className="absolute top-0 right-0 -mr-16 -mt-16 text-indigo-500/10 pointer-events-none"><Mail size={250} /></div>
           <div className="relative z-10">
             <h3 className="text-2xl font-bold text-white mb-8">Contatos Diretos</h3>
