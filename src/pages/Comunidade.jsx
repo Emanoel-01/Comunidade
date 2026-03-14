@@ -165,7 +165,7 @@ export default function Comunidade() {
         </div>
 
         {/* Sidebar Direita */}
-        <aside className="lg:col-span-3 space-y-5 hidden xl:block">
+        <aside className="lg:col-span-3 space-y-5 hidden lg:block">
           <div className="bg-gradient-to-br from-emerald-800 to-slate-900 rounded-2xl border border-emerald-700 p-5 text-white">
             <h4 className="font-bold mb-4 text-sm uppercase tracking-wider text-emerald-300">Próximos Eventos</h4>
             <RecentEventsMini />
