@@ -163,28 +163,19 @@ export default function AcademiaEsuda() {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
                 <div>
                   <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2"><CheckCircle className="text-emerald-500 shrink-0" /> Matriz Curricular</h3>
-                  <div className="mb-8 relative pl-6 border-l-2 border-indigo-200">
-                    <div className="absolute w-4 h-4 bg-indigo-600 rounded-full -left-[9px] top-1"></div>
-                    <h4 className="font-bold text-lg text-indigo-900 mb-2">Ciclo Comum (180h)</h4>
-                    <p className="text-sm text-slate-500 mb-4 font-medium uppercase tracking-wide">Base Empreendedora & Estratégica</p>
-                    <ul className="space-y-3">
-                      <li className="text-sm text-slate-700 text-justify">Gestão de Escritórios, Branding e Precificação</li>
-                      <li className="text-sm text-slate-700 text-justify">Novas Fontes de Receita: Laudos e Perícias</li>
-                      <li className="text-sm text-slate-700 text-justify">Inteligência Artificial Aplicada e Design Thinking</li>
-                    </ul>
-                  </div>
-                  <div className="relative pl-6 border-l-2 border-emerald-200">
-                    <div className="absolute w-4 h-4 bg-emerald-500 rounded-full -left-[9px] top-1"></div>
-                    <h4 className="font-bold text-lg text-emerald-900 mb-2">Ciclo Específico (180h)</h4>
-                    <p className="text-sm text-slate-500 mb-4 font-medium uppercase tracking-wide">{selectedCourse.profile}</p>
-                    <ul className="space-y-3">
-                      {selectedCourse.specificCycle.map((disciplina, idx) => (
-                        <li key={idx} className="text-sm text-slate-700 text-justify flex items-start gap-2">
-                          <CheckCircle2 size={14} className="text-emerald-500 mt-1 shrink-0" /> {disciplina}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                  <AccordionCycle
+                    title="Ciclo Comum (180h)"
+                    subtitle="Base Empreendedora & Estratégica"
+                    color="indigo"
+                    items={['Gestão de Escritórios, Branding e Precificação', 'Novas Fontes de Receita: Laudos e Perícias', 'Inteligência Artificial Aplicada e Design Thinking']}
+                  />
+                  <AccordionCycle
+                    title="Ciclo Específico (180h)"
+                    subtitle={selectedCourse.profile}
+                    color="emerald"
+                    items={selectedCourse.specificCycle}
+                    defaultOpen
+                  />
                 </div>
                 <div className="flex flex-col gap-6">
                   <div className="bg-slate-900 rounded-2xl p-6 sm:p-8 text-white shadow-xl">
