@@ -11,6 +11,34 @@ const esudaCourses = [
   { id: 'acustica', title: 'Acústica Arquitetônica e Iluminação', profile: 'O Perfil Comfort/Performance', status: 'Matrículas Abertas', color: 'emerald', duration: '10 meses', hours: '360 h', format: 'Presencial, Gravadas, Remoto', price: '10 x R$ 249,00', description: 'Focado em Conforto Ambiental e Alta Performance. Domine as variáveis físicas do ambiente para projetos de excelência.', specificCycle: ['Acústica Gráfica e Normas', 'Estudo das Tipologias Internas I: Ambientes Residenciais e Comerciais', 'Estudo das Tipologias Internas II: Estúdios, Teatros e Cinemas', 'Estudo das Tipologias Internas III: Grandes Ambientes', 'Acústica e Iluminação Urbana', 'Iluminação, Conceituação e Normas', 'Iluminação Residencial', 'Iluminação Comercial', 'Iluminação Externa: Jardins, Praças e Edificações Históricas'] },
 ];
 
+function AccordionCycle({ title, subtitle, color, items, defaultOpen = false }) {
+  const [open, setOpen] = useState(defaultOpen);
+  const borderColor = color === 'indigo' ? 'border-indigo-200' : 'border-emerald-200';
+  const dotColor = color === 'indigo' ? 'bg-indigo-600' : 'bg-emerald-500';
+  const titleColor = color === 'indigo' ? 'text-indigo-900' : 'text-emerald-900';
+  return (
+    <div className={`mb-4 relative pl-6 border-l-2 ${borderColor}`}>
+      <div className={`absolute w-4 h-4 ${dotColor} rounded-full -left-[9px] top-3`}></div>
+      <button onClick={() => setOpen(!open)} className="w-full flex items-center justify-between text-left py-2 group">
+        <div>
+          <h4 className={`font-bold text-lg ${titleColor}`}>{title}</h4>
+          <p className="text-sm text-slate-500 font-medium uppercase tracking-wide">{subtitle}</p>
+        </div>
+        <ChevronDown size={20} className={`text-slate-400 transition-transform shrink-0 ml-2 ${open ? 'rotate-180' : ''}`} />
+      </button>
+      {open && (
+        <ul className="space-y-3 pt-3 pb-2">
+          {items.map((item, idx) => (
+            <li key={idx} className="text-sm text-slate-700 text-justify flex items-start gap-2">
+              <CheckCircle2 size={14} className={`${color === 'indigo' ? 'text-indigo-500' : 'text-emerald-500'} mt-1 shrink-0`} /> {item}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
 export default function AcademiaEsuda() {
   const [selectedCourse, setSelectedCourse] = useState(null);
   const cursosRef = useRef(null);
