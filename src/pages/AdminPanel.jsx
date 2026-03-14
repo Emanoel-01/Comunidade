@@ -111,14 +111,15 @@ function NavItem({ id, label, icon: Icon, active, onClick }) {
 }
 
 function AdminDashboard({ onNavigate }) {
-  const [stats, setStats] = useState({ posts: 0, members: 0, jobs: 0, events: 0 });
+  const [stats, setStats] = useState({ posts: 0, members: 0, jobs: 0, events: 0, pendingTestimonials: 0 });
   useEffect(() => {
     Promise.all([
       base44.entities.BlogPost.filter({ status: 'published' }),
       base44.entities.UserProfile.list(),
       base44.entities.JobListing.filter({ status: 'active' }),
       base44.entities.CommunityEvent.list(),
-    ]).then(([posts, members, jobs, events]) => setStats({ posts: posts.length, members: members.length, jobs: jobs.length, events: events.length }));
+      base44.entities.Testimonial.filter({ approved: false }),
+    ]).then(([posts, members, jobs, events, pending]) => setStats({ posts: posts.length, members: members.length, jobs: jobs.length, events: events.length, pendingTestimonials: pending.length }));
   }, []);
 
   return (
@@ -138,6 +139,18 @@ function AdminDashboard({ onNavigate }) {
           </div>
         ))}
       </div>
+      {stats.pendingTestimonials > 0 && (
+        <div className="bg-amber-50 border border-amber-200 rounded-2xl p-5 flex items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <MessageSquare className="text-amber-500 shrink-0" size={24} />
+            <div>
+              <p className="font-bold text-amber-900">Depoimentos aguardando aprovação</p>
+              <p className="text-sm text-amber-700">{stats.pendingTestimonials} depoimento(s) enviado(s) pelos visitantes precisam de revisão.</p>
+            </div>
+          </div>
+          <button onClick={() => onNavigate('testimonials')} className="bg-amber-500 hover:bg-amber-600 text-white font-bold px-4 py-2 rounded-lg text-sm whitespace-nowrap">Revisar</button>
+        </div>
+      )}
       <div className="bg-indigo-50 border border-indigo-100 rounded-2xl p-6">
         <h3 className="font-bold text-indigo-900 mb-2">Ações Rápidas</h3>
         <div className="flex flex-wrap gap-3 mt-3">
