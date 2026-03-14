@@ -17,12 +17,25 @@ const BLANK_POST = { title: '', content: '', excerpt: '', cover_image: '', categ
 export default function AdminPanel() {
   const [adminTab, setAdminTab] = useState('dashboard');
   const [user, setUser] = useState(null);
+  const [authChecked, setAuthChecked] = useState(false);
 
   useEffect(() => {
-    base44.auth.me().then(setUser);
+    base44.auth.me()
+      .then(me => { setUser(me); setAuthChecked(true); })
+      .catch(() => {
+        base44.auth.redirectToLogin(window.location.pathname);
+      });
   }, []);
 
-  if (user && user.role !== 'admin') {
+  if (!authChecked) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-100">
+        <div className="w-8 h-8 border-4 border-slate-200 border-t-indigo-600 rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
+  if (!user || user.role !== 'admin') {
     return (
       <div className="min-h-screen flex items-center justify-center bg-slate-100">
         <div className="bg-white p-10 rounded-2xl border border-slate-200 text-center shadow-xl max-w-md">
