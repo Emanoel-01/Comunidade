@@ -92,11 +92,25 @@ export default function Home() {
     }
   };
 
-  const handleTestimonialSubmit = (e) => {
+  const handleTestimonialSubmit = async (e) => {
     e.preventDefault();
     if (!testimonialForm.photo) { alert("Por favor, anexe uma foto para o depoimento."); return; }
+    let photoUrl = testimonialForm.photo;
+    // Upload da foto para storage
+    const blob = await fetch(testimonialForm.photo).then(r => r.blob());
+    const file = new File([blob], 'testimonial.jpg', { type: blob.type });
+    const { file_url } = await base44.integrations.Core.UploadFile({ file });
+    photoUrl = file_url;
+    await base44.entities.Testimonial.create({
+      author_name: testimonialForm.name,
+      author_email: testimonialForm.email,
+      author_phone: testimonialForm.phone,
+      text: testimonialForm.text,
+      author_photo: photoUrl,
+      approved: false,
+    });
     setTestimonialFormSubmitted(true);
-    setTestimonialForm({ name: '', text: '', photo: null });
+    setTestimonialForm({ name: '', email: '', phone: '', text: '', photo: null });
   };
 
   const getIconComponent = (iconType) => {
