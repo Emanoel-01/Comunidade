@@ -3,7 +3,7 @@ import { base44 } from '@/api/base44Client';
 import {
   ShieldCheck, LayoutDashboard, Users, FileText,
   Plus, Bell, CheckCircle2, X, UserPlus, Award, PenTool, Upload, Send,
-  Briefcase, Download, Calendar, Trash2, Save, AlertTriangle, LogOut
+  Briefcase, Download, Calendar, Trash2, Save, AlertTriangle, LogOut, MessagesSquare
 } from 'lucide-react';
 import { createPageUrl } from '@/utils';
 import { Link } from 'react-router-dom';
@@ -50,6 +50,7 @@ export default function AdminPanel() {
           <NavItem id="blog_editor" label="Novo Artigo" icon={PenTool} active={adminTab} onClick={setAdminTab} />
           <div className="mt-3 mb-1 px-3 text-[10px] font-bold text-slate-500 uppercase tracking-wider">Comunidade</div>
           <NavItem id="community_users" label="Membros" icon={Users} active={adminTab} onClick={setAdminTab} />
+          <NavItem id="community_forum" label="Fórum" icon={MessagesSquare} active={adminTab} onClick={setAdminTab} />
           <NavItem id="community_jobs" label="Vagas" icon={Briefcase} active={adminTab} onClick={setAdminTab} />
           <NavItem id="community_materials" label="Materiais" icon={Download} active={adminTab} onClick={setAdminTab} />
           <NavItem id="community_events" label="Eventos" icon={Calendar} active={adminTab} onClick={setAdminTab} />
@@ -74,6 +75,7 @@ export default function AdminPanel() {
         {adminTab === 'dashboard' && <AdminDashboard onNavigate={setAdminTab} />}
         {adminTab === 'blog_list' && <AdminBlogList onEdit={(post) => setAdminTab('blog_editor')} />}
         {adminTab === 'blog_editor' && <AdminBlogEditor onBack={() => setAdminTab('blog_list')} />}
+        {adminTab === 'community_forum' && <AdminForum />}
         {adminTab === 'community_users' && <AdminUsers />}
         {adminTab === 'community_jobs' && <AdminJobs />}
         {adminTab === 'community_materials' && <AdminMaterials />}
