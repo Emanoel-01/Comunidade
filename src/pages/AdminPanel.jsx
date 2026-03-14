@@ -367,10 +367,26 @@ function AdminUsers() {
 function AdminJobs() {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showForm, setShowForm] = useState(false);
+  const [form, setForm] = useState({ title: '', company: '', type: 'CLT', location: '', description: '', requirements: '', contact_link: '' });
+  const [saving, setSaving] = useState(false);
 
-  useEffect(() => {
+  useEffect(() => { loadJobs(); }, []);
+
+  const loadJobs = async () => {
+    setLoading(true);
     base44.entities.JobListing.list('-created_date').then(data => { setJobs(data); setLoading(false); });
-  }, []);
+  };
+
+  const handleCreate = async (e) => {
+    e.preventDefault();
+    setSaving(true);
+    await base44.entities.JobListing.create({ ...form, status: 'active' });
+    setForm({ title: '', company: '', type: 'CLT', location: '', description: '', requirements: '', contact_link: '' });
+    setShowForm(false);
+    await loadJobs();
+    setSaving(false);
+  };
 
   const toggleStatus = async (job) => {
     const newStatus = job.status === 'active' ? 'closed' : 'active';
@@ -386,8 +402,39 @@ function AdminJobs() {
 
   return (
     <div className="animate-in fade-in space-y-5">
-      <h2 className="text-2xl font-bold text-slate-900">Gerenciar Vagas</h2>
-      <p className="text-sm text-slate-500">Vagas publicadas na comunidade. Para criar novas vagas, acesse a aba Comunidade.</p>
+      <div className="flex justify-between items-center">
+        <h2 className="text-2xl font-bold text-slate-900">Gerenciar Vagas</h2>
+        <button onClick={() => setShowForm(!showForm)} className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-4 py-2 rounded-lg text-sm shadow-sm">
+          <Plus size={16} /> Nova Vaga
+        </button>
+      </div>
+
+      {showForm && (
+        <div className="bg-white rounded-2xl border border-indigo-200 shadow-md p-6 relative">
+          <button onClick={() => setShowForm(false)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-700"><X size={20} /></button>
+          <h3 className="font-bold text-slate-900 mb-4">Nova Vaga</h3>
+          <form onSubmit={handleCreate} className="space-y-4">
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div><label className="block text-xs font-bold text-slate-600 mb-1">Título *</label><input required value={form.title} onChange={e => setForm({ ...form, title: e.target.value })} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" /></div>
+              <div><label className="block text-xs font-bold text-slate-600 mb-1">Empresa *</label><input required value={form.company} onChange={e => setForm({ ...form, company: e.target.value })} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" /></div>
+              <div><label className="block text-xs font-bold text-slate-600 mb-1">Tipo</label>
+                <select value={form.type} onChange={e => setForm({ ...form, type: e.target.value })} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">
+                  {['CLT', 'PJ', 'Freelance', 'Estágio', 'Remoto'].map(t => <option key={t}>{t}</option>)}
+                </select>
+              </div>
+              <div><label className="block text-xs font-bold text-slate-600 mb-1">Local *</label><input required value={form.location} onChange={e => setForm({ ...form, location: e.target.value })} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" /></div>
+            </div>
+            <div><label className="block text-xs font-bold text-slate-600 mb-1">Descrição</label><textarea rows={3} value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 resize-none" /></div>
+            <div><label className="block text-xs font-bold text-slate-600 mb-1">Requisitos</label><textarea rows={2} value={form.requirements} onChange={e => setForm({ ...form, requirements: e.target.value })} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 resize-none" /></div>
+            <div><label className="block text-xs font-bold text-slate-600 mb-1">Link / Contato</label><input value={form.contact_link} onChange={e => setForm({ ...form, contact_link: e.target.value })} placeholder="https://..." className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" /></div>
+            <div className="flex justify-end gap-3 pt-2">
+              <button type="button" onClick={() => setShowForm(false)} className="px-4 py-2 text-slate-600 font-bold hover:bg-slate-100 rounded-lg text-sm">Cancelar</button>
+              <button type="submit" disabled={saving} className="px-6 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg text-sm disabled:opacity-50 flex items-center gap-2"><Save size={14} />{saving ? 'Salvando...' : 'Publicar Vaga'}</button>
+            </div>
+          </form>
+        </div>
+      )}
+
       {loading ? <div className="h-32 bg-white rounded-xl animate-pulse border border-slate-200"></div> : (
         <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-x-auto">
           <table className="w-full text-sm min-w-[500px]">
@@ -412,10 +459,36 @@ function AdminJobs() {
 function AdminMaterials() {
   const [materials, setMaterials] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showForm, setShowForm] = useState(false);
+  const [form, setForm] = useState({ title: '', description: '', category: 'Planilhas', file_url: '' });
+  const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
 
-  useEffect(() => {
+  useEffect(() => { loadMaterials(); }, []);
+
+  const loadMaterials = async () => {
+    setLoading(true);
     base44.entities.Material.list('-created_date').then(data => { setMaterials(data); setLoading(false); });
-  }, []);
+  };
+
+  const handleFileUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading(true);
+    const { file_url } = await base44.integrations.Core.UploadFile({ file });
+    setForm(prev => ({ ...prev, file_url }));
+    setUploading(false);
+  };
+
+  const handleCreate = async (e) => {
+    e.preventDefault();
+    setSaving(true);
+    await base44.entities.Material.create({ ...form, downloads: 0 });
+    setForm({ title: '', description: '', category: 'Planilhas', file_url: '' });
+    setShowForm(false);
+    await loadMaterials();
+    setSaving(false);
+  };
 
   const deleteMaterial = async (id) => {
     if (!confirm('Excluir este material?')) return;
@@ -425,7 +498,46 @@ function AdminMaterials() {
 
   return (
     <div className="animate-in fade-in space-y-5">
-      <h2 className="text-2xl font-bold text-slate-900">Gerenciar Materiais</h2>
+      <div className="flex justify-between items-center">
+        <h2 className="text-2xl font-bold text-slate-900">Gerenciar Materiais</h2>
+        <button onClick={() => setShowForm(!showForm)} className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-4 py-2 rounded-lg text-sm shadow-sm">
+          <Plus size={16} /> Novo Material
+        </button>
+      </div>
+
+      {showForm && (
+        <div className="bg-white rounded-2xl border border-indigo-200 shadow-md p-6 relative">
+          <button onClick={() => setShowForm(false)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-700"><X size={20} /></button>
+          <h3 className="font-bold text-slate-900 mb-4">Novo Material</h3>
+          <form onSubmit={handleCreate} className="space-y-4">
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div><label className="block text-xs font-bold text-slate-600 mb-1">Título *</label><input required value={form.title} onChange={e => setForm({ ...form, title: e.target.value })} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" /></div>
+              <div><label className="block text-xs font-bold text-slate-600 mb-1">Categoria</label>
+                <select value={form.category} onChange={e => setForm({ ...form, category: e.target.value })} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">
+                  {['Planilhas', 'Normas ABNT', 'E-books', 'Apresentações', 'Modelos de Laudo', 'Outros'].map(c => <option key={c}>{c}</option>)}
+                </select>
+              </div>
+            </div>
+            <div>
+              <label className="block text-xs font-bold text-slate-600 mb-1">Arquivo *</label>
+              <div className="flex items-center gap-3">
+                <label className={`flex items-center gap-2 px-4 py-2 border-2 border-dashed border-indigo-300 text-indigo-600 rounded-lg text-sm font-bold cursor-pointer hover:bg-indigo-50 ${uploading ? 'opacity-50' : ''}`}>
+                  <Upload size={15} /> {uploading ? 'Enviando...' : 'Fazer Upload do Arquivo'}
+                  <input type="file" onChange={handleFileUpload} className="hidden" disabled={uploading} />
+                </label>
+                {form.file_url && <span className="text-xs text-emerald-600 font-bold flex items-center gap-1"><CheckCircle2 size={13} /> Arquivo enviado!</span>}
+              </div>
+              <input value={form.file_url} onChange={e => setForm({ ...form, file_url: e.target.value })} placeholder="Ou cole a URL do arquivo..." className="mt-2 w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
+            </div>
+            <div><label className="block text-xs font-bold text-slate-600 mb-1">Descrição</label><textarea rows={2} value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 resize-none" /></div>
+            <div className="flex justify-end gap-3 pt-2">
+              <button type="button" onClick={() => setShowForm(false)} className="px-4 py-2 text-slate-600 font-bold hover:bg-slate-100 rounded-lg text-sm">Cancelar</button>
+              <button type="submit" disabled={saving || uploading || !form.file_url} className="px-6 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg text-sm disabled:opacity-50 flex items-center gap-2"><Save size={14} />{saving ? 'Salvando...' : 'Publicar Material'}</button>
+            </div>
+          </form>
+        </div>
+      )}
+
       {loading ? <div className="h-32 bg-white rounded-xl animate-pulse border border-slate-200"></div> : (
         <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-x-auto">
           <table className="w-full text-sm min-w-[500px]">
@@ -450,10 +562,26 @@ function AdminMaterials() {
 function AdminEvents() {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showForm, setShowForm] = useState(false);
+  const [form, setForm] = useState({ title: '', description: '', event_date: '', location: '', type: 'Webinar', link: '', image_url: '', max_participants: '' });
+  const [saving, setSaving] = useState(false);
 
-  useEffect(() => {
+  useEffect(() => { loadEvents(); }, []);
+
+  const loadEvents = async () => {
+    setLoading(true);
     base44.entities.CommunityEvent.list('-event_date').then(data => { setEvents(data); setLoading(false); });
-  }, []);
+  };
+
+  const handleCreate = async (e) => {
+    e.preventDefault();
+    setSaving(true);
+    await base44.entities.CommunityEvent.create({ ...form, registrations: [], max_participants: form.max_participants ? Number(form.max_participants) : undefined });
+    setForm({ title: '', description: '', event_date: '', location: '', type: 'Webinar', link: '', image_url: '', max_participants: '' });
+    setShowForm(false);
+    await loadEvents();
+    setSaving(false);
+  };
 
   const deleteEvent = async (id) => {
     if (!confirm('Excluir este evento?')) return;
@@ -463,7 +591,40 @@ function AdminEvents() {
 
   return (
     <div className="animate-in fade-in space-y-5">
-      <h2 className="text-2xl font-bold text-slate-900">Gerenciar Eventos</h2>
+      <div className="flex justify-between items-center">
+        <h2 className="text-2xl font-bold text-slate-900">Gerenciar Eventos</h2>
+        <button onClick={() => setShowForm(!showForm)} className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-4 py-2 rounded-lg text-sm shadow-sm">
+          <Plus size={16} /> Novo Evento
+        </button>
+      </div>
+
+      {showForm && (
+        <div className="bg-white rounded-2xl border border-indigo-200 shadow-md p-6 relative">
+          <button onClick={() => setShowForm(false)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-700"><X size={20} /></button>
+          <h3 className="font-bold text-slate-900 mb-4">Novo Evento</h3>
+          <form onSubmit={handleCreate} className="space-y-4">
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div><label className="block text-xs font-bold text-slate-600 mb-1">Título *</label><input required value={form.title} onChange={e => setForm({ ...form, title: e.target.value })} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" /></div>
+              <div><label className="block text-xs font-bold text-slate-600 mb-1">Tipo</label>
+                <select value={form.type} onChange={e => setForm({ ...form, type: e.target.value })} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">
+                  {['Webinar', 'Visita Técnica', 'Masterclass', 'Workshop', 'Evento Presencial'].map(t => <option key={t}>{t}</option>)}
+                </select>
+              </div>
+              <div><label className="block text-xs font-bold text-slate-600 mb-1">Data e Hora *</label><input required type="datetime-local" value={form.event_date} onChange={e => setForm({ ...form, event_date: e.target.value })} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" /></div>
+              <div><label className="block text-xs font-bold text-slate-600 mb-1">Local / Plataforma</label><input value={form.location} onChange={e => setForm({ ...form, location: e.target.value })} placeholder="Ex: Zoom, Google Meet, Recife-PE" className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" /></div>
+              <div><label className="block text-xs font-bold text-slate-600 mb-1">Link de Acesso</label><input value={form.link} onChange={e => setForm({ ...form, link: e.target.value })} placeholder="https://..." className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" /></div>
+              <div><label className="block text-xs font-bold text-slate-600 mb-1">Vagas (opcional)</label><input type="number" min={1} value={form.max_participants} onChange={e => setForm({ ...form, max_participants: e.target.value })} placeholder="Ex: 50" className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" /></div>
+            </div>
+            <div><label className="block text-xs font-bold text-slate-600 mb-1">Descrição</label><textarea rows={3} value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 resize-none" /></div>
+            <div><label className="block text-xs font-bold text-slate-600 mb-1">URL da Imagem de Capa (opcional)</label><input value={form.image_url} onChange={e => setForm({ ...form, image_url: e.target.value })} placeholder="https://..." className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" /></div>
+            <div className="flex justify-end gap-3 pt-2">
+              <button type="button" onClick={() => setShowForm(false)} className="px-4 py-2 text-slate-600 font-bold hover:bg-slate-100 rounded-lg text-sm">Cancelar</button>
+              <button type="submit" disabled={saving} className="px-6 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg text-sm disabled:opacity-50 flex items-center gap-2"><Save size={14} />{saving ? 'Salvando...' : 'Criar Evento'}</button>
+            </div>
+          </form>
+        </div>
+      )}
+
       <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-x-auto">
         <table className="w-full text-sm min-w-[500px]">
           <thead className="bg-slate-50 border-b border-slate-200 text-slate-600 font-bold"><tr><th className="px-5 py-3 text-left">Evento</th><th className="px-5 py-3 text-center">Data</th><th className="px-5 py-3 text-center">Inscritos</th><th className="px-5 py-3 text-center">Ações</th></tr></thead>
