@@ -139,9 +139,23 @@ export default function CommunityProfile({ userId, currentUser, currentProfile, 
                 <Edit3 size={15} /> {editing ? 'Cancelar' : 'Editar Perfil'}
               </button>
             ) : (
-              <button className="mt-2 flex items-center gap-2 px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg text-sm shadow-sm transition-colors">
-                <UserPlus size={15} /> Seguir
-              </button>
+              <div className="flex items-center gap-2 mt-2">
+                <button
+                  onClick={handleFollowToggle}
+                  disabled={followLoading}
+                  className={`flex items-center gap-2 px-5 py-2 font-bold rounded-lg text-sm shadow-sm transition-colors disabled:opacity-50 ${isFollowing ? 'bg-slate-100 text-slate-700 hover:bg-red-50 hover:text-red-600 border border-slate-300' : 'bg-indigo-600 hover:bg-indigo-700 text-white'}`}
+                >
+                  {isFollowing ? <><UserMinus size={15} /> Seguindo</> : <><UserPlus size={15} /> Seguir</>}
+                </button>
+                {onStartChat && (
+                  <button
+                    onClick={handleStartChat}
+                    className="flex items-center gap-2 px-4 py-2 border border-slate-300 text-slate-700 hover:bg-emerald-50 hover:text-emerald-700 hover:border-emerald-300 font-bold rounded-lg text-sm transition-colors"
+                  >
+                    <MessageCircle size={15} /> Mensagem
+                  </button>
+                )}
+              </div>
             )}
           </div>
           <div className="mt-4">
