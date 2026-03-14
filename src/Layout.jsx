@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import {
   Building2, Cpu, GraduationCap, BookOpen, Mail, Lock, Menu, X,
-  Instagram, Linkedin, Youtube, MessageCircle, MapPin, Settings, UserCircle
+  Instagram, Linkedin, Youtube, MessageCircle, Phone, MapPin, Settings, UserCircle
 } from 'lucide-react';
 
 const navLinks = [
