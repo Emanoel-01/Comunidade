@@ -26,23 +26,29 @@ const services = {
 
 function ServiceGrid({ items, ctaLabel }) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      {items.map((s, i) => (
-        <div key={i} className="bg-white border border-slate-200 p-8 rounded-2xl shadow-sm flex flex-col">
-          <h4 className="text-xl font-bold text-slate-800 mb-3">{s.title}</h4>
-          <p className="text-slate-600 text-sm mb-6">{s.desc}</p>
-          <ul className="space-y-3 mb-8 flex-grow">
-            {s.items.map((item, j) => (
-              <li key={j} className="flex items-start gap-2 text-sm text-slate-700">
-                <CheckCircle2 size={16} className="text-blue-500 mt-0.5 shrink-0" />
-                <span className="text-justify">{item}</span>
-              </li>
-            ))}
-          </ul>
-          <a href="https://wa.me/5581991298803" target="_blank" rel="noopener noreferrer" className="w-full block bg-slate-50 hover:bg-blue-600 text-slate-800 hover:text-white font-bold py-3 rounded-lg text-center transition-colors border border-slate-200 hover:border-blue-600">{ctaLabel}</a>
-        </div>
-      ))}
-    </div>
+    <>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        {items.map((s, i) => (
+          <div key={i} className="bg-white border border-slate-200 p-8 rounded-2xl shadow-sm flex flex-col">
+            <h4 className="text-xl font-bold text-slate-800 mb-3">{s.title}</h4>
+            <p className="text-slate-600 text-sm mb-6">{s.desc}</p>
+            <ul className="space-y-3 flex-grow">
+              {s.items.map((item, j) => (
+                <li key={j} className="flex items-start gap-2 text-sm text-slate-700">
+                  <CheckCircle2 size={16} className="text-blue-500 mt-0.5 shrink-0" />
+                  <span className="text-justify">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+      <div className="text-center">
+        <a href="https://wa.me/5581991298803" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-bold px-10 py-4 rounded-xl text-base transition-colors shadow-md">
+          {ctaLabel} <ArrowRight size={18} />
+        </a>
+      </div>
+    </>
   );
 }
 
