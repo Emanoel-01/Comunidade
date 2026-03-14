@@ -69,6 +69,27 @@ export default function AmorimArquitetura() {
         </div>
       </div>
 
+      {/* GALERIA PORTFÓLIO */}
+      <div className="mb-16">
+        <h3 className="text-2xl font-bold text-slate-900 mb-2">Portfólio Visual</h3>
+        <p className="text-slate-600 mb-8">Projetos reais, patologias resolvidas e antes & depois dos nossos atendimentos.</p>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+          {[
+            { img: 'https://static.wixstatic.com/media/152459_6339ba323283427daa071eb7d16349ab~mv2.jpg/v1/fill/w_480,h_600,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/2014.jpg', label: 'Gerenciamento - Nova Sede CRC/PE' },
+            { img: 'https://static.wixstatic.com/media/152459_15e60566f08a4fcf828b0c37630ce2ed~mv2.jpg/v1/fill/w_480,h_600,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/sol.jpg', label: 'Usina Solar - CRC/PE' },
+            { img: 'https://static.wixstatic.com/media/152459_84fd38ffd69849378852a469c196cf20~mv2.jpg/v1/fill/w_480,h_600,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/RFRN.jpg', label: 'Receita Federal - Natal/RN' },
+            { img: 'https://static.wixstatic.com/media/152459_b214383a73d14514ad8901a5cb287041~mv2.png/v1/crop/x_359,y_0,w_583,h_731/fill/w_300,h_375,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/cor.png', label: 'Residencial Parque de Exposições' },
+          ].map((item, i) => (
+            <div key={i} className="group relative overflow-hidden rounded-2xl aspect-square shadow-sm border border-slate-200 cursor-pointer">
+              <img src={item.img} alt={item.label} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                <p className="text-white text-xs font-bold leading-tight">{item.label}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* DIAGNÓSTICA */}
       <div className="mb-16">
         <h3 className="text-2xl font-bold text-slate-900 mb-2 flex items-center gap-2"><Search className="text-blue-600" /> Engenharia Diagnóstica e Legal</h3>
