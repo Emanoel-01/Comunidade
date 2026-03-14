@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
-import { LockKeyhole, CheckCircle2 } from 'lucide-react';
+import { LockKeyhole, CheckCircle2, Send } from 'lucide-react';
+import AccessRequestForm from '../components/community/AccessRequestForm';
 import CommunityFeed from '../components/community/CommunityFeed';
 import CommunityJobs from '../components/community/CommunityJobs';
 import CommunityMaterials from '../components/community/CommunityMaterials';
@@ -15,6 +16,7 @@ export default function Comunidade() {
   const [profile, setProfile] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [loginForm, setLoginForm] = useState({ email: '', password: '' });
+  const [showRequestForm, setShowRequestForm] = useState(false);
   const [activeTab, setActiveTab] = useState('feed');
   const [viewingProfileId, setViewingProfileId] = useState(null);
   const [chatConversation, setChatConversation] = useState(null);
@@ -83,15 +85,27 @@ export default function Comunidade() {
               </ul>
             </div>
           </div>
-          <div className="md:w-1/2 p-10 flex flex-col justify-center">
-            <h3 className="text-2xl font-bold text-slate-900 mb-6">Acessar Plataforma</h3>
-            <button
-              onClick={handleLogin}
-              className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-4 rounded-xl transition-all shadow-md text-lg"
-            >
-              Entrar / Criar Conta
-            </button>
-            <p className="text-xs text-slate-500 mt-4 text-center">Acesso restrito a alunos, parceiros e equipe cadastrada.</p>
+          <div className="md:w-1/2 flex flex-col justify-center">
+            {showRequestForm ? (
+              <AccessRequestForm onClose={() => setShowRequestForm(false)} />
+            ) : (
+              <div className="p-10">
+                <h3 className="text-2xl font-bold text-slate-900 mb-6">Acessar Plataforma</h3>
+                <button
+                  onClick={handleLogin}
+                  className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-4 rounded-xl transition-all shadow-md text-lg mb-3"
+                >
+                  Entrar com minha conta
+                </button>
+                <button
+                  onClick={() => setShowRequestForm(true)}
+                  className="w-full border-2 border-indigo-200 text-indigo-700 hover:bg-indigo-50 font-bold py-3 rounded-xl transition-all text-sm flex items-center justify-center gap-2"
+                >
+                  <Send size={15} /> Solicitar Acesso ao Administrador
+                </button>
+                <p className="text-xs text-slate-500 mt-4 text-center">Acesso restrito a alunos, parceiros e equipe cadastrada.</p>
+              </div>
+            )}
           </div>
         </div>
       </div>
