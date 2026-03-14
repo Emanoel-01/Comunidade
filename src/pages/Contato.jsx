@@ -45,6 +45,7 @@ export default function Contato() {
               <button type="submit" className="w-full bg-indigo-900 hover:bg-indigo-800 text-white py-4 rounded-xl font-bold flex items-center justify-center gap-2">
                 Enviar Mensagem <Send size={18} />
               </button>
+              <p className="text-center text-xs text-slate-400 mt-3">Nossa equipe técnica responderá em até 24h úteis.</p>
             </div>
           </form>
         </div>
