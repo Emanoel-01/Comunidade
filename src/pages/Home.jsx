@@ -250,6 +250,20 @@ export default function Home() {
             </div>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Card de vídeo fixo */}
+            <div className="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col">
+              <div className="aspect-square overflow-hidden relative">
+                <iframe
+                  src="https://drive.google.com/file/d/1XKNc4PTfsifmd_B4pS2GoDt3xct60Y8b/preview"
+                  className="w-full h-full"
+                  allow="autoplay"
+                  title="Depoimento em vídeo"
+                ></iframe>
+              </div>
+              <div className="p-4 border-t border-slate-100">
+                <p className="font-bold text-slate-900 text-sm">Emanoel Amorim</p>
+              </div>
+            </div>
             {testimonials.map((t, idx) => (
               <div key={idx} className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow overflow-hidden relative group cursor-pointer" onClick={() => setZoomedMedia({ src: t.author_photo, text: t.text, name: t.author_name })}>
                 <div className="aspect-square overflow-hidden">
