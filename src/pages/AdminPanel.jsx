@@ -676,6 +676,88 @@ function AdminEvents() {
   );
 }
 
+function AdminTestimonials() {
+  const [testimonials, setTestimonials] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [filter, setFilter] = useState('pending');
+
+  useEffect(() => { loadTestimonials(); }, [filter]);
+
+  const loadTestimonials = async () => {
+    setLoading(true);
+    const data = filter === 'pending'
+      ? await base44.entities.Testimonial.filter({ approved: false })
+      : await base44.entities.Testimonial.filter({ approved: true });
+    setTestimonials(data);
+    setLoading(false);
+  };
+
+  const approve = async (id) => {
+    await base44.entities.Testimonial.update(id, { approved: true });
+    setTestimonials(prev => prev.filter(t => t.id !== id));
+  };
+
+  const reject = async (id) => {
+    if (!confirm('Excluir este depoimento?')) return;
+    await base44.entities.Testimonial.delete(id);
+    setTestimonials(prev => prev.filter(t => t.id !== id));
+  };
+
+  return (
+    <div className="animate-in fade-in space-y-5">
+      <div className="flex items-center justify-between">
+        <h2 className="text-2xl font-bold text-slate-900">Depoimentos</h2>
+        <div className="flex gap-2">
+          <button onClick={() => setFilter('pending')} className={`px-4 py-2 rounded-lg font-bold text-sm ${filter === 'pending' ? 'bg-amber-500 text-white' : 'bg-white border border-slate-300 text-slate-600'}`}>Pendentes</button>
+          <button onClick={() => setFilter('approved')} className={`px-4 py-2 rounded-lg font-bold text-sm ${filter === 'approved' ? 'bg-emerald-600 text-white' : 'bg-white border border-slate-300 text-slate-600'}`}>Aprovados</button>
+        </div>
+      </div>
+
+      {loading ? (
+        <div className="space-y-3">{[1,2,3].map(i => <div key={i} className="h-24 bg-white rounded-xl animate-pulse border border-slate-200"></div>)}</div>
+      ) : testimonials.length === 0 ? (
+        <div className="bg-white rounded-2xl border border-slate-200 py-16 text-center text-slate-400">
+          <MessageSquare size={36} className="mx-auto mb-2 opacity-30" />
+          <p>{filter === 'pending' ? 'Nenhum depoimento pendente.' : 'Nenhum depoimento aprovado.'}</p>
+        </div>
+      ) : (
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {testimonials.map(t => (
+            <div key={t.id} className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
+              {t.author_photo && (
+                <div className="aspect-square overflow-hidden">
+                  <img src={t.author_photo} alt={t.author_name} className="w-full h-full object-cover" />
+                </div>
+              )}
+              <div className="p-4 flex flex-col gap-2 flex-grow">
+                <p className="font-bold text-slate-900">{t.author_name}</p>
+                {t.author_email && <p className="text-xs text-slate-500">{t.author_email}</p>}
+                {t.author_phone && <p className="text-xs text-slate-500">{t.author_phone}</p>}
+                <p className="text-sm text-slate-600 line-clamp-3 flex-grow">{t.text}</p>
+                {filter === 'pending' && (
+                  <div className="flex gap-2 mt-2">
+                    <button onClick={() => approve(t.id)} className="flex-1 flex items-center justify-center gap-1 bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2 rounded-lg text-sm">
+                      <ThumbsUp size={14} /> Aprovar
+                    </button>
+                    <button onClick={() => reject(t.id)} className="flex-1 flex items-center justify-center gap-1 bg-red-500 hover:bg-red-600 text-white font-bold py-2 rounded-lg text-sm">
+                      <ThumbsDown size={14} /> Rejeitar
+                    </button>
+                  </div>
+                )}
+                {filter === 'approved' && (
+                  <button onClick={() => reject(t.id)} className="mt-2 flex items-center justify-center gap-1 border border-red-300 text-red-500 hover:bg-red-50 font-bold py-2 rounded-lg text-sm">
+                    <Trash2 size={14} /> Remover
+                  </button>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function AdminSendNotification() {
   const [profiles, setProfiles] = useState([]);
   const [form, setForm] = useState({ target: 'all', user_id: '', type: 'admin', title: '', message: '' });
