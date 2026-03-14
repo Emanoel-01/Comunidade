@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
 import {
-  ShieldCheck, LayoutDashboard, BarChart3, Edit3, Users, FileText, Eye, ThumbsUp,
-  Plus, Bell, CheckCircle2, X, UserPlus, Award, PenTool, Bold, Italic, Upload, Send,
-  Briefcase, Download, Calendar, Trash2, Save, AlertTriangle, RefreshCw, LogOut, LogIn
+  ShieldCheck, LayoutDashboard, Users, FileText,
+  Plus, Bell, CheckCircle2, X, UserPlus, Award, PenTool, Upload, Send,
+  Briefcase, Download, Calendar, Trash2, Save, AlertTriangle, LogOut
 } from 'lucide-react';
 import { createPageUrl } from '@/utils';
 import { Link } from 'react-router-dom';
