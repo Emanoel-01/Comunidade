@@ -123,6 +123,14 @@ export default function Comunidade() {
           {activeTab === 'eventos' && !viewingProfileId && (
             <CommunityEvents user={user} />
           )}
+          {activeTab === 'chat' && !viewingProfileId && (
+            <CommunityChat
+              user={user}
+              profile={profile}
+              initialConversation={chatConversation}
+              onClearInitialConversation={() => setChatConversation(null)}
+            />
+          )}
           {(activeTab === 'perfil' || viewingProfileId) && (
             <CommunityProfile
               userId={viewingProfileId || user.id}
@@ -130,6 +138,7 @@ export default function Comunidade() {
               currentProfile={profile}
               onBack={viewingProfileId ? () => setViewingProfileId(null) : null}
               onProfileUpdate={setProfile}
+              onStartChat={(conv) => { setChatConversation(conv); setViewingProfileId(null); setActiveTab('chat'); }}
             />
           )}
           {activeTab === 'notificacoes' && !viewingProfileId && (
