@@ -17,6 +17,7 @@ export default function Comunidade() {
   const [loginForm, setLoginForm] = useState({ email: '', password: '' });
   const [activeTab, setActiveTab] = useState('feed');
   const [viewingProfileId, setViewingProfileId] = useState(null);
+  const [chatConversation, setChatConversation] = useState(null);
 
   useEffect(() => {
     checkAuth();
