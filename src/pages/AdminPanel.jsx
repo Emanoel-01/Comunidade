@@ -68,6 +68,7 @@ export default function AdminPanel() {
           <NavItem id="community_materials" label="Materiais" icon={Download} active={adminTab} onClick={setAdminTab} />
           <NavItem id="community_events" label="Eventos" icon={Calendar} active={adminTab} onClick={setAdminTab} />
           <NavItem id="notifications_send" label="Enviar Notificação" icon={Bell} active={adminTab} onClick={setAdminTab} />
+          <NavItem id="testimonials" label="Depoimentos" icon={MessageSquare} active={adminTab} onClick={setAdminTab} />
           <NavItem id="invite_users" label="Convites e Acessos" icon={UserPlus} active={adminTab} onClick={setAdminTab} />
         </nav>
         <div className="p-4 border-t border-slate-800 space-y-2">
