@@ -16,7 +16,7 @@ export default function AmorimTech() {
   const [selectedTechApp, setSelectedTechApp] = useState(null);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-12 animate-in fade-in">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 animate-in fade-in">
       {/* HEADER */}
       <div className="text-center mb-16">
         <div className="inline-flex items-center gap-2 px-4 py-2 bg-indigo-100 text-indigo-700 rounded-full text-sm font-bold tracking-wide mb-6"><Cpu size={16} /> Ecossistema SaaS & Inteligência Artificial</div>
@@ -26,8 +26,8 @@ export default function AmorimTech() {
 
       {/* APP DESTAQUE */}
       <div className="bg-slate-900 rounded-3xl overflow-hidden mb-16 shadow-2xl text-white">
-        <div className="grid lg:grid-cols-2">
-          <div className="p-8 md:p-12 flex flex-col justify-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2">
+          <div className="p-5 sm:p-8 md:p-12 flex flex-col justify-center">
             <div className="flex items-center gap-3 mb-6">
               <div className="w-16 h-16 bg-cyan-500 rounded-2xl flex items-center justify-center font-extrabold text-2xl shadow-lg">G</div>
               <div><span className="text-cyan-400 font-bold text-sm tracking-wider uppercase">{techApps[0].tag}</span><h3 className="text-3xl font-bold">{techApps[0].name}</h3></div>
@@ -38,7 +38,7 @@ export default function AmorimTech() {
                 <li key={i} className="flex items-center gap-3 font-medium text-slate-200"><CheckCircle2 className="text-cyan-400 shrink-0" size={20} /> {feature}</li>
               ))}
             </ul>
-            <button onClick={() => setSelectedTechApp(techApps[0])} className="bg-cyan-500 hover:bg-cyan-400 text-slate-900 font-bold px-8 py-4 rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg w-full sm:w-auto"><PlayCircle size={20} /> Ver Demonstração em Vídeo</button>
+            <button onClick={() => setSelectedTechApp(techApps[0])} className="bg-cyan-500 hover:bg-cyan-400 text-slate-900 font-bold px-6 sm:px-8 py-3 sm:py-4 rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg w-full"><PlayCircle size={20} /> Ver Demonstração em Vídeo</button>
           </div>
           <div className="bg-slate-800 relative min-h-[300px] lg:min-h-full">
             <div className="absolute inset-0 flex items-center justify-center p-8">
@@ -56,7 +56,7 @@ export default function AmorimTech() {
       {/* MAIS APPS */}
       <div className="mb-8">
         <h3 className="text-2xl font-bold text-slate-900 mb-8 flex items-center gap-2"><MonitorSmartphone className="text-indigo-600" /> Mais Soluções do Ecossistema</h3>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {techApps.slice(1).map((app, i) => (
             <div key={i} className="bg-white rounded-2xl p-8 shadow-sm border border-slate-200 hover:shadow-xl transition-all group flex flex-col relative overflow-hidden">
               <div className="absolute top-0 left-0 w-full h-1 bg-indigo-500"></div>
