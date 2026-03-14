@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
-import { ChevronLeft, Edit3, UserPlus, UserMinus, Award, ShieldCheck, Linkedin, Instagram, MessageCircle, Save, X, Plus } from 'lucide-react';
+import { ChevronLeft, Edit3, UserPlus, UserMinus, Award, ShieldCheck, Linkedin, Instagram, MessageCircle, Save, X, Plus, Upload, MapPin, Link2, GraduationCap, Briefcase } from 'lucide-react';
 
 export default function CommunityProfile({ userId, currentUser, currentProfile, onBack, onProfileUpdate, onStartChat }) {
   const [profile, setProfile] = useState(null);
@@ -11,6 +11,7 @@ export default function CommunityProfile({ userId, currentUser, currentProfile, 
   const [saving, setSaving] = useState(false);
   const [newSkill, setNewSkill] = useState('');
   const [followLoading, setFollowLoading] = useState(false);
+  const [uploadingAvatar, setUploadingAvatar] = useState(false);
 
   const isOwn = userId === currentUser?.id;
   const isFollowing = (currentProfile?.following || []).includes(userId);
@@ -85,16 +86,43 @@ export default function CommunityProfile({ userId, currentUser, currentProfile, 
     onStartChat(conv);
   };
 
+  const handleAvatarUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploadingAvatar(true);
+    const { file_url } = await base44.integrations.Core.UploadFile({ file });
+    setEditForm(prev => ({ ...prev, avatar_url: file_url }));
+    setUploadingAvatar(false);
+  };
+
+  const handleBannerUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploadingAvatar(true);
+    const { file_url } = await base44.integrations.Core.UploadFile({ file });
+    setEditForm(prev => ({ ...prev, banner_url: file_url }));
+    setUploadingAvatar(false);
+  };
+
   const handleSave = async () => {
     setSaving(true);
     const updated = await base44.entities.UserProfile.update(profile.id, {
       bio: editForm.bio,
       role_label: editForm.role_label,
+      role_type: editForm.role_type,
       avatar_url: editForm.avatar_url,
       banner_url: editForm.banner_url,
       linkedin: editForm.linkedin,
       instagram: editForm.instagram,
       whatsapp: editForm.whatsapp,
+      website: editForm.website,
+      location: editForm.location,
+      formation: editForm.formation,
+      institution: editForm.institution,
+      crea_cau: editForm.crea_cau,
+      specialization: editForm.specialization,
+      experience_years: editForm.experience_years,
+      certifications: editForm.certifications || [],
       skills: editForm.skills || [],
     });
     setProfile(updated);
