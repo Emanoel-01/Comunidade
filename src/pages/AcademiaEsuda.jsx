@@ -33,7 +33,7 @@ export default function AcademiaEsuda() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl font-bold text-slate-900 mb-4">A Arquitetura Curricular Inteligente</h2>
           <p className="text-slate-600 max-w-2xl mx-auto mb-16 text-lg text-justify md:text-center">Projetada para resolver o abismo entre a técnica e o negócio.</p>
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             {[
               { icon: Briefcase, color: 'blue', num: '1.', title: 'Base Empreendedora', desc: 'O Ciclo Comum (180h) foca em Gestão de Negócios, Branding, Precificação, Liderança 4.0, IA Aplicada e Negociação Harvard.' },
               { icon: Target, color: 'emerald', num: '2.', title: 'Especialização Cirúrgica', desc: 'O Ciclo Técnico (180h) tem foco total no resultado final esperado pelo mercado. Escolha entre 7 caminhos de sucesso para dominar seu nicho.' },
@@ -72,10 +72,10 @@ export default function AcademiaEsuda() {
             <div className="w-full bg-slate-700 rounded-full h-3"><div className="bg-gradient-to-r from-emerald-600 to-emerald-400 h-3 rounded-full" style={{ width: '72%' }}></div></div>
           </div>
 
-          <div className="grid lg:grid-cols-12 gap-8 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             <div className="lg:col-span-7 space-y-6">
               <h3 className="text-xl font-bold flex items-center gap-2 text-white border-b border-slate-700 pb-3"><BarChart3 className="text-emerald-500" /> Transparência do ROI Financeiro</h3>
-              <div className="grid sm:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="bg-slate-800 rounded-xl p-5 sm:p-6 border border-slate-700">
                   <p className="text-slate-400 text-sm font-medium mb-1">Investimento da Turma</p>
                   <p className="text-2xl sm:text-3xl font-extrabold text-white mb-2">R$ 67.166,40</p>
@@ -99,7 +99,7 @@ export default function AcademiaEsuda() {
             <div className="lg:col-span-5 space-y-6">
               <div>
                 <h3 className="text-xl font-bold flex items-center gap-2 text-white border-b border-slate-700 pb-3 mb-6"><Award className="text-blue-500" /> Autoridade e Networking</h3>
-                <div className="grid grid-cols-2 gap-3">
+                <div className="grid grid-cols-2 gap-3 sm:gap-4">
                   <div className="bg-slate-800/50 p-4 rounded-lg border border-blue-500/20 flex flex-col items-center text-center"><Calendar size={28} className="text-blue-400 mb-2" /><span className="text-2xl font-bold text-white">3</span><span className="text-xs text-slate-400">Eventos</span></div>
                   <div className="bg-slate-800/50 p-4 rounded-lg border border-purple-500/20 flex flex-col items-center text-center"><FileText size={28} className="text-purple-400 mb-2" /><span className="text-2xl font-bold text-white">2</span><span className="text-xs text-slate-400">Artigos Científicos</span></div>
                   <div className="bg-slate-800/50 p-4 rounded-lg border border-emerald-500/20 flex flex-col items-center text-center"><CheckCircle size={28} className="text-emerald-400 mb-2" /><span className="text-2xl font-bold text-white">1</span><span className="text-xs text-slate-400">Certificado Antecipado</span></div>
@@ -135,7 +135,7 @@ export default function AcademiaEsuda() {
       <section ref={cursosRef} className="py-20 bg-slate-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16"><h2 className="text-3xl font-bold text-slate-900 mb-4">Escolha a sua Especialização</h2></div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {esudaCourses.map((curso) => (
               <div key={curso.id} onClick={() => setSelectedCourse(curso)} className="bg-white border border-slate-200 rounded-2xl p-8 flex flex-col h-full hover:border-emerald-500 hover:shadow-xl transition-all cursor-pointer group">
                 <span className={`inline-block px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-${curso.color}-100 text-${curso.color}-700 w-fit mb-4`}>{curso.status}</span>
@@ -152,15 +152,15 @@ export default function AcademiaEsuda() {
       {/* MODAL CURSO */}
       {selectedCourse && (
         <div className="fixed inset-0 z-[200] flex items-center justify-center p-0 sm:p-4 md:p-6 bg-slate-900/90 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className="bg-white sm:rounded-3xl w-full h-full sm:h-auto max-w-4xl sm:max-h-[90vh] overflow-y-auto shadow-2xl relative flex flex-col">
-            <button onClick={() => setSelectedCourse(null)} className="absolute top-4 right-4 z-10 w-10 h-10 bg-slate-100/80 backdrop-blur hover:bg-red-100 text-slate-600 hover:text-red-600 rounded-full flex items-center justify-center transition-colors shadow-sm"><X size={20} /></button>
-            <div className="bg-slate-50 p-6 sm:p-8 md:p-12 border-b border-slate-200 mt-12 sm:mt-0">
+          <div className="bg-white rounded-none sm:rounded-3xl w-full h-full sm:h-auto max-w-4xl sm:max-h-[90vh] overflow-y-auto shadow-2xl relative flex flex-col">
+          <button onClick={() => setSelectedCourse(null)} className="absolute top-4 right-4 z-10 w-10 h-10 bg-slate-100/80 backdrop-blur hover:bg-red-100 text-slate-600 hover:text-red-600 rounded-full flex items-center justify-center transition-colors shadow-sm"><X size={20} /></button>
+          <div className="bg-slate-50 p-5 sm:p-8 md:p-12 border-b border-slate-200 mt-12 sm:mt-0">
               <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold uppercase bg-${selectedCourse.color}-100 text-${selectedCourse.color}-700 mb-4`}>{selectedCourse.status}</span>
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">{selectedCourse.title}</h2>
               <p className="text-base sm:text-lg text-slate-600 text-justify">{selectedCourse.description}</p>
             </div>
             <div className="p-6 sm:p-8 md:p-12">
-              <div className="grid lg:grid-cols-2 gap-8 md:gap-12">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12">
                 <div>
                   <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2"><CheckCircle className="text-emerald-500 shrink-0" /> Matriz Curricular</h3>
                   <div className="mb-8 relative pl-6 border-l-2 border-indigo-200">
