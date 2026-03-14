@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
-import { ChevronLeft, Edit3, UserPlus, Award, ShieldCheck, Linkedin, Instagram, MessageCircle, Save, X, Plus } from 'lucide-react';
+import { ChevronLeft, Edit3, UserPlus, UserMinus, Award, ShieldCheck, Linkedin, Instagram, MessageCircle, Save, X, Plus } from 'lucide-react';
 
 export default function CommunityProfile({ userId, currentUser, currentProfile, onBack, onProfileUpdate }) {
   const [profile, setProfile] = useState(null);
