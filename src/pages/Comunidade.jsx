@@ -82,13 +82,13 @@ export default function Comunidade() {
           </div>
           <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-2">
             {[
-              { tab: 'feed', icon: LayoutDashboard, label: 'Fórum e Feed' },
-              { tab: 'vagas', icon: Briefcase, label: 'Vagas e Contratos' },
-              { tab: 'materiais', icon: Download, label: 'Materiais Exclusivos' },
-              { tab: 'eventos', icon: Calendar, label: 'Calendário de Eventos' },
-              { tab: 'perfil', icon: UserCircle, label: 'Meu Perfil' },
-            ].map(({ tab, icon: Icon, label }) => (
-              <button key={tab} onClick={() => { setComunidadeTab(tab); setViewingProfile(null); }} className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-colors ${comunidadeTab === tab && !viewingProfile ? 'bg-indigo-50 text-indigo-700' : 'text-slate-600 hover:bg-slate-50'}`}><Icon size={18}/> {label}</button>
+              { tab: 'feed', IconComp: LayoutDashboard, label: 'Fórum e Feed' },
+              { tab: 'vagas', IconComp: Briefcase, label: 'Vagas e Contratos' },
+              { tab: 'materiais', IconComp: Download, label: 'Materiais Exclusivos' },
+              { tab: 'eventos', IconComp: Calendar, label: 'Calendário de Eventos' },
+              { tab: 'perfil', IconComp: UserCircle, label: 'Meu Perfil' },
+            ].map(({ tab, IconComp, label }) => (
+              <button key={tab} onClick={() => { setComunidadeTab(tab); setViewingProfile(null); }} className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-colors ${comunidadeTab === tab && !viewingProfile ? 'bg-indigo-50 text-indigo-700' : 'text-slate-600 hover:bg-slate-50'}`}><IconComp size={18}/> {label}</button>
             ))}
           </div>
           <button onClick={() => { setIsLoggedIn(false); setUserRole(null); }} className="w-full text-sm text-red-600 hover:underline font-bold text-center py-2">Sair da Comunidade</button>
