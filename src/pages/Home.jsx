@@ -373,7 +373,15 @@ export default function Home() {
       {zoomedMedia && (
         <div className="fixed inset-0 z-[300] flex items-center justify-center p-4 sm:p-8 bg-slate-900/95 backdrop-blur-md animate-in fade-in zoom-in-95 duration-200" onClick={() => setZoomedMedia(null)}>
           <button onClick={() => setZoomedMedia(null)} className="absolute top-4 right-4 z-10 w-12 h-12 bg-white/10 hover:bg-white/20 text-white rounded-full flex items-center justify-center transition-colors"><X size={28} /></button>
-          <img src={zoomedMedia.src} alt="Ampliado" className="max-w-full max-h-full object-contain rounded-xl shadow-2xl" onClick={e => e.stopPropagation()} />
+          <div className="flex flex-col md:flex-row items-center gap-6 max-w-4xl w-full" onClick={e => e.stopPropagation()}>
+            <img src={zoomedMedia.src} alt="Ampliado" className="max-h-[70vh] max-w-full md:max-w-sm object-contain rounded-xl shadow-2xl" />
+            {zoomedMedia.text && (
+              <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6 max-w-md">
+                <p className="text-white text-base leading-relaxed mb-4">"{zoomedMedia.text}"</p>
+                <p className="text-emerald-400 font-bold">— {zoomedMedia.name}</p>
+              </div>
+            )}
+          </div>
         </div>
       )}
     </div>
