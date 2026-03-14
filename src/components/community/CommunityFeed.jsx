@@ -117,26 +117,142 @@ function PostCard({ post, currentUser, currentProfile, onViewProfile }) {
   );
 }
 
+// Card de Evento para o feed
+function EventCard({ event }) {
+  const isPast = event.event_date && new Date(event.event_date) < new Date();
+  const typeColors = {
+    'Webinar': 'bg-blue-100 text-blue-700',
+    'Visita Técnica': 'bg-emerald-100 text-emerald-700',
+    'Masterclass': 'bg-purple-100 text-purple-700',
+    'Workshop': 'bg-amber-100 text-amber-700',
+    'Evento Presencial': 'bg-rose-100 text-rose-700',
+  };
+  return (
+    <div className={`bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden ${isPast ? 'opacity-70' : 'border-l-4 border-l-indigo-500'}`}>
+      <div className="px-4 py-2 bg-indigo-50 border-b border-indigo-100 flex items-center gap-2 text-xs font-bold text-indigo-600">
+        <Calendar size={13} /> Novo Evento na Comunidade
+      </div>
+      <div className="p-5">
+        <div className="flex items-start justify-between gap-3">
+          <div className="flex-grow">
+            <div className="flex items-center gap-2 mb-2">
+              <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${typeColors[event.type] || 'bg-slate-100 text-slate-700'}`}>{event.type}</span>
+              {isPast && <span className="text-xs text-slate-400">Encerrado</span>}
+            </div>
+            <h3 className="font-bold text-slate-900 text-base">{event.title}</h3>
+            {event.description && <p className="text-sm text-slate-600 mt-1 line-clamp-2">{event.description}</p>}
+            <div className="flex flex-wrap gap-3 mt-3 text-xs text-slate-500">
+              {event.event_date && <span className="flex items-center gap-1"><Calendar size={12} />{format(new Date(event.event_date), "dd/MM/yyyy 'às' HH:mm", { locale: ptBR })}</span>}
+              {event.location && <span>📍 {event.location}</span>}
+              <span>👥 {(event.registrations || []).length} inscritos</span>
+            </div>
+          </div>
+        </div>
+        {!isPast && event.link && (
+          <a href={event.link} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold px-4 py-2 rounded-lg transition-colors">
+            <ExternalLink size={13} /> Acessar Evento
+          </a>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// Card de Vaga para o feed
+function JobCard({ job }) {
+  return (
+    <div className="bg-white rounded-2xl border border-slate-200 border-l-4 border-l-emerald-500 shadow-sm overflow-hidden">
+      <div className="px-4 py-2 bg-emerald-50 border-b border-emerald-100 flex items-center gap-2 text-xs font-bold text-emerald-600">
+        <Briefcase size={13} /> Nova Vaga Disponível
+      </div>
+      <div className="p-5">
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <h3 className="font-bold text-slate-900 text-base">{job.title}</h3>
+            <div className="flex flex-wrap items-center gap-2 text-sm text-slate-500 mt-1">
+              <span className="font-medium">{job.company}</span>
+              <span>•</span>
+              <span className="bg-slate-100 px-2 py-0.5 rounded text-xs font-bold text-slate-600">{job.type}</span>
+              <span>📍 {job.location}</span>
+            </div>
+            {job.description && <p className="text-sm text-slate-600 mt-2 line-clamp-2">{job.description}</p>}
+          </div>
+          {job.contact_link && (
+            <a href={job.contact_link} target="_blank" rel="noopener noreferrer" className="shrink-0 flex items-center gap-1 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold px-4 py-2 rounded-lg transition-colors whitespace-nowrap">
+              Candidatar <ExternalLink size={12} />
+            </a>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Card de Material para o feed
+function MaterialCard({ material }) {
+  const handleDownload = async () => {
+    await base44.entities.Material.update(material.id, { downloads: (material.downloads || 0) + 1 });
+    window.open(material.file_url, '_blank');
+  };
+  return (
+    <div className="bg-white rounded-2xl border border-slate-200 border-l-4 border-l-amber-500 shadow-sm overflow-hidden">
+      <div className="px-4 py-2 bg-amber-50 border-b border-amber-100 flex items-center gap-2 text-xs font-bold text-amber-600">
+        <FileText size={13} /> Novo Material Disponível
+      </div>
+      <div className="p-5 flex items-center gap-4">
+        <div className="w-12 h-12 bg-amber-100 rounded-xl flex items-center justify-center shrink-0">
+          <Download size={22} className="text-amber-600" />
+        </div>
+        <div className="flex-grow min-w-0">
+          <h3 className="font-bold text-slate-900 text-sm">{material.title}</h3>
+          <p className="text-xs text-slate-500 mt-0.5">{material.category} • {material.downloads || 0} downloads</p>
+          {material.description && <p className="text-xs text-slate-600 mt-1 line-clamp-1">{material.description}</p>}
+        </div>
+        <button onClick={handleDownload} className="shrink-0 flex items-center gap-1.5 bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold px-4 py-2 rounded-lg transition-colors whitespace-nowrap">
+          <Download size={13} /> Baixar
+        </button>
+      </div>
+    </div>
+  );
+}
+
 export default function CommunityFeed({ user, profile, onViewProfile }) {
-  const [posts, setPosts] = useState([]);
+  const [feedItems, setFeedItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [newPostContent, setNewPostContent] = useState('');
   const [posting, setPosting] = useState(false);
 
   useEffect(() => {
-    loadPosts();
+    loadFeed();
     const unsub = base44.entities.CommunityPost.subscribe(event => {
-      if (event.type === 'create') setPosts(prev => [event.data, ...prev]);
-      else if (event.type === 'update') setPosts(prev => prev.map(p => p.id === event.id ? event.data : p));
-      else if (event.type === 'delete') setPosts(prev => prev.filter(p => p.id !== event.id));
+      if (event.type === 'create' && !event.data?.is_forum) {
+        setFeedItems(prev => [{ type: 'post', data: event.data, date: event.data.created_date }, ...prev]);
+      } else if (event.type === 'update') {
+        setFeedItems(prev => prev.map(item => item.type === 'post' && item.data.id === event.id ? { ...item, data: event.data } : item));
+      } else if (event.type === 'delete') {
+        setFeedItems(prev => prev.filter(item => !(item.type === 'post' && item.data.id === event.id)));
+      }
     });
     return unsub;
   }, []);
 
-  const loadPosts = async () => {
+  const loadFeed = async () => {
     setLoading(true);
-    const data = await base44.entities.CommunityPost.filter({ status: 'active' }, '-created_date', 30);
-    setPosts(data);
+    const [posts, events, jobs, materials] = await Promise.all([
+      base44.entities.CommunityPost.filter({ status: 'active' }, '-created_date', 30),
+      base44.entities.CommunityEvent.list('-created_date', 10),
+      base44.entities.JobListing.filter({ status: 'active' }, '-created_date', 10),
+      base44.entities.Material.list('-created_date', 10),
+    ]);
+
+    const allItems = [
+      ...posts.filter(p => !p.is_forum).map(p => ({ type: 'post', data: p, date: p.created_date })),
+      ...events.map(e => ({ type: 'event', data: e, date: e.created_date })),
+      ...jobs.map(j => ({ type: 'job', data: j, date: j.created_date })),
+      ...materials.map(m => ({ type: 'material', data: m, date: m.created_date })),
+    ].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+    setFeedItems(allItems);
     setLoading(false);
   };
 
@@ -150,6 +266,7 @@ export default function CommunityFeed({ user, profile, onViewProfile }) {
       author_avatar: profile?.avatar_url || '',
       author_role: profile?.role_label || user.role,
       content: newPostContent,
+      is_forum: false,
       likes: 0,
       liked_by: [],
       comments_count: 0,
@@ -186,15 +303,19 @@ export default function CommunityFeed({ user, profile, onViewProfile }) {
         <div className="space-y-4">
           {[1,2,3].map(i => <div key={i} className="bg-white rounded-2xl border border-slate-200 h-40 animate-pulse"></div>)}
         </div>
-      ) : posts.length === 0 ? (
+      ) : feedItems.length === 0 ? (
         <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center text-slate-400">
           <p className="text-lg font-bold text-slate-600 mb-2">O feed ainda está vazio!</p>
           <p className="text-sm">Seja o primeiro a postar algo interessante.</p>
         </div>
       ) : (
-        posts.map(post => (
-          <PostCard key={post.id} post={post} currentUser={user} currentProfile={profile} onViewProfile={onViewProfile} />
-        ))
+        feedItems.map((item, idx) => {
+          if (item.type === 'post') return <PostCard key={`post-${item.data.id}`} post={item.data} currentUser={user} currentProfile={profile} onViewProfile={onViewProfile} />;
+          if (item.type === 'event') return <EventCard key={`event-${item.data.id}`} event={item.data} />;
+          if (item.type === 'job') return <JobCard key={`job-${item.data.id}`} job={item.data} />;
+          if (item.type === 'material') return <MaterialCard key={`material-${item.data.id}`} material={item.data} />;
+          return null;
+        })
       )}
     </div>
   );
