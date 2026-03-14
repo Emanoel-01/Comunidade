@@ -95,6 +95,7 @@ export default function AdminPanel() {
         {adminTab === 'community_materials' && <AdminMaterials />}
         {adminTab === 'community_events' && <AdminEvents />}
         {adminTab === 'notifications_send' && <AdminSendNotification />}
+        {adminTab === 'testimonials' && <AdminTestimonials />}
         {adminTab === 'invite_users' && <AdminInviteUsers />}
       </div>
     </div>
