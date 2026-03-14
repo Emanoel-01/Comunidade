@@ -108,23 +108,45 @@ export default function Layout({ children, currentPageName }) {
                   <li><Link to={createPageUrl('AmorimArquitetura')} className="hover:text-white transition-colors">Amorim Arquitetura</Link></li>
                   <li><Link to={createPageUrl('AmorimTech')} className="hover:text-white transition-colors">Amorim Tech</Link></li>
                   <li><Link to={createPageUrl('AcademiaEsuda')} className="hover:text-white transition-colors">Academia ESUDA</Link></li>
-                  <li><Link to={createPageUrl('Blog')} className="hover:text-white transition-colors">Blog Técnico</Link></li>
+                  <li><Link to={createPageUrl('Comunidade')} className="text-emerald-400 hover:text-emerald-300 transition-colors">Acesso Restrito (Comunidade)</Link></li>
                 </ul>
               </div>
               <div className="md:col-span-1">
                 <h4 className="text-white font-bold mb-3">Contato Oficial</h4>
-                <ul className="space-y-2.5 text-sm">
-                  <li><a href="https://wa.me/5581991298803" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-white hover:text-emerald-400 transition-colors"><MessageCircle size={14} className="text-emerald-400" /> <span className="font-medium">(81) 99129-8803</span></a></li>
-                  <li className="flex items-start gap-2 pt-1"><Mail size={14} className="text-indigo-400 mt-0.5 shrink-0" /> <a href="mailto:emanoel@amorimarquitetura.com.br" className="break-all hover:text-indigo-300 transition-colors text-xs">emanoel@amorimarquitetura.com.br</a></li>
+                <ul className="space-y-3 text-sm">
+                  <li>
+                    <a href="https://wa.me/5581991298803" target="_blank" rel="noopener noreferrer" className="flex items-start gap-2 text-white hover:text-emerald-400 transition-colors">
+                      <MessageCircle size={15} className="text-emerald-400 mt-0.5 shrink-0" />
+                      <div>
+                        <p className="font-bold">(81) 99129-8803</p>
+                        <p className="text-xs text-slate-500 uppercase tracking-wide">(Apenas WhatsApp)</p>
+                      </div>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="tel:5581999284160" className="flex items-start gap-2 text-white hover:text-blue-400 transition-colors">
+                      <Phone size={15} className="text-blue-400 mt-0.5 shrink-0" />
+                      <div>
+                        <p className="font-bold">(81) 99928-4160</p>
+                        <p className="text-xs text-slate-500 uppercase tracking-wide">(Apenas Ligações)</p>
+                      </div>
+                    </a>
+                  </li>
+                  <li className="flex items-start gap-2"><Mail size={14} className="text-indigo-400 mt-0.5 shrink-0" /> <a href="mailto:emanoel@amorimarquitetura.com.br" className="break-all hover:text-indigo-300 transition-colors text-xs">emanoel@amorimarquitetura.com.br</a></li>
                 </ul>
               </div>
               <div className="md:col-span-1">
-                <h4 className="text-white font-bold mb-3">Redes</h4>
-                <div className="flex flex-wrap gap-2">
-                  <a href="https://www.instagram.com/oemanoelamorim/" target="_blank" rel="noreferrer" className="w-7 h-7 rounded-full bg-slate-800 flex items-center justify-center hover:bg-slate-700 hover:text-white transition-colors"><Instagram size={12} /></a>
-                  <a href="http://linkedin.com/in/emanoel-amorim-43025b65" target="_blank" rel="noreferrer" className="w-7 h-7 rounded-full bg-slate-800 flex items-center justify-center hover:bg-slate-700 hover:text-white transition-colors"><Linkedin size={12} /></a>
-                  <a href="https://www.youtube.com/@mestre-amorim" target="_blank" rel="noreferrer" className="w-7 h-7 rounded-full bg-slate-800 flex items-center justify-center hover:bg-slate-700 hover:text-white transition-colors"><Youtube size={12} /></a>
+                <h4 className="text-white font-bold mb-3">Redes e IDs Científicos</h4>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  <a href="https://www.instagram.com/oemanoelamorim/" target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center hover:bg-slate-600 hover:text-white transition-colors"><Instagram size={13} /></a>
+                  <a href="http://linkedin.com/in/emanoel-amorim-43025b65" target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center hover:bg-slate-600 hover:text-white transition-colors"><Linkedin size={13} /></a>
+                  <a href="https://www.youtube.com/@mestre-amorim" target="_blank" rel="noreferrer" className="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center hover:bg-slate-600 hover:text-white transition-colors"><Youtube size={13} /></a>
+                  <a href="https://www.researchgate.net/" target="_blank" rel="noreferrer" className="h-8 px-2.5 rounded-full bg-slate-700 flex items-center justify-center hover:bg-slate-600 text-white text-xs font-bold transition-colors">RG</a>
+                  <a href="http://lattes.cnpq.br/" target="_blank" rel="noreferrer" className="h-8 px-2.5 rounded-full bg-slate-700 flex items-center justify-center hover:bg-slate-600 text-white text-xs font-bold transition-colors">Lattes</a>
                 </div>
+                <a href="https://wa.me/5581991298803" target="_blank" rel="noopener noreferrer" className="flex items-center justify-center gap-2 w-full bg-emerald-500 hover:bg-emerald-400 text-white font-bold py-2.5 rounded-xl text-sm transition-colors">
+                  <MessageCircle size={16} /> WhatsApp
+                </a>
               </div>
             </div>
             <div className="pt-4 border-t border-slate-800 text-center text-xs flex flex-col md:flex-row justify-between items-center gap-2 text-slate-500">
