@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
-import { Download, FileText, Plus, X, Upload } from 'lucide-react';
+import { Download, FileText, Plus, X, Upload, Star, BookOpen, CheckCircle2, Search } from 'lucide-react';
 
 const categoryColors = {
   'Planilhas': 'bg-emerald-100 text-emerald-700',
@@ -11,6 +11,84 @@ const categoryColors = {
   'Outros': 'bg-slate-100 text-slate-700',
 };
 
+const categoryIcons = {
+  'Planilhas': '📊',
+  'Normas ABNT': '📋',
+  'E-books': '📖',
+  'Apresentações': '🖥️',
+  'Modelos de Laudo': '📄',
+  'Outros': '📎',
+};
+
+function MaterialCard({ m, user, onDownloaded }) {
+  const [downloading, setDownloading] = useState(false);
+  const [downloaded, setDownloaded] = useState(false);
+
+  const handleDownload = async () => {
+    setDownloading(true);
+    const newCount = (m.downloads || 0) + 1;
+    await base44.entities.Material.update(m.id, { downloads: newCount });
+
+    // Gamificação: pontos por download (registrado via notificação ao user)
+    if (user) {
+      await base44.entities.Notification.create({
+        user_id: user.id,
+        type: 'material',
+        title: `Download realizado! +5 pontos 🏆`,
+        message: `Você baixou "${m.title}". Continue aprendendo para subir no ranking da comunidade!`,
+        link: '/Comunidade',
+        read: false
+      });
+    }
+
+    onDownloaded(m.id, newCount);
+    setDownloaded(true);
+    setDownloading(false);
+    window.open(m.file_url, '_blank');
+    setTimeout(() => setDownloaded(false), 3000);
+  };
+
+  return (
+    <div className="bg-white rounded-2xl border border-slate-200 hover:border-indigo-300 hover:shadow-md transition-all overflow-hidden group">
+      <div className={`h-2 ${m.category === 'Planilhas' ? 'bg-emerald-400' : m.category === 'Normas ABNT' ? 'bg-blue-400' : m.category === 'E-books' ? 'bg-purple-400' : m.category === 'Apresentações' ? 'bg-amber-400' : m.category === 'Modelos de Laudo' ? 'bg-rose-400' : 'bg-slate-400'}`}></div>
+      <div className="p-5">
+        <div className="flex items-start gap-3 mb-3">
+          <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-2xl shrink-0 ${m.category === 'Planilhas' ? 'bg-emerald-50' : m.category === 'Normas ABNT' ? 'bg-blue-50' : m.category === 'E-books' ? 'bg-purple-50' : m.category === 'Apresentações' ? 'bg-amber-50' : m.category === 'Modelos de Laudo' ? 'bg-rose-50' : 'bg-slate-50'}`}>
+            {categoryIcons[m.category] || '📎'}
+          </div>
+          <div className="flex-grow overflow-hidden">
+            <h4 className="font-extrabold text-slate-900 text-sm leading-tight">{m.title}</h4>
+            <span className={`inline-block px-2 py-0.5 rounded text-[10px] font-bold mt-1 ${categoryColors[m.category] || 'bg-slate-100 text-slate-700'}`}>{m.category}</span>
+          </div>
+        </div>
+        {m.description && <p className="text-xs text-slate-600 mb-4 line-clamp-2 leading-relaxed">{m.description}</p>}
+        <div className="flex items-center justify-between pt-3 border-t border-slate-100">
+          <div className="flex items-center gap-3 text-xs text-slate-400">
+            <span className="flex items-center gap-1"><Download size={11} /> {m.downloads || 0} downloads</span>
+          </div>
+          <button
+            onClick={handleDownload}
+            disabled={downloading}
+            className={`flex items-center gap-1.5 font-bold text-xs px-4 py-2 rounded-xl transition-all ${
+              downloaded
+                ? 'bg-emerald-100 text-emerald-700'
+                : 'bg-slate-900 hover:bg-indigo-600 text-white'
+            } disabled:opacity-60`}
+          >
+            {downloading ? (
+              <><div className="w-3 h-3 border-2 border-current border-t-transparent rounded-full animate-spin"></div> Baixando</>
+            ) : downloaded ? (
+              <><CheckCircle2 size={13} /> Baixado!</>
+            ) : (
+              <><Download size={13} /> Baixar</>
+            )}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function CommunityMaterials({ user }) {
   const [materials, setMaterials] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -18,16 +96,20 @@ export default function CommunityMaterials({ user }) {
   const [form, setForm] = useState({ title: '', description: '', category: 'Planilhas', file_url: '' });
   const [saving, setSaving] = useState(false);
   const [activeFilter, setActiveFilter] = useState('Todos');
+  const [search, setSearch] = useState('');
+  const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
-    loadMaterials();
+    base44.entities.Material.list('-created_date').then(d => { setMaterials(d); setLoading(false); });
   }, []);
 
-  const loadMaterials = async () => {
-    setLoading(true);
-    const data = await base44.entities.Material.list('-created_date');
-    setMaterials(data);
-    setLoading(false);
+  const handleFileUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading(true);
+    const { file_url } = await base44.integrations.Core.UploadFile({ file });
+    setForm(prev => ({ ...prev, file_url }));
+    setUploading(false);
   };
 
   const handleSubmit = async (e) => {
@@ -36,83 +118,102 @@ export default function CommunityMaterials({ user }) {
     await base44.entities.Material.create({ ...form, downloads: 0 });
     setForm({ title: '', description: '', category: 'Planilhas', file_url: '' });
     setShowForm(false);
-    await loadMaterials();
+    const d = await base44.entities.Material.list('-created_date');
+    setMaterials(d);
     setSaving(false);
   };
 
-  const handleDownload = async (material) => {
-    await base44.entities.Material.update(material.id, { downloads: (material.downloads || 0) + 1 });
-    window.open(material.file_url, '_blank');
+  const handleDownloaded = (id, newCount) => {
+    setMaterials(prev => prev.map(m => m.id === id ? { ...m, downloads: newCount } : m));
   };
 
   const categories = ['Todos', 'Planilhas', 'Normas ABNT', 'E-books', 'Apresentações', 'Modelos de Laudo', 'Outros'];
-  const filtered = activeFilter === 'Todos' ? materials : materials.filter(m => m.category === activeFilter);
+  const filtered = materials
+    .filter(m => activeFilter === 'Todos' || m.category === activeFilter)
+    .filter(m => !search || m.title.toLowerCase().includes(search.toLowerCase()) || m.description?.toLowerCase().includes(search.toLowerCase()));
+
+  const totalDownloads = materials.reduce((a, m) => a + (m.downloads || 0), 0);
 
   return (
     <div className="animate-in fade-in space-y-5">
-      <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 flex justify-between items-center">
-        <div>
-          <h2 className="text-xl font-bold text-slate-900">Biblioteca de Materiais</h2>
-          <p className="text-sm text-slate-500">Planilhas, normas e materiais exclusivos para membros.</p>
+      {/* Header */}
+      <div className="bg-gradient-to-r from-amber-600 to-orange-600 rounded-2xl p-6 text-white">
+        <div className="flex justify-between items-center">
+          <div>
+            <h2 className="text-xl font-extrabold flex items-center gap-2"><BookOpen size={20} /> Biblioteca de Materiais</h2>
+            <p className="text-amber-100 text-sm mt-1">Planilhas, normas e recursos técnicos exclusivos.</p>
+          </div>
+          {user?.role === 'admin' && (
+            <button onClick={() => setShowForm(!showForm)} className="bg-white text-amber-900 hover:bg-amber-50 font-bold px-4 py-2 rounded-xl flex items-center gap-2 text-sm shadow transition-colors">
+              <Plus size={16} /> Adicionar
+            </button>
+          )}
         </div>
-        {user?.role === 'admin' && (
-          <button onClick={() => setShowForm(true)} className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-4 py-2 rounded-lg flex items-center gap-2 text-sm shadow-sm transition-colors">
-            <Plus size={16} /> Adicionar
-          </button>
-        )}
+        <div className="flex gap-4 mt-4 text-sm">
+          <div className="bg-white/10 rounded-xl px-4 py-2 text-center"><p className="font-extrabold text-lg">{materials.length}</p><p className="text-amber-200 text-xs">Materiais</p></div>
+          <div className="bg-white/10 rounded-xl px-4 py-2 text-center"><p className="font-extrabold text-lg">{totalDownloads}</p><p className="text-amber-200 text-xs">Downloads totais</p></div>
+        </div>
       </div>
 
       {showForm && (
-        <div className="bg-white rounded-2xl border border-indigo-200 shadow-md p-6 relative">
+        <div className="bg-white rounded-2xl border border-amber-200 shadow-md p-6 relative">
           <button onClick={() => setShowForm(false)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-700"><X size={20} /></button>
-          <h3 className="font-bold text-slate-900 mb-4">Novo Material</h3>
+          <h3 className="font-bold text-slate-900 mb-4 text-lg">Novo Material</h3>
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div><label className="block text-xs font-bold text-slate-600 mb-1">Título *</label><input required value={form.title} onChange={e => setForm({ ...form, title: e.target.value })} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" /></div>
+            <div><label className="block text-xs font-bold text-slate-600 mb-1">Título *</label><input required value={form.title} onChange={e => setForm({ ...form, title: e.target.value })} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400" /></div>
             <div><label className="block text-xs font-bold text-slate-600 mb-1">Categoria</label>
-              <select value={form.category} onChange={e => setForm({ ...form, category: e.target.value })} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">
+              <select value={form.category} onChange={e => setForm({ ...form, category: e.target.value })} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400">
                 {['Planilhas', 'Normas ABNT', 'E-books', 'Apresentações', 'Modelos de Laudo', 'Outros'].map(c => <option key={c}>{c}</option>)}
               </select>
             </div>
-            <div><label className="block text-xs font-bold text-slate-600 mb-1">URL do Arquivo *</label><input required value={form.file_url} onChange={e => setForm({ ...form, file_url: e.target.value })} placeholder="https://..." className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" /></div>
-            <div><label className="block text-xs font-bold text-slate-600 mb-1">Descrição</label><textarea rows={2} value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 resize-none" /></div>
+            <div>
+              <label className="block text-xs font-bold text-slate-600 mb-1">Arquivo *</label>
+              <div className="flex gap-3 items-center">
+                <label className={`flex items-center gap-2 px-4 py-2 border-2 border-dashed border-amber-300 text-amber-600 rounded-lg text-sm font-bold cursor-pointer hover:bg-amber-50 transition-colors ${uploading ? 'opacity-50' : ''}`}>
+                  <Upload size={15} /> {uploading ? 'Enviando...' : 'Upload de Arquivo'}
+                  <input type="file" onChange={handleFileUpload} className="hidden" disabled={uploading} />
+                </label>
+                {form.file_url && <span className="text-xs text-emerald-600 font-bold flex items-center gap-1"><CheckCircle2 size={13} /> Arquivo enviado!</span>}
+              </div>
+              <p className="text-xs text-slate-400 mt-1">Ou insira uma URL: <input value={form.file_url} onChange={e => setForm({ ...form, file_url: e.target.value })} placeholder="https://..." className="ml-1 border-b border-slate-300 text-sm focus:outline-none focus:border-amber-400 px-1" /></p>
+            </div>
+            <div><label className="block text-xs font-bold text-slate-600 mb-1">Descrição</label><textarea rows={2} value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 resize-none" /></div>
             <div className="flex justify-end gap-3">
               <button type="button" onClick={() => setShowForm(false)} className="px-4 py-2 text-slate-600 font-bold hover:bg-slate-100 rounded-lg text-sm">Cancelar</button>
-              <button type="submit" disabled={saving} className="px-6 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg text-sm disabled:opacity-50">{saving ? 'Salvando...' : 'Publicar'}</button>
+              <button type="submit" disabled={saving || !form.file_url} className="px-6 py-2 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-lg text-sm disabled:opacity-50">{saving ? 'Publicando...' : 'Publicar'}</button>
             </div>
           </form>
         </div>
       )}
 
-      <div className="flex overflow-x-auto gap-2 pb-2" style={{ scrollbarWidth: 'none' }}>
-        {categories.map(cat => (
-          <button key={cat} onClick={() => setActiveFilter(cat)} className={`px-4 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-colors ${activeFilter === cat ? 'bg-indigo-600 text-white' : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'}`}>{cat}</button>
-        ))}
+      {/* Busca + Filtros */}
+      <div className="space-y-3">
+        <div className="relative">
+          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+          <input
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            placeholder="Buscar materiais..."
+            className="w-full border border-slate-200 rounded-xl pl-10 pr-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 bg-white"
+          />
+        </div>
+        <div className="flex overflow-x-auto gap-2 pb-1" style={{ scrollbarWidth: 'none' }}>
+          {categories.map(cat => (
+            <button key={cat} onClick={() => setActiveFilter(cat)} className={`px-4 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-colors flex-shrink-0 ${activeFilter === cat ? 'bg-amber-600 text-white' : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-50'}`}>{cat}</button>
+          ))}
+        </div>
       </div>
 
       {loading ? (
-        <div className="grid sm:grid-cols-2 gap-4">{[1,2,3,4].map(i => <div key={i} className="bg-white rounded-xl border border-slate-200 h-28 animate-pulse"></div>)}</div>
+        <div className="grid sm:grid-cols-2 gap-4">{[1,2,3,4].map(i => <div key={i} className="bg-white rounded-2xl border border-slate-200 h-36 animate-pulse"></div>)}</div>
       ) : filtered.length === 0 ? (
-        <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center text-slate-400"><FileText size={40} className="mx-auto mb-3 opacity-30" /><p className="font-bold text-slate-600">Nenhum material disponível.</p></div>
+        <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center text-slate-400">
+          <FileText size={40} className="mx-auto mb-3 opacity-30" />
+          <p className="font-bold text-slate-600">Nenhum material encontrado.</p>
+        </div>
       ) : (
         <div className="grid sm:grid-cols-2 gap-4">
-          {filtered.map(m => (
-            <div key={m.id} className="bg-white rounded-xl border border-slate-200 p-5 hover:shadow-md transition-shadow flex flex-col">
-              <div className="flex items-start gap-3 mb-3">
-                <div className="w-10 h-10 bg-slate-100 rounded-lg flex items-center justify-center text-slate-500 shrink-0"><FileText size={20} /></div>
-                <div className="flex-grow overflow-hidden">
-                  <h4 className="font-bold text-slate-900 text-sm truncate">{m.title}</h4>
-                  <span className={`inline-block px-2 py-0.5 rounded text-[10px] font-bold mt-1 ${categoryColors[m.category] || 'bg-slate-100 text-slate-700'}`}>{m.category}</span>
-                </div>
-              </div>
-              {m.description && <p className="text-xs text-slate-600 mb-4 line-clamp-2">{m.description}</p>}
-              <div className="flex items-center justify-between mt-auto pt-3 border-t border-slate-100">
-                <span className="text-xs text-slate-400">{m.downloads || 0} downloads</span>
-                <button onClick={() => handleDownload(m)} className="flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold px-4 py-2 rounded-lg transition-colors">
-                  <Download size={14} /> Baixar
-                </button>
-              </div>
-            </div>
-          ))}
+          {filtered.map(m => <MaterialCard key={m.id} m={m} user={user} onDownloaded={handleDownloaded} />)}
         </div>
       )}
     </div>
