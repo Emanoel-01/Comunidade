@@ -46,6 +46,11 @@ export default function Home() {
   const [zoomedMedia, setZoomedMedia] = useState(null);
   const [testimonialForm, setTestimonialForm] = useState({ name: '', text: '', photo: null });
   const [isAutoScroll, setIsAutoScroll] = useState(false);
+  const [testimonials, setTestimonials] = useState([]);
+
+  useEffect(() => {
+    base44.entities.Testimonial.filter({ approved: true }).then(setTestimonials);
+  }, []);
 
   const timelineRef = useRef(null);
   const autoScrollInterval = useRef(null);
