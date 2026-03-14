@@ -26,7 +26,7 @@ const services = {
 
 function ServiceGrid({ items, ctaLabel }) {
   return (
-    <div className="grid md:grid-cols-2 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       {items.map((s, i) => (
         <div key={i} className="bg-white border border-slate-200 p-8 rounded-2xl shadow-sm flex flex-col">
           <h4 className="text-xl font-bold text-slate-800 mb-3">{s.title}</h4>
@@ -48,11 +48,11 @@ function ServiceGrid({ items, ctaLabel }) {
 
 export default function AmorimArquitetura() {
   return (
-    <div className="max-w-7xl mx-auto px-4 py-12 animate-in fade-in">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 animate-in fade-in">
       {/* HERO */}
       <div className="relative bg-slate-900 rounded-3xl overflow-hidden mb-16 shadow-2xl">
         <div className="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center"></div>
-        <div className="relative z-10 px-8 py-16 md:px-16 md:py-20 flex flex-col md:flex-row items-center gap-8">
+        <div className="relative z-10 px-5 py-10 sm:px-8 sm:py-16 md:px-16 md:py-20 flex flex-col md:flex-row items-center gap-8">
           <div className="md:w-2/3">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/20 text-blue-300 rounded-full text-sm font-bold tracking-wide mb-6 border border-blue-500/30">
               <Building2 size={16} /> Especialistas em Engenharia Condominial
@@ -85,10 +85,10 @@ export default function AmorimArquitetura() {
       </div>
 
       {/* CTA */}
-      <div className="bg-blue-50 border border-blue-100 rounded-2xl p-8 text-center flex flex-col items-center mt-16">
+      <div className="bg-blue-50 border border-blue-100 rounded-2xl p-6 sm:p-8 text-center flex flex-col items-center mt-10 sm:mt-16">
         <h3 className="text-2xl font-bold text-slate-800 mb-4">Mais de 100 projetos executados com sucesso</h3>
         <p className="text-slate-600 mb-8 max-w-2xl text-justify md:text-center">A Amorim Arquitetura é a escolha de grandes instituições públicas, privadas e condomínios que não abrem mão de segurança, rigor normativo e tecnologia de ponta.</p>
-        <Link to={createPageUrl('Home')} className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-8 py-3.5 rounded-lg transition-colors shadow-md flex items-center justify-center gap-2">Ver Órgãos que Confiam na Nossa Engenharia <ArrowRight size={18} /></Link>
+        <Link to={createPageUrl('Home')} className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 sm:px-8 py-3.5 rounded-lg transition-colors shadow-md flex items-center justify-center gap-2 text-sm sm:text-base text-center">Ver Órgãos que Confiam na Nossa Engenharia <ArrowRight size={18} className="shrink-0" /></Link>
       </div>
     </div>
   );
