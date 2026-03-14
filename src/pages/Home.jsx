@@ -7,6 +7,47 @@ import {
 import { createPageUrl } from '@/utils';
 import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
+import { Link } from 'react-router-dom';
+
+function RecentBlogPosts() {
+  const [posts, setPosts] = React.useState([]);
+  React.useEffect(() => {
+    base44.entities.BlogPost.filter({ status: 'published' }, '-created_date', 3).then(setPosts);
+  }, []);
+  if (posts.length === 0) return null;
+  return (
+    <section className="bg-white py-16 border-b border-slate-100">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-end mb-10">
+          <div>
+            <h2 className="text-3xl font-bold text-slate-900 mb-2">Artigos Recentes</h2>
+            <p className="text-slate-600">Conteúdo técnico para quem quer estar à frente do mercado.</p>
+          </div>
+          <Link to="/Blog" className="hidden sm:flex items-center gap-1 text-indigo-600 hover:text-indigo-800 font-semibold text-sm">Ver todos <ChevronRight size={16} /></Link>
+        </div>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {posts.map((post) => (
+            <Link to="/Blog" key={post.id} className="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow overflow-hidden flex flex-col group">
+              {post.cover_image && (
+                <div className="aspect-video overflow-hidden">
+                  <img src={post.cover_image} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                </div>
+              )}
+              <div className="p-5 flex flex-col flex-grow">
+                {post.category && <span className="text-xs font-bold text-indigo-600 uppercase tracking-wide mb-2">{post.category}</span>}
+                <h3 className="font-bold text-slate-900 mb-2 line-clamp-2 group-hover:text-indigo-700 transition-colors">{post.title}</h3>
+                {post.excerpt && <p className="text-slate-500 text-sm line-clamp-2 flex-grow">{post.excerpt}</p>}
+              </div>
+            </Link>
+          ))}
+        </div>
+        <div className="sm:hidden mt-6 text-center">
+          <Link to="/Blog" className="text-indigo-600 font-semibold text-sm">Ver todos os artigos →</Link>
+        </div>
+      </div>
+    </section>
+  );
+}
 
 const timeline = [
   { year: '2026', title: 'CEO, CTO & Arquiteto de Soluções da Amorim TECH', description: 'Atuação como Product Manager da Marca e Técnico Responsável pela migração da arquitetura de protótipos e unificação para uma infraestrutura de escala industrial.', icon: 'tech', imageUrl: 'https://i.ibb.co/TDC35Hqf/Emanoel-Silva-de-Amorim.jpg' },
