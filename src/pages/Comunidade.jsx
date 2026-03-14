@@ -129,6 +129,9 @@ export default function Comunidade() {
           {activeTab === 'feed' && !viewingProfileId && (
             <CommunityFeed user={user} profile={profile} onViewProfile={setViewingProfileId} />
           )}
+          {activeTab === 'forum' && !viewingProfileId && (
+            <CommunityForum user={user} profile={profile} />
+          )}
           {activeTab === 'vagas' && !viewingProfileId && (
             <CommunityJobs user={user} />
           )}
