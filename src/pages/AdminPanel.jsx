@@ -13,7 +13,7 @@ import AdminInviteUsers from '../components/admin/AdminInviteUsers';
 import AdminForum from '../components/admin/AdminForum';
 import MediaUploader from '../components/shared/MediaUploader';
 
-const BLANK_POST = { title: '', content: '', excerpt: '', cover_image: '', category: 'Gestão 4.0', tags: [], author_name: 'Emanoel Amorim', author_role: 'CEO Amorim Tech', author_avatar: 'https://i.ibb.co/TDC35Hqf/Emanoel-Silva-de-Amorim.jpg', read_time: '5 min', status: 'draft' };
+const BLANK_POST = { title: '', content: '', excerpt: '', cover_image: '', media_urls: [], category: 'Gestão 4.0', tags: [], author_name: 'Emanoel Amorim', author_role: 'CEO Amorim Tech', author_avatar: 'https://i.ibb.co/TDC35Hqf/Emanoel-Silva-de-Amorim.jpg', read_time: '5 min', status: 'draft' };
 
 export default function AdminPanel() {
   const [adminTab, setAdminTab] = useState('dashboard');
