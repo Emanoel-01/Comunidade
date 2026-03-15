@@ -64,6 +64,7 @@ export default function AdminPanel() {
           <div className="mt-3 mb-1 px-3 text-[10px] font-bold text-slate-500 uppercase tracking-wider">Blog</div>
           <NavItem id="blog_list" label="Posts Publicados" icon={FileText} active={adminTab} onClick={setAdminTab} />
           <NavItem id="blog_editor" label="Novo Artigo" icon={PenTool} active={adminTab} onClick={setAdminTab} />
+          <NavItem id="blog_analytics" label="Analytics do Blog" icon={BarChart2} active={adminTab} onClick={setAdminTab} />
           <div className="mt-3 mb-1 px-3 text-[10px] font-bold text-slate-500 uppercase tracking-wider">Comunidade</div>
           <NavItem id="community_users" label="Membros" icon={Users} active={adminTab} onClick={setAdminTab} />
           <NavItem id="community_forum" label="Fórum" icon={MessagesSquare} active={adminTab} onClick={setAdminTab} />
