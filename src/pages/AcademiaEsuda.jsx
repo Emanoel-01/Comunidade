@@ -159,15 +159,47 @@ export default function AcademiaEsuda() {
                       </div>
                     ))}
 
-                    {/* Empregados e Freelancer - Cards com foto */}
+                    {/* Edital Centelha - card especial */}
+                    <div className="bg-gradient-to-r from-amber-500/20 to-yellow-500/10 border border-amber-400/40 rounded-xl p-3 hover:border-amber-400/70 transition-colors">
+                      <div className="flex items-center gap-2 mb-2">
+                        <div className="w-8 h-8 rounded-lg bg-amber-500/30 flex items-center justify-center shrink-0">
+                          <Lightbulb size={16} className="text-amber-400" />
+                        </div>
+                        <div>
+                          <span className="text-[10px] font-bold uppercase tracking-wide text-amber-400">Edital Centelha 3 · Jan/2026</span>
+                          <p className="text-white text-xs font-bold leading-tight">Equipe Concorrente Selecionada</p>
+                        </div>
+                      </div>
+                      <p className="text-slate-300 text-[11px] leading-snug mb-2">
+                        <span className="text-white font-semibold">Projeto:</span> "Amorim Tech - Ecossistema para Gestão Inteligente de Edifícios"
+                      </p>
+                      <div className="flex flex-col gap-1">
+                        {['Nathálya Aguiar Leal de Melo', 'Adrianne Oliveira Menezes'].map((nome, i) => (
+                          <div key={i} className="flex items-center gap-2 bg-slate-700/40 rounded-lg px-2 py-1">
+                            <div className="w-5 h-5 rounded-full bg-amber-500/30 flex items-center justify-center shrink-0">
+                              <Star size={10} className="text-amber-400" />
+                            </div>
+                            <span className="text-white text-[11px] font-semibold">{nome}</span>
+                            <span className="text-slate-400 text-[10px] ml-auto">Arq. Urbanista</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Colocações Profissionais - cards melhorados */}
                     <div className="mt-1 mb-1">
-                      <p className="text-[10px] text-slate-400 uppercase tracking-widest px-1 mb-2">Colocações Profissionais</p>
-                      <div className="grid grid-cols-2 gap-2">
+                      <div className="flex items-center gap-2 px-1 mb-3">
+                        <div className="h-px flex-1 bg-slate-600"></div>
+                        <p className="text-[10px] text-slate-400 uppercase tracking-widest font-bold">Colocações Profissionais</p>
+                        <div className="h-px flex-1 bg-slate-600"></div>
+                      </div>
+                      <div className="grid grid-cols-1 gap-2">
                         {[
                           {
                             type: 'Freelancer',
-                            typeColor: 'text-teal-400',
-                            typeBg: 'bg-teal-500/20 border-teal-500/30',
+                            typeColor: 'text-teal-300',
+                            typeBg: 'bg-teal-500/10 border-teal-500/30',
+                            badgeBg: 'bg-teal-500/20',
                             nome: 'Paulo Ewerton Ribeiro da Silva',
                             funcao: 'Projetista',
                             data: '30/09/2025',
@@ -175,8 +207,9 @@ export default function AcademiaEsuda() {
                           },
                           {
                             type: 'Empregado',
-                            typeColor: 'text-amber-400',
-                            typeBg: 'bg-amber-500/20 border-amber-500/30',
+                            typeColor: 'text-amber-300',
+                            typeBg: 'bg-amber-500/10 border-amber-500/30',
+                            badgeBg: 'bg-amber-500/20',
                             nome: 'Hugo Ewerton Pereira Silva',
                             funcao: 'Engenheiro Fiscal de Campo',
                             data: '01/09/2025',
@@ -184,8 +217,9 @@ export default function AcademiaEsuda() {
                           },
                           {
                             type: 'Empregado',
-                            typeColor: 'text-amber-400',
-                            typeBg: 'bg-amber-500/20 border-amber-500/30',
+                            typeColor: 'text-amber-300',
+                            typeBg: 'bg-amber-500/10 border-amber-500/30',
+                            badgeBg: 'bg-amber-500/20',
                             nome: 'Adriana Gonçalves Araujo',
                             funcao: 'Fiscal de Obras',
                             data: '31/08/2025',
@@ -193,26 +227,23 @@ export default function AcademiaEsuda() {
                           },
                           {
                             type: 'Empregado',
-                            typeColor: 'text-amber-400',
-                            typeBg: 'bg-amber-500/20 border-amber-500/30',
+                            typeColor: 'text-amber-300',
+                            typeBg: 'bg-amber-500/10 border-amber-500/30',
+                            badgeBg: 'bg-amber-500/20',
                             nome: 'Vinícius de Assis Souto Maior Arruda',
                             funcao: 'Gerente de Obras',
                             data: '31/08/2025',
                             foto: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69b4f78756902b494e56bda9/60fcfd9c1_image.png',
                           },
                         ].map((aluno, idx) => (
-                          <div key={idx} className={`bg-slate-700/70 border ${aluno.typeBg} rounded-xl p-3 flex flex-col gap-2 hover:bg-slate-600/80 transition-colors`}>
-                            <div className="flex items-center gap-2">
-                              <img src={aluno.foto} alt={aluno.nome} className="w-10 h-10 rounded-full object-cover border-2 border-slate-500 shrink-0" />
-                              <div className="overflow-hidden">
-                                <span className={`text-[10px] font-bold uppercase tracking-wide ${aluno.typeColor} flex items-center gap-1`}><Briefcase size={10}/> {aluno.type}</span>
-                                <p className="text-white text-xs font-bold leading-tight truncate">{aluno.nome}</p>
-                              </div>
-                            </div>
-                            <div className="pl-0.5">
-                              <p className="text-slate-200 text-xs font-semibold">{aluno.funcao}</p>
+                          <div key={idx} className={`border ${aluno.typeBg} rounded-xl p-3 flex items-center gap-3 hover:bg-slate-600/50 transition-colors`}>
+                            <img src={aluno.foto} alt={aluno.nome} className="w-11 h-11 rounded-full object-cover border-2 border-slate-600 shrink-0" />
+                            <div className="flex-1 min-w-0">
+                              <p className="text-white text-xs font-bold leading-tight truncate">{aluno.nome}</p>
+                              <p className="text-slate-300 text-[11px] mt-0.5">{aluno.funcao}</p>
                               <p className="text-slate-500 text-[10px] font-mono mt-0.5">{aluno.data}</p>
                             </div>
+                            <span className={`shrink-0 text-[10px] font-bold px-2 py-1 rounded-full ${aluno.badgeBg} ${aluno.typeColor} border border-current/20`}>{aluno.type}</span>
                           </div>
                         ))}
                       </div>
