@@ -135,7 +135,7 @@ export default function Home() {
       </section>
 
       {/* INSTITUIÇÕES - logo após o Hero */}
-      <section className="bg-white py-14 border-b border-slate-100">
+      <section id="clientes" className="bg-white py-14 border-b border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="text-sm font-bold tracking-widest text-slate-500 uppercase mb-8">Instituições que Confiam no Nosso Trabalho</p>
           <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 gap-6 items-center justify-items-center">
