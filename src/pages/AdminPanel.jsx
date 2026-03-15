@@ -344,6 +344,26 @@ function AdminBlogEditor({ post: initialPost, onBack }) {
               </div>
             </div>
           </div>
+          <div className="bg-white rounded-2xl border border-amber-200 shadow-sm p-5 space-y-3">
+            <h3 className="font-bold text-slate-800 text-sm flex items-center gap-1">🔍 SEO</h3>
+            <div>
+              <label className="block text-xs font-bold text-slate-600 mb-1">Palavra-chave Principal</label>
+              <input value={form.keyword || ''} onChange={e => setForm({ ...form, keyword: e.target.value })} placeholder="Ex: manutenção predial" className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400" />
+            </div>
+            <div>
+              <label className="block text-xs font-bold text-slate-600 mb-1">
+                Meta Description <span className={`font-normal ${(form.meta_description || '').length > 160 ? 'text-red-500' : 'text-slate-400'}`}>({(form.meta_description || '').length}/160)</span>
+              </label>
+              <textarea
+                value={form.meta_description || ''}
+                onChange={e => setForm({ ...form, meta_description: e.target.value })}
+                placeholder="Descrição exibida no Google (máx 160 caracteres)..."
+                maxLength={160}
+                rows={3}
+                className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 resize-none"
+              />
+            </div>
+          </div>
           <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 space-y-3">
             <h3 className="font-bold text-slate-800 text-sm">Autor</h3>
             <div><label className="block text-xs font-bold text-slate-600 mb-1">Nome</label><input value={form.author_name} onChange={e => setForm({ ...form, author_name: e.target.value })} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" /></div>
