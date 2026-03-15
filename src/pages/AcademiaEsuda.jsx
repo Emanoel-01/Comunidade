@@ -242,7 +242,7 @@ export default function AcademiaEsuda() {
                             nome: 'Paulo Ewerton Ribeiro da Silva',
                             funcao: 'Projetista',
                             data: '30/09/2025',
-                            foto: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69b4f78756902b494e56bda9/60fcfd9c1_image.png',
+                            foto: 'https://base44.app/api/apps/68e635f18ac82c0861df74bb/files/public/68e635f18ac82c0861df74bb/1f83a6303_WhatsAppImage2025-12-10at222424.jpeg',
                           },
                           {
                             type: 'Empregado',
@@ -252,7 +252,7 @@ export default function AcademiaEsuda() {
                             nome: 'Hugo Ewerton Pereira Silva',
                             funcao: 'Engenheiro Fiscal de Campo',
                             data: '01/09/2025',
-                            foto: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69b4f78756902b494e56bda9/60fcfd9c1_image.png',
+                            foto: 'https://base44.app/api/apps/68e635f18ac82c0861df74bb/files/public/68e635f18ac82c0861df74bb/be3ce88a4_1000436217.jpg',
                           },
                           {
                             type: 'Empregado',
@@ -262,7 +262,7 @@ export default function AcademiaEsuda() {
                             nome: 'Adriana Gonçalves Araujo',
                             funcao: 'Fiscal de Obras',
                             data: '31/08/2025',
-                            foto: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69b4f78756902b494e56bda9/60fcfd9c1_image.png',
+                            foto: 'https://base44.app/api/apps/68e635f18ac82c0861df74bb/files/public/68e635f18ac82c0861df74bb/6defa5f03_1000436126.jpg',
                           },
                           {
                             type: 'Empregado',
@@ -272,7 +272,7 @@ export default function AcademiaEsuda() {
                             nome: 'Vinícius de Assis Souto Maior Arruda',
                             funcao: 'Gerente de Obras',
                             data: '31/08/2025',
-                            foto: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69b4f78756902b494e56bda9/60fcfd9c1_image.png',
+                            foto: 'https://base44.app/api/apps/68e635f18ac82c0861df74bb/files/public/68e635f18ac82c0861df74bb/fa93d6795_WhatsAppImage2025-12-10at214138.jpeg',
                           },
                         ].map((aluno, idx) => (
                           <div key={idx} className={`border ${aluno.typeBg} rounded-xl p-3 flex items-center gap-3 hover:bg-slate-600/50 transition-colors`}>
