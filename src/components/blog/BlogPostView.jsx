@@ -110,11 +110,18 @@ export default function BlogPostView({ post, onBack, onSelectPost, relatedPosts 
           <img src={post.cover_image} alt={post.title} className="w-full aspect-[21/9] rounded-2xl object-cover mb-12 shadow-lg" />
         )}
 
-        <div className="prose prose-lg max-w-none text-slate-700 leading-relaxed text-justify mb-16">
+        <div className="prose prose-lg max-w-none text-slate-700 leading-relaxed text-justify mb-10">
           {(post.content || '').split('\n\n').map((p, i) => (
             <p key={i} className="mb-6">{p}</p>
           ))}
         </div>
+
+        {post.media_urls?.length > 0 && (
+          <div className="mb-12">
+            <h3 className="text-lg font-bold text-slate-800 mb-3">Galeria de Mídias</h3>
+            <MediaGallery mediaUrls={post.media_urls} />
+          </div>
+        )}
 
         {post.tags && post.tags.length > 0 && (
           <div className="flex flex-wrap gap-2 mb-10">
