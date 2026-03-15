@@ -60,23 +60,83 @@ export default function AcademiaEsuda() {
         </div>
       </section>
 
-      {/* ARQUITETURA CURRICULAR */}
+      {/* 3 PILARES */}
       <section className="py-20 bg-white border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold text-slate-900 mb-4">A Arquitetura Curricular Inteligente</h2>
-          <p className="text-slate-600 max-w-2xl mx-auto mb-16 text-lg text-justify md:text-center">Projetada para resolver o abismo entre a técnica e o negócio.</p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-            {[
-              { icon: Briefcase, color: 'blue', num: '1.', title: 'Base Empreendedora', desc: 'O Ciclo Comum (180h) foca em Gestão de Negócios, Branding, Precificação, Liderança 4.0, IA Aplicada e Negociação Harvard.' },
-              { icon: Target, color: 'emerald', num: '2.', title: 'Especialização Cirúrgica', desc: 'O Ciclo Técnico (180h) tem foco total no resultado final esperado pelo mercado. Escolha entre 7 caminhos de sucesso para dominar seu nicho.' },
-              { icon: TrendingUp, color: 'amber', num: '3.', title: 'Inteligência de Carreira', desc: 'Ao concluir uma especialização, você já eliminou todo o Ciclo Comum. Isso permite obter uma segunda certificação com 50% do caminho andado.' },
-            ].map((item, i) => (
-              <div key={i} className="bg-slate-50 rounded-2xl p-8 border border-slate-100 hover:shadow-md transition-shadow">
-                <div className={`w-16 h-16 bg-${item.color}-100 text-${item.color}-600 rounded-2xl flex items-center justify-center mx-auto mb-6`}><item.icon size={32} /></div>
-                <h3 className="text-xl font-bold text-slate-900 mb-3">{item.num} {item.title}</h3>
-                <p className="text-slate-600 text-sm leading-relaxed text-justify">{item.desc}</p>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Intro */}
+          <div className="text-center mb-14">
+            <p className="text-sm font-bold uppercase tracking-widest text-emerald-600 mb-3">O Mercado Mudou</p>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-5">3 Pilares que Tornam Esta Formação Imbatível</h2>
+            <p className="text-slate-500 max-w-2xl mx-auto text-base leading-relaxed">
+              Saber "um pouco de tudo" não garante mais os melhores contratos nem os maiores salários. A <strong>Construção 4.0</strong> exige um novo perfil: o especialista que domina a técnica profunda, mas que também sabe gerir, vender e liderar. Nossa metodologia de <strong>Sinergia Curricular</strong> integra desenvolvimento humano, visão estratégica e tecnologia de ponta.
+            </p>
+          </div>
+
+          {/* Cards dos 3 Pilares */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+
+            {/* Pilar 1 */}
+            <div className="bg-slate-50 rounded-2xl p-8 border border-slate-100 hover:shadow-md transition-shadow flex flex-col">
+              <div className="w-16 h-16 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6"><Briefcase size={32} /></div>
+              <h3 className="text-xl font-bold text-slate-900 mb-2 text-center">1. A Base do Profissional Empreendedor</h3>
+              <p className="text-xs font-bold text-blue-500 uppercase tracking-wide text-center mb-4">Ciclo Comum — 180h</p>
+              <p className="text-slate-600 text-sm leading-relaxed text-justify mb-4">
+                Enquanto outras escolas ensinam apenas teoria básica, nós entregamos ferramentas para você <strong>monetizar seu conhecimento</strong>. Antes de entrar no nicho técnico, você domina:
+              </p>
+              <ul className="space-y-2 mb-4">
+                <li className="flex items-start gap-2 text-sm text-slate-700"><CheckCircle size={14} className="text-blue-500 mt-0.5 shrink-0" /><span><strong>Gestão de Negócios:</strong> Branding, Precificação e Estrutura Legal para blindar seu CPF e CNPJ.</span></li>
+                <li className="flex items-start gap-2 text-sm text-slate-700"><CheckCircle size={14} className="text-blue-500 mt-0.5 shrink-0" /><span><strong>Liderança 4.0:</strong> IA Aplicada, Negociação Harvard e Marketing Pessoal.</span></li>
+              </ul>
+              <p className="text-xs text-blue-700 font-semibold bg-blue-50 rounded-lg px-3 py-2 mt-auto">✅ Você deixa de ser apenas um executor de projetos e passa a pensar como dono do negócio.</p>
+            </div>
+
+            {/* Pilar 2 */}
+            <div className="bg-slate-50 rounded-2xl p-8 border border-slate-100 hover:shadow-md transition-shadow flex flex-col">
+              <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-6"><Target size={32} /></div>
+              <h3 className="text-xl font-bold text-slate-900 mb-2 text-center">2. Especialização Cirúrgica</h3>
+              <p className="text-xs font-bold text-emerald-500 uppercase tracking-wide text-center mb-4">7 Perfis · 7 Caminhos de Sucesso — 180h</p>
+              <p className="text-slate-600 text-sm leading-relaxed text-justify mb-4">Não formamos "faz-tudo". Nossos cursos têm foco total no resultado final esperado pelo mercado. Clique em cada perfil para conhecer a especialização:</p>
+              <ul className="space-y-2">
+                {[
+                  { id: 'gpo', emoji: '🏗️', label: 'Gestão de Projetos e Obras', sublabel: 'O Perfil Business' },
+                  { id: 'bim', emoji: '💻', label: 'Tecnologia BIM', sublabel: 'O Perfil Tech' },
+                  { id: 'manutencao', emoji: '⚙️', label: 'Manutenção Predial', sublabel: 'O Perfil Operations' },
+                  { id: 'legal', emoji: '⚖️', label: 'Engenharia Legal', sublabel: 'O Perfil Legal/Finance' },
+                  { id: 'neuroarquitetura', emoji: '🧠', label: 'Neuroarquitetura', sublabel: 'O Perfil Human-Centric' },
+                  { id: 'interiores', emoji: '🎨', label: 'Design de Interiores', sublabel: 'O Perfil Inovação/Estética' },
+                  { id: 'acustica', emoji: '💡', label: 'Acústica e Iluminação', sublabel: 'O Perfil Comfort/Performance' },
+                ].map((item) => (
+                  <li key={item.id}>
+                    <button
+                      onClick={() => courseRefs.current[item.id]?.scrollIntoView({ behavior: 'smooth', block: 'center' })}
+                      className="w-full flex items-center gap-2 text-left text-sm bg-white hover:bg-emerald-50 border border-slate-200 hover:border-emerald-400 rounded-lg px-3 py-2 transition-all group"
+                    >
+                      <span>{item.emoji}</span>
+                      <div className="flex-1">
+                        <span className="font-semibold text-slate-800 group-hover:text-emerald-700">{item.label}</span>
+                        <span className="block text-[10px] text-slate-400 uppercase tracking-wide">{item.sublabel}</span>
+                      </div>
+                      <ArrowRight size={12} className="text-emerald-500 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Pilar 3 */}
+            <div className="bg-slate-50 rounded-2xl p-8 border border-slate-100 hover:shadow-md transition-shadow flex flex-col">
+              <div className="w-16 h-16 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center mx-auto mb-6"><TrendingUp size={32} /></div>
+              <h3 className="text-xl font-bold text-slate-900 mb-2 text-center">3. Inteligência de Carreira</h3>
+              <p className="text-xs font-bold text-amber-500 uppercase tracking-wide text-center mb-4">Lifelong Learning</p>
+              <p className="text-slate-600 text-sm leading-relaxed text-justify mb-4">
+                Nosso modelo respeita seu tempo e investimento. Ao concluir uma especialização, você já eliminou todo o <strong>Ciclo Comum (360h)</strong>. Isso significa que ao buscar uma segunda certificação, você começa com <strong>50% do caminho andado</strong>, incentivando sua formação contínua sem recomeçar do zero.
+              </p>
+              <div className="mt-auto bg-amber-50 border border-amber-200 rounded-xl p-4 text-center">
+                <p className="text-3xl font-extrabold text-amber-600 mb-1">50%</p>
+                <p className="text-xs text-amber-700 font-semibold">do caminho já percorrido na 2ª certificação</p>
               </div>
-            ))}
+            </div>
+
           </div>
         </div>
       </section>
