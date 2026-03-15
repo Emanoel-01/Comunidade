@@ -187,20 +187,31 @@ export default function Home() {
               <h2 className="text-white font-bold text-lg">Trajetória & Portfólio</h2>
               <button onClick={() => setShowTrajetoriaModal(false)} className="w-9 h-9 bg-white/10 hover:bg-white/20 text-white rounded-full flex items-center justify-center transition-colors"><X size={20} /></button>
             </div>
-            {/* Podcast */}
-            <div className="bg-indigo-950 px-6 pb-8">
-              <h3 className="text-white font-bold text-base mb-4">Apresentação em Áudio</h3>
-              <iframe
-                style={{ borderRadius: '12px' }}
-                src="https://open.spotify.com/embed/episode/4wMGEFvPcGQH9FpIfTCGvM?utm_source=generator&theme=0"
-                width="100%"
-                height="152"
-                frameBorder="0"
-                allowFullScreen=""
-                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                loading="lazy"
-                title="Podcast Emanoel Amorim"
-              ></iframe>
+            {/* Perfil + Podcast */}
+            <div className="bg-indigo-950 px-6 pb-8 flex flex-col items-center text-center">
+              <div className="mb-4 mt-2">
+                <img
+                  src="https://i.ibb.co/TDC35Hqf/Emanoel-Silva-de-Amorim.jpg"
+                  alt="Emanoel Amorim"
+                  className="w-20 h-20 rounded-full object-cover border-4 border-indigo-400 shadow-lg mx-auto"
+                />
+              </div>
+              <h2 className="text-white font-extrabold text-xl mb-1 leading-tight">Meu Perfil: Gestão Estratégica e Tecnologia</h2>
+              <p className="text-indigo-300 text-sm mb-6">Emanoel Amorim - Arquiteto e Urbanista</p>
+              <div className="w-full bg-indigo-900/60 border border-indigo-700 rounded-2xl p-4 mb-2">
+                <h3 className="text-white font-bold text-base mb-3 text-left">Apresentação em Áudio</h3>
+                <iframe
+                  style={{ borderRadius: '12px' }}
+                  src="https://open.spotify.com/embed/episode/1NXYnNIrKCwm3sVtjQRGlD?utm_source=generator&theme=0"
+                  width="100%"
+                  height="152"
+                  frameBorder="0"
+                  allowFullScreen=""
+                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                  loading="lazy"
+                  title="Podcast Emanoel Amorim"
+                ></iframe>
+              </div>
             </div>
             {/* Trajetória */}
             <TrajetoriaPortfolio />
