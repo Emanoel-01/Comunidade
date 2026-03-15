@@ -165,7 +165,7 @@ export default function Home() {
               <p className="text-lg text-slate-600 mb-6 leading-relaxed text-justify">Com profundo conhecimento em engenharia diagnóstica, gestão condominial e preservação de patrimônios históricos, percebi que a <strong>tecnologia e a educação</strong> são os caminhos definitivos para transformar a construção civil no Brasil.</p>
               <p className="text-lg text-slate-600 mb-8 leading-relaxed text-justify">Atuo na linha de frente liderando a <strong>Amorim Arquitetura</strong> (consultoria técnica) e a <strong>Amorim Tech</strong> (ferramentas 4.0). Na academia, dedico-me como <strong>Coordenador de Pós-Graduação na ESUDA</strong>, formando os líderes preparados para os desafios do mercado real.</p>
               <button
-                onClick={scrollToTrajetoria}
+                onClick={() => setShowTrajetoriaModal(true)}
                 className="inline-flex items-center gap-2 bg-indigo-900 hover:bg-indigo-800 text-white font-bold px-6 py-3 rounded-lg transition-all shadow-md"
               >
                 Ver Linha do Tempo Profissional <ChevronRight size={18} />
