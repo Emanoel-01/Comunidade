@@ -23,6 +23,27 @@ export default function Layout({ children, currentPageName }) {
 
   return (
     <div className="min-h-screen bg-slate-50 font-sans text-slate-800 flex flex-col relative">
+      <style>{`
+        .ql-content h1 { font-size: 2rem; font-weight: 800; margin: 1.5rem 0 0.75rem; color: #0f172a; }
+        .ql-content h2 { font-size: 1.5rem; font-weight: 700; margin: 1.25rem 0 0.5rem; color: #1e293b; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.4rem; }
+        .ql-content h3 { font-size: 1.25rem; font-weight: 700; margin: 1rem 0 0.5rem; color: #334155; }
+        .ql-content p { margin-bottom: 1rem; line-height: 1.8; }
+        .ql-content ul { list-style: disc; padding-left: 1.5rem; margin-bottom: 1rem; }
+        .ql-content ol { list-style: decimal; padding-left: 1.5rem; margin-bottom: 1rem; }
+        .ql-content li { margin-bottom: 0.25rem; }
+        .ql-content strong { font-weight: 700; color: #0f172a; }
+        .ql-content em { font-style: italic; }
+        .ql-content u { text-decoration: underline; }
+        .ql-content s { text-decoration: line-through; }
+        .ql-content blockquote { border-left: 4px solid #818cf8; padding-left: 1rem; color: #64748b; font-style: italic; margin: 1.25rem 0; }
+        .ql-content pre { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; margin-bottom: 1rem; font-family: monospace; }
+        .ql-content code { background: #f1f5f9; color: #4f46e5; padding: 0.1rem 0.4rem; border-radius: 0.25rem; font-size: 0.875rem; font-family: monospace; }
+        .ql-content a { color: #4f46e5; text-decoration: underline; }
+        .ql-content img { max-width: 100%; border-radius: 0.5rem; margin: 1rem 0; }
+        .ql-content .ql-align-center { text-align: center; }
+        .ql-content .ql-align-right { text-align: right; }
+        .ql-content .ql-align-justify { text-align: justify; }
+      `}</style>
       {/* HEADER */}
       <header className="bg-white shadow-sm sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
