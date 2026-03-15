@@ -21,7 +21,7 @@ const esudaCourses = [
   {
     id: 'manutencao', title: 'Engenharia e Gestão da Manutenção Predial 4.0', profile: 'O Perfil Operações',
     status: 'Turma Iniciada', statusType: 'iniciada',
-    color: 'amber', duration: '10 meses', hours: '360h',
+    color: 'indigo', duration: '10 meses', hours: '360h',
     format: 'Presencial, Remoto (ao vivo), Gravadas',
     dias: 'Sáb', horario: '08:00 - 17:00',
     inscricoes: '30/08/2025', inicioAulas: '30/08/2025',
