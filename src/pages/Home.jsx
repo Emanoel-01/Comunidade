@@ -231,7 +231,7 @@ export default function Home() {
             {[
               { icon: Building2, title: 'Amorim Arquitetura', desc: 'Consultoria e Gestão estratégica, laudos e engenharia diagnóstica com foco em eficiência, segurança e preservação.', link: 'AmorimArquitetura', color: 'blue' },
               { icon: Cpu, title: 'Amorim Tech', desc: 'Desenvolvendo o ecossistema digital para gestão inteligente de edifícios (SaaS e EdTech).', link: 'AmorimTech', color: 'indigo' },
-              { icon: GraduationCap, title: 'Academia ESUDA', desc: 'Formando os protagonistas do futuro. Especialistas e líderes que dominam a convergência entre teoria, prática e tecnologia. O ponto de encontro entre quem resolve e quem contrata na Construção Civil.', link: 'AcademiaEsuda', color: 'emerald' },
+              { icon: GraduationCap, title: 'Academia ESUDA', desc: 'Formando os protagonistas do futuro. Especialistas e líderes que dominam a convergência entre teoria, prática e tecnologia.', link: 'AcademiaEsuda', color: 'emerald' },
             ].map((item, i) => (
               <div key={i} className="bg-white rounded-2xl shadow-sm border border-slate-200 p-8 hover:shadow-xl transition-all group flex flex-col">
                 <div className={`w-14 h-14 bg-slate-50 rounded-xl flex items-center justify-center text-slate-700 mb-6 group-hover:bg-${item.color}-50 group-hover:text-${item.color}-600 transition-colors`}><item.icon className="w-8 h-8" /></div>
