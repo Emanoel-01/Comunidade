@@ -251,7 +251,7 @@ export default function IncubadoraSection() {
             </div>
 
             {/* ROI Banner */}
-            {projeto.roi !== '—' ? (
+            {projeto.roi !== '-' ? (
               <div className="bg-gradient-to-br from-emerald-600 to-teal-800 rounded-xl p-6 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
                 <div>
                   <p className="text-emerald-100 text-sm font-bold uppercase tracking-wide mb-1">Retorno Médio sobre o Investimento</p>
