@@ -81,7 +81,10 @@ export default function AcademiaEsuda() {
       </section>
 
       {/* INCUBADORA */}
-      <section className="py-20 bg-slate-900 text-white border-b border-emerald-900">
+      <IncubadoraSection />
+
+      {/* PLACEHOLDER - remove original section start */}
+      {false && <section className="py-20 bg-slate-900 text-white border-b border-emerald-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-500/20 border border-emerald-500/30 rounded-full text-emerald-400 text-sm font-bold tracking-wide mb-4"><TrendingUp size={16} /> Aceleradora de Carreiras</div>
