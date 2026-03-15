@@ -302,39 +302,73 @@ export default function Home() {
               <button onClick={() => setTestimonialsModalView('gallery')} className="text-indigo-600 hover:text-indigo-800 font-medium flex items-center gap-1 group">Ver Galeria Completa <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform"/></button>
             </div>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Card de vídeo fixo */}
-            <div className="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col">
-              <div className="aspect-square overflow-hidden relative">
-                <iframe
-                  src="https://drive.google.com/file/d/1XKNc4PTfsifmd_B4pS2GoDt3xct60Y8b/preview"
-                  className="w-full h-full"
-                  allow="autoplay"
-                  title="Depoimento em vídeo"
-                ></iframe>
-              </div>
-              <div className="p-4 border-t border-slate-100">
-                <p className="font-bold text-slate-900 text-sm">Annah Paula Freire</p>
-                <p className="text-slate-500 text-xs mt-1">Arquiteta Paisagista • Especialista em Transformação de Pessoas</p>
-                <p className="text-slate-600 text-xs mt-1 italic line-clamp-3">"Com diplomacia e competência, Emanoel conseguiu adequar os perfis profissionais, com prazo e a melhor forma de atender o cliente."</p>
-              </div>
-            </div>
-            {testimonials.map((t, idx) => (
-              <div key={idx} className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow overflow-hidden relative group cursor-pointer" onClick={() => setZoomedMedia({ src: t.author_photo, text: t.text, name: t.author_name })}>
-                <div className="aspect-square overflow-hidden">
-                  <img src={t.author_photo} alt={t.author_name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+
+          {/* Depoimentos Fixos com imagem em destaque */}
+          {(() => {
+            const fixedNames = ['Annah Paula Freire', 'José Gonçalves Campos Filho', 'Amanda Aires Vieira', 'Clodomir Barros'];
+            const fixedTestimonials = testimonials.filter(t => fixedNames.includes(t.author_name));
+            const dynamicTestimonials = testimonials.filter(t => !fixedNames.includes(t.author_name));
+            return (
+              <>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                  {/* Card de vídeo fixo - Annah Paula Freire */}
+                  <div className="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col">
+                    <div className="aspect-square overflow-hidden relative">
+                      <iframe
+                        src="https://drive.google.com/file/d/1XKNc4PTfsifmd_B4pS2GoDt3xct60Y8b/preview"
+                        className="w-full h-full"
+                        allow="autoplay"
+                        title="Depoimento em vídeo"
+                      ></iframe>
+                    </div>
+                    <div className="p-4 border-t border-slate-100">
+                      <p className="font-bold text-slate-900 text-sm">Annah Paula Freire</p>
+                      <p className="text-slate-500 text-xs mt-1">Arquiteta Paisagista • Especialista em Transformação de Pessoas</p>
+                      <p className="text-slate-600 text-xs mt-1 italic line-clamp-3">"Com diplomacia e competência, Emanoel conseguiu adequar os perfis profissionais, com prazo e a melhor forma de atender o cliente."</p>
+                    </div>
+                  </div>
+                  {/* Demais fixos do banco */}
+                  {fixedTestimonials.map((t, idx) => (
+                    <div key={idx} className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow overflow-hidden relative group cursor-pointer" onClick={() => setZoomedMedia({ src: t.author_photo, text: t.text, name: t.author_name })}>
+                      <div className="aspect-square overflow-hidden">
+                        <img src={t.author_photo} alt={t.author_name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                      </div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-5 pointer-events-none">
+                        <p className="text-white font-bold text-sm">{t.author_name}</p>
+                        <p className="text-slate-300 text-xs mt-1 line-clamp-3">{t.text}</p>
+                      </div>
+                      <div className="p-4 border-t border-slate-100">
+                        <p className="font-bold text-slate-900 text-sm">{t.author_name}</p>
+                        <p className="text-slate-500 text-xs mt-1 line-clamp-2">{t.text}</p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-5 pointer-events-none">
-                  <p className="text-white font-bold text-sm">{t.author_name}</p>
-                  <p className="text-slate-300 text-xs mt-1 line-clamp-3">{t.text}</p>
-                </div>
-                <div className="p-4 border-t border-slate-100">
-                  <p className="font-bold text-slate-900 text-sm">{t.author_name}</p>
-                  <p className="text-slate-500 text-xs mt-1 line-clamp-2">{t.text}</p>
-                </div>
-              </div>
-            ))}
-          </div>
+
+                {/* Depoimentos dinâmicos (formulário) - layout compacto */}
+                {dynamicTestimonials.length > 0 && (
+                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {dynamicTestimonials.map((t, idx) => (
+                      <div key={idx} className="bg-white rounded-xl shadow-sm border border-slate-200 p-5 flex gap-4 items-start">
+                        {t.author_photo ? (
+                          <img src={t.author_photo} alt={t.author_name} className="w-11 h-11 rounded-full object-cover shrink-0 border-2 border-slate-100" />
+                        ) : (
+                          <div className="w-11 h-11 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center shrink-0 font-bold text-lg">
+                            {t.author_name?.charAt(0)}
+                          </div>
+                        )}
+                        <div className="flex-1 min-w-0">
+                          <p className="font-bold text-slate-900 text-sm leading-tight">{t.author_name}</p>
+                          {t.author_role && <p className="text-indigo-600 text-xs mt-0.5">{t.author_role}</p>}
+                          <p className="text-slate-600 text-sm mt-2 leading-relaxed">"{t.text}"</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </>
+            );
+          })()}
         </div>
       </section>
 
