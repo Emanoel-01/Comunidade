@@ -246,6 +246,7 @@ function AdminBlogEditor({ post: initialPost, onBack }) {
   const [form, setForm] = useState(initialPost || BLANK_POST);
   const [saving, setSaving] = useState(false);
   const [tagInput, setTagInput] = useState('');
+  const [uploadingCover, setUploadingCover] = useState(false);
 
   const save = async (status) => {
     setSaving(true);
@@ -267,6 +268,15 @@ function AdminBlogEditor({ post: initialPost, onBack }) {
 
   const removeTag = (idx) => setForm(f => ({ ...f, tags: f.tags.filter((_, i) => i !== idx) }));
 
+  const handleCoverUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploadingCover(true);
+    const { file_url } = await base44.integrations.Core.UploadFile({ file });
+    setForm(f => ({ ...f, cover_image: file_url }));
+    setUploadingCover(false);
+  };
+
   return (
     <div className="animate-in fade-in space-y-5">
       <div className="flex items-center justify-between">
@@ -278,10 +288,12 @@ function AdminBlogEditor({ post: initialPost, onBack }) {
       </div>
 
       <div className="grid lg:grid-cols-3 gap-5">
+        {/* Coluna principal */}
         <div className="lg:col-span-2 space-y-4">
           <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 space-y-4">
             <input type="text" placeholder="Título do artigo..." value={form.title} onChange={e => setForm({ ...form, title: e.target.value })} className="w-full text-2xl font-extrabold text-slate-900 border-none outline-none bg-transparent placeholder-slate-300" />
             <input type="text" placeholder="Resumo (aparece nos cards do blog)..." value={form.excerpt} onChange={e => setForm({ ...form, excerpt: e.target.value })} className="w-full text-slate-600 border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
+
             <div>
               <label className="block text-xs font-bold text-slate-500 mb-1 uppercase tracking-wide">Conteúdo do Artigo</label>
               <div className="border border-slate-200 rounded-xl overflow-hidden">
@@ -289,21 +301,82 @@ function AdminBlogEditor({ post: initialPost, onBack }) {
                   value={form.content}
                   onChange={val => setForm({ ...form, content: val })}
                   theme="snow"
-                  style={{ minHeight: '300px' }}
+                  placeholder="Escreva o conteúdo detalhado do post..."
+                  style={{ minHeight: '320px' }}
                   modules={{
                     toolbar: [
                       [{ 'header': [1, 2, 3, false] }],
-                      ['bold', 'italic', 'underline', 'blockquote'],
+                      [{ 'font': [] }],
+                      [{ 'size': ['small', false, 'large', 'huge'] }],
+                      ['bold', 'italic', 'underline', 'strike'],
+                      [{ 'color': [] }, { 'background': [] }],
+                      ['blockquote', 'code-block'],
+                      ['link', 'image'],
                       [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-                      ['link'],
+                      [{ 'align': [] }],
                       ['clean']
                     ]
                   }}
                 />
               </div>
             </div>
+
+            {/* Imagem de Destaque */}
+            <div>
+              <label className="block text-xs font-bold text-indigo-600 mb-2 uppercase tracking-wide">Imagem de Destaque (Thumbnail)</label>
+              <div className="flex items-center gap-3">
+                <label className={`flex items-center gap-2 px-4 py-2 border border-slate-300 rounded-lg text-sm text-slate-600 cursor-pointer hover:bg-slate-50 transition-colors ${uploadingCover ? 'opacity-50' : ''}`}>
+                  <Upload size={14} />
+                  {uploadingCover ? 'Enviando...' : 'Escolher arquivo'}
+                  <input type="file" accept="image/*" onChange={handleCoverUpload} className="hidden" disabled={uploadingCover} />
+                </label>
+                {!form.cover_image && <span className="text-sm text-slate-400">Nenhum arquivo escolhido</span>}
+                {form.cover_image && <span className="text-xs text-emerald-600 font-bold flex items-center gap-1"><CheckCircle2 size={13} /> Imagem carregada</span>}
+              </div>
+              {form.cover_image && (
+                <div className="mt-3 relative group w-fit">
+                  <img src={form.cover_image} className="h-36 rounded-lg object-cover border border-slate-200" alt="capa" />
+                  <button onClick={() => setForm(f => ({ ...f, cover_image: '' }))} className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-0.5 opacity-0 group-hover:opacity-100 transition-opacity"><X size={12} /></button>
+                </div>
+              )}
+            </div>
+
+            {/* Tags */}
+            <div>
+              <label className="block text-xs font-bold text-slate-500 mb-2 uppercase tracking-wide">Tags</label>
+              <div className="flex flex-wrap gap-1 mb-2">
+                {(form.tags || []).map((tag, idx) => (
+                  <span key={idx} className="flex items-center gap-1 bg-indigo-50 text-indigo-700 text-xs px-2 py-1 rounded-full font-bold">
+                    {tag} <button onClick={() => removeTag(idx)} className="hover:text-red-500"><X size={10} /></button>
+                  </span>
+                ))}
+              </div>
+              <div className="flex gap-2">
+                <input
+                  value={tagInput}
+                  onChange={e => setTagInput(e.target.value)}
+                  onKeyDown={e => e.key === 'Enter' && (e.preventDefault(), addTag())}
+                  placeholder="Digite uma tag e pressione Enter"
+                  className="flex-grow border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                />
+                <button onClick={addTag} className="flex items-center gap-1 px-3 py-2 bg-white border border-slate-300 text-slate-700 rounded-lg text-sm font-bold hover:bg-slate-50">
+                  <Plus size={14} /> Adicionar
+                </button>
+              </div>
+            </div>
+
+            {/* Mídias Anexadas */}
+            <div>
+              <MediaUploader
+                mediaUrls={form.media_urls || []}
+                onChange={urls => setForm({ ...form, media_urls: urls })}
+                label="Mídias Anexadas"
+              />
+            </div>
           </div>
         </div>
+
+        {/* Coluna lateral */}
         <div className="space-y-4">
           <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 space-y-4">
             <h3 className="font-bold text-slate-800 text-sm">Configurações</h3>
@@ -314,36 +387,11 @@ function AdminBlogEditor({ post: initialPost, onBack }) {
               </select>
             </div>
             <div>
-              <label className="block text-xs font-bold text-slate-600 mb-1">URL da Capa</label>
-              <input value={form.cover_image} onChange={e => setForm({ ...form, cover_image: e.target.value })} placeholder="https://..." className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
-              {form.cover_image && <img src={form.cover_image} className="mt-2 w-full aspect-video object-cover rounded-lg" alt="" />}
-            </div>
-            <div>
-              <MediaUploader
-                mediaUrls={form.media_urls || []}
-                onChange={urls => setForm({ ...form, media_urls: urls })}
-                label="Mídias do artigo (fotos, vídeos, áudios)"
-              />
-            </div>
-            <div>
               <label className="block text-xs font-bold text-slate-600 mb-1">Tempo de Leitura</label>
-              <input value={form.read_time} onChange={e => setForm({ ...form, read_time: e.target.value })} placeholder="5 min de leitura" className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
-            </div>
-            <div>
-              <label className="block text-xs font-bold text-slate-600 mb-1">Tags</label>
-              <div className="flex flex-wrap gap-1 mb-2">
-                {(form.tags || []).map((tag, idx) => (
-                  <span key={idx} className="flex items-center gap-1 bg-indigo-50 text-indigo-700 text-xs px-2 py-1 rounded-full font-bold">
-                    {tag} <button onClick={() => removeTag(idx)} className="hover:text-red-500"><X size={10} /></button>
-                  </span>
-                ))}
-              </div>
-              <div className="flex gap-2">
-                <input value={tagInput} onChange={e => setTagInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && (e.preventDefault(), addTag())} placeholder="Adicionar tag..." className="flex-grow border border-slate-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
-                <button onClick={addTag} className="px-3 py-1.5 bg-indigo-600 text-white rounded-lg text-xs font-bold hover:bg-indigo-700"><Plus size={14} /></button>
-              </div>
+              <input value={form.read_time} onChange={e => setForm({ ...form, read_time: e.target.value })} placeholder="5 min" className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
             </div>
           </div>
+
           <div className="bg-white rounded-2xl border border-amber-200 shadow-sm p-5 space-y-3">
             <h3 className="font-bold text-slate-800 text-sm flex items-center gap-1">🔍 SEO</h3>
             <div>
@@ -364,6 +412,7 @@ function AdminBlogEditor({ post: initialPost, onBack }) {
               />
             </div>
           </div>
+
           <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 space-y-3">
             <h3 className="font-bold text-slate-800 text-sm">Autor</h3>
             <div><label className="block text-xs font-bold text-slate-600 mb-1">Nome</label><input value={form.author_name} onChange={e => setForm({ ...form, author_name: e.target.value })} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" /></div>
