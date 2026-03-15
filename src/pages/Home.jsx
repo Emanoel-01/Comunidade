@@ -180,8 +180,26 @@ export default function Home() {
         </div>
       </section>
 
-      {/* TRAJETÓRIA & PORTFÓLIO */}
-      <TrajetoriaPortfolio />
+      {/* APRESENTAÇÃO EM ÁUDIO + TRAJETÓRIA & PORTFÓLIO */}
+      <div ref={trajetoriaRef}>
+        <section className="bg-indigo-950 py-10 px-4">
+          <div className="max-w-2xl mx-auto">
+            <h3 className="text-white font-bold text-xl mb-5">Apresentação em Áudio</h3>
+            <iframe
+              style={{ borderRadius: '12px' }}
+              src="https://open.spotify.com/embed/episode/4wMGEFvPcGQH9FpIfTCGvM?utm_source=generator&theme=0"
+              width="100%"
+              height="152"
+              frameBorder="0"
+              allowFullScreen=""
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              loading="lazy"
+              title="Podcast Emanoel Amorim"
+            ></iframe>
+          </div>
+        </section>
+        <TrajetoriaPortfolio />
+      </div>
 
       {/* ECOSSISTEMA */}
       <section ref={ecosystemRef} className="py-20 bg-slate-50">
