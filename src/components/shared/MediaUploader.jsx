@@ -49,6 +49,12 @@ function MediaThumb({ url, onRemove }) {
           <span className="text-[10px] font-bold">Áudio</span>
         </div>
       )}
+      {type === 'pdf' && (
+        <div className="flex flex-col items-center justify-center w-full h-full bg-red-100 text-red-600 gap-1">
+          <FileText size={22} />
+          <span className="text-[10px] font-bold">PDF</span>
+        </div>
+      )}
       {type === 'unknown' && (
         <div className="flex flex-col items-center justify-center w-full h-full bg-slate-200 text-slate-600 gap-1">
           <Upload size={18} />
