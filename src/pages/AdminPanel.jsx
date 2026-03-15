@@ -11,6 +11,7 @@ import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import AdminInviteUsers from '../components/admin/AdminInviteUsers';
 import AdminForum from '../components/admin/AdminForum';
+import MediaUploader from '../components/shared/MediaUploader';
 
 const BLANK_POST = { title: '', content: '', excerpt: '', cover_image: '', category: 'Gestão 4.0', tags: [], author_name: 'Emanoel Amorim', author_role: 'CEO Amorim Tech', author_avatar: 'https://i.ibb.co/TDC35Hqf/Emanoel-Silva-de-Amorim.jpg', read_time: '5 min', status: 'draft' };
 
