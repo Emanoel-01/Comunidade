@@ -79,7 +79,7 @@ export default function AcademiaEsuda() {
             <div className="bg-slate-50 rounded-2xl p-8 border border-slate-100 hover:shadow-md transition-shadow flex flex-col">
               <div className="w-16 h-16 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6"><Briefcase size={32} /></div>
               <h3 className="text-xl font-bold text-slate-900 mb-2 text-center">1. A Base do Profissional Empreendedor</h3>
-              <p className="text-xs font-bold text-blue-500 uppercase tracking-wide text-center mb-4">Ciclo Comum — 180h</p>
+              <p className="text-xs font-bold text-blue-500 uppercase tracking-wide text-center mb-4">Ciclo Estratégias de Negócios, Liderança e Inteligência Competitiva</p>
               <p className="text-slate-600 text-sm leading-relaxed text-justify mb-4">
                 Enquanto outras escolas ensinam apenas teoria básica, nós entregamos ferramentas para você <strong>monetizar seu conhecimento</strong>. Antes de entrar no nicho técnico, você domina:
               </p>
