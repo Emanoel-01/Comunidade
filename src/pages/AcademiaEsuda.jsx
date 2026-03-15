@@ -81,7 +81,7 @@ const esudaCourses = [
   {
     id: 'interiores', title: 'Design de Interiores Contemporâneo', profile: 'O Perfil Inovação/Estética',
     status: 'Inscrições para Próxima Turma', statusType: 'proxima',
-    color: 'blue', duration: '10 meses', hours: '360h',
+    color: 'indigo', duration: '10 meses', hours: '360h',
     format: 'Presencial, Remoto (ao vivo), Gravadas',
     dias: 'Sáb', horario: '08:00 - 17:00',
     inscricoes: 'Em breve', inicioAulas: 'Em breve',
@@ -96,7 +96,7 @@ const esudaCourses = [
   {
     id: 'acustica', title: 'Acústica Arquitetônica e Iluminação', profile: 'O Perfil Comfort/Performance',
     status: 'Inscrições para Próxima Turma', statusType: 'proxima',
-    color: 'blue', duration: '10 meses', hours: '360h',
+    color: 'indigo', duration: '10 meses', hours: '360h',
     format: 'Presencial, Remoto (ao vivo), Gravadas',
     dias: 'Sáb', horario: '08:00 - 17:00',
     inscricoes: 'Em breve', inicioAulas: 'Em breve',
