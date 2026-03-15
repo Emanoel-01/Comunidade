@@ -359,19 +359,53 @@ export default function Home() {
                   <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 flex items-center gap-2"><Star className="text-amber-500" fill="currentColor" /> Galeria de Depoimentos</h2>
                   <button onClick={() => setTestimonialsModalView('form')} className="hidden md:flex bg-indigo-900 hover:bg-indigo-800 text-white font-bold px-4 py-2 rounded-lg items-center gap-2"><MessageSquare size={16} /> Enviar o meu</button>
                 </div>
-                <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
-                  {testimonials.map((t, idx) => (
-                    <div key={idx} className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden relative group cursor-pointer" onClick={() => setZoomedMedia({ src: t.author_photo, text: t.text, name: t.author_name })}>
-                      <div className="aspect-square overflow-hidden">
-                        <img src={t.author_photo} alt={t.author_name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                {(() => {
+                  const fixedNames = ['Annah Paula Freire', 'José Gonçalves Campos Filho', 'Amanda Aires Vieira', 'Clodomir Barros'];
+                  const fixedT = testimonials.filter(t => fixedNames.includes(t.author_name));
+                  const dynamicT = testimonials.filter(t => !fixedNames.includes(t.author_name));
+                  return (
+                    <>
+                      {/* Fixos com imagem */}
+                      <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 mb-8">
+                        {fixedT.map((t, idx) => (
+                          <div key={idx} className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden relative group cursor-pointer" onClick={() => setZoomedMedia({ src: t.author_photo, text: t.text, name: t.author_name })}>
+                            <div className="aspect-square overflow-hidden">
+                              <img src={t.author_photo} alt={t.author_name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
+                            </div>
+                            <div className="p-3 border-t border-slate-100">
+                              <p className="font-bold text-slate-900 text-sm">{t.author_name}</p>
+                              <p className="text-slate-500 text-xs mt-1 line-clamp-3">{t.text}</p>
+                            </div>
+                          </div>
+                        ))}
                       </div>
-                      <div className="p-3 border-t border-slate-100">
-                        <p className="font-bold text-slate-900 text-sm">{t.author_name}</p>
-                        <p className="text-slate-500 text-xs mt-1 line-clamp-3">{t.text}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                      {/* Dinâmicos do formulário - layout compacto */}
+                      {dynamicT.length > 0 && (
+                        <>
+                          <h3 className="text-slate-700 font-bold text-sm uppercase tracking-wide mb-4">Mais Depoimentos</h3>
+                          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                            {dynamicT.map((t, idx) => (
+                              <div key={idx} className="bg-white rounded-xl shadow-sm border border-slate-200 p-5 flex gap-4 items-start">
+                                {t.author_photo ? (
+                                  <img src={t.author_photo} alt={t.author_name} className="w-11 h-11 rounded-full object-cover shrink-0 border-2 border-slate-100" />
+                                ) : (
+                                  <div className="w-11 h-11 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center shrink-0 font-bold text-lg">
+                                    {t.author_name?.charAt(0)}
+                                  </div>
+                                )}
+                                <div className="flex-1 min-w-0">
+                                  <p className="font-bold text-slate-900 text-sm leading-tight">{t.author_name}</p>
+                                  {t.author_role && <p className="text-indigo-600 text-xs mt-0.5">{t.author_role}</p>}
+                                  <p className="text-slate-600 text-sm mt-2 leading-relaxed">"{t.text}"</p>
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </>
+                      )}
+                    </>
+                  );
+                })()}
               </div>
             )}
             {testimonialsModalView === 'form' && (
