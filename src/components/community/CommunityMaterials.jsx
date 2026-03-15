@@ -100,7 +100,7 @@ export default function CommunityMaterials({ user }) {
   const [materials, setMaterials] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
-  const [form, setForm] = useState({ title: '', description: '', category: 'Planilhas', file_url: '' });
+  const [form, setForm] = useState({ title: '', description: '', category: 'Planilhas', file_url: '', media_urls: [] });
   const [saving, setSaving] = useState(false);
   const [activeFilter, setActiveFilter] = useState('Todos');
   const [search, setSearch] = useState('');
