@@ -36,7 +36,7 @@ const esudaCourses = [
   {
     id: 'bim', title: 'Tecnologia BIM na Construção Civil', profile: 'O Perfil Tech',
     status: 'Turma Iniciada', statusType: 'iniciada',
-    color: 'amber', duration: '10 meses', hours: '360h',
+    color: 'indigo', duration: '10 meses', hours: '360h',
     format: 'Presencial, Remoto (ao vivo), Gravadas',
     dias: 'Sáb', horario: '08:00 - 17:00',
     inscricoes: '31/01/2026', inicioAulas: '31/01/2026',
@@ -66,7 +66,7 @@ const esudaCourses = [
   {
     id: 'neuroarquitetura', title: 'Neuroarquitetura', profile: 'O Perfil Human-Centric',
     status: 'Inscrições para Próxima Turma', statusType: 'proxima',
-    color: 'blue', duration: '10 meses', hours: '360h',
+    color: 'indigo', duration: '10 meses', hours: '360h',
     format: 'Presencial, Remoto (ao vivo), Gravadas',
     dias: 'Sáb', horario: '08:00 - 17:00',
     inscricoes: 'Em breve', inicioAulas: 'Em breve',
