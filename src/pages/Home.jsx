@@ -172,9 +172,7 @@ export default function Home() {
               <h2 className="text-3xl font-bold text-slate-900 mb-6">Trajetória e Propósito</h2>
               <p className="text-lg text-slate-600 mb-6 leading-relaxed text-justify">Com profundo conhecimento em engenharia diagnóstica, gestão condominial e preservação de patrimônios históricos, percebi que a <strong>tecnologia e a educação</strong> são os caminhos definitivos para transformar a construção civil no Brasil.</p>
               <p className="text-lg text-slate-600 mb-8 leading-relaxed text-justify">Atuo na linha de frente liderando a <strong>Amorim Arquitetura</strong> (consultoria técnica) e a <strong>Amorim Tech</strong> (ferramentas 4.0). Na academia, dedico-me como <strong>Coordenador de Pós-Graduação na ESUDA</strong>, formando os líderes preparados para os desafios do mercado real.</p>
-              <button onClick={() => setIsPortfolioModalOpen(true)} className="px-6 py-3 bg-slate-900 text-white font-medium rounded-lg hover:bg-slate-800 transition-colors shadow-md flex items-center gap-2">
-                Ver Linha do Tempo Profissional <ChevronRight size={18}/>
-              </button>
+
             </div>
           </div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 bg-slate-50 rounded-2xl p-6 sm:p-8 border border-slate-100">
