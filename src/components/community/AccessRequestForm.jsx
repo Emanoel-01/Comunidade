@@ -3,16 +3,15 @@ import { base44 } from '@/api/base44Client';
 import { CheckCircle2, X, Send } from 'lucide-react';
 
 const ROLE_OPTIONS = [
-  { value: 'aluno', label: 'Aluno / Estudante' },
-  { value: 'engenheiro', label: 'Engenheiro Civil' },
-  { value: 'arquiteto', label: 'Arquiteto' },
-  { value: 'docente', label: 'Docente / Professor' },
-  { value: 'parceiro', label: 'Parceiro Comercial' },
-  { value: 'gestor_condominial', label: 'Gestor Condominial' },
-  { value: 'consultor_bim', label: 'Consultor BIM' },
-  { value: 'perito_judicial', label: 'Perito Judicial' },
-  { value: 'corretor', label: 'Corretor de Imóveis' },
-  { value: 'investidor', label: 'Investidor' },
+  { value: 'perito_judicial', label: 'Especialista em Engenharia Diagnóstica' },
+  { value: 'gestor_condominial', label: 'Gestor de Ativos / Facilities Manager' },
+  { value: 'parceiro', label: 'Síndico Profissional / Gestor Predial' },
+  { value: 'arquiteto', label: 'Clientes Amorim Arquitetura' },
+  { value: 'aluno', label: 'Aluno / Pós-Graduando ESUDA' },
+  { value: 'engenheiro', label: 'Profissional Autônomo' },
+  { value: 'investidor', label: 'Investidor / Incorporador' },
+  { value: 'consultor_bim', label: 'Consultor BIM / Inovação Tecnológica' },
+  { value: 'docente', label: 'Parceiro Estratégico / Fornecedor Homologado' },
 ];
 
 export default function AccessRequestForm({ onClose }) {
