@@ -126,12 +126,21 @@ export default function MediaUploader({ mediaUrls = [], onChange, label = "Adici
           ) : (
             <>
               <Upload size={18} className="text-slate-400" />
-              <span className="text-[10px] text-slate-400 mt-1 font-bold text-center">Foto/Vídeo/MP3</span>
+              <span className="text-[10px] text-slate-400 mt-1 font-bold text-center">Foto/Vídeo/MP3/PDF</span>
             </>
           )}
           <input ref={inputRef} type="file" multiple accept={accept} onChange={handleFiles} className="hidden" disabled={uploading} />
         </label>
       </div>
+
+      {/* Feedback de upload por arquivo */}
+      {fileStatuses.length > 0 && (
+        <div className="mt-3 flex flex-col gap-1.5">
+          {fileStatuses.map((f, i) => (
+            <UploadingItem key={i} name={f.name} status={f.status} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
