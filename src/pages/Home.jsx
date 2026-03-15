@@ -158,9 +158,9 @@ export default function Home() {
               </div>
             </div>
             <div className="md:w-2/3">
-              <h2 className="text-3xl font-bold text-slate-900 mb-6">Trajetória e Propósito</h2>
-              <p className="text-lg text-slate-600 mb-6 leading-relaxed text-justify">Com profundo conhecimento em engenharia diagnóstica, gestão condominial e preservação de patrimônios históricos, percebi que a <strong>tecnologia e a educação</strong> são os caminhos definitivos para transformar a construção civil no Brasil.</p>
-              <p className="text-lg text-slate-600 mb-8 leading-relaxed text-justify">Atuo na linha de frente liderando a <strong>Amorim Arquitetura</strong> (consultoria técnica) e a <strong>Amorim Tech</strong> (ferramentas 4.0). Na academia, dedico-me como <strong>Coordenador de Pós-Graduação na ESUDA</strong>, formando os líderes preparados para os desafios do mercado real.</p>
+              <h2 className="text-3xl font-bold text-slate-900 mb-3">Minha Missão e Propósito</h2>
+              <p className="text-lg text-slate-600 mb-6 leading-relaxed text-justify">Tive o privilégio de atuar na gestão de empreendimentos em todo o ciclo de vida dos edifícios: desde a viabilidade, projeto e legalização, passando por obras, pós-obra, instalação, operação, até a manutenção e demolição seletiva. Essa trajetória me mostrou com clareza que a <strong>tecnologia e a educação</strong> são os caminhos definitivos para transformar a construção civil no Brasil.</p>
+              <p className="text-lg text-slate-600 mb-8 leading-relaxed text-justify">Hoje, atuo na linha de frente liderando a <strong>Amorim Arquitetura</strong> (consultoria técnica) e a <strong>Amorim Tech</strong> (ferramentas 4.0). No pilar educacional, dedico-me como <strong>Coordenador de Pós-Graduação na ESUDA</strong>, formando líderes e especialistas preparados para enfrentar e superar os desafios do mercado real.</p>
               <button
                 onClick={() => setShowTrajetoriaModal(true)}
                 className="inline-flex items-center gap-2 bg-indigo-900 hover:bg-indigo-800 text-white font-bold px-6 py-3 rounded-lg transition-all shadow-md"
