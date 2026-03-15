@@ -212,12 +212,13 @@ export default function AcademiaEsuda() {
                         <span className="text-white font-semibold">Projeto:</span> "Amorim Tech - Ecossistema para Gestão Inteligente de Edifícios"
                       </p>
                       <div className="flex flex-col gap-1">
-                        {['Nathálya Aguiar Leal de Melo', 'Adrianne Oliveira Menezes'].map((nome, i) => (
+                        {[
+                          { nome: 'Nathálya Aguiar Leal de Melo', foto: 'https://base44.app/api/apps/68e635f18ac82c0861df74bb/files/public/68e635f18ac82c0861df74bb/568498f4f_WhatsAppImage2025-12-10at172355.jpeg' },
+                          { nome: 'Adrianne Oliveira Menezes', foto: 'https://base44.app/api/apps/68e635f18ac82c0861df74bb/files/public/68e635f18ac82c0861df74bb/410684c1c_WhatsAppImage2026-01-29at111340.jpeg' },
+                        ].map((aluno, i) => (
                           <div key={i} className="flex items-center gap-2 bg-slate-700/40 rounded-lg px-2 py-1">
-                            <div className="w-5 h-5 rounded-full bg-amber-500/30 flex items-center justify-center shrink-0">
-                              <Star size={10} className="text-amber-400" />
-                            </div>
-                            <span className="text-white text-[11px] font-semibold">{nome}</span>
+                            <img src={aluno.foto} alt={aluno.nome} className="w-7 h-7 rounded-full object-cover border-2 border-amber-400/50 shrink-0" />
+                            <span className="text-white text-[11px] font-semibold">{aluno.nome}</span>
                             <span className="text-slate-400 text-[10px] ml-auto">Arq. Urbanista</span>
                           </div>
                         ))}
