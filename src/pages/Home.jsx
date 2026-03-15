@@ -69,6 +69,7 @@ const clientes = [
 export default function Home() {
   const ecosystemRef = useRef(null);
   const instituicoesRef = useRef(null);
+  const trajetoriaRef = useRef(null);
 
   const [testimonialsModalView, setTestimonialsModalView] = useState(null);
   const [testimonialFormSubmitted, setTestimonialFormSubmitted] = useState(false);
