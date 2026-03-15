@@ -85,7 +85,6 @@ export default function Home() {
   const [testimonialFormSubmitted, setTestimonialFormSubmitted] = useState(false);
   const [zoomedMedia, setZoomedMedia] = useState(null);
   const [testimonialForm, setTestimonialForm] = useState({ name: '', email: '', phone: '', text: '', photo: null });
-  const [isAutoScroll, setIsAutoScroll] = useState(false);
   const [testimonials, setTestimonials] = useState([]);
 
   useEffect(() => {
