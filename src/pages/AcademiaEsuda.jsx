@@ -12,43 +12,7 @@ const esudaCourses = [
   { id: 'acustica', title: 'Acústica Arquitetônica e Iluminação', profile: 'O Perfil Comfort/Performance', status: 'Matrículas Abertas', color: 'emerald', duration: '10 meses', hours: '360 h', format: 'Presencial, Gravadas, Remoto', price: '10 x R$ 249,00', description: 'Focado em Conforto Ambiental e Alta Performance. Domine as variáveis físicas do ambiente para projetos de excelência.', specificCycle: ['Acústica Gráfica e Normas', 'Estudo das Tipologias Internas I: Ambientes Residenciais e Comerciais', 'Estudo das Tipologias Internas II: Estúdios, Teatros e Cinemas', 'Estudo das Tipologias Internas III: Grandes Ambientes', 'Acústica e Iluminação Urbana', 'Iluminação, Conceituação e Normas', 'Iluminação Residencial', 'Iluminação Comercial', 'Iluminação Externa: Jardins, Praças e Edificações Históricas'] },
 ];
 
-function RoiExplainer() {
-  const [open, setOpen] = useState(false);
-  return (
-    <div className="bg-slate-800/50 border border-slate-600 rounded-xl overflow-hidden">
-      <button onClick={() => setOpen(!open)} className="w-full flex items-center justify-between px-4 py-3 text-left hover:bg-slate-700/50 transition-colors">
-        <div className="flex items-center gap-2">
-          <Info size={15} className="text-slate-400 shrink-0" />
-          <span className="text-slate-300 text-xs font-semibold">Como o ROI é calculado?</span>
-        </div>
-        <ChevronDown size={15} className={`text-slate-400 transition-transform shrink-0 ${open ? 'rotate-180' : ''}`} />
-      </button>
-      {open && (
-        <div className="px-4 pb-4 text-xs text-slate-400 space-y-3 border-t border-slate-700 pt-3">
-          <div className="bg-slate-700/50 rounded-lg p-3 text-center">
-            <p className="text-slate-300 font-mono text-[11px]">ROI = (Ganho Total − Investimento Total) ÷ Investimento Total × 100</p>
-          </div>
-          <div className="space-y-2">
-            <div className="flex gap-2">
-              <span className="w-2 h-2 rounded-full bg-slate-500 shrink-0 mt-1.5"></span>
-              <p><span className="text-white font-semibold">Investimento Total:</span> soma de todos os custos diretos e indiretos aplicados (mensalidades, tempo, infraestrutura).</p>
-            </div>
-            <div className="flex gap-2">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0 mt-1.5"></span>
-              <p><span className="text-white font-semibold">Ganho Total Agregado:</span> soma de receitas diretas geradas, economias alcançadas e valor monetário de benefícios mensuráveis pelos alunos.</p>
-            </div>
-          </div>
-          <div className="bg-emerald-900/20 border border-emerald-500/20 rounded-lg p-3">
-            <p className="text-emerald-400 font-semibold mb-1">Exemplo simplificado:</p>
-            <p>Investimento: R$ 67.166 → Ganho: R$ 224.999</p>
-            <p className="text-white font-mono mt-1">(224.999 − 67.166) ÷ 67.166 × 100 = <span className="text-emerald-400 font-bold">235%</span></p>
-          </div>
-          <p className="text-slate-500 text-[10px] italic">Um ROI de 235% significa que para cada R$1 investido, os alunos obtiveram R$2,35 de retorno líquido.</p>
-        </div>
-      )}
-    </div>
-  );
-}
+
 
 function AccordionCycle({ title, subtitle, color, items, defaultOpen = false }) {
   const [open, setOpen] = useState(defaultOpen);
