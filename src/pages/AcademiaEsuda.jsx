@@ -256,18 +256,7 @@ export default function AcademiaEsuda() {
                   <p className="text-xs font-bold text-indigo-600 mb-3">{curso.profile}</p>
                   <p className="text-slate-500 text-xs leading-relaxed mb-4 flex-grow text-justify line-clamp-3">{curso.description}</p>
 
-                  {/* Informações rápidas */}
-                  <div className="grid grid-cols-2 gap-x-4 gap-y-2 border-t border-slate-100 pt-4 mb-4 text-xs text-slate-600">
-                    <div className="flex items-center gap-1.5"><BookOpen size={13} className="text-blue-500 shrink-0" /><span><strong>Carga:</strong> {curso.hours}</span></div>
-                    <div className="flex items-center gap-1.5"><Timer size={13} className="text-orange-500 shrink-0" /><span><strong>Duração:</strong> {curso.duration}</span></div>
-                    <div className="flex items-center gap-1.5"><Calendar size={13} className="text-green-500 shrink-0" /><span><strong>Dia(s):</strong> {curso.dias}</span></div>
-                    <div className="flex items-center gap-1.5"><Clock size={13} className="text-orange-400 shrink-0" /><span><strong>Horário:</strong> {curso.horario}</span></div>
-                    <div className="flex items-center gap-1.5 col-span-2"><Monitor size={13} className="text-purple-500 shrink-0" /><span className="truncate"><strong>Formato:</strong> {curso.format}</span></div>
-                    <div className="flex items-center gap-1.5"><CalendarCheck size={13} className="text-slate-400 shrink-0" /><span><strong>Inscrições:</strong> {curso.inscricoes}</span></div>
-                    <div className="flex items-center gap-1.5"><BookOpen size={13} className="text-slate-400 shrink-0" /><span><strong>Início:</strong> {curso.inicioAulas}</span></div>
-                  </div>
-
-                  <div className="flex items-center justify-between pt-3 border-t border-slate-100 text-emerald-600 font-bold text-sm group-hover:translate-x-1 transition-transform">Ver Ementa <ArrowRight size={16} /></div>
+                  <div className="flex items-center justify-between pt-3 border-t border-slate-100 mt-auto text-emerald-600 font-bold text-sm group-hover:translate-x-1 transition-transform">Ver Ementa <ArrowRight size={16} /></div>
                 </div>
               );
             })}
