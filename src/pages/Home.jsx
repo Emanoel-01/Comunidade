@@ -225,6 +225,7 @@ export default function Home() {
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-slate-900 mb-4">Conheça nosso Ecossistema</h2>
             <p className="text-slate-600 max-w-2xl mx-auto">Soluções integradas que vão da formação acadêmica à aplicação de inteligência artificial no canteiro de obras.</p>
+
           </div>
           <div className="grid md:grid-cols-3 gap-6">
             {[
