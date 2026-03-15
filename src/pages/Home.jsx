@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { 
-  ChevronRight, ArrowRight, LockKeyhole, CheckCircle2, Building2, Cpu, GraduationCap,
+  ChevronRight, ChevronLeft, ArrowRight, LockKeyhole, CheckCircle2, Building2, Cpu, GraduationCap,
   MessageSquare, Star, X, Upload, Send, MessageCircle
 } from 'lucide-react';
 import TrajetoriaPortfolio from '@/components/TrajetoriaPortfolio';
