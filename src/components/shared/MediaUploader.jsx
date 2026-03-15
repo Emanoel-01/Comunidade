@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { base44 } from '@/api/base44Client';
-import { Upload, X, Loader2, Image, Film, Music } from 'lucide-react';
+import { Upload, X, Loader2, Film, Music, CheckCircle2, AlertCircle, FileText } from 'lucide-react';
 
 function getMediaType(url) {
   if (!url) return 'unknown';
