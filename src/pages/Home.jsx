@@ -296,47 +296,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* MODAL: PORTFOLIO / TIMELINE */}
-      {isPortfolioModalOpen && (
-        <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 sm:p-6 bg-slate-900/80 backdrop-blur-sm animate-in fade-in duration-200">
-          <div className="bg-slate-50 rounded-2xl w-full max-w-5xl max-h-[90vh] overflow-y-auto shadow-2xl relative flex flex-col">
-            <button onClick={() => setIsPortfolioModalOpen(false)} className="absolute top-4 right-4 z-10 w-10 h-10 bg-white/50 backdrop-blur border border-slate-200 hover:bg-red-50 hover:text-red-600 rounded-full flex items-center justify-center transition-colors shadow-sm"><X size={20} /></button>
-            <div className="p-6 sm:p-10">
-              <div className="text-center mb-8">
-                <img src="https://i.ibb.co/TDC35Hqf/Emanoel-Silva-de-Amorim.jpg" alt="Emanoel Amorim" className="w-28 h-28 sm:w-36 sm:h-36 rounded-full object-cover border-4 border-indigo-600 shadow-lg mx-auto mb-4" />
-                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight">Meu Perfil: Gestão Estratégica e Tecnologia</h1>
-                <p className="text-lg text-slate-600 mt-2 font-medium">Emanoel Amorim - Arquiteto e Urbanista</p>
-              </div>
-              <div className="bg-indigo-900 p-6 sm:p-8 rounded-2xl shadow-inner text-white mb-10 border border-indigo-800">
-                <h4 className="font-bold text-xl mb-3">Apresentação em Áudio</h4>
-                <div className="bg-slate-900/50 p-2 rounded-xl border border-indigo-500/30">
-                  <iframe style={{ borderRadius: '12px' }} src="https://open.spotify.com/embed/episode/1NXYnNIrKCwm3sVtjQRGlD?utm_source=generator&t=431&theme=0" width="100%" height="152" frameBorder="0" allowFullScreen="" loading="lazy" title="Podcast" />
-                </div>
-              </div>
-              <div className="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 mb-10 shadow-sm">
-                <div className="flex justify-between items-center mb-6">
-                  <h3 className="text-xl sm:text-2xl font-bold text-slate-800 flex items-center gap-2"><Award className="w-6 h-6 text-indigo-600" /> Trajetória & Portfólio</h3>
-                  <div className="flex items-center gap-2">
-                    <button onClick={() => scrollTimeline('left')} className="p-2 border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors"><ChevronLeft className="w-5 h-5" /></button>
-                    <button onClick={toggleAutoScroll} className={`px-4 py-2 text-sm font-bold rounded-lg transition-colors hidden sm:block ${isAutoScroll ? "bg-indigo-600 text-white" : "border border-slate-200 hover:bg-slate-50"}`}>{isAutoScroll ? 'Pausar Scroll' : 'Auto-Scroll'}</button>
-                    <button onClick={() => scrollTimeline('right')} className="p-2 border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors"><ChevronRight className="w-5 h-5" /></button>
-                  </div>
-                </div>
-                <div ref={timelineRef} className="overflow-x-auto scroll-smooth flex gap-6 pb-6 pt-2" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-                  {timeline.map((item, index) => (
-                    <div key={index} className="flex-shrink-0 w-72 bg-white rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-4 relative group">
-                      <div className="absolute -top-3 left-1/2 transform -translate-x-1/2"><div className="inline-block bg-indigo-100 px-3 py-1 rounded-full border border-indigo-200 shadow-sm"><span className="text-xs font-bold text-indigo-700">{item.year}</span></div></div>
-                      <div className="flex justify-center mt-6 mb-4"><div className={`w-16 h-16 rounded-full border-2 ${getIconBg(item.icon)} flex items-center justify-center overflow-hidden bg-slate-50`}>{item.imageUrl ? <img src={item.imageUrl} alt={item.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" /> : getIconComponent(item.icon)}</div></div>
-                      <h4 className="font-bold text-sm text-slate-900 mb-2 text-center">{item.title}</h4>
-                      <p className="text-xs text-slate-600 text-justify leading-relaxed line-clamp-4">{item.description}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+
 
       {/* MODAL: DEPOIMENTOS */}
       {testimonialsModalView && (
