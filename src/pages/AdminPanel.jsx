@@ -569,6 +569,11 @@ function AdminMaterials() {
               <input value={form.file_url} onChange={e => setForm({ ...form, file_url: e.target.value })} placeholder="Ou cole a URL do arquivo..." className="mt-2 w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
             </div>
             <div><label className="block text-xs font-bold text-slate-600 mb-1">Descrição</label><textarea rows={2} value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 resize-none" /></div>
+            <MediaUploader
+              mediaUrls={form.media_urls || []}
+              onChange={urls => setForm({ ...form, media_urls: urls })}
+              label="Mídias de pré-visualização (foto, vídeo ou áudio)"
+            />
             <div className="flex justify-end gap-3 pt-2">
               <button type="button" onClick={() => setShowForm(false)} className="px-4 py-2 text-slate-600 font-bold hover:bg-slate-100 rounded-lg text-sm">Cancelar</button>
               <button type="submit" disabled={saving || uploading || !form.file_url} className="px-6 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg text-sm disabled:opacity-50 flex items-center gap-2"><Save size={14} />{saving ? 'Salvando...' : 'Publicar Material'}</button>
