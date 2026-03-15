@@ -229,7 +229,7 @@ export default function Home() {
           </div>
           <div className="grid md:grid-cols-3 gap-6">
             {[
-              { logo: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69b4f78756902b494e56bda9/4bf541eda_1773615908160.png', title: 'Amorim Arquitetura', desc: 'Consultoria e Gestão estratégica, laudos e engenharia diagnóstica com foco em eficiência, segurança e preservação.', link: 'AmorimArquitetura', color: 'blue', bgIcon: 'bg-slate-900' },
+              { logo: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69b4f78756902b494e56bda9/a9321f1d3_LOGO1.jpg', title: 'Amorim Arquitetura', desc: 'Consultoria e Gestão estratégica, laudos e engenharia diagnóstica com foco em eficiência, segurança e preservação.', link: 'AmorimArquitetura', color: 'blue', bgIcon: 'bg-slate-900' },
               { logo: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69b4f78756902b494e56bda9/db6acc907_1773615044341.png', title: 'Amorim Tech', desc: 'Desenvolvendo o ecossistema digital para gestão inteligente de edifícios (SaaS e EdTech).', link: 'EmDesenvolvimento', color: 'indigo', bgIcon: 'bg-white' },
               { icon: GraduationCap, title: 'Academia ESUDA', desc: 'Formando os protagonistas do futuro. Especialistas e líderes que dominam a convergência entre teoria, prática e tecnologia.', link: 'AcademiaEsuda', color: 'emerald', bgIcon: 'bg-slate-50' },
             ].map((item, i) => (
