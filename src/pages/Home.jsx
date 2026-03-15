@@ -81,7 +81,6 @@ export default function Home() {
   const ecosystemRef = useRef(null);
   const instituicoesRef = useRef(null);
 
-  const [isPortfolioModalOpen, setIsPortfolioModalOpen] = useState(false);
   const [testimonialsModalView, setTestimonialsModalView] = useState(null);
   const [testimonialFormSubmitted, setTestimonialFormSubmitted] = useState(false);
   const [zoomedMedia, setZoomedMedia] = useState(null);
