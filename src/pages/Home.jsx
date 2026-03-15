@@ -82,6 +82,7 @@ export default function Home() {
   }, []);
 
   const scrollToEcosystem = () => { if (ecosystemRef.current) ecosystemRef.current.scrollIntoView({ behavior: 'smooth' }); };
+  const scrollToTrajetoria = () => { if (trajetoriaRef.current) trajetoriaRef.current.scrollIntoView({ behavior: 'smooth' }); };
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
