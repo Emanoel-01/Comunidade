@@ -523,7 +523,7 @@ function AdminMaterials() {
     e.preventDefault();
     setSaving(true);
     await base44.entities.Material.create({ ...form, downloads: 0 });
-    setForm({ title: '', description: '', category: 'Planilhas', file_url: '' });
+    setForm({ title: '', description: '', category: 'Planilhas', file_url: '', media_urls: [] });
     setShowForm(false);
     await loadMaterials();
     setSaving(false);
