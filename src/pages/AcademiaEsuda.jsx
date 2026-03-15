@@ -133,7 +133,7 @@ export default function AcademiaEsuda() {
                   <div className="bg-slate-800/50 p-4 rounded-lg border border-blue-500/20 flex flex-col items-center text-center"><Calendar size={28} className="text-blue-400 mb-2" /><span className="text-2xl font-bold text-white">3</span><span className="text-xs text-slate-400">Eventos</span></div>
                   <div className="bg-slate-800/50 p-4 rounded-lg border border-purple-500/20 flex flex-col items-center text-center"><FileText size={28} className="text-purple-400 mb-2" /><span className="text-2xl font-bold text-white">2</span><span className="text-xs text-slate-400">Artigos Científicos</span></div>
                   <div className="bg-slate-800/50 p-4 rounded-lg border border-emerald-500/20 flex flex-col items-center text-center"><CheckCircle size={28} className="text-emerald-400 mb-2" /><span className="text-2xl font-bold text-white">3</span><span className="text-xs text-slate-400">Empregados</span></div>
-                  <div className="bg-slate-800/50 p-4 rounded-lg border border-amber-500/20 flex flex-col items-center text-center"><Users size={28} className="text-amber-400 mb-2" /><span className="text-2xl font-bold text-white">1</span><span className="text-xs text-slate-400">Freelancer</span></div>
+                  <div className="bg-slate-800/50 p-4 rounded-lg border border-amber-500/20 flex flex-col items-center text-center"><Lightbulb size={28} className="text-amber-400 mb-2" /><span className="text-2xl font-bold text-white">1</span><span className="text-xs text-slate-400">Edital Centelha</span></div>
                 </div>
               </div>
               <div>
