@@ -12,6 +12,7 @@ const ROLE_OPTIONS = [
   { value: 'investidor', label: 'Investidor / Incorporador' },
   { value: 'consultor_bim', label: 'Consultor BIM / Inovação Tecnológica' },
   { value: 'docente', label: 'Parceiro Estratégico / Fornecedor Homologado' },
+  { value: 'corretor', label: 'Gestor / Servidor Público' },
 ];
 
 export default function AccessRequestForm({ onClose }) {
