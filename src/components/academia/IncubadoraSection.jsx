@@ -31,21 +31,29 @@ function RoiExplainer() {
               <p><span className="text-white font-semibold">Ganho Total Agregado:</span> soma das receitas geradas por colocações profissionais, contratos, economias e valor monetário de produções tecnológicas dos alunos.</p>
             </div>
           </div>
-          <div className="space-y-1.5">
-            <p className="text-slate-300 font-semibold text-[11px] uppercase tracking-wide">Categorias de Impacto Consideradas:</p>
-            {[
-              { cat: 'Eventos', desc: 'Valor estimado de participação e organização de eventos técnicos (R$ 500/evento/aluno)' },
-              { cat: 'Artigos', desc: 'Valor de publicação científica e autoridade acadêmica (R$ 2.000/artigo)' },
-              { cat: 'Canteiros', desc: 'Visitas técnicas e aprendizado aplicado em obra (R$ 800/visita/aluno)' },
-              { cat: 'Network', desc: 'Colocações profissionais: salário médio × 3 meses de retorno gerado' },
-              { cat: 'Relatórios', desc: 'Laudos, relatórios técnicos e produções acadêmicas (R$ 1.500/relatório)' },
-              { cat: 'Produções', desc: 'Produções tecnológicas: Edital Centelha e inovações (valor estimado de mercado)' },
-            ].map((item, i) => (
-              <div key={i} className="flex gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 shrink-0 mt-1.5"></span>
-                <p><span className="text-indigo-300 font-semibold">{item.cat}:</span> {item.desc}</p>
+          <div className="space-y-3">
+            <div>
+              <p className="text-slate-300 font-semibold text-[11px] uppercase tracking-wide mb-1.5">ROI Financeiro (tangível):</p>
+              <div className="flex gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0 mt-1.5"></span>
+                <p><span className="text-emerald-300 font-semibold">Network:</span> valor mensal recebido × tempo do contrato (empregados e freelancers colocados pelo programa).</p>
               </div>
-            ))}
+            </div>
+            <div>
+              <p className="text-slate-300 font-semibold text-[11px] uppercase tracking-wide mb-1.5">ROI Educacional (intangível financeiro):</p>
+              {[
+                { cat: 'Eventos', desc: 'Participação e organização de eventos técnicos — ampliam autoridade e visibilidade profissional.' },
+                { cat: 'Artigos', desc: 'Publicações científicas — geram reconhecimento acadêmico e credibilidade no mercado.' },
+                { cat: 'Canteiros', desc: 'Visitas técnicas a obras — aprendizado prático e vivência real do canteiro.' },
+                { cat: 'Relatórios', desc: 'Laudos e relatórios técnicos — desenvolvem raciocínio analítico e produção acadêmica.' },
+                { cat: 'Produções', desc: 'Produções tecnológicas (ex: Centelha) — estimulam inovação e empreendedorismo.' },
+              ].map((item, i) => (
+                <div key={i} className="flex gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 shrink-0 mt-1.5"></span>
+                  <p><span className="text-indigo-300 font-semibold">{item.cat}:</span> {item.desc}</p>
+                </div>
+              ))}
+            </div>
           </div>
           <div className="bg-emerald-900/20 border border-emerald-500/20 rounded-lg p-3">
             <p className="text-emerald-400 font-semibold mb-1">Exemplo — Projeto 1 (28 alunos):</p>
