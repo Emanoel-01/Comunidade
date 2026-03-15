@@ -84,24 +84,7 @@ export default function Comunidade() {
                 <li className="flex items-start gap-2"><CheckCircle2 size={16} className="text-emerald-400 shrink-0 mt-0.5" /> <span><strong className="text-white">Liderança e Prática:</strong> Networking com os protagonistas que dominam a convergência tecnológica.</span></li>
                 <li className="flex items-start gap-2"><CheckCircle2 size={16} className="text-emerald-400 shrink-0 mt-0.5" /> <span><strong className="text-white">Hub de Oportunidades:</strong> Onde a engenharia consultiva encontra as parcerias de alto nível.</span></li>
               </ul>
-              <p className="text-xs font-bold uppercase tracking-widest text-emerald-400 mb-2">Perfis que Integram</p>
-              <ul className="space-y-1.5 text-xs text-slate-300">
-                {[
-                  'Especialista em Engenharia Diagnóstica',
-                  'Gestor de Ativos / Facilities Manager',
-                  'Síndico Profissional / Gestor Predial',
-                  'Clientes Amorim Arquitetura',
-                  'Aluno / Pós-Graduando ESUDA',
-                  'Profissional Autônomo',
-                  'Investidor / Incorporador',
-                  'Consultor BIM / Inovação Tecnológica',
-                  'Parceiro Estratégico / Fornecedor Homologado',
-                ].map((p, i) => (
-                  <li key={i} className="flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0"></span> {p}
-                  </li>
-                ))}
-              </ul>
+
             </div>
           </div>
           <div className="md:w-1/2 flex flex-col justify-center">
