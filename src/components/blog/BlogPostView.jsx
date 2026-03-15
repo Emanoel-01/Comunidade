@@ -97,7 +97,7 @@ export default function BlogPostView({ post, onBack, onSelectPost, relatedPosts 
 
         {/* Conteúdo renderizado como HTML (React Quill) */}
         <div
-          className="prose prose-lg max-w-none text-slate-700 leading-relaxed text-justify mb-10 ql-content"
+          className="ql-content mb-10"
           dangerouslySetInnerHTML={{ __html: post.content || '' }}
         />
 
