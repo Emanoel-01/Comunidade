@@ -45,6 +45,7 @@ function AccordionCycle({ title, subtitle, color, items, defaultOpen = false }) 
 export default function AcademiaEsuda() {
   const [selectedCourse, setSelectedCourse] = useState(null);
   const cursosRef = useRef(null);
+  const courseRefs = useRef({});
 
   return (
     <div className="animate-in fade-in duration-500 bg-slate-50 min-h-screen pb-20">
