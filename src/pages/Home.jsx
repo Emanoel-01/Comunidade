@@ -123,25 +123,7 @@ export default function Home() {
     setTestimonialForm({ name: '', email: '', phone: '', text: '', photo: null });
   };
 
-  const getIconComponent = (iconType) => {
-    switch(iconType) {
-      case 'tech': return <Wifi className="w-6 h-6 text-indigo-600" />;
-      case 'academic': return <Award className="w-6 h-6 text-blue-600" />;
-      case 'work': return <Briefcase className="w-6 h-6 text-green-600" />;
-      case 'project': return <Award className="w-6 h-6 text-orange-600" />;
-      default: return <Briefcase className="w-6 h-6 text-slate-600" />;
-    }
-  };
 
-  const getIconBg = (iconType) => {
-    switch(iconType) {
-      case 'tech': return 'bg-indigo-100 border-indigo-300';
-      case 'academic': return 'bg-slate-100 border-slate-300';
-      case 'work': return 'bg-green-100 border-green-300';
-      case 'project': return 'bg-orange-100 border-orange-300';
-      default: return 'bg-slate-100 border-slate-300';
-    }
-  };
 
   return (
     <div className="animate-in fade-in duration-500">
