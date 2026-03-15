@@ -24,25 +24,29 @@ export default function Layout({ children, currentPageName }) {
   return (
     <div className="min-h-screen bg-slate-50 font-sans text-slate-800 flex flex-col relative">
       <style>{`
-        .ql-content h1 { font-size: 2rem; font-weight: 800; margin: 1.5rem 0 0.75rem; color: #0f172a; }
-        .ql-content h2 { font-size: 1.5rem; font-weight: 700; margin: 1.25rem 0 0.5rem; color: #1e293b; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.4rem; }
-        .ql-content h3 { font-size: 1.25rem; font-weight: 700; margin: 1rem 0 0.5rem; color: #334155; }
-        .ql-content p { margin-bottom: 1rem; line-height: 1.8; }
-        .ql-content ul { list-style: disc; padding-left: 1.5rem; margin-bottom: 1rem; }
-        .ql-content ol { list-style: decimal; padding-left: 1.5rem; margin-bottom: 1rem; }
-        .ql-content li { margin-bottom: 0.25rem; }
-        .ql-content strong { font-weight: 700; color: #0f172a; }
-        .ql-content em { font-style: italic; }
-        .ql-content u { text-decoration: underline; }
-        .ql-content s { text-decoration: line-through; }
-        .ql-content blockquote { border-left: 4px solid #818cf8; padding-left: 1rem; color: #64748b; font-style: italic; margin: 1.25rem 0; }
-        .ql-content pre { background: #1e293b; color: #e2e8f0; padding: 1rem; border-radius: 0.5rem; overflow-x: auto; margin-bottom: 1rem; font-family: monospace; }
-        .ql-content code { background: #f1f5f9; color: #4f46e5; padding: 0.1rem 0.4rem; border-radius: 0.25rem; font-size: 0.875rem; font-family: monospace; }
-        .ql-content a { color: #4f46e5; text-decoration: underline; }
-        .ql-content img { max-width: 100%; border-radius: 0.5rem; margin: 1rem 0; }
-        .ql-content .ql-align-center { text-align: center; }
-        .ql-content .ql-align-right { text-align: right; }
-        .ql-content .ql-align-justify { text-align: justify; }
+        .ql-content { font-size: 1.0625rem; color: #334155; line-height: 1.8; }
+        .ql-content h1 { font-size: 2rem !important; font-weight: 800 !important; margin: 1.5rem 0 0.75rem !important; color: #0f172a !important; line-height: 1.2 !important; }
+        .ql-content h2 { font-size: 1.5rem !important; font-weight: 700 !important; margin: 1.5rem 0 0.6rem !important; color: #1e293b !important; border-bottom: 1px solid #e2e8f0; padding-bottom: 0.4rem; line-height: 1.3 !important; }
+        .ql-content h3 { font-size: 1.25rem !important; font-weight: 700 !important; margin: 1.25rem 0 0.5rem !important; color: #334155 !important; }
+        .ql-content p { margin-bottom: 1.1rem !important; line-height: 1.85 !important; }
+        .ql-content ul { list-style: disc !important; padding-left: 1.75rem !important; margin-bottom: 1rem !important; }
+        .ql-content ol { list-style: decimal !important; padding-left: 1.75rem !important; margin-bottom: 1rem !important; }
+        .ql-content li { margin-bottom: 0.3rem !important; line-height: 1.7; }
+        .ql-content strong, .ql-content b { font-weight: 700 !important; color: #0f172a !important; }
+        .ql-content em, .ql-content i { font-style: italic !important; }
+        .ql-content u { text-decoration: underline !important; }
+        .ql-content s { text-decoration: line-through !important; }
+        .ql-content blockquote { border-left: 4px solid #818cf8 !important; padding-left: 1rem !important; color: #64748b !important; font-style: italic !important; margin: 1.5rem 0 !important; background: #f8f7ff; border-radius: 0 0.5rem 0.5rem 0; padding: 0.75rem 1rem; }
+        .ql-content pre { background: #1e293b !important; color: #e2e8f0 !important; padding: 1rem !important; border-radius: 0.5rem !important; overflow-x: auto !important; margin-bottom: 1rem !important; font-family: monospace !important; }
+        .ql-content code { background: #f1f5f9 !important; color: #4f46e5 !important; padding: 0.1rem 0.4rem !important; border-radius: 0.25rem !important; font-size: 0.875rem !important; font-family: monospace !important; }
+        .ql-content a { color: #4f46e5 !important; text-decoration: underline !important; }
+        .ql-content img { max-width: 100% !important; border-radius: 0.5rem !important; margin: 1rem 0 !important; }
+        .ql-content .ql-align-center { text-align: center !important; }
+        .ql-content .ql-align-right { text-align: right !important; }
+        .ql-content .ql-align-justify { text-align: justify !important; }
+        .ql-content .ql-indent-1 { padding-left: 2rem !important; }
+        .ql-content .ql-indent-2 { padding-left: 4rem !important; }
+        .ql-content .ql-indent-3 { padding-left: 6rem !important; }
       `}</style>
       {/* HEADER */}
       <header className="bg-white shadow-sm sticky top-0 z-40">
