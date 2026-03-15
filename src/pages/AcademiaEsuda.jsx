@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { GraduationCap, ArrowRight, Briefcase, Target, TrendingUp, CheckCircle, CheckCircle2, X } from 'lucide-react';
+import { GraduationCap, ArrowRight, Briefcase, Target, TrendingUp, CheckCircle, CheckCircle2, X, ChevronDown } from 'lucide-react';
 import IncubadoraSection from '@/components/academia/IncubadoraSection';
 
 const esudaCourses = [
