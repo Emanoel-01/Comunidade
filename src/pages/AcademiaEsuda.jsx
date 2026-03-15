@@ -303,20 +303,39 @@ export default function AcademiaEsuda() {
                     defaultOpen
                   />
                 </div>
-                <div className="flex flex-col gap-6">
-                  <div className="bg-slate-900 rounded-2xl p-6 sm:p-8 text-white shadow-xl">
-                    <h3 className="text-xl font-bold mb-2">Investimento</h3>
-                    <div className="bg-slate-800 rounded-xl p-5 sm:p-6 border border-slate-700 mb-6 mt-4">
-                      <span className="bg-emerald-500 text-slate-900 text-xs font-bold px-2 py-1 rounded">Condição Especial</span>
-                      <p className="text-2xl sm:text-3xl font-extrabold text-white mt-2">{selectedCourse.price}</p>
+                <div className="flex flex-col gap-5">
+                  {/* Ficha técnica */}
+                  <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5">
+                    <div className="grid grid-cols-2 gap-x-6 gap-y-3 text-sm">
+                      <div className="flex items-start gap-2"><BookOpen size={15} className="text-blue-500 mt-0.5 shrink-0" /><div><p className="text-[10px] text-slate-400 uppercase font-bold tracking-wide">Carga Horária</p><p className="font-bold text-slate-800">{selectedCourse.hours}</p></div></div>
+                      <div className="flex items-start gap-2 col-span-1"><Monitor size={15} className="text-purple-500 mt-0.5 shrink-0" /><div><p className="text-[10px] text-slate-400 uppercase font-bold tracking-wide">Formato</p><p className="font-bold text-slate-800 leading-tight">{selectedCourse.format}</p></div></div>
+                      <div className="flex items-start gap-2"><Calendar size={15} className="text-green-500 mt-0.5 shrink-0" /><div><p className="text-[10px] text-slate-400 uppercase font-bold tracking-wide">Dia(s)</p><p className="font-bold text-slate-800">{selectedCourse.dias}</p></div></div>
+                      <div className="flex items-start gap-2"><Clock size={15} className="text-orange-500 mt-0.5 shrink-0" /><div><p className="text-[10px] text-slate-400 uppercase font-bold tracking-wide">Horário</p><p className="font-bold text-slate-800">{selectedCourse.horario}</p></div></div>
+                      <div className="flex items-start gap-2"><Timer size={15} className="text-red-400 mt-0.5 shrink-0" /><div><p className="text-[10px] text-slate-400 uppercase font-bold tracking-wide">Duração</p><p className="font-bold text-slate-800">{selectedCourse.duration}</p></div></div>
+                      <div className="flex items-start gap-2"><CalendarCheck size={15} className="text-slate-400 mt-0.5 shrink-0" /><div><p className="text-[10px] text-slate-400 uppercase font-bold tracking-wide">Inscrições</p><p className="font-bold text-slate-800">{selectedCourse.inscricoes}</p></div></div>
+                      <div className="flex items-start gap-2 col-span-2"><BookOpen size={15} className="text-slate-400 mt-0.5 shrink-0" /><div><p className="text-[10px] text-slate-400 uppercase font-bold tracking-wide">Início das Aulas</p><p className="font-bold text-slate-800">{selectedCourse.inicioAulas}</p></div></div>
                     </div>
-                    <div className="grid grid-cols-3 gap-3 mb-6 text-center">
-                      <div className="bg-slate-800 p-3 rounded-lg"><p className="text-xs text-slate-400 mb-1">Duração</p><p className="text-sm font-bold">{selectedCourse.duration}</p></div>
-                      <div className="bg-slate-800 p-3 rounded-lg"><p className="text-xs text-slate-400 mb-1">Carga</p><p className="text-sm font-bold">{selectedCourse.hours}</p></div>
-                      <div className="bg-slate-800 p-3 rounded-lg col-span-1"><p className="text-xs text-slate-400 mb-1">Formato</p><p className="text-xs font-bold leading-tight">{selectedCourse.format}</p></div>
-                    </div>
-                    <a href="https://wa.me/5581991298803" target="_blank" rel="noopener noreferrer" className="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-bold py-3 sm:py-4 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2">Garantir Minha Vaga <ArrowRight size={20} /></a>
                   </div>
+
+                  {/* Condições de Pagamento */}
+                  <div>
+                    <h3 className="text-base font-bold text-slate-700 mb-3 flex items-center gap-2">💲 Condições de Pagamento</h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                      {selectedCourse.pagamentos.map((p, i) => (
+                        <div key={i} className={`rounded-xl border-2 p-3 text-center transition-all ${p.melhor ? 'border-emerald-400 bg-emerald-50' : 'border-slate-200 bg-white'}`}>
+                          {p.melhor && (
+                            <div className="flex items-center justify-center gap-1 text-amber-500 text-[10px] font-bold mb-1">
+                              <Star size={10} fill="currentColor" /> Melhor Condição
+                            </div>
+                          )}
+                          <p className="text-xs font-bold text-slate-800 leading-snug">{p.label}</p>
+                          {p.melhor && <div className="mt-2 bg-emerald-500 text-white text-[10px] font-bold px-3 py-1 rounded-lg inline-block">Melhor Condição</div>}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <a href="https://wa.me/5581991298803" target="_blank" rel="noopener noreferrer" className="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-bold py-3 sm:py-4 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 text-base">Garantir Minha Vaga <ArrowRight size={20} /></a>
                 </div>
               </div>
             </div>
