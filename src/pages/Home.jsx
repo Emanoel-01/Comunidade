@@ -231,13 +231,13 @@ export default function Home() {
             {[
               { logo: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69b4f78756902b494e56bda9/a9321f1d3_LOGO1.jpg', title: 'Amorim Arquitetura', desc: 'Consultoria e Gestão estratégica, laudos e engenharia diagnóstica com foco em eficiência, segurança e preservação.', link: 'AmorimArquitetura', color: 'blue', logoClass: 'w-full h-16 object-contain object-left' },
               { logo: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69b4f78756902b494e56bda9/db6acc907_1773615044341.png', title: 'Amorim Tech', desc: 'Desenvolvendo o ecossistema digital para gestão inteligente de edifícios (SaaS e EdTech).', link: 'EmDesenvolvimento', color: 'indigo', logoClass: 'w-14 h-14 object-contain' },
-              { icon: GraduationCap, title: 'Academia ESUDA', desc: 'Formando os protagonistas do futuro. Especialistas e líderes que dominam a convergência entre teoria, prática e tecnologia.', link: 'AcademiaEsuda', color: 'emerald', bgIcon: 'bg-slate-50' },
+              { icon: GraduationCap, title: 'Academia ESUDA', desc: 'Formando os protagonistas do futuro. Especialistas e líderes que dominam a convergência entre teoria, prática e tecnologia.', link: 'AcademiaEsuda', color: 'emerald' },
             ].map((item, i) => (
               <div key={i} className="bg-white rounded-2xl shadow-sm border border-slate-200 p-8 hover:shadow-xl transition-all group flex flex-col">
-                <div className={`w-16 h-16 ${item.bgIcon} rounded-xl flex items-center justify-center mb-6 overflow-hidden border border-slate-100`}>
+                <div className="mb-6 flex items-center">
                   {item.logo
-                    ? <img src={item.logo} alt={item.title} className="w-full h-full object-contain p-1" />
-                    : <item.icon className="w-8 h-8 text-emerald-600" />
+                    ? <img src={item.logo} alt={item.title} className={item.logoClass} />
+                    : <div className="w-14 h-14 bg-emerald-50 rounded-xl flex items-center justify-center"><item.icon className="w-8 h-8 text-emerald-600" /></div>
                   }
                 </div>
                 <h3 className="text-2xl font-bold mb-3 text-slate-900">{item.title}</h3>
