@@ -185,6 +185,11 @@ export default function CommunityMaterials({ user }) {
               <p className="text-xs text-slate-400 mt-1">Ou insira uma URL: <input value={form.file_url} onChange={e => setForm({ ...form, file_url: e.target.value })} placeholder="https://..." className="ml-1 border-b border-slate-300 text-sm focus:outline-none focus:border-amber-400 px-1" /></p>
             </div>
             <div><label className="block text-xs font-bold text-slate-600 mb-1">Descrição</label><textarea rows={2} value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400 resize-none" /></div>
+            <MediaUploader
+              mediaUrls={form.media_urls || []}
+              onChange={urls => setForm({ ...form, media_urls: urls })}
+              label="Mídias de pré-visualização (foto, vídeo ou áudio)"
+            />
             <div className="flex justify-end gap-3">
               <button type="button" onClick={() => setShowForm(false)} className="px-4 py-2 text-slate-600 font-bold hover:bg-slate-100 rounded-lg text-sm">Cancelar</button>
               <button type="submit" disabled={saving || !form.file_url} className="px-6 py-2 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-lg text-sm disabled:opacity-50">{saving ? 'Publicando...' : 'Publicar'}</button>
