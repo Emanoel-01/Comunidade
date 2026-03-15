@@ -287,6 +287,11 @@ export default function CommunityForum({ user, profile }) {
                 className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 resize-none"
               />
             </div>
+            <MediaUploader
+              mediaUrls={form.media_urls || []}
+              onChange={urls => setForm({ ...form, media_urls: urls })}
+              label="Adicionar mídias (foto, vídeo ou áudio)"
+            />
             <div className="flex justify-end gap-3">
               <button type="button" onClick={() => setShowForm(false)} className="px-4 py-2 text-slate-600 font-bold hover:bg-slate-100 rounded-lg text-sm">Cancelar</button>
               <button

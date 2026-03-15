@@ -372,15 +372,16 @@ export default function CommunityFeed({ user, profile, onViewProfile }) {
                 className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 resize-none transition-all"
               />
               {focused && (
-                <div className="flex items-center justify-between mt-2">
-                  <div className="flex gap-2 text-slate-400">
+                <div className="mt-2 space-y-3">
+                  <MediaUploader mediaUrls={newPostMedia} onChange={setNewPostMedia} label="" />
+                  <div className="flex items-center justify-between">
                     <span className="text-xs text-slate-400 italic">Compartilhe experiências, dúvidas e conquistas!</span>
-                  </div>
-                  <div className="flex gap-2">
-                    <button onClick={() => { setFocused(false); setNewPostContent(''); }} className="px-4 py-1.5 text-slate-500 hover:bg-slate-100 font-bold rounded-lg text-sm transition-colors">Cancelar</button>
-                    <button onClick={handlePost} disabled={posting || !newPostContent.trim()} className="px-5 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-sm transition-colors disabled:opacity-40">
-                      {posting ? 'Publicando...' : 'Publicar'}
-                    </button>
+                    <div className="flex gap-2">
+                      <button onClick={() => { setFocused(false); setNewPostContent(''); setNewPostMedia([]); }} className="px-4 py-1.5 text-slate-500 hover:bg-slate-100 font-bold rounded-lg text-sm transition-colors">Cancelar</button>
+                      <button onClick={handlePost} disabled={posting || !newPostContent.trim()} className="px-5 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-sm transition-colors disabled:opacity-40">
+                        {posting ? 'Publicando...' : 'Publicar'}
+                      </button>
+                    </div>
                   </div>
                 </div>
               )}
