@@ -63,7 +63,12 @@ function MaterialCard({ m, user, onDownloaded }) {
             <span className={`inline-block px-2 py-0.5 rounded text-[10px] font-bold mt-1 ${categoryColors[m.category] || 'bg-slate-100 text-slate-700'}`}>{m.category}</span>
           </div>
         </div>
-        {m.description && <p className="text-xs text-slate-600 mb-4 line-clamp-2 leading-relaxed">{m.description}</p>}
+        {m.description && <p className="text-xs text-slate-600 mb-3 line-clamp-2 leading-relaxed">{m.description}</p>}
+        {m.media_urls?.length > 0 && (
+          <div className="mb-3">
+            <MediaGallery mediaUrls={m.media_urls} />
+          </div>
+        )}
         <div className="flex items-center justify-between pt-3 border-t border-slate-100">
           <div className="flex items-center gap-3 text-xs text-slate-400">
             <span className="flex items-center gap-1"><Download size={11} /> {m.downloads || 0} downloads</span>
