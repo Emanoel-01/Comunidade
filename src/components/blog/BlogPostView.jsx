@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
 import { ThumbsUp, ChevronLeft, Linkedin, MessageCircle, Eye, Send, Share2, Clock } from 'lucide-react';
+import MediaGallery from '@/components/shared/MediaGallery';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import BlogPostCard from './BlogPostCard';
