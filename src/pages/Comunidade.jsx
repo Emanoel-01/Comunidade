@@ -122,7 +122,7 @@ export default function Comunidade() {
                 >
                   <Send size={15} /> Solicitar Acesso ao Administrador
                 </button>
-                <p className="text-xs text-slate-500 mt-4 text-center">Acesso restrito a alunos, parceiros e equipe cadastrada.</p>
+                <p className="text-xs text-slate-500 mt-4 text-center">Área restrita.</p>
               </div>
             )}
           </div>
