@@ -229,12 +229,17 @@ export default function Home() {
           </div>
           <div className="grid md:grid-cols-3 gap-6">
             {[
-              { icon: Building2, title: 'Amorim Arquitetura', desc: 'Consultoria e Gestão estratégica, laudos e engenharia diagnóstica com foco em eficiência, segurança e preservação.', link: 'AmorimArquitetura', color: 'blue' },
-              { icon: Cpu, title: 'Amorim Tech', desc: 'Desenvolvendo o ecossistema digital para gestão inteligente de edifícios (SaaS e EdTech).', link: 'EmDesenvolvimento', color: 'indigo' },
-              { icon: GraduationCap, title: 'Academia ESUDA', desc: 'Formando os protagonistas do futuro. Especialistas e líderes que dominam a convergência entre teoria, prática e tecnologia.', link: 'AcademiaEsuda', color: 'emerald' },
+              { logo: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69b4f78756902b494e56bda9/4bf541eda_1773615908160.png', title: 'Amorim Arquitetura', desc: 'Consultoria e Gestão estratégica, laudos e engenharia diagnóstica com foco em eficiência, segurança e preservação.', link: 'AmorimArquitetura', color: 'blue', bgIcon: 'bg-slate-900' },
+              { logo: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69b4f78756902b494e56bda9/db6acc907_1773615044341.png', title: 'Amorim Tech', desc: 'Desenvolvendo o ecossistema digital para gestão inteligente de edifícios (SaaS e EdTech).', link: 'EmDesenvolvimento', color: 'indigo', bgIcon: 'bg-white' },
+              { icon: GraduationCap, title: 'Academia ESUDA', desc: 'Formando os protagonistas do futuro. Especialistas e líderes que dominam a convergência entre teoria, prática e tecnologia.', link: 'AcademiaEsuda', color: 'emerald', bgIcon: 'bg-slate-50' },
             ].map((item, i) => (
               <div key={i} className="bg-white rounded-2xl shadow-sm border border-slate-200 p-8 hover:shadow-xl transition-all group flex flex-col">
-                <div className={`w-14 h-14 bg-slate-50 rounded-xl flex items-center justify-center text-slate-700 mb-6 group-hover:bg-${item.color}-50 group-hover:text-${item.color}-600 transition-colors`}><item.icon className="w-8 h-8" /></div>
+                <div className={`w-16 h-16 ${item.bgIcon} rounded-xl flex items-center justify-center mb-6 overflow-hidden border border-slate-100`}>
+                  {item.logo
+                    ? <img src={item.logo} alt={item.title} className="w-full h-full object-contain p-1" />
+                    : <item.icon className="w-8 h-8 text-emerald-600" />
+                  }
+                </div>
                 <h3 className="text-2xl font-bold mb-3 text-slate-900">{item.title}</h3>
                 <p className="text-slate-600 mb-8 flex-grow text-justify">{item.desc}</p>
                 <Link to={createPageUrl(item.link)} className={`text-${item.color}-600 font-semibold flex items-center w-full justify-between pt-4 border-t border-slate-100`}>
