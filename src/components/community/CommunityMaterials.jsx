@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
 import { Download, FileText, Plus, X, Upload, Star, BookOpen, CheckCircle2, Search } from 'lucide-react';
+import MediaUploader from '@/components/shared/MediaUploader';
+import MediaGallery from '@/components/shared/MediaGallery';
 
 const categoryColors = {
   'Planilhas': 'bg-emerald-100 text-emerald-700',
