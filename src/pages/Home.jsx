@@ -71,6 +71,7 @@ export default function Home() {
   const instituicoesRef = useRef(null);
   const trajetoriaRef = useRef(null);
 
+  const [showTrajetoriaModal, setShowTrajetoriaModal] = useState(false);
   const [testimonialsModalView, setTestimonialsModalView] = useState(null);
   const [testimonialFormSubmitted, setTestimonialFormSubmitted] = useState(false);
   const [zoomedMedia, setZoomedMedia] = useState(null);
