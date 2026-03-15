@@ -74,23 +74,39 @@ function MediaThumb({ url, onRemove }) {
   );
 }
 
-export default function MediaUploader({ mediaUrls = [], onChange, label = "Adicionar mídia", accept = "image/*,video/mp4,audio/mp3,audio/mpeg,audio/*" }) {
-  const [uploading, setUploading] = useState(false);
+export default function MediaUploader({ mediaUrls = [], onChange, label = "Adicionar mídia", accept = "image/*,video/mp4,audio/mp3,audio/mpeg,audio/*,.pdf" }) {
+  const [fileStatuses, setFileStatuses] = useState([]); // [{name, status: 'uploading'|'success'|'error'}]
   const inputRef = useRef();
+
+  const uploading = fileStatuses.some(f => f.status === 'uploading');
 
   const handleFiles = async (e) => {
     const files = Array.from(e.target.files || []);
     if (!files.length) return;
-    setUploading(true);
-    const uploaded = await Promise.all(
-      files.map(async (file) => {
-        const { file_url } = await base44.integrations.Core.UploadFile({ file });
-        return file_url;
+
+    // Inicializa todos como "uploading"
+    const initial = files.map(f => ({ name: f.name, status: 'uploading' }));
+    setFileStatuses(initial);
+
+    const results = await Promise.all(
+      files.map(async (file, idx) => {
+        try {
+          const { file_url } = await base44.integrations.Core.UploadFile({ file });
+          setFileStatuses(prev => prev.map((s, i) => i === idx ? { ...s, status: 'success' } : s));
+          return file_url;
+        } catch {
+          setFileStatuses(prev => prev.map((s, i) => i === idx ? { ...s, status: 'error' } : s));
+          return null;
+        }
       })
     );
-    onChange([...mediaUrls, ...uploaded]);
-    setUploading(false);
+
+    const successful = results.filter(Boolean);
+    if (successful.length) onChange([...mediaUrls, ...successful]);
     if (inputRef.current) inputRef.current.value = '';
+
+    // Limpa os status após 3s
+    setTimeout(() => setFileStatuses([]), 3000);
   };
 
   const handleRemove = (idx) => {
