@@ -91,35 +91,7 @@ export default function Home() {
     base44.entities.Testimonial.filter({ approved: true }).then(setTestimonials);
   }, []);
 
-  const timelineRef = useRef(null);
-  const autoScrollInterval = useRef(null);
-
   const scrollToEcosystem = () => { if (ecosystemRef.current) ecosystemRef.current.scrollIntoView({ behavior: 'smooth' }); };
-
-  const scrollTimeline = (direction) => {
-    if (timelineRef.current) {
-      timelineRef.current.scrollBy({ left: direction === 'left' ? -300 : 300, behavior: 'smooth' });
-    }
-  };
-
-  const toggleAutoScroll = () => {
-    if (isAutoScroll) { clearInterval(autoScrollInterval.current); setIsAutoScroll(false); }
-    else {
-      setIsAutoScroll(true);
-      autoScrollInterval.current = setInterval(() => {
-        if (timelineRef.current) {
-          const maxScroll = timelineRef.current.scrollWidth - timelineRef.current.clientWidth;
-          if (timelineRef.current.scrollLeft >= maxScroll) { timelineRef.current.scrollTo({ left: 0, behavior: 'smooth' }); }
-          else { timelineRef.current.scrollBy({ left: 2, behavior: 'auto' }); }
-        }
-      }, 30);
-    }
-  };
-
-  useEffect(() => {
-    if (!isPortfolioModalOpen && autoScrollInterval.current) { clearInterval(autoScrollInterval.current); setIsAutoScroll(false); }
-    return () => { if (autoScrollInterval.current) clearInterval(autoScrollInterval.current); };
-  }, [isPortfolioModalOpen]);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
