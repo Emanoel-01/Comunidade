@@ -121,7 +121,7 @@ export default function Home() {
         <div className="absolute inset-0 opacity-10 bg-[url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center mix-blend-overlay"></div>
         <div className="max-w-5xl mx-auto text-center relative z-10">
           <h1 className="text-xl md:text-2xl text-indigo-200 font-medium tracking-widest uppercase mb-4">Emanoel Amorim</h1>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 tracking-tight leading-tight">Transformando a Construção <br className="hidden md:block" />com Tecnologia.</h2>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 tracking-tight leading-tight">Transformando a Construção Civil <br className="hidden md:block" />com Tecnologia.</h2>
           <p className="text-lg md:text-xl text-indigo-100 mb-10 max-w-2xl mx-auto font-light leading-relaxed">Arquiteto, Mestre em Engenharia, Founder da AmorimTech e Coordenador Acadêmico.</p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Link to={createPageUrl('Comunidade')} className="bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-bold px-8 py-3.5 rounded-lg transition-all shadow-lg flex items-center justify-center gap-2">
