@@ -8,7 +8,26 @@ function getMediaType(url) {
   if (lower.match(/\.(mp4|webm|mov|avi)$/)) return 'video';
   if (lower.match(/\.(mp3|wav|ogg|aac|m4a)$/)) return 'audio';
   if (lower.match(/\.(jpg|jpeg|png|gif|webp|svg)$/)) return 'image';
+  if (lower.match(/\.(pdf)$/)) return 'pdf';
   return 'unknown';
+}
+
+function UploadingItem({ name, status, error }) {
+  return (
+    <div className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-xs font-medium transition-all ${
+      status === 'uploading' ? 'bg-indigo-50 border-indigo-200 text-indigo-700' :
+      status === 'success'   ? 'bg-emerald-50 border-emerald-200 text-emerald-700' :
+                               'bg-red-50 border-red-200 text-red-700'
+    }`}>
+      {status === 'uploading' && <Loader2 size={14} className="animate-spin shrink-0" />}
+      {status === 'success'   && <CheckCircle2 size={14} className="shrink-0" />}
+      {status === 'error'     && <AlertCircle size={14} className="shrink-0" />}
+      <span className="truncate max-w-[140px]">{name}</span>
+      {status === 'uploading' && <span className="ml-auto text-indigo-400 shrink-0">Enviando...</span>}
+      {status === 'success'   && <span className="ml-auto shrink-0">Concluído!</span>}
+      {status === 'error'     && <span className="ml-auto shrink-0">Erro</span>}
+    </div>
+  );
 }
 
 function MediaThumb({ url, onRemove }) {
