@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { 
   ChevronRight, ArrowRight, LockKeyhole, CheckCircle2, Building2, Cpu, GraduationCap,
-  MessageSquare, Star, Search, X, Upload, Send, ThumbsUp, Eye, ChevronLeft,
-  Award, Wifi, Briefcase, MessageCircle
+  MessageSquare, Star, X, Upload, Send, MessageCircle
 } from 'lucide-react';
+import TrajetoriaPortfolio from '@/components/TrajetoriaPortfolio';
 import { createPageUrl } from '@/utils';
 import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
