@@ -8,7 +8,7 @@ import {
 
 const navLinks = [
   { label: 'Amorim Arquitetura', page: 'AmorimArquitetura', color: 'blue' },
-  { label: 'Amorim Tech', page: 'AmorimTech', color: 'indigo' },
+  { label: 'Amorim Tech', page: 'EmDesenvolvimento', color: 'indigo' },
   { label: 'Academia ESUDA', page: 'AcademiaEsuda', color: 'emerald' },
   { label: 'Blog', page: 'Blog', color: 'slate' },
   { label: 'Contato', page: 'Contato', color: 'amber' },
