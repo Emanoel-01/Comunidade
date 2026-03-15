@@ -48,18 +48,7 @@ function RecentBlogPosts() {
   );
 }
 
-const timeline = [
-  { year: '2026', title: 'CEO, CTO & Arquiteto de Soluções da Amorim TECH', description: 'Atuação como Product Manager da Marca e Técnico Responsável pela migração da arquitetura de protótipos e unificação para uma infraestrutura de escala industrial.', icon: 'tech', imageUrl: 'https://i.ibb.co/TDC35Hqf/Emanoel-Silva-de-Amorim.jpg' },
-  { year: '2025', title: 'Analista de Processos e Arquiteto de Soluções Digitais', description: 'Desenvolvimento (por Vibe Coding) de 09 Protótipos de apps de gestão inteligente das edificações.', icon: 'tech', imageUrl: 'https://i.ibb.co/TDC35Hqf/Emanoel-Silva-de-Amorim.jpg' },
-  { year: '2024', title: 'Mestrado em Engenharia Civil', description: 'Gestão da Manutenção de Edificações em Instituições Públicas. UPE - Universidade de Pernambuco.', icon: 'academic' },
-  { year: '2024', title: 'Coordenador e Docente de Cursos de Especialização', description: 'Atuação na Faculdade Esuda.', icon: 'work', imageUrl: 'https://esuda.edu.br/wp-content/uploads/2024/01/cropped-cor-1000-x-474.png' },
-  { year: '2024', title: 'Residencial Parque de Exposições', description: 'Projeto Arquitetônico. Módulos I a IV. Sertenge Engenharia S/A | Local: Recife/PE', icon: 'project', imageUrl: 'https://static.wixstatic.com/media/152459_b214383a73d14514ad8901a5cb287041~mv2.png/v1/crop/x_359,y_0,w_583,h_731/fill/w_300,h_375,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/cor.png' },
-  { year: '2023', title: 'Usina Solar CRC/PE', description: 'Fiscalização da Execução da Usina Solar na Nova Sede. CRC/PE | Local: Recife/PE', icon: 'project', imageUrl: 'https://static.wixstatic.com/media/152459_15e60566f08a4fcf828b0c37630ce2ed~mv2.jpg/v1/fill/w_480,h_600,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/sol.jpg' },
-  { year: '2021', title: 'Nova Sede do CRC/PE', description: 'Gerenciamento da Construção da Nova Sede. CRC/PE | Local: Recife/PE', icon: 'project', imageUrl: 'https://static.wixstatic.com/media/152459_6339ba323283427daa071eb7d16349ab~mv2.jpg/v1/fill/w_480,h_600,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/2014.jpg' },
-  { year: '2019', title: 'Sede da Receita Federal em Natal/RN', description: 'Projeto da Nova Sede da Delegacia da Receita Federal. RFRN | Local: Natal/RN', icon: 'project', imageUrl: 'https://static.wixstatic.com/media/152459_84fd38ffd69849378852a469c196cf20~mv2.jpg/v1/fill/w_480,h_600,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/RFRN.jpg' },
-  { year: '2017', title: 'MBA em Gerenciamento de Projetos', description: 'Metodologia gerenciamento de projeto de conservação e restauro em bens tombados. Faculdade Esuda.', icon: 'academic' },
-  { year: '2010-2014', title: 'Graduação em Arquitetura e Urbanismo', description: 'Faculdade Ciências Humanas Esuda.', icon: 'academic' },
-];
+
 
 const clientes = [
   { name: 'Olinda', img: 'https://static.wixstatic.com/media/152459_4061729626104e168084e4d0754e8127~mv2.png', url: 'https://www.olinda.pe.gov.br/' },
