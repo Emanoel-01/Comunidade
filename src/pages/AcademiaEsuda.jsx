@@ -3,13 +3,111 @@ import { GraduationCap, ArrowRight, Briefcase, Target, TrendingUp, CheckCircle, 
 import IncubadoraSection from '@/components/academia/IncubadoraSection';
 
 const esudaCourses = [
-  { id: 'gpo', title: 'Gestão de Projetos e Obras', profile: 'O Perfil Business', status: 'Turma Iniciada', color: 'amber', duration: '10 meses', hours: '360 h', format: 'Presencial, Gravadas, Remoto', price: '10 x R$ 249,00', description: 'Focado em Dinheiro e Prazo. Seja o gestor que protege a margem de lucro, domina os pleitos (claims) e garante o equilíbrio financeiro da obra.', specificCycle: ['Técnicas de Orçamentos, Cobranças e Custos de Projetos', 'Técnicas de Orçamentos, Cobranças e Custos de Obras (Integração BIM 5D)', 'Técnicas de Coordenação e Compatibilização de Projetos', 'Técnicas de Planejamento e Coordenação de Obras (PERT/CPM e LOB)', 'Gestão de Riscos, Eficiência Energética e Sustentabilidade', 'Lean Construction, Last Planner System e Logística de Canteiro', 'Engenharia de Segurança e Normas de Desempenho (NBR 15.575)', 'Administração Contratual, Medições e Gestão de Pleitos (Claims)', 'Sistemas Informatizados de Gestão Integrada e BI (ERP, CDE e Power BI)'] },
-  { id: 'manutencao', title: 'Engenharia e Gestão da Manutenção Predial 4.0', profile: 'O Perfil Operações', status: 'Turma Iniciada', color: 'amber', duration: '10 meses', hours: '360 h', format: 'Presencial, Gravadas, Remoto', price: '10 x R$ 249,00', description: 'Focado em Vida Útil e Gestão de Ativos. Lidere a era da Gestão de Facilities utilizando IoT, Drones e BIM FM para valorizar o patrimônio.', specificCycle: ['Engenharia Diagnóstica e Intervenção para Manutenção (NBR 16.747)', 'Patologias Construtivas em Estruturas e Sistemas de Envoltória', 'Manutenção Avançada em Instalações Prediais e PMOC', 'CMMS/GMAO: Implementação de Sistemas de Gestão da Manutenção', 'Manutenção Preditiva: IoT, Sensores Inteligentes e Automação Predial', 'Termografia Infravermelha e Drones na Inspeção de Ativos', 'Gestão de Ativos com BIM 7D (FM) e Orçamentação Preditiva', 'Gestão de Contratos e Fornecedores de Facilities (SLA/KPIs)', 'Gestão da Manutenção: Planejamento, KPIs e Conformidade Operacional'] },
-  { id: 'bim', title: 'Tecnologia BIM na Construção Civil', profile: 'O Perfil Tech', status: 'Turma Iniciada', color: 'amber', duration: '10 meses', hours: '360 h', format: 'Presencial, Gravadas, Remoto', price: '10 x R$ 249,00', description: 'Focado no Método Virtual. Seja o BIM Manager que coordena dados, interoperabilidade e simulações complexas de construção.', specificCycle: ['BIM Arquitetura I: Modelagem Estratégica e Documentação', 'BIM Arquitetura II: Parametrização, Lógica de Projeto e Dados', 'BIM Estrutural: Detalhamento de Fabricação (LOD 400)', 'BIM Instalações I: Modelagem de Sistemas e Normatização', 'BIM Instalações II: Coordenação 3D e Clash Detection', 'Análise BIM 4D/5D: Simulação de Custos e Cronograma', 'CDE e Normatização: Implementação da ISO 19650 e BEP', 'BIM 6D e 7D: Desempenho, Sustentabilidade e Gestão de Ativos', 'BIM Estratégico: Gêmeos Digitais, IA e Business Intelligence'] },
-  { id: 'legal', title: 'Engenharia Legal e Perícias: Avaliações', profile: 'O Perfil Legal/Finanças', status: 'Matrículas Abertas', color: 'emerald', duration: '10 meses', hours: '360 h', format: 'Presencial, Gravadas, Remoto', price: '10 x R$ 249,00', description: 'Focado em Valor e Prova. Torne-se a autoridade que o judiciário respeita. Domine regularização, auditoria e avaliação de ativos imobiliários.', specificCycle: ['Patologia das Construções, Investigação e Responsabilidade', 'Auditoria Predial e NBR 16.747: Classificação de Risco', 'Avaliação de Imóveis I: Método Comparativo (Foco Urbano)', 'Avaliação de Imóveis II: Renda, Rurais e Laudos Complexos', 'Perícias Judiciais e Vistorias Cautelares de Vizinhança', 'Perícia em Desempenho: Verificação Judicial da NBR 15.575', 'Simulação Computacional (BIM 6D) e Análise de Ciclo de Vida', 'Certificações e Auditoria de Compliance Técnico-Legal', 'Engenharia Legal Aplicada: Responsabilidade Civil e Ética'] },
-  { id: 'neuroarquitetura', title: 'Neuroarquitetura', profile: 'O Perfil Human-Centric', status: 'Matrículas Abertas', color: 'emerald', duration: '10 meses', hours: '360 h', format: 'Presencial, Gravadas, Remoto', price: '10 x R$ 249,00', description: 'Focado em Comportamento e Bem-estar. Use a neurociência para projetar espaços que otimizam a saúde mental e a produtividade.', specificCycle: ['Neurociência Aplicada à Arquitetura', 'Ritmo Biológico e Fatores Humanos', 'Neuroarquitetura e Design Cognitivo', 'Espaços Residenciais e Comerciais: Aplicações da Neuroarquitetura', 'Espaços Corporativos: Aplicações e Princípios', 'Estímulos e Percepções: Neuroarquitetura em Espaços Verdes', 'Neuroiluminação', 'Design Biofílico', 'Neurourbanismo'] },
-  { id: 'interiores', title: 'Design de Interiores Contemporâneo', profile: 'O Perfil Inovação/Estética', status: 'Matrículas Abertas', color: 'emerald', duration: '10 meses', hours: '360 h', format: 'Presencial, Gravadas, Remoto', price: '10 x R$ 249,00', description: 'Focado em Inovação e Funcionalidade. Crie ambientes modernos que representam novas tendências em materiais, tecnologia e estética.', specificCycle: ['Design de Superfícies', 'Iluminação de Interiores: Comerciais e Residenciais', 'Automação, Internet das Coisas e Eficiência dos Ambientes', 'Inclusão e Ergonomia', 'Antropologia do Espaço', 'Design do Mobiliário', 'Design Aplicado para Ambientes Residenciais', 'Design Aplicado para Ambientes Comerciais e Corporativos', 'Design de Interiores para o Mercado de Luxo'] },
-  { id: 'acustica', title: 'Acústica Arquitetônica e Iluminação', profile: 'O Perfil Comfort/Performance', status: 'Matrículas Abertas', color: 'emerald', duration: '10 meses', hours: '360 h', format: 'Presencial, Gravadas, Remoto', price: '10 x R$ 249,00', description: 'Focado em Conforto Ambiental e Alta Performance. Domine as variáveis físicas do ambiente para projetos de excelência.', specificCycle: ['Acústica Gráfica e Normas', 'Estudo das Tipologias Internas I: Ambientes Residenciais e Comerciais', 'Estudo das Tipologias Internas II: Estúdios, Teatros e Cinemas', 'Estudo das Tipologias Internas III: Grandes Ambientes', 'Acústica e Iluminação Urbana', 'Iluminação, Conceituação e Normas', 'Iluminação Residencial', 'Iluminação Comercial', 'Iluminação Externa: Jardins, Praças e Edificações Históricas'] },
+  {
+    id: 'gpo', title: 'Gestão de Projetos e Obras', profile: 'O Perfil Business',
+    status: 'Turma Iniciada', statusType: 'iniciada',
+    color: 'amber', duration: '10 meses', hours: '360h',
+    format: 'Presencial, Remoto (ao vivo), Gravadas',
+    dias: 'Sáb', horario: '08:00 - 17:00',
+    inscricoes: '30/08/2025', inicioAulas: '30/08/2025',
+    pagamentos: [
+      { label: '10 x R$ 249,00 no cartão de crédito', melhor: true },
+      { label: '05 x R$ 499,00 no boleto', melhor: false },
+      { label: '10 x R$ 373,00 no boleto', melhor: false },
+    ],
+    description: 'Focado em Dinheiro e Prazo. Seja o gestor que protege a margem de lucro, domina os pleitos (claims) e garante o equilíbrio financeiro da obra.',
+    specificCycle: ['Técnicas de Orçamentos, Cobranças e Custos de Projetos', 'Técnicas de Orçamentos, Cobranças e Custos de Obras (Integração BIM 5D)', 'Técnicas de Coordenação e Compatibilização de Projetos', 'Técnicas de Planejamento e Coordenação de Obras (PERT/CPM e LOB)', 'Gestão de Riscos, Eficiência Energética e Sustentabilidade', 'Lean Construction, Last Planner System e Logística de Canteiro', 'Engenharia de Segurança e Normas de Desempenho (NBR 15.575)', 'Administração Contratual, Medições e Gestão de Pleitos (Claims)', 'Sistemas Informatizados de Gestão Integrada e BI (ERP, CDE e Power BI)']
+  },
+  {
+    id: 'manutencao', title: 'Engenharia e Gestão da Manutenção Predial 4.0', profile: 'O Perfil Operações',
+    status: 'Turma Iniciada', statusType: 'iniciada',
+    color: 'amber', duration: '10 meses', hours: '360h',
+    format: 'Presencial, Remoto (ao vivo), Gravadas',
+    dias: 'Sáb', horario: '08:00 - 17:00',
+    inscricoes: '30/08/2025', inicioAulas: '30/08/2025',
+    pagamentos: [
+      { label: '10 x R$ 249,00 no cartão de crédito', melhor: true },
+      { label: '05 x R$ 499,00 no boleto', melhor: false },
+      { label: '10 x R$ 373,00 no boleto', melhor: false },
+    ],
+    description: 'Focado em Vida Útil e Gestão de Ativos. Lidere a era da Gestão de Facilities utilizando IoT, Drones e BIM FM para valorizar o patrimônio.',
+    specificCycle: ['Engenharia Diagnóstica e Intervenção para Manutenção (NBR 16.747)', 'Patologias Construtivas em Estruturas e Sistemas de Envoltória', 'Manutenção Avançada em Instalações Prediais e PMOC', 'CMMS/GMAO: Implementação de Sistemas de Gestão da Manutenção', 'Manutenção Preditiva: IoT, Sensores Inteligentes e Automação Predial', 'Termografia Infravermelha e Drones na Inspeção de Ativos', 'Gestão de Ativos com BIM 7D (FM) e Orçamentação Preditiva', 'Gestão de Contratos e Fornecedores de Facilities (SLA/KPIs)', 'Gestão da Manutenção: Planejamento, KPIs e Conformidade Operacional']
+  },
+  {
+    id: 'bim', title: 'Tecnologia BIM na Construção Civil', profile: 'O Perfil Tech',
+    status: 'Turma Iniciada', statusType: 'iniciada',
+    color: 'amber', duration: '10 meses', hours: '360h',
+    format: 'Presencial, Remoto (ao vivo), Gravadas',
+    dias: 'Sáb', horario: '08:00 - 17:00',
+    inscricoes: '31/01/2026', inicioAulas: '31/01/2026',
+    pagamentos: [
+      { label: '10 x R$ 249,00 no cartão de crédito', melhor: true },
+      { label: '05 x R$ 499,00 no boleto', melhor: false },
+      { label: '10 x R$ 373,00 no boleto', melhor: false },
+    ],
+    description: 'Focado no Método Virtual. Seja o BIM Manager que coordena dados, interoperabilidade e simulações complexas de construção.',
+    specificCycle: ['BIM Arquitetura I: Modelagem Estratégica e Documentação', 'BIM Arquitetura II: Parametrização, Lógica de Projeto e Dados', 'BIM Estrutural: Detalhamento de Fabricação (LOD 400)', 'BIM Instalações I: Modelagem de Sistemas e Normatização', 'BIM Instalações II: Coordenação 3D e Clash Detection', 'Análise BIM 4D/5D: Simulação de Custos e Cronograma', 'CDE e Normatização: Implementação da ISO 19650 e BEP', 'BIM 6D e 7D: Desempenho, Sustentabilidade e Gestão de Ativos', 'BIM Estratégico: Gêmeos Digitais, IA e Business Intelligence']
+  },
+  {
+    id: 'legal', title: 'Engenharia Legal e Perícias: Avaliações', profile: 'O Perfil Legal/Finanças',
+    status: 'Matrículas Abertas', statusType: 'abertas',
+    color: 'emerald', duration: '10 meses', hours: '360h',
+    format: 'Presencial, Remoto (ao vivo), Gravadas',
+    dias: 'Sáb', horario: '08:00 - 17:00',
+    inscricoes: '15/12/2025', inicioAulas: '31/01/2026',
+    pagamentos: [
+      { label: '10 x R$ 249,00 no cartão de crédito', melhor: true },
+      { label: '05 x R$ 499,00 no boleto', melhor: false },
+      { label: '10 x R$ 373,00 no boleto', melhor: false },
+    ],
+    description: 'Focado em Valor e Prova. Torne-se a autoridade que o judiciário respeita. Domine regularização, auditoria e avaliação de ativos imobiliários.',
+    specificCycle: ['Patologia das Construções, Investigação e Responsabilidade', 'Auditoria Predial e NBR 16.747: Classificação de Risco', 'Avaliação de Imóveis I: Método Comparativo (Foco Urbano)', 'Avaliação de Imóveis II: Renda, Rurais e Laudos Complexos', 'Perícias Judiciais e Vistorias Cautelares de Vizinhança', 'Perícia em Desempenho: Verificação Judicial da NBR 15.575', 'Simulação Computacional (BIM 6D) e Análise de Ciclo de Vida', 'Certificações e Auditoria de Compliance Técnico-Legal', 'Engenharia Legal Aplicada: Responsabilidade Civil e Ética']
+  },
+  {
+    id: 'neuroarquitetura', title: 'Neuroarquitetura', profile: 'O Perfil Human-Centric',
+    status: 'Inscrições para Próxima Turma', statusType: 'proxima',
+    color: 'blue', duration: '10 meses', hours: '360h',
+    format: 'Presencial, Remoto (ao vivo), Gravadas',
+    dias: 'Sáb', horario: '08:00 - 17:00',
+    inscricoes: 'Em breve', inicioAulas: 'Em breve',
+    pagamentos: [
+      { label: '10 x R$ 249,00 no cartão de crédito', melhor: true },
+      { label: '05 x R$ 499,00 no boleto', melhor: false },
+      { label: '10 x R$ 373,00 no boleto', melhor: false },
+    ],
+    description: 'Focado em Comportamento e Bem-estar. Use a neurociência para projetar espaços que otimizam a saúde mental e a produtividade.',
+    specificCycle: ['Neurociência Aplicada à Arquitetura', 'Ritmo Biológico e Fatores Humanos', 'Neuroarquitetura e Design Cognitivo', 'Espaços Residenciais e Comerciais: Aplicações da Neuroarquitetura', 'Espaços Corporativos: Aplicações e Princípios', 'Estímulos e Percepções: Neuroarquitetura em Espaços Verdes', 'Neuroiluminação', 'Design Biofílico', 'Neurourbanismo']
+  },
+  {
+    id: 'interiores', title: 'Design de Interiores Contemporâneo', profile: 'O Perfil Inovação/Estética',
+    status: 'Inscrições para Próxima Turma', statusType: 'proxima',
+    color: 'blue', duration: '10 meses', hours: '360h',
+    format: 'Presencial, Remoto (ao vivo), Gravadas',
+    dias: 'Sáb', horario: '08:00 - 17:00',
+    inscricoes: 'Em breve', inicioAulas: 'Em breve',
+    pagamentos: [
+      { label: '10 x R$ 249,00 no cartão de crédito', melhor: true },
+      { label: '05 x R$ 499,00 no boleto', melhor: false },
+      { label: '10 x R$ 373,00 no boleto', melhor: false },
+    ],
+    description: 'Focado em Inovação e Funcionalidade. Crie ambientes modernos que representam novas tendências em materiais, tecnologia e estética.',
+    specificCycle: ['Design de Superfícies', 'Iluminação de Interiores: Comerciais e Residenciais', 'Automação, Internet das Coisas e Eficiência dos Ambientes', 'Inclusão e Ergonomia', 'Antropologia do Espaço', 'Design do Mobiliário', 'Design Aplicado para Ambientes Residenciais', 'Design Aplicado para Ambientes Comerciais e Corporativos', 'Design de Interiores para o Mercado de Luxo']
+  },
+  {
+    id: 'acustica', title: 'Acústica Arquitetônica e Iluminação', profile: 'O Perfil Comfort/Performance',
+    status: 'Inscrições para Próxima Turma', statusType: 'proxima',
+    color: 'blue', duration: '10 meses', hours: '360h',
+    format: 'Presencial, Remoto (ao vivo), Gravadas',
+    dias: 'Sáb', horario: '08:00 - 17:00',
+    inscricoes: 'Em breve', inicioAulas: 'Em breve',
+    pagamentos: [
+      { label: '10 x R$ 249,00 no cartão de crédito', melhor: true },
+      { label: '05 x R$ 499,00 no boleto', melhor: false },
+      { label: '10 x R$ 373,00 no boleto', melhor: false },
+    ],
+    description: 'Focado em Conforto Ambiental e Alta Performance. Domine as variáveis físicas do ambiente para projetos de excelência.',
+    specificCycle: ['Acústica Gráfica e Normas', 'Estudo das Tipologias Internas I: Ambientes Residenciais e Comerciais', 'Estudo das Tipologias Internas II: Estúdios, Teatros e Cinemas', 'Estudo das Tipologias Internas III: Grandes Ambientes', 'Acústica e Iluminação Urbana', 'Iluminação, Conceituação e Normas', 'Iluminação Residencial', 'Iluminação Comercial', 'Iluminação Externa: Jardins, Praças e Edificações Históricas']
+  },
 ];
 
 
