@@ -125,7 +125,7 @@ export default function AcademiaEsuda() {
               <h3 className="text-xl font-bold text-slate-900 mb-2 text-center">3. Inteligência de Carreira</h3>
               <p className="text-xs font-bold text-amber-500 uppercase tracking-wide text-center mb-4">Lifelong Learning</p>
               <p className="text-slate-600 text-sm leading-relaxed text-justify mb-4">
-                Nosso modelo respeita seu tempo e investimento. Ao concluir uma especialização, você já eliminou todo o <strong>Ciclo Comum (360h)</strong>. Isso significa que ao buscar uma segunda certificação, você começa com <strong>50% do caminho andado</strong>, incentivando sua formação contínua sem recomeçar do zero.
+                Nosso modelo respeita seu tempo e investimento. Ao concluir uma especialização, você já eliminou todo o <strong>Ciclo Estratégias de Negócios, Liderança e Inteligência Competitiva (180h)</strong>. Isso significa que ao buscar uma segunda certificação, você começa com <strong>50% do caminho andado</strong>, incentivando sua formação contínua sem recomeçar do zero.
               </p>
               <div className="mt-auto bg-amber-50 border border-amber-200 rounded-xl p-4 text-center">
                 <p className="text-3xl font-extrabold text-amber-600 mb-1">50%</p>
