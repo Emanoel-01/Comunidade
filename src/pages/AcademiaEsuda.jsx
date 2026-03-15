@@ -130,29 +130,39 @@ export default function AcademiaEsuda() {
                 <div className="grid grid-cols-2 gap-3 sm:gap-4">
                   <div className="bg-slate-800/50 p-4 rounded-lg border border-blue-500/20 flex flex-col items-center text-center"><Calendar size={28} className="text-blue-400 mb-2" /><span className="text-2xl font-bold text-white">3</span><span className="text-xs text-slate-400">Eventos</span></div>
                   <div className="bg-slate-800/50 p-4 rounded-lg border border-purple-500/20 flex flex-col items-center text-center"><FileText size={28} className="text-purple-400 mb-2" /><span className="text-2xl font-bold text-white">2</span><span className="text-xs text-slate-400">Artigos Científicos</span></div>
-                  <div className="bg-slate-800/50 p-4 rounded-lg border border-emerald-500/20 flex flex-col items-center text-center"><CheckCircle size={28} className="text-emerald-400 mb-2" /><span className="text-2xl font-bold text-white">1</span><span className="text-xs text-slate-400">Certificado Antecipado</span></div>
-                  <div className="bg-slate-800/50 p-4 rounded-lg border border-amber-500/20 flex flex-col items-center text-center"><Users size={28} className="text-amber-400 mb-2" /><span className="text-2xl font-bold text-white">4</span><span className="text-xs text-slate-400">Ações de Network</span></div>
+                  <div className="bg-slate-800/50 p-4 rounded-lg border border-emerald-500/20 flex flex-col items-center text-center"><CheckCircle size={28} className="text-emerald-400 mb-2" /><span className="text-2xl font-bold text-white">3</span><span className="text-xs text-slate-400">Empregados</span></div>
+                  <div className="bg-slate-800/50 p-4 rounded-lg border border-amber-500/20 flex flex-col items-center text-center"><Users size={28} className="text-amber-400 mb-2" /><span className="text-2xl font-bold text-white">1</span><span className="text-xs text-slate-400">Freelancer</span></div>
                 </div>
               </div>
               <div>
-                <h4 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4">Feed de Publicações e Conquistas</h4>
-                <div className="bg-slate-800 rounded-xl p-2 h-72 overflow-y-auto border border-slate-700">
+                <h4 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-2">Feed de Publicações e Conquistas</h4>
+                <div className="bg-slate-800 rounded-xl p-2 h-80 overflow-y-auto border border-slate-700">
                   <div className="flex flex-col gap-2 p-2">
                     {[
-                      { type: 'artigo', icon: <FileText size={16}/>, color: 'text-purple-400', bg: 'bg-purple-500/20', title: 'Eficiência e Inovação na Construção Civil...', date: 'Out/2025' },
-                      { type: 'artigo', icon: <FileText size={16}/>, color: 'text-purple-400', bg: 'bg-purple-500/20', title: 'Aplicações do BIM: Uma Abordagem...', date: 'Set/2025' },
-                      { type: 'cargo', icon: <Briefcase size={16}/>, color: 'text-amber-400', bg: 'bg-amber-500/20', title: 'Projetista (Freelancer)', date: 'Set/2025' },
-                      { type: 'evento', icon: <Calendar size={16}/>, color: 'text-blue-400', bg: 'bg-blue-500/20', title: 'Visita Técnica à Obra no Palácio J. Nabuco', date: 'Ago/2025' },
-                      { type: 'cargo', icon: <Briefcase size={16}/>, color: 'text-amber-400', bg: 'bg-amber-500/20', title: 'Engenheiro Fiscal de Campo', date: 'Ago/2025' },
+                      { type: 'Artigo Científico', icon: <FileText size={16}/>, color: 'text-purple-400', bg: 'bg-purple-500/20', title: 'Eficiência e Inovação na Construção Civil: O Impacto Dos Sistemas Informatizados na Gestão De Obras', date: 'Nov/2025', detail: null },
+                      { type: 'Artigo Científico', icon: <FileText size={16}/>, color: 'text-purple-400', bg: 'bg-purple-500/20', title: 'Aplicações do BIM: Uma Abordagem Sistêmica para Compatibilização de Projetos', date: 'Nov/2025', detail: null },
+                      { type: 'Evento', icon: <Calendar size={16}/>, color: 'text-blue-400', bg: 'bg-blue-500/20', title: 'Construção 4.0 – Engenharia e Tecnologia Integradas para o Ciclo de Vida do Edifício', date: 'Out/2025', detail: null },
+                      { type: 'Freelancer', icon: <Briefcase size={16}/>, color: 'text-teal-400', bg: 'bg-teal-500/20', title: 'Projetista', date: 'Set/2025', detail: 'Aluno contratado como Projetista Freelancer — atuação em projeto real ainda durante a especialização.' },
+                      { type: 'Evento', icon: <Calendar size={16}/>, color: 'text-blue-400', bg: 'bg-blue-500/20', title: 'Construindo Lideranças: A Visão do PMI para a Manutenção Predial – Parte 2', date: 'Set/2025', detail: null },
+                      { type: 'Canteiro Didático', icon: <Award size={16}/>, color: 'text-emerald-400', bg: 'bg-emerald-500/20', title: 'Visita Técnica a Obra do Palácio Joaquim Nabuco', date: 'Set/2025', detail: null },
+                      { type: 'Evento', icon: <Calendar size={16}/>, color: 'text-blue-400', bg: 'bg-blue-500/20', title: 'Construindo Lideranças: A Visão do PMI para a Manutenção Predial – Parte 1', date: 'Set/2025', detail: null },
+                      { type: 'Empregado', icon: <Briefcase size={16}/>, color: 'text-amber-400', bg: 'bg-amber-500/20', title: 'Engenheiro Fiscal de Campo', date: 'Set/2025', detail: 'Aluno contratado como Engenheiro Fiscal de Campo — resultado direto do networking gerado na incubadora.' },
+                      { type: 'Empregado', icon: <Briefcase size={16}/>, color: 'text-amber-400', bg: 'bg-amber-500/20', title: 'Fiscal de Obras', date: 'Ago/2025', detail: 'Aluno inserido no mercado como Fiscal de Obras antes mesmo da conclusão do curso.' },
+                      { type: 'Empregado', icon: <Briefcase size={16}/>, color: 'text-amber-400', bg: 'bg-amber-500/20', title: 'Gerente de Obras', date: 'Ago/2025', detail: 'Aluno promovido a Gerente de Obras — posição de liderança conquistada durante a especialização.' },
                     ].map((item, idx) => (
-                      <div key={idx} className="flex items-center gap-3 bg-slate-700/50 p-3 rounded-lg hover:bg-slate-600 transition-colors">
-                        <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${item.bg} ${item.color}`}>{item.icon}</div>
-                        <div className="flex-grow overflow-hidden"><p className="text-sm font-bold text-white truncate">{item.title}</p><p className="text-[10px] text-slate-400 uppercase tracking-wide">{item.type}</p></div>
-                        <div className="shrink-0 text-xs font-mono text-slate-500">{item.date}</div>
+                      <div key={idx} className="flex items-start gap-3 bg-slate-700/50 p-3 rounded-lg hover:bg-slate-600 transition-colors">
+                        <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mt-0.5 ${item.bg} ${item.color}`}>{item.icon}</div>
+                        <div className="flex-grow overflow-hidden">
+                          <p className="text-sm font-bold text-white leading-snug">{item.title}</p>
+                          <p className="text-[10px] text-slate-400 uppercase tracking-wide mt-0.5">{item.type}</p>
+                          {item.detail && <p className="text-[11px] text-slate-300 mt-1 leading-snug italic">{item.detail}</p>}
+                        </div>
+                        <div className="shrink-0 text-xs font-mono text-slate-500 pt-0.5">{item.date}</div>
                       </div>
                     ))}
                   </div>
                 </div>
+                <p className="text-[10px] text-slate-500 mt-2 text-center italic">* Os alunos autorizam expressamente a vinculação de sua imagem e conquistas como prova social da Incubadora Profissional.</p>
               </div>
             </div>
           </div>
