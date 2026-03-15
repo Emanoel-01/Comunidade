@@ -298,9 +298,9 @@ function AdminBlogEditor({ post: initialPost, onBack }) {
               <label className="block text-xs font-bold text-slate-500 mb-1 uppercase tracking-wide">Conteúdo do Artigo</label>
               <div className="border border-slate-200 rounded-xl overflow-hidden">
                 <ReactQuill
-                  value={form.content}
-                  onChange={val => setForm({ ...form, content: val })}
-                  theme="snow"
+                value={form.content}
+                onChange={val => setForm(prev => ({ ...prev, content: val }))}
+                theme="snow"
                   placeholder="Escreva o conteúdo detalhado do post..."
                   style={{ minHeight: '320px' }}
                   modules={{
