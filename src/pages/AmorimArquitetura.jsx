@@ -71,19 +71,56 @@ export default function AmorimArquitetura() {
 
       {/* GALERIA PORTFÓLIO */}
       <div className="mb-16">
-        <h3 className="text-2xl font-bold text-slate-900 mb-2">Portfólio Visual</h3>
-        <p className="text-slate-600 mb-8">Projetos reais, patologias resolvidas e antes & depois dos nossos atendimentos.</p>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+        <h3 className="text-2xl font-bold text-slate-900 mb-2">Portfólio de Projetos</h3>
+        <p className="text-slate-600 mb-8">Mais de 15 anos de projetos executados para órgãos públicos, instituições e empreendimentos privados em Pernambuco e no Brasil.</p>
+
+        {/* Projetos em destaque */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+          <div className="group relative overflow-hidden rounded-2xl shadow-md border border-slate-200 cursor-pointer" style={{height: 320}}>
+            <img src="https://static.wixstatic.com/media/152459_6339ba323283427daa071eb7d16349ab~mv2.jpg/v1/fill/w_480,h_600,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/2014.jpg" alt="Nova Sede CRC/PE" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent flex items-end p-6">
+              <div>
+                <span className="text-xs font-bold text-blue-300 uppercase tracking-widest">2021 · CRC/PE</span>
+                <p className="text-white text-lg font-bold leading-tight mt-1">Gerenciamento da Nova Sede do CRC/PE</p>
+                <p className="text-slate-300 text-sm mt-1">Recife/PE</p>
+              </div>
+            </div>
+          </div>
+          <div className="group relative overflow-hidden rounded-2xl shadow-md border border-slate-200 cursor-pointer" style={{height: 320}}>
+            <img src="https://static.wixstatic.com/media/152459_84fd38ffd69849378852a469c196cf20~mv2.jpg/v1/fill/w_480,h_600,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/RFRN.jpg" alt="Receita Federal RN" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent flex items-end p-6">
+              <div>
+                <span className="text-xs font-bold text-blue-300 uppercase tracking-widest">2019 · Receita Federal</span>
+                <p className="text-white text-lg font-bold leading-tight mt-1">Nova Sede da Delegacia da Receita Federal</p>
+                <p className="text-slate-300 text-sm mt-1">Natal/RN</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Grid de projetos */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
           {[
-            { img: 'https://static.wixstatic.com/media/152459_6339ba323283427daa071eb7d16349ab~mv2.jpg/v1/fill/w_480,h_600,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/2014.jpg', label: 'Gerenciamento - Nova Sede CRC/PE' },
-            { img: 'https://static.wixstatic.com/media/152459_15e60566f08a4fcf828b0c37630ce2ed~mv2.jpg/v1/fill/w_480,h_600,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/sol.jpg', label: 'Usina Solar - CRC/PE' },
-            { img: 'https://static.wixstatic.com/media/152459_84fd38ffd69849378852a469c196cf20~mv2.jpg/v1/fill/w_480,h_600,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/RFRN.jpg', label: 'Receita Federal - Natal/RN' },
-            { img: 'https://static.wixstatic.com/media/152459_b214383a73d14514ad8901a5cb287041~mv2.png/v1/crop/x_359,y_0,w_583,h_731/fill/w_300,h_375,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/cor.png', label: 'Residencial Parque de Exposições' },
+            { img: 'https://static.wixstatic.com/media/152459_15e60566f08a4fcf828b0c37630ce2ed~mv2.jpg/v1/fill/w_480,h_600,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/sol.jpg', label: 'Usina Solar CRC/PE', year: '2023' },
+            { img: 'https://static.wixstatic.com/media/152459_b214383a73d14514ad8901a5cb287041~mv2.png/v1/crop/x_359,y_0,w_583,h_731/fill/w_300,h_375,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/cor.png', label: 'Residencial Parque de Exposições', year: '2024' },
+            { img: 'https://static.wixstatic.com/media/152459_0dedafe2eeda4698981281984bcf0c99~mv2.jpg/v1/fill/w_480,h_600,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/Basilica%20do%20Carmo%20_JPG.jpg', label: 'Restauração Basílica do Carmo', year: '2019' },
+            { img: 'https://static.wixstatic.com/media/152459_306189bdcd0d41e583a79b549afcba9c~mv2.jpg/v1/fill/w_300,h_375,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/CRC-PE%20-%20VISTA%2001.jpg', label: 'Projeto Nova Sede CRC/PE', year: '2017' },
+            { img: 'https://static.wixstatic.com/media/152459_bcf3588cf83b4d30afb4dd255a9c3e07~mv2.jpg/v1/fill/w_480,h_600,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/DSC00299_JPG.jpg', label: 'Capela São João Batista do Brum', year: '2017' },
+            { img: 'https://static.wixstatic.com/media/152459_04c2c92f8ef843218671d733881c4b64~mv2.png/v1/crop/x_530,y_0,w_861,h_1080/fill/w_480,h_600,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/Largo%20do%20Monte.png', label: 'Requalificação Largo do Monte', year: '2017' },
+            { img: 'https://static.wixstatic.com/media/152459_0a72b01d9aa9414cae7ab49644a3dcd2~mv2.jpg/v1/fill/w_480,h_600,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/parquedasesculturas-1.jpg', label: 'Atrativos Turísticos do Recife', year: '2015' },
+            { img: 'https://static.wixstatic.com/media/152459_f4a82f2ec8e84ae19863af18f9c440e8~mv2.jpg/v1/crop/x_290,y_0,w_861,h_1080/fill/w_480,h_600,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/teleferico%20recife06.jpg', label: 'Teleférico Parque Dois Irmãos', year: '2015' },
+            { img: 'https://static.wixstatic.com/media/152459_19c8ac599d664aeab9bfc55afa4a5639~mv2.jpg/v1/crop/x_665,y_0,w_1977,h_2480/fill/w_300,h_375,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/FORUM%20justi%C3%A7a%20federal.jpg', label: 'Fórum Des. Neves Filho', year: '2015' },
+            { img: 'https://static.wixstatic.com/media/152459_eba2191949b14057a6b1fc5693f2ab8c~mv2.jpg/v1/crop/x_322,y_0,w_957,h_1200/fill/w_480,h_600,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/taatro11.jpg', label: 'Cine Teatro Quartel do Derby', year: '2014' },
+            { img: 'https://static.wixstatic.com/media/152459_e7a542e59257490a8661700ab41915fa~mv2.jpg/v1/crop/x_77,y_0,w_265,h_332/fill/w_300,h_375,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/blog-engenho_edited.jpg', label: 'Restauração Engenho São João', year: '2012' },
+            { img: 'https://static.wixstatic.com/media/152459_1920e747843046e8b52ca5306d85e91d~mv2.jpg/v1/fill/w_300,h_375,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/P1010034_JPG.jpg', label: 'Restauração Engenho Monjope', year: '2011' },
           ].map((item, i) => (
-            <div key={i} className="group relative overflow-hidden rounded-2xl aspect-square shadow-sm border border-slate-200 cursor-pointer">
+            <div key={i} className="group relative overflow-hidden rounded-xl aspect-square shadow-sm border border-slate-200 cursor-pointer">
               <img src={item.img} alt={item.label} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-                <p className="text-white text-xs font-bold leading-tight">{item.label}</p>
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-3">
+                <div>
+                  <p className="text-blue-300 text-xs font-bold">{item.year}</p>
+                  <p className="text-white text-xs font-semibold leading-tight">{item.label}</p>
+                </div>
               </div>
             </div>
           ))}
