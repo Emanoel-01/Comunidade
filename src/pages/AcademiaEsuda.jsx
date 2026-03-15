@@ -90,7 +90,7 @@ export default function AcademiaEsuda() {
           <div className="text-center mb-16"><h2 className="text-3xl font-bold text-slate-900 mb-4">Escolha a sua Especialização</h2></div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {esudaCourses.map((curso) => (
-              <div key={curso.id} onClick={() => setSelectedCourse(curso)} className="bg-white border border-slate-200 rounded-2xl p-8 flex flex-col h-full hover:border-emerald-500 hover:shadow-xl transition-all cursor-pointer group">
+              <div key={curso.id} ref={el => courseRefs.current[curso.id] = el} onClick={() => setSelectedCourse(curso)} className="bg-white border border-slate-200 rounded-2xl p-8 flex flex-col h-full hover:border-emerald-500 hover:shadow-xl transition-all cursor-pointer group">
                 <span className={`inline-block px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-${curso.color}-100 text-${curso.color}-700 w-fit mb-4`}>{curso.status}</span>
                 <h3 className="text-2xl font-bold text-slate-900 mb-2 group-hover:text-emerald-700 transition-colors">{curso.title}</h3>
                 <p className="text-sm font-bold text-indigo-600 mb-4">{curso.profile}</p>
