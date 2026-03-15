@@ -341,9 +341,11 @@ export default function CommunityFeed({ user, profile, onViewProfile }) {
       author_avatar: profile?.avatar_url || '',
       author_role: profile?.role_label || user.role,
       content: newPostContent, is_forum: false,
+      media_urls: newPostMedia,
       likes: 0, liked_by: [], comments_count: 0, status: 'active'
     });
     setNewPostContent('');
+    setNewPostMedia([]);
     setFocused(false);
     setPosting(false);
   };

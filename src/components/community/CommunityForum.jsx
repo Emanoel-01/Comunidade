@@ -194,13 +194,14 @@ export default function CommunityForum({ user, profile }) {
       forum_title: form.title,
       content: form.content,
       forum_category: form.forum_category,
+      media_urls: form.media_urls || [],
       is_forum: true,
       likes: 0,
       liked_by: [],
       comments_count: 0,
       status: 'active',
     });
-    setForm({ title: '', content: '', forum_category: 'Geral' });
+    setForm({ title: '', content: '', forum_category: 'Geral', media_urls: [] });
     setShowForm(false);
     setPosting(false);
     await loadPosts();
