@@ -98,10 +98,13 @@ function ForumPostCard({ post, currentUser, currentProfile }) {
         )}
         <p className="text-slate-700 text-sm leading-relaxed">{post.content}</p>
 
-        {post.image_url && (
+        {post.image_url && !post.media_urls?.length && (
           <div className="mt-3 rounded-xl overflow-hidden border border-slate-100">
             <img src={post.image_url} className="w-full object-cover max-h-72" alt="" />
           </div>
+        )}
+        {post.media_urls?.length > 0 && (
+          <MediaGallery mediaUrls={post.media_urls} />
         )}
       </div>
 
