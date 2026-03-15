@@ -255,8 +255,7 @@ export default function Home() {
               <div className="inline-block mb-4 px-3 py-1 bg-emerald-500/20 border border-emerald-500/30 rounded-full text-emerald-400 text-sm font-bold tracking-wide">Acesso Restrito</div>
               <h2 className="text-3xl md:text-5xl font-bold mb-3 leading-tight">Comunidade Business 4.0</h2>
               <p className="text-emerald-400 font-semibold text-lg mb-5">Além do Diploma</p>
-              <p className="text-base text-slate-300 mb-3 leading-relaxed">O ponto de encontro entre quem resolve e quem contrata na Engenharia.</p>
-              <p className="text-sm text-slate-400 mb-6 leading-relaxed">Este não é um espaço acadêmico. É o braço de networking e inteligência de mercado do nosso Ecossistema Digital. Unimos profissionais de elite, empresas do setor e grandes contratantes para transformar conhecimento técnico em oportunidades reais de negócio.</p>
+              <p className="text-base text-slate-300 mb-6 leading-relaxed">O ponto de encontro entre quem resolve e quem contrata na Construção Civil.</p>
               <ul className="space-y-4 mb-10">
                 {[
                   { label: 'Ecossistema 360°', desc: 'Conectando alunos, clientes e parceiros estratégicos.' },
