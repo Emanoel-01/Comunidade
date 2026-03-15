@@ -181,26 +181,35 @@ export default function Home() {
         </div>
       </section>
 
-      {/* APRESENTAÇÃO EM ÁUDIO + TRAJETÓRIA & PORTFÓLIO */}
-      <div ref={trajetoriaRef}>
-        <section className="bg-indigo-950 py-10 px-4">
-          <div className="max-w-2xl mx-auto">
-            <h3 className="text-white font-bold text-xl mb-5">Apresentação em Áudio</h3>
-            <iframe
-              style={{ borderRadius: '12px' }}
-              src="https://open.spotify.com/embed/episode/4wMGEFvPcGQH9FpIfTCGvM?utm_source=generator&theme=0"
-              width="100%"
-              height="152"
-              frameBorder="0"
-              allowFullScreen=""
-              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-              loading="lazy"
-              title="Podcast Emanoel Amorim"
-            ></iframe>
+      {/* MODAL: TRAJETÓRIA & PODCAST */}
+      {showTrajetoriaModal && (
+        <div className="fixed inset-0 z-[200] flex items-end sm:items-center justify-center bg-slate-900/80 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="bg-white w-full sm:rounded-2xl max-h-[95vh] overflow-y-auto shadow-2xl relative flex flex-col" style={{ maxWidth: '100vw' }}>
+            {/* Header do modal */}
+            <div className="sticky top-0 z-10 bg-indigo-950 px-6 py-4 flex items-center justify-between">
+              <h2 className="text-white font-bold text-lg">Trajetória & Portfólio</h2>
+              <button onClick={() => setShowTrajetoriaModal(false)} className="w-9 h-9 bg-white/10 hover:bg-white/20 text-white rounded-full flex items-center justify-center transition-colors"><X size={20} /></button>
+            </div>
+            {/* Podcast */}
+            <div className="bg-indigo-950 px-6 pb-8">
+              <h3 className="text-white font-bold text-base mb-4">Apresentação em Áudio</h3>
+              <iframe
+                style={{ borderRadius: '12px' }}
+                src="https://open.spotify.com/embed/episode/4wMGEFvPcGQH9FpIfTCGvM?utm_source=generator&theme=0"
+                width="100%"
+                height="152"
+                frameBorder="0"
+                allowFullScreen=""
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                loading="lazy"
+                title="Podcast Emanoel Amorim"
+              ></iframe>
+            </div>
+            {/* Trajetória */}
+            <TrajetoriaPortfolio />
           </div>
-        </section>
-        <TrajetoriaPortfolio />
-      </div>
+        </div>
+      )}
 
       {/* ECOSSISTEMA */}
       <section ref={ecosystemRef} className="py-20 bg-slate-50">
