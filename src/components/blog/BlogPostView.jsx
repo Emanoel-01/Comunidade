@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
-import { ThumbsUp, ChevronLeft, Linkedin, MessageCircle, Eye, Send, Share2, Clock } from 'lucide-react';
+import { ThumbsUp, ChevronLeft, Eye, Send, Clock, Tag } from 'lucide-react';
 import MediaGallery from '@/components/shared/MediaGallery';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import BlogPostCard from './BlogPostCard';
+import BlogShareButtons from './BlogShareButtons';
+import ReactMarkdown from 'react-markdown';
+import { usePostTracking } from './usePostTracking';
 
 export default function BlogPostView({ post, onBack, onSelectPost, relatedPosts }) {
   const [comments, setComments] = useState([]);
@@ -13,12 +16,14 @@ export default function BlogPostView({ post, onBack, onSelectPost, relatedPosts 
   const [liked, setLiked] = useState(false);
   const [likesCount, setLikesCount] = useState(post.likes || 0);
   const [submitting, setSubmitting] = useState(false);
-  const [shareMenu, setShareMenu] = useState(false);
+  const { trackView } = usePostTracking();
 
   useEffect(() => {
     loadComments();
     const savedLike = localStorage.getItem(`liked_post_${post.id}`);
-    if (savedLike) { setLiked(true); }
+    if (savedLike) setLiked(true);
+    // Track view
+    base44.auth.me().then(user => trackView(post, user)).catch(() => trackView(post, null));
   }, [post.id]);
 
   const loadComments = async () => {
@@ -39,30 +44,19 @@ export default function BlogPostView({ post, onBack, onSelectPost, relatedPosts 
     e.preventDefault();
     if (!newComment.trim() || !commentName.trim()) return;
     setSubmitting(true);
-    await base44.entities.Comment.create({
-      blog_post_id: post.id,
-      author_name: commentName,
-      content: newComment,
-    });
+    await base44.entities.Comment.create({ blog_post_id: post.id, author_name: commentName, content: newComment });
     setNewComment('');
     setCommentName('');
     await loadComments();
     setSubmitting(false);
   };
 
-  const handleShare = (platform) => {
-    const url = encodeURIComponent(window.location.href);
-    const text = encodeURIComponent(post.title);
-    if (platform === 'linkedin') window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`);
-    if (platform === 'whatsapp') window.open(`https://wa.me/?text=${text}%20${url}`);
-    if (platform === 'copy') { navigator.clipboard.writeText(window.location.href); alert('Link copiado!'); }
-    setShareMenu(false);
-    base44.entities.BlogPost.update(post.id, { shares: (post.shares || 0) + 1 });
-  };
-
   const formattedDate = post.created_date
     ? format(new Date(post.created_date), "dd 'de' MMMM 'de' yyyy", { locale: ptBR })
     : '';
+
+  // Detect if content is markdown (has ## or ** etc)
+  const isMarkdown = post.content && (post.content.includes('##') || post.content.includes('**') || post.content.includes('- '));
 
   return (
     <article className="bg-slate-50 min-h-screen pb-20">
@@ -75,7 +69,7 @@ export default function BlogPostView({ post, onBack, onSelectPost, relatedPosts 
           <span className="inline-block px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-xs font-bold uppercase tracking-wider mb-4">{post.category}</span>
           <h1 className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-6 leading-tight">{post.title}</h1>
 
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 border-y border-slate-200 py-6 mb-8">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-y border-slate-200 py-5 mb-8">
             <div className="flex items-center gap-4">
               {post.author_avatar ? (
                 <img src={post.author_avatar} className="w-14 h-14 rounded-full object-cover shadow-sm" alt="" />
@@ -84,36 +78,47 @@ export default function BlogPostView({ post, onBack, onSelectPost, relatedPosts 
               )}
               <div>
                 <p className="font-bold text-slate-900 text-lg">{post.author_name}</p>
-                <p className="text-sm text-slate-500">{post.author_role} • {formattedDate}</p>
+                <p className="text-sm text-slate-500">{post.author_role} · {formattedDate}</p>
               </div>
             </div>
             <div className="flex items-center gap-3 text-sm text-slate-500">
               <span className="flex items-center gap-1"><Eye size={14} />{post.views || 0} views</span>
               {post.read_time && <span className="flex items-center gap-1"><Clock size={14} />{post.read_time}</span>}
-              <div className="relative">
-                <button onClick={() => setShareMenu(!shareMenu)} className="flex items-center gap-2 px-3 py-2 bg-slate-100 hover:bg-slate-200 rounded-lg font-bold text-slate-700 transition-colors">
-                  <Share2 size={16} /> Compartilhar
-                </button>
-                {shareMenu && (
-                  <div className="absolute right-0 top-full mt-2 bg-white rounded-xl shadow-xl border border-slate-200 z-30 w-48 overflow-hidden">
-                    <button onClick={() => handleShare('linkedin')} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-slate-50 text-blue-700 font-medium"><Linkedin size={16} /> LinkedIn</button>
-                    <button onClick={() => handleShare('whatsapp')} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-slate-50 text-emerald-600 font-medium"><MessageCircle size={16} /> WhatsApp</button>
-                    <button onClick={() => handleShare('copy')} className="w-full flex items-center gap-3 px-4 py-3 hover:bg-slate-50 text-slate-600 font-medium">🔗 Copiar Link</button>
-                  </div>
-                )}
-              </div>
             </div>
           </div>
+
+          {/* Share no topo */}
+          <BlogShareButtons post={post} compact />
         </header>
 
         {post.cover_image && (
           <img src={post.cover_image} alt={post.title} className="w-full aspect-[21/9] rounded-2xl object-cover mb-12 shadow-lg" />
         )}
 
+        {/* Conteúdo com suporte a Markdown */}
         <div className="prose prose-lg max-w-none text-slate-700 leading-relaxed text-justify mb-10">
-          {(post.content || '').split('\n\n').map((p, i) => (
-            <p key={i} className="mb-6">{p}</p>
-          ))}
+          {isMarkdown ? (
+            <ReactMarkdown
+              components={{
+                h1: ({ children }) => <h1 className="text-3xl font-extrabold text-slate-900 mt-8 mb-4">{children}</h1>,
+                h2: ({ children }) => <h2 className="text-2xl font-bold text-slate-900 mt-6 mb-3 border-b border-slate-200 pb-2">{children}</h2>,
+                h3: ({ children }) => <h3 className="text-xl font-bold text-slate-800 mt-5 mb-2">{children}</h3>,
+                p: ({ children }) => <p className="mb-5 leading-relaxed">{children}</p>,
+                ul: ({ children }) => <ul className="list-disc pl-6 mb-4 space-y-1">{children}</ul>,
+                ol: ({ children }) => <ol className="list-decimal pl-6 mb-4 space-y-1">{children}</ol>,
+                li: ({ children }) => <li className="text-slate-700">{children}</li>,
+                strong: ({ children }) => <strong className="font-bold text-slate-900">{children}</strong>,
+                blockquote: ({ children }) => <blockquote className="border-l-4 border-indigo-300 pl-4 italic text-slate-600 my-4">{children}</blockquote>,
+                code: ({ children }) => <code className="bg-slate-100 text-indigo-700 px-1.5 py-0.5 rounded text-sm font-mono">{children}</code>,
+              }}
+            >
+              {post.content}
+            </ReactMarkdown>
+          ) : (
+            (post.content || '').split('\n\n').map((p, i) => (
+              <p key={i} className="mb-6">{p}</p>
+            ))
+          )}
         </div>
 
         {post.media_urls?.length > 0 && (
@@ -126,25 +131,27 @@ export default function BlogPostView({ post, onBack, onSelectPost, relatedPosts 
         {post.tags && post.tags.length > 0 && (
           <div className="flex flex-wrap gap-2 mb-10">
             {post.tags.map((tag, i) => (
-              <span key={i} className="px-3 py-1 bg-indigo-50 text-indigo-700 rounded-full text-xs font-bold border border-indigo-100">#{tag}</span>
+              <span key={i} className="flex items-center gap-1 px-3 py-1 bg-indigo-50 text-indigo-700 rounded-full text-xs font-bold border border-indigo-100">
+                <Tag size={10} />#{tag}
+              </span>
             ))}
           </div>
         )}
 
         {/* Like & Share */}
-        <div className="flex items-center justify-between bg-slate-100 p-6 rounded-2xl border border-slate-200 mb-12">
-          <button
-            onClick={handleLike}
-            disabled={liked}
-            className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold transition-all shadow-sm ${liked ? 'bg-indigo-600 text-white cursor-default' : 'bg-white text-slate-700 border border-slate-300 hover:bg-slate-100'}`}
-          >
-            <ThumbsUp size={20} fill={liked ? "currentColor" : "none"} />
-            {liked ? 'Você curtiu!' : 'Curtir Artigo'}
-            <span className="ml-2 px-2 py-0.5 bg-black/10 rounded text-sm">{likesCount}</span>
-          </button>
-          <button onClick={() => setShareMenu(!shareMenu)} className="flex items-center gap-2 px-5 py-3 bg-white rounded-xl border border-slate-300 font-bold text-slate-700 hover:bg-slate-50 transition-colors">
-            <Share2 size={18} /> Compartilhar
-          </button>
+        <div className="bg-slate-100 p-6 rounded-2xl border border-slate-200 mb-12 space-y-4">
+          <div className="flex items-center justify-between flex-wrap gap-4">
+            <button
+              onClick={handleLike}
+              disabled={liked}
+              className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold transition-all shadow-sm ${liked ? 'bg-indigo-600 text-white cursor-default' : 'bg-white text-slate-700 border border-slate-300 hover:bg-slate-50'}`}
+            >
+              <ThumbsUp size={20} fill={liked ? "currentColor" : "none"} />
+              {liked ? 'Você curtiu!' : 'Curtir Artigo'}
+              <span className="ml-2 px-2 py-0.5 bg-black/10 rounded text-sm">{likesCount}</span>
+            </button>
+          </div>
+          <BlogShareButtons post={post} />
         </div>
 
         {/* Comentários */}
@@ -164,8 +171,7 @@ export default function BlogPostView({ post, onBack, onSelectPost, relatedPosts 
               placeholder="Seu comentário..."
               value={newComment}
               onChange={e => setNewComment(e.target.value)}
-              required
-              rows={3}
+              required rows={3}
               className="w-full border border-slate-300 rounded-xl px-4 py-3 mb-4 focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
             />
             <button type="submit" disabled={submitting} className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-3 rounded-xl flex items-center gap-2 transition-colors disabled:opacity-50">
@@ -189,7 +195,6 @@ export default function BlogPostView({ post, onBack, onSelectPost, relatedPosts 
           </div>
         </div>
 
-        {/* Posts Relacionados */}
         {relatedPosts.length > 0 && (
           <div>
             <h3 className="text-2xl font-bold text-slate-900 mb-6">Artigos Relacionados</h3>
