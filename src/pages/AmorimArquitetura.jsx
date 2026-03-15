@@ -1,5 +1,5 @@
-import React from 'react';
-import { Building2, Search, Lightbulb, CheckCircle2, ArrowRight } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Building2, Search, Lightbulb, CheckCircle2, ArrowRight, ChevronLeft, ChevronRight as ChevronRightIcon } from 'lucide-react';
 import { createPageUrl } from '@/utils';
 import { Link } from 'react-router-dom';
 
