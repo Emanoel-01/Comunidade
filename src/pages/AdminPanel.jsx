@@ -297,6 +297,13 @@ function AdminBlogEditor({ post: initialPost, onBack }) {
               {form.cover_image && <img src={form.cover_image} className="mt-2 w-full aspect-video object-cover rounded-lg" alt="" />}
             </div>
             <div>
+              <MediaUploader
+                mediaUrls={form.media_urls || []}
+                onChange={urls => setForm({ ...form, media_urls: urls })}
+                label="Mídias do artigo (fotos, vídeos, áudios)"
+              />
+            </div>
+            <div>
               <label className="block text-xs font-bold text-slate-600 mb-1">Tempo de Leitura</label>
               <input value={form.read_time} onChange={e => setForm({ ...form, read_time: e.target.value })} placeholder="5 min de leitura" className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
             </div>
