@@ -241,11 +241,21 @@ export default function Home() {
           <div className="flex flex-col lg:flex-row items-center gap-12">
             <div className="lg:w-1/2">
               <div className="inline-block mb-4 px-3 py-1 bg-emerald-500/20 border border-emerald-500/30 rounded-full text-emerald-400 text-sm font-bold tracking-wide">Acesso Restrito</div>
-              <h2 className="text-3xl md:text-5xl font-bold mb-6 leading-tight">Comunidade Profissional de Engenharia</h2>
-              <p className="text-lg text-slate-300 mb-8 leading-relaxed text-justify">Um espaço exclusivo dedicado ao networking de alto nível, onde nossos alunos, professores e parceiros comerciais trocam conhecimentos reais do mercado.</p>
+              <h2 className="text-3xl md:text-5xl font-bold mb-3 leading-tight">Comunidade Business 4.0</h2>
+              <p className="text-emerald-400 font-semibold text-lg mb-5">Além do Diploma</p>
+              <p className="text-base text-slate-300 mb-3 leading-relaxed">O ponto de encontro entre quem resolve e quem contrata na Engenharia.</p>
+              <p className="text-sm text-slate-400 mb-6 leading-relaxed">Este não é um espaço acadêmico. É o braço de networking e inteligência de mercado do nosso Ecossistema Digital. Unimos profissionais de elite, empresas do setor e grandes contratantes para transformar conhecimento técnico em oportunidades reais de negócio.</p>
               <ul className="space-y-4 mb-10">
-                {['Fórum Técnico e debates de casos práticos', 'Oportunidades de trabalho e vagas no setor', 'Materiais, normas e planilhas exclusivas', 'Networking com grandes empresas e síndicos'].map((item, i) => (
-                  <li key={i} className="flex items-center gap-3 text-slate-200 font-medium"><CheckCircle2 className="text-emerald-400" size={20} /> {item}</li>
+                {[
+                  { label: 'Ecossistema 360°', desc: 'Conectando alunos, clientes e parceiros estratégicos.' },
+                  { label: 'Inteligência de Mercado', desc: 'Materiais exclusivos com foco em aplicação imediata e resultados.' },
+                  { label: 'Networking de Alto Nível', desc: 'Interação direta com grandes síndicos e gestores de manutenção.' },
+                  { label: 'Hub de Negócios', desc: 'Onde as vagas e as parcerias comerciais acontecem primeiro.' },
+                ].map((item, i) => (
+                  <li key={i} className="flex items-start gap-3 text-slate-200">
+                    <CheckCircle2 className="text-emerald-400 shrink-0 mt-0.5" size={20} />
+                    <span><span className="font-bold">{item.label}:</span> <span className="text-slate-300 font-normal">{item.desc}</span></span>
+                  </li>
                 ))}
               </ul>
               <Link to={createPageUrl('Comunidade')} className="bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-bold px-8 py-4 rounded-lg transition-all shadow-lg inline-flex items-center justify-center gap-2 text-lg">Entrar na Comunidade</Link>
