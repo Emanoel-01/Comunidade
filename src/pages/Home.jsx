@@ -68,8 +68,6 @@ const clientes = [
 
 export default function Home() {
   const ecosystemRef = useRef(null);
-  const instituicoesRef = useRef(null);
-  const trajetoriaRef = useRef(null);
 
   const [showTrajetoriaModal, setShowTrajetoriaModal] = useState(false);
   const [testimonialsModalView, setTestimonialsModalView] = useState(null);
