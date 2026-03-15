@@ -95,31 +95,11 @@ export default function BlogPostView({ post, onBack, onSelectPost, relatedPosts 
           <img src={post.cover_image} alt={post.title} className="w-full aspect-[21/9] rounded-2xl object-cover mb-12 shadow-lg" />
         )}
 
-        {/* Conteúdo com suporte a Markdown */}
-        <div className="prose prose-lg max-w-none text-slate-700 leading-relaxed text-justify mb-10">
-          {isMarkdown ? (
-            <ReactMarkdown
-              components={{
-                h1: ({ children }) => <h1 className="text-3xl font-extrabold text-slate-900 mt-8 mb-4">{children}</h1>,
-                h2: ({ children }) => <h2 className="text-2xl font-bold text-slate-900 mt-6 mb-3 border-b border-slate-200 pb-2">{children}</h2>,
-                h3: ({ children }) => <h3 className="text-xl font-bold text-slate-800 mt-5 mb-2">{children}</h3>,
-                p: ({ children }) => <p className="mb-5 leading-relaxed">{children}</p>,
-                ul: ({ children }) => <ul className="list-disc pl-6 mb-4 space-y-1">{children}</ul>,
-                ol: ({ children }) => <ol className="list-decimal pl-6 mb-4 space-y-1">{children}</ol>,
-                li: ({ children }) => <li className="text-slate-700">{children}</li>,
-                strong: ({ children }) => <strong className="font-bold text-slate-900">{children}</strong>,
-                blockquote: ({ children }) => <blockquote className="border-l-4 border-indigo-300 pl-4 italic text-slate-600 my-4">{children}</blockquote>,
-                code: ({ children }) => <code className="bg-slate-100 text-indigo-700 px-1.5 py-0.5 rounded text-sm font-mono">{children}</code>,
-              }}
-            >
-              {post.content}
-            </ReactMarkdown>
-          ) : (
-            (post.content || '').split('\n\n').map((p, i) => (
-              <p key={i} className="mb-6">{p}</p>
-            ))
-          )}
-        </div>
+        {/* Conteúdo renderizado como HTML (React Quill) */}
+        <div
+          className="prose prose-lg max-w-none text-slate-700 leading-relaxed text-justify mb-10 ql-content"
+          dangerouslySetInnerHTML={{ __html: post.content || '' }}
+        />
 
         {post.media_urls?.length > 0 && (
           <div className="mb-12">
