@@ -123,6 +123,8 @@ export default function AcademiaEsuda() {
                 </div>
                 <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white/10 rounded-full flex items-center justify-center backdrop-blur-sm border border-white/20 shrink-0"><TrendingUp className="text-white w-8 h-8 sm:w-10 sm:h-10" /></div>
               </div>
+              {/* ROI Accordion explicativo */}
+              <RoiExplainer />
             </div>
             <div className="lg:col-span-5 space-y-6">
               <div>
