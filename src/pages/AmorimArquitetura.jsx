@@ -183,9 +183,9 @@ export default function AmorimArquitetura() {
 
       {/* CTA */}
       <div className="bg-blue-50 border border-blue-100 rounded-2xl p-6 sm:p-8 text-center flex flex-col items-center mt-10 sm:mt-16">
-        <h3 className="text-2xl font-bold text-slate-800 mb-4">Mais de 100 projetos executados com sucesso</h3>
+        <h3 className="text-2xl font-bold text-slate-800 mb-4">Mais de 100 projetos e laudos executados com sucesso</h3>
         <p className="text-slate-600 mb-8 max-w-2xl text-justify md:text-center">A Amorim Arquitetura é a escolha de grandes instituições públicas, privadas e condomínios que não abrem mão de segurança, rigor normativo e tecnologia de ponta.</p>
-        <Link to={createPageUrl('Home')} className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 sm:px-8 py-3.5 rounded-lg transition-colors shadow-md flex items-center justify-center gap-2 text-sm sm:text-base text-center">Ver Órgãos que Confiam na Nossa Engenharia <ArrowRight size={18} className="shrink-0" /></Link>
+        <a href="/#clientes" onClick={e => { e.preventDefault(); window.location.href = '/Home'; setTimeout(() => { const el = document.getElementById('clientes'); if (el) el.scrollIntoView({ behavior: 'smooth' }); }, 400); }} className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 sm:px-8 py-3.5 rounded-lg transition-colors shadow-md flex items-center justify-center gap-2 text-sm sm:text-base text-center">Ver Órgãos que Confiam no Nosso Trabalho <ArrowRight size={18} className="shrink-0" /></a>
       </div>
     </div>
   );
