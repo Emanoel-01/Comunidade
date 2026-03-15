@@ -333,7 +333,7 @@ export default function IncubadoraSection() {
                         </div>
                         <div>
                           <span className="text-[10px] font-bold uppercase tracking-wide text-amber-400">Produção Tecnológica · Edital Centelha 3 · Jan/2026</span>
-                          <p className="text-white text-xs font-bold leading-tight">Equipe Concorrente Selecionada</p>
+                          <p className="text-white text-xs font-bold leading-tight">Equipe Integrante</p>
                         </div>
                       </div>
                       <p className="text-slate-300 text-[11px] leading-snug mb-2">
