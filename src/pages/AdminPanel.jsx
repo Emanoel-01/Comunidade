@@ -282,13 +282,26 @@ function AdminBlogEditor({ post: initialPost, onBack }) {
           <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 space-y-4">
             <input type="text" placeholder="Título do artigo..." value={form.title} onChange={e => setForm({ ...form, title: e.target.value })} className="w-full text-2xl font-extrabold text-slate-900 border-none outline-none bg-transparent placeholder-slate-300" />
             <input type="text" placeholder="Resumo (aparece nos cards do blog)..." value={form.excerpt} onChange={e => setForm({ ...form, excerpt: e.target.value })} className="w-full text-slate-600 border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
-            <textarea
-              placeholder="Escreva o conteúdo do artigo aqui... (use linha em branco para separar parágrafos)"
-              value={form.content}
-              onChange={e => setForm({ ...form, content: e.target.value })}
-              rows={16}
-              className="w-full border border-slate-200 rounded-xl px-4 py-3 text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-400 resize-none text-sm leading-relaxed"
-            />
+            <div>
+              <label className="block text-xs font-bold text-slate-500 mb-1 uppercase tracking-wide">Conteúdo do Artigo</label>
+              <div className="border border-slate-200 rounded-xl overflow-hidden">
+                <ReactQuill
+                  value={form.content}
+                  onChange={val => setForm({ ...form, content: val })}
+                  theme="snow"
+                  style={{ minHeight: '300px' }}
+                  modules={{
+                    toolbar: [
+                      [{ 'header': [1, 2, 3, false] }],
+                      ['bold', 'italic', 'underline', 'blockquote'],
+                      [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                      ['link'],
+                      ['clean']
+                    ]
+                  }}
+                />
+              </div>
+            </div>
           </div>
         </div>
         <div className="space-y-4">
