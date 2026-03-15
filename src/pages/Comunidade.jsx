@@ -76,13 +76,31 @@ export default function Comunidade() {
             <div className="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1000')] bg-cover bg-center"></div>
             <div className="relative z-10">
               <LockKeyhole className="text-emerald-400 w-12 h-12 mb-6" />
-              <h2 className="text-3xl font-extrabold mb-4">Comunidade Exclusiva</h2>
-              <p className="text-slate-300 mb-8 text-sm">O maior ecossistema de profissionais de Engenharia Diagnóstica e Gestão de Obras.</p>
-              <ul className="space-y-3 text-sm">
-                <li className="flex items-center gap-2"><CheckCircle2 size={16} className="text-emerald-400" /> Fórum Técnico Especializado</li>
-                <li className="flex items-center gap-2"><CheckCircle2 size={16} className="text-emerald-400" /> Vagas de Emprego Ocultas</li>
-                <li className="flex items-center gap-2"><CheckCircle2 size={16} className="text-emerald-400" /> Materiais Exclusivos</li>
-                <li className="flex items-center gap-2"><CheckCircle2 size={16} className="text-emerald-400" /> Eventos e Masterclasses</li>
+              <h2 className="text-3xl font-extrabold mb-4">Comunidade Business 4.0</h2>
+              <p className="text-slate-300 mb-5 text-sm leading-relaxed">Além do Diploma: O ponto de encontro entre quem resolve e quem contrata na Construção Civil.</p>
+              <ul className="space-y-3 text-sm mb-6">
+                <li className="flex items-start gap-2"><CheckCircle2 size={16} className="text-emerald-400 shrink-0 mt-0.5" /> <span><strong className="text-white">Gestão Estratégica & Diagnóstica:</strong> Soluções em laudos, eficiência e segurança predial.</span></li>
+                <li className="flex items-start gap-2"><CheckCircle2 size={16} className="text-emerald-400 shrink-0 mt-0.5" /> <span><strong className="text-white">Ecossistema Digital SaaS:</strong> Tecnologia inteligente para a gestão de ativos e edifícios.</span></li>
+                <li className="flex items-start gap-2"><CheckCircle2 size={16} className="text-emerald-400 shrink-0 mt-0.5" /> <span><strong className="text-white">Liderança e Prática:</strong> Networking com os protagonistas que dominam a convergência tecnológica.</span></li>
+                <li className="flex items-start gap-2"><CheckCircle2 size={16} className="text-emerald-400 shrink-0 mt-0.5" /> <span><strong className="text-white">Hub de Oportunidades:</strong> Onde a engenharia consultiva encontra as parcerias de alto nível.</span></li>
+              </ul>
+              <p className="text-xs font-bold uppercase tracking-widest text-emerald-400 mb-2">Perfis que Integram</p>
+              <ul className="space-y-1.5 text-xs text-slate-300">
+                {[
+                  'Especialista em Engenharia Diagnóstica',
+                  'Gestor de Ativos / Facilities Manager',
+                  'Síndico Profissional / Gestor Predial',
+                  'Clientes Amorim Arquitetura',
+                  'Aluno / Pós-Graduando ESUDA',
+                  'Profissional Autônomo',
+                  'Investidor / Incorporador',
+                  'Consultor BIM / Inovação Tecnológica',
+                  'Parceiro Estratégico / Fornecedor Homologado',
+                ].map((p, i) => (
+                  <li key={i} className="flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0"></span> {p}
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
