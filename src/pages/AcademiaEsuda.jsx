@@ -250,13 +250,13 @@ export default function AcademiaEsuda() {
                 proxima: 'bg-blue-100 text-blue-700',
               };
               return (
-                <div key={curso.id} ref={el => courseRefs.current[curso.id] = el} onClick={() => setSelectedCourse(curso)} className="bg-white border border-slate-200 rounded-2xl p-6 flex flex-col h-full hover:border-emerald-500 hover:shadow-xl transition-all cursor-pointer group">
+                <div key={curso.id} ref={el => courseRefs.current[curso.id] = el} onClick={() => setSelectedCourse(curso)} className="bg-white border border-slate-200 rounded-2xl p-6 flex flex-col h-full hover:border-indigo-500 hover:shadow-xl transition-all cursor-pointer group">
                   <span className={`inline-block px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider w-fit mb-3 ${statusStyles[curso.statusType]}`}>{curso.status}</span>
-                  <h3 className="text-lg font-bold text-slate-900 mb-1 group-hover:text-emerald-700 transition-colors leading-snug">{curso.title}</h3>
+                  <h3 className="text-lg font-bold text-slate-900 mb-1 group-hover:text-indigo-700 transition-colors leading-snug">{curso.title}</h3>
                   <p className="text-xs font-bold text-indigo-600 mb-3">{curso.profile}</p>
                   <p className="text-slate-500 text-xs leading-relaxed mb-4 flex-grow text-justify line-clamp-3">{curso.description}</p>
 
-                  <div className="flex items-center justify-between pt-3 border-t border-slate-100 mt-auto text-emerald-600 font-bold text-sm group-hover:translate-x-1 transition-transform">Ver Ementa <ArrowRight size={16} /></div>
+                  <div className="flex items-center justify-between pt-3 border-t border-slate-100 mt-auto text-indigo-600 font-bold text-sm group-hover:translate-x-1 transition-transform">Ver Ementa <ArrowRight size={16} /></div>
                 </div>
               );
             })}
