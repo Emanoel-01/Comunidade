@@ -61,7 +61,7 @@ export default function AmorimArquitetura() {
         <div className="relative z-10 px-5 py-10 sm:px-8 sm:py-16 md:px-16 md:py-20 flex flex-col md:flex-row items-center gap-8">
           <div className="md:w-2/3">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/20 text-blue-300 rounded-full text-sm font-bold tracking-wide mb-6 border border-blue-500/30">
-              <Building2 size={16} /> Especialistas em Engenharia Condominial
+              <Building2 size={16} /> Especialistas em Engenharia Consultiva
             </div>
             <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-6 leading-tight">Excelência técnica para proteger o seu patrimônio.</h2>
             <p className="text-lg text-slate-300 leading-relaxed text-justify">A Amorim Arquitetura é pioneira em Engenharia Condominial e Diagnóstica em Pernambuco. Unimos o rigor técnico das normas da ABNT com a inovação da Construção 4.0 para garantir a conformidade legal e otimizar os custos do seu empreendimento.</p>
