@@ -95,32 +95,28 @@ export default function AcademiaEsuda() {
               <div className="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-6"><Target size={32} /></div>
               <h3 className="text-xl font-bold text-slate-900 mb-2 text-center">2. Especialização Cirúrgica</h3>
               <p className="text-xs font-bold text-emerald-500 uppercase tracking-wide text-center mb-4">7 Perfis · 7 Caminhos de Sucesso — 180h</p>
-              <p className="text-slate-600 text-sm leading-relaxed text-justify mb-4">Não formamos "faz-tudo". Nossos cursos têm foco total no resultado final esperado pelo mercado. Clique em cada perfil para conhecer a especialização:</p>
-              <ul className="space-y-2">
+              <p className="text-slate-600 text-sm leading-relaxed text-justify mb-4">Não formamos "faz-tudo". Clique em um perfil para conhecer a especialização:</p>
+              <div className="grid grid-cols-2 gap-2">
                 {[
-                  { id: 'gpo', emoji: '🏗️', label: 'Gestão de Projetos e Obras', sublabel: 'O Perfil Business' },
-                  { id: 'bim', emoji: '💻', label: 'Tecnologia BIM', sublabel: 'O Perfil Tech' },
-                  { id: 'manutencao', emoji: '⚙️', label: 'Manutenção Predial', sublabel: 'O Perfil Operations' },
-                  { id: 'legal', emoji: '⚖️', label: 'Engenharia Legal', sublabel: 'O Perfil Legal/Finance' },
-                  { id: 'neuroarquitetura', emoji: '🧠', label: 'Neuroarquitetura', sublabel: 'O Perfil Human-Centric' },
-                  { id: 'interiores', emoji: '🎨', label: 'Design de Interiores', sublabel: 'O Perfil Inovação/Estética' },
-                  { id: 'acustica', emoji: '💡', label: 'Acústica e Iluminação', sublabel: 'O Perfil Comfort/Performance' },
+                  { id: 'gpo', emoji: '🏗️', sublabel: 'O Perfil Business' },
+                  { id: 'bim', emoji: '💻', sublabel: 'O Perfil Tech' },
+                  { id: 'manutencao', emoji: '⚙️', sublabel: 'O Perfil Operations' },
+                  { id: 'legal', emoji: '⚖️', sublabel: 'O Perfil Legal/Finance' },
+                  { id: 'neuroarquitetura', emoji: '🧠', sublabel: 'O Perfil Human-Centric' },
+                  { id: 'interiores', emoji: '🎨', sublabel: 'O Perfil Estética' },
+                  { id: 'acustica', emoji: '💡', sublabel: 'O Perfil Comfort' },
                 ].map((item) => (
-                  <li key={item.id}>
-                    <button
-                      onClick={() => courseRefs.current[item.id]?.scrollIntoView({ behavior: 'smooth', block: 'center' })}
-                      className="w-full flex items-center gap-2 text-left text-sm bg-white hover:bg-emerald-50 border border-slate-200 hover:border-emerald-400 rounded-lg px-3 py-2 transition-all group"
-                    >
-                      <span>{item.emoji}</span>
-                      <div className="flex-1">
-                        <span className="font-semibold text-slate-800 group-hover:text-emerald-700">{item.label}</span>
-                        <span className="block text-[10px] text-slate-400 uppercase tracking-wide">{item.sublabel}</span>
-                      </div>
-                      <ArrowRight size={12} className="text-emerald-500 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
-                    </button>
-                  </li>
+                  <button
+                    key={item.id}
+                    onClick={() => courseRefs.current[item.id]?.scrollIntoView({ behavior: 'smooth', block: 'center' })}
+                    className="flex flex-col items-center text-center bg-white hover:bg-emerald-50 border border-slate-200 hover:border-emerald-400 rounded-xl px-3 py-3 transition-all group"
+                  >
+                    <span className="text-2xl mb-1">{item.emoji}</span>
+                    <span className="text-xs font-bold text-slate-800 group-hover:text-emerald-700 leading-tight">{item.sublabel}</span>
+                    <ArrowRight size={10} className="text-emerald-500 mt-1 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </button>
                 ))}
-              </ul>
+              </div>
             </div>
 
             {/* Pilar 3 */}
