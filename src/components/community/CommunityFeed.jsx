@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
 import { ThumbsUp, MessageCircle, ShieldCheck, Send, Briefcase, Download, Calendar, ExternalLink, FileText, Image, Smile, Trophy, Clock } from 'lucide-react';
+import MediaUploader from '@/components/shared/MediaUploader';
+import MediaGallery from '@/components/shared/MediaGallery';
 import { format, formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 
