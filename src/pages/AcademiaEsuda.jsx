@@ -173,7 +173,7 @@ export default function AcademiaEsuda() {
                 <div>
                   <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mb-6 flex items-center gap-2"><CheckCircle className="text-emerald-500 shrink-0" /> Matriz Curricular</h3>
                   <AccordionCycle
-                    title="Ciclo Comum (180h)"
+                    title="Ciclo Estratégias de Negócios, Liderança e Inteligência Competitiva (180h)"
                     subtitle="Base Empreendedora & Estratégica"
                     color="indigo"
                     items={['Gestão de Escritórios, Branding e Precificação', 'Novas Fontes de Receita: Laudos e Perícias', 'Inteligência Artificial Aplicada e Design Thinking']}
