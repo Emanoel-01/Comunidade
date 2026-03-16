@@ -119,6 +119,7 @@ export default function Comunidade() {
 
   return (
     <div className="bg-slate-100 min-h-screen pb-20 md:pb-0">
+      <GamificationToast user={user} />
       <div className="max-w-7xl mx-auto px-3 sm:px-4 py-4 sm:py-8 grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6">
         {/* Sidebar Esquerda */}
         <CommunitySidebar
