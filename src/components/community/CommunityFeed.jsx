@@ -381,6 +381,23 @@ export default function CommunityFeed({ user, profile, onViewProfile }) {
               {focused && (
                 <div className="mt-2 space-y-3">
                   <MediaUploader mediaUrls={newPostMedia} onChange={setNewPostMedia} label="" />
+                  {showVideoInput ? (
+                    <div className="flex gap-2 items-center">
+                      <Link size={14} className="text-slate-400 shrink-0" />
+                      <input
+                        type="url"
+                        placeholder="Cole o link do YouTube, Instagram ou LinkedIn..."
+                        value={newPostVideoUrl}
+                        onChange={e => setNewPostVideoUrl(e.target.value)}
+                        className="flex-grow border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                      />
+                      {newPostVideoUrl && <SocialVideoEmbed url={newPostVideoUrl} />}
+                    </div>
+                  ) : (
+                    <button type="button" onClick={() => setShowVideoInput(true)} className="flex items-center gap-2 text-xs font-medium text-slate-500 hover:text-indigo-600 hover:bg-indigo-50 px-3 py-1.5 rounded-lg transition-colors">
+                      <Link size={13} /> Adicionar link de vídeo (YouTube / Instagram / LinkedIn)
+                    </button>
+                  )}
                   <div className="flex items-center justify-between">
                     <span className="text-xs text-slate-400 italic">Compartilhe experiências, dúvidas e conquistas!</span>
                     <div className="flex gap-2">
