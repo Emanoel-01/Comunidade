@@ -127,7 +127,7 @@ export default function CommunityMaterials({ user }) {
     e.preventDefault();
     setSaving(true);
     await base44.entities.Material.create({ ...form, downloads: 0 });
-    setForm({ title: '', description: '', category: 'Planilhas', file_url: '', media_urls: [] });
+    setForm({ title: '', description: '', category: 'Planilhas', file_url: '', media_urls: [], social_video_url: '' });
     setShowForm(false);
     const d = await base44.entities.Material.list('-created_date');
     setMaterials(d);
