@@ -384,7 +384,7 @@ export default function CommunityFeed({ user, profile, onViewProfile }) {
                   <div className="flex items-center justify-between">
                     <span className="text-xs text-slate-400 italic">Compartilhe experiências, dúvidas e conquistas!</span>
                     <div className="flex gap-2">
-                      <button onClick={() => { setFocused(false); setNewPostContent(''); setNewPostMedia([]); }} className="px-4 py-1.5 text-slate-500 hover:bg-slate-100 font-bold rounded-lg text-sm transition-colors">Cancelar</button>
+                      <button onClick={() => { setFocused(false); setNewPostContent(''); setNewPostMedia([]); setNewPostVideoUrl(''); setShowVideoInput(false); }} className="px-4 py-1.5 text-slate-500 hover:bg-slate-100 font-bold rounded-lg text-sm transition-colors">Cancelar</button>
                       <button onClick={handlePost} disabled={posting || !newPostContent.trim()} className="px-5 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-sm transition-colors disabled:opacity-40">
                         {posting ? 'Publicando...' : 'Publicar'}
                       </button>
