@@ -7,6 +7,7 @@ import TrajetoriaPortfolio from '@/components/TrajetoriaPortfolio';
 import { createPageUrl } from '@/utils';
 import { Link } from 'react-router-dom';
 import { base44 } from '@/api/base44Client';
+import HallOfFame from '@/components/gamification/HallOfFame';
 
 function RecentBlogPosts() {
   const [posts, setPosts] = React.useState([]);

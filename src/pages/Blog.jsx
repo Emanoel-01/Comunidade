@@ -5,6 +5,7 @@ import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import BlogPostCard from '../components/blog/BlogPostCard';
 import BlogPostView from '../components/blog/BlogPostView';
+import HallOfFame from '../components/gamification/HallOfFame';
 
 const blogCategories = ['Todos', 'Gestão 4.0', 'Manutenção Predial', 'Tecnologia BIM', 'Engenharia Legal', 'Carreira'];
 
