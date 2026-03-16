@@ -11,6 +11,8 @@ import CommunitySidebar from '../components/community/CommunitySidebar';
 import CommunityNotifications from '../components/community/CommunityNotifications';
 import CommunityChat from '../components/community/CommunityChat';
 import CommunityForum from '../components/community/CommunityForum';
+import UserGamificationDashboard from '../components/gamification/UserGamificationDashboard';
+import HallOfFame from '../components/gamification/HallOfFame';
 
 export default function Comunidade() {
   const [user, setUser] = useState(null);
@@ -163,6 +165,15 @@ export default function Comunidade() {
           {activeTab === 'notificacoes' && !viewingProfileId && (
             <CommunityNotifications user={user} />
           )}
+          {activeTab === 'ranking' && !viewingProfileId && (
+            <div className="space-y-5">
+              <div className="bg-white rounded-2xl border border-slate-200 p-5">
+                <h2 className="text-xl font-bold text-slate-900 mb-1 flex items-center gap-2">🏆 Meu Painel de Gamificação</h2>
+                <p className="text-sm text-slate-500 mb-5">Acompanhe sua evolução, pontuação e medalhas conquistadas.</p>
+                <UserGamificationDashboard user={user} />
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Sidebar Direita */}
@@ -171,6 +182,7 @@ export default function Comunidade() {
             <h4 className="font-bold mb-4 text-sm uppercase tracking-wider text-emerald-300">Próximos Eventos</h4>
             <RecentEventsMini />
           </div>
+          <HallOfFame compact />
           <TopMembersMini onViewProfile={setViewingProfileId} />
         </aside>
       </div>
