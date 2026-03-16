@@ -342,7 +342,7 @@ export default function CommunityFeed({ user, profile, onViewProfile }) {
     e.preventDefault();
     if (!newPostContent.trim()) return;
     setPosting(true);
-    await base44.entities.CommunityPost.create({
+    const post = await base44.entities.CommunityPost.create({
       author_id: user.id, author_name: user.full_name,
       author_avatar: profile?.avatar_url || '',
       author_role: profile?.role_label || user.role,
@@ -351,8 +351,16 @@ export default function CommunityFeed({ user, profile, onViewProfile }) {
       social_video_url: newPostVideoUrl || '',
       likes: 0, liked_by: [], comments_count: 0, status: 'active'
     });
+    // Gamificação: pontuar por criar post no feed
+    await base44.functions.invoke('awardPoints', {
+      activity_type: 'community_post_created',
+      related_entity_id: post.id,
+      related_entity_title: newPostContent.substring(0, 60),
+    });
     setNewPostContent('');
     setNewPostMedia([]);
+    setNewPostVideoUrl('');
+    setShowVideoInput(false);
     setFocused(false);
     setPosting(false);
   };
