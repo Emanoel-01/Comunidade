@@ -166,7 +166,7 @@ export default function CommunityForum({ user, profile }) {
   const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState('Todos');
   const [showForm, setShowForm] = useState(false);
-  const [form, setForm] = useState({ title: '', content: '', forum_category: 'Geral', media_urls: [] });
+  const [form, setForm] = useState({ title: '', content: '', forum_category: 'Geral', media_urls: [], social_video_url: '' });
   const [posting, setPosting] = useState(false);
 
   useEffect(() => {
