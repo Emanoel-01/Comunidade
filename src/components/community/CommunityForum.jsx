@@ -104,6 +104,9 @@ function ForumPostCard({ post, currentUser, currentProfile }) {
             <img src={post.image_url} className="w-full object-cover max-h-72" alt="" />
           </div>
         )}
+        {post.social_video_url && (
+          <div className="mt-3"><SocialVideoEmbed url={post.social_video_url} /></div>
+        )}
         {post.media_urls?.length > 0 && (
           <MediaGallery mediaUrls={post.media_urls} />
         )}
