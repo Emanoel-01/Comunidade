@@ -191,7 +191,7 @@ export default function Home() {
             <div className="bg-indigo-950 px-6 pb-8 flex flex-col items-center text-center">
               <div className="mb-4 mt-2">
                 <img
-                  src="https://i.ibb.co/TDC35Hqf/Emanoel-Silva-de-Amorim.jpg"
+                  src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69b4f78756902b494e56bda9/82107f70e_EmanoelAmorim.jpg"
                   alt="Emanoel Amorim"
                   className="w-20 h-20 rounded-full object-cover border-4 border-indigo-400 shadow-lg mx-auto"
                 />
