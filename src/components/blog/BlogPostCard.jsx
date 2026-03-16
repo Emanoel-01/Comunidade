@@ -29,7 +29,7 @@ export default function BlogPostCard({ post, onClick }) {
           )}
         </div>
         <h3 className="text-xl font-bold text-slate-900 mb-3 line-clamp-2 group-hover:text-indigo-700 transition-colors">{post.title}</h3>
-        <p className="text-slate-600 text-sm line-clamp-3 mb-6 flex-grow">{post.excerpt}</p>
+        <p className="text-slate-600 text-sm line-clamp-3 mb-6 flex-grow">{post.summary}</p>
         <div className="flex justify-between items-center pt-4 border-t border-slate-100">
           <div className="flex items-center gap-2">
             {post.author_avatar ? (
