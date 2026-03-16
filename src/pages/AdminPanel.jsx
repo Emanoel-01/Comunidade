@@ -365,6 +365,18 @@ function AdminBlogEditor({ post: initialPost, onBack }) {
               </div>
             </div>
 
+            {/* Link de Vídeo */}
+            <div>
+              <label className="block text-xs font-bold text-slate-500 mb-1 uppercase tracking-wide">Link de Vídeo (YouTube, Vimeo...)</label>
+              <input
+                type="url"
+                value={form.video_link || ''}
+                onChange={e => setForm({ ...form, video_link: e.target.value })}
+                placeholder="https://www.youtube.com/watch?v=..."
+                className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              />
+            </div>
+
             {/* Mídias Anexadas */}
             <div>
               <MediaUploader
