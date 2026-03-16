@@ -135,6 +135,9 @@ export default function BlogPostView({ post, onBack, onSelectPost, relatedPosts 
           <BlogShareButtons post={post} />
         </div>
 
+        {/* Newsletter */}
+        <NewsletterSignup post={post} />
+
         {/* Comentários */}
         <div className="mb-16">
           <h3 className="text-2xl font-bold text-slate-900 mb-6">Comentários ({comments.length})</h3>
