@@ -93,7 +93,7 @@ export default function AdminPanel() {
       <div className="flex-grow p-5 md:p-8 overflow-auto">
         {adminTab === 'dashboard' && <AdminDashboard onNavigate={setAdminTab} />}
         {adminTab === 'blog_list' && <AdminBlogList onEdit={(post) => setAdminTab('blog_editor')} />}
-        {adminTab === 'blog_editor' && <AdminBlogEditor onBack={() => setAdminTab('blog_list')} />}
+        {adminTab === 'blog_editor' && <AdminBlogEditorNew onBack={() => setAdminTab('blog_list')} />}
         {adminTab === 'blog_analytics' && (
           <div className="animate-in fade-in space-y-5">
             <h2 className="text-2xl font-bold text-slate-900 flex items-center gap-2"><BarChart2 size={22} className="text-pink-600" /> Analytics do Blog</h2>
