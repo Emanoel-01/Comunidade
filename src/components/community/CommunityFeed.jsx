@@ -84,6 +84,9 @@ function PostCard({ post, currentUser, currentProfile, onViewProfile }) {
 
         <p className="text-slate-700 text-sm leading-relaxed mb-4 whitespace-pre-wrap">{post.content}</p>
 
+        {post.social_video_url && (
+          <SocialVideoEmbed url={post.social_video_url} />
+        )}
         {post.image_url && !post.media_urls?.length && (
           <div className="w-full rounded-xl overflow-hidden mb-4 border border-slate-100">
             <img src={post.image_url} className="w-full object-cover max-h-[400px]" alt="" />
