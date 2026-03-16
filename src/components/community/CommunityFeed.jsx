@@ -398,6 +398,7 @@ export default function CommunityFeed({ user, profile, onViewProfile }) {
                       <Link size={13} /> Adicionar link de vídeo (YouTube / Instagram / LinkedIn)
                     </button>
                   )}
+                  )}
                   <div className="flex items-center justify-between">
                     <span className="text-xs text-slate-400 italic">Compartilhe experiências, dúvidas e conquistas!</span>
                     <div className="flex gap-2">
