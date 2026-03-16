@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
-import { MessagesSquare, Send, ThumbsUp, MessageCircle, ChevronDown, ChevronUp, Tag, Plus, X } from 'lucide-react';
+import { MessagesSquare, Send, ThumbsUp, MessageCircle, ChevronDown, ChevronUp, Tag, Plus, X, Link } from 'lucide-react';
 import MediaUploader from '@/components/shared/MediaUploader';
 import MediaGallery from '@/components/shared/MediaGallery';
+import SocialVideoEmbed from '@/components/shared/SocialVideoEmbed';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 
