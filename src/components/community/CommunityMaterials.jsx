@@ -65,6 +65,9 @@ function MaterialCard({ m, user, onDownloaded }) {
           </div>
         </div>
         {m.description && <p className="text-xs text-slate-600 mb-3 line-clamp-2 leading-relaxed">{m.description}</p>}
+        {m.social_video_url && (
+          <div className="mb-3"><SocialVideoEmbed url={m.social_video_url} /></div>
+        )}
         {m.media_urls?.length > 0 && (
           <div className="mb-3">
             <MediaGallery mediaUrls={m.media_urls} />
