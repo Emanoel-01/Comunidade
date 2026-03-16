@@ -8,6 +8,7 @@ import BlogPostCard from './BlogPostCard';
 import BlogShareButtons from './BlogShareButtons';
 import ReactMarkdown from 'react-markdown';
 import { usePostTracking } from './usePostTracking';
+import NewsletterSignup from './NewsletterSignup';
 
 export default function BlogPostView({ post, onBack, onSelectPost, relatedPosts }) {
   const [comments, setComments] = useState([]);
