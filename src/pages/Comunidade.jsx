@@ -13,6 +13,7 @@ import CommunityChat from '../components/community/CommunityChat';
 import CommunityForum from '../components/community/CommunityForum';
 import UserGamificationDashboard from '../components/gamification/UserGamificationDashboard';
 import HallOfFame from '../components/gamification/HallOfFame';
+import GamificationToast from '../components/gamification/GamificationToast';
 
 export default function Comunidade() {
   const [user, setUser] = useState(null);
