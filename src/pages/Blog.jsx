@@ -56,7 +56,7 @@ export default function Blog() {
       {/* Header */}
       <div className="bg-white border-b border-slate-200 py-12 px-4">
         <div className="max-w-7xl mx-auto">
-          <h1 className="text-4xl font-extrabold text-slate-900 mb-2">Blog Técnico</h1>
+          <h1 className="text-4xl font-extrabold text-slate-900 mb-2">Blog Mundo 4.0</h1>
           <p className="text-lg text-slate-600 mb-6">Conteúdo aprofundado sobre Construção 4.0, Gestão e Tecnologia.</p>
           <div className="relative max-w-xl">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
