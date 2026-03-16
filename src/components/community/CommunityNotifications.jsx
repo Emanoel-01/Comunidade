@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
-import { Bell, CheckCheck, MessageCircle, ThumbsUp, Briefcase, Calendar, Download, ShieldCheck } from 'lucide-react';
+import { Bell, CheckCheck, MessageCircle, ThumbsUp, Briefcase, Calendar, Download, ShieldCheck, Star } from 'lucide-react';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 
