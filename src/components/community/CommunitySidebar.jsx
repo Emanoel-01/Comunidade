@@ -1,6 +1,7 @@
 import React from 'react';
-import { LayoutDashboard, Briefcase, Download, Calendar, UserCircle, Bell, LogOut, MessageSquare, MessagesSquare } from 'lucide-react';
+import { LayoutDashboard, Briefcase, Download, Calendar, UserCircle, Bell, LogOut, MessageSquare, MessagesSquare, Trophy } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
+import HallOfFame from '@/components/gamification/HallOfFame';
 
 const tabs = [
   { id: 'feed', TabIcon: LayoutDashboard, label: 'Feed' },
@@ -8,8 +9,8 @@ const tabs = [
   { id: 'vagas', TabIcon: Briefcase, label: 'Vagas' },
   { id: 'materiais', TabIcon: Download, label: 'Materiais' },
   { id: 'eventos', TabIcon: Calendar, label: 'Eventos' },
+  { id: 'ranking', TabIcon: Trophy, label: 'Ranking' },
   { id: 'chat', TabIcon: MessageSquare, label: 'Chat' },
-  { id: 'notificacoes', TabIcon: Bell, label: 'Avisos' },
   { id: 'perfil', TabIcon: UserCircle, label: 'Perfil' },
 ];
 
@@ -19,6 +20,7 @@ const tabsFull = [
   { id: 'vagas', TabIcon: Briefcase, label: 'Vagas e Contratos' },
   { id: 'materiais', TabIcon: Download, label: 'Materiais Exclusivos' },
   { id: 'eventos', TabIcon: Calendar, label: 'Calendário de Eventos' },
+  { id: 'ranking', TabIcon: Trophy, label: 'Hall da Fama 🏆' },
   { id: 'chat', TabIcon: MessageSquare, label: 'Mensagens' },
   { id: 'notificacoes', TabIcon: Bell, label: 'Notificações' },
   { id: 'perfil', TabIcon: UserCircle, label: 'Meu Perfil' },
