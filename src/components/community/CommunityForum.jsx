@@ -190,7 +190,7 @@ export default function CommunityForum({ user, profile }) {
     e.preventDefault();
     if (!form.content.trim()) return;
     setPosting(true);
-    await base44.entities.CommunityPost.create({
+    const newPost = await base44.entities.CommunityPost.create({
       author_id: user.id,
       author_name: user.full_name,
       author_avatar: profile?.avatar_url || '',
@@ -205,6 +205,11 @@ export default function CommunityForum({ user, profile }) {
       comments_count: 0,
       status: 'active',
     });
+    base44.functions.invoke('awardPoints', {
+      activity_type: 'forum_post_created',
+      related_entity_id: newPost?.id || '',
+      related_entity_title: form.title || form.content.slice(0, 50),
+    }).catch(() => {});
     setForm({ title: '', content: '', forum_category: 'Geral', media_urls: [], social_video_url: '' });
     setShowForm(false);
     setPosting(false);

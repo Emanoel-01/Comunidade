@@ -32,16 +32,12 @@ function MaterialCard({ m, user, onDownloaded }) {
     const newCount = (m.downloads || 0) + 1;
     await base44.entities.Material.update(m.id, { downloads: newCount });
 
-    // Gamificação: pontos por download (registrado via notificação ao user)
     if (user) {
-      await base44.entities.Notification.create({
-        user_id: user.id,
-        type: 'material',
-        title: `Download realizado! +5 pontos 🏆`,
-        message: `Você baixou "${m.title}". Continue aprendendo para subir no ranking da comunidade!`,
-        link: '/Comunidade',
-        read: false
-      });
+      base44.functions.invoke('awardPoints', {
+        activity_type: 'material_downloaded',
+        related_entity_id: m.id,
+        related_entity_title: m.title,
+      }).catch(() => {});
     }
 
     onDownloaded(m.id, newCount);
