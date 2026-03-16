@@ -14,6 +14,7 @@ import AdminForum from '../components/admin/AdminForum';
 import MediaUploader from '../components/shared/MediaUploader';
 import BlogAnalyticsDashboard from '../components/blog/BlogAnalyticsDashboard';
 import ReactQuill from 'react-quill';
+import AdminBlogEditorNew from '../components/admin/AdminBlogEditorNew';
 
 const BLANK_POST = { title: '', content: '', summary: '', cover_image: '', media_urls: [], video_link: '', category: 'Gestão 4.0', tags: [], author_name: 'Emanoel Amorim', author_role: 'CEO Amorim Tech', author_avatar: 'https://i.ibb.co/TDC35Hqf/Emanoel-Silva-de-Amorim.jpg', read_time: '5 min', status: 'draft', seo_description: '', seo_keyword: '' };
 
