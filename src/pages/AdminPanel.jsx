@@ -396,7 +396,7 @@ function AdminBlogEditor({ post: initialPost, onBack }) {
             <h3 className="font-bold text-slate-800 text-sm flex items-center gap-1">🔍 SEO</h3>
             <div>
               <label className="block text-xs font-bold text-slate-600 mb-1">Palavra-chave Principal</label>
-              <input value={form.keyword || ''} onChange={e => setForm({ ...form, keyword: e.target.value })} placeholder="Ex: manutenção predial" className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400" />
+              <input value={form.seo_keyword || ''} onChange={e => setForm({ ...form, seo_keyword: e.target.value })} placeholder="Ex: manutenção predial" className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400" />
             </div>
             <div>
               <label className="block text-xs font-bold text-slate-600 mb-1">
