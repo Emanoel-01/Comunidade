@@ -12,6 +12,7 @@ const icons = {
   event: <Calendar size={16} className="text-purple-500" />,
   admin: <ShieldCheck size={16} className="text-red-500" />,
   mention: <MessageCircle size={16} className="text-rose-500" />,
+  gamification: <Star size={16} className="text-yellow-500" />,
 };
 
 export default function CommunityNotifications({ user }) {
