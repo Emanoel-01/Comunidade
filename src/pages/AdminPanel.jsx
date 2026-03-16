@@ -292,7 +292,7 @@ function AdminBlogEditor({ post: initialPost, onBack }) {
         <div className="lg:col-span-2 space-y-4">
           <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5 space-y-4">
             <input type="text" placeholder="Título do artigo..." value={form.title} onChange={e => { const v = e.target.value; setForm(prev => ({ ...prev, title: v })); }} className="w-full text-2xl font-extrabold text-slate-900 border-none outline-none bg-transparent placeholder-slate-300" />
-            <input type="text" placeholder="Resumo (aparece nos cards do blog)..." value={form.excerpt} onChange={e => { const v = e.target.value; setForm(prev => ({ ...prev, excerpt: v })); }} className="w-full text-slate-600 border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
+            <textarea rows={2} placeholder="Resumo (aparece nos cards do blog)..." value={form.summary || ''} onChange={e => { const v = e.target.value; setForm(prev => ({ ...prev, summary: v })); }} className="w-full text-slate-600 border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 resize-none" />
 
             <div>
               <label className="block text-xs font-bold text-slate-500 mb-1 uppercase tracking-wide">Conteúdo do Artigo</label>
