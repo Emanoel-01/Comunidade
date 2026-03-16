@@ -235,10 +235,7 @@ export default function Home() {
             ].map((item, i) => (
               <div key={i} className="bg-white rounded-2xl shadow-sm border border-slate-200 p-8 hover:shadow-xl transition-all group flex flex-col">
                 <div className="mb-6 flex items-center">
-                  {item.logo
-                    ? <img src={item.logo} alt={item.title} className={item.logoClass} />
-                    : <div className="w-14 h-14 bg-emerald-50 rounded-xl flex items-center justify-center"><item.icon className="w-8 h-8 text-emerald-600" /></div>
-                  }
+                  <img src={item.logo} alt={item.title} className={item.logoClass} />
                 </div>
                 <h3 className="text-2xl font-bold mb-3 text-slate-900">{item.title}</h3>
                 <p className="text-slate-600 mb-8 flex-grow text-justify">{item.desc}</p>
