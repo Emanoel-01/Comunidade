@@ -23,8 +23,17 @@ export default function BlogPostView({ post, onBack, onSelectPost, relatedPosts 
     loadComments();
     const savedLike = localStorage.getItem(`liked_post_${post.id}`);
     if (savedLike) setLiked(true);
-    // Track view
-    base44.auth.me().then(user => trackView(post, user)).catch(() => trackView(post, null));
+    // Track view + gamificação
+    base44.auth.me().then(user => {
+      trackView(post, user);
+      if (user) {
+        base44.functions.invoke('awardPoints', {
+          activity_type: 'blog_post_read',
+          related_entity_id: post.id,
+          related_entity_title: post.title,
+        }).catch(() => {});
+      }
+    }).catch(() => trackView(post, null));
   }, [post.id]);
 
   const loadComments = async () => {
@@ -39,6 +48,13 @@ export default function BlogPostView({ post, onBack, onSelectPost, relatedPosts 
     setLiked(true);
     localStorage.setItem(`liked_post_${post.id}`, '1');
     await base44.entities.BlogPost.update(post.id, { likes: newCount });
+    base44.auth.me().then(user => {
+      if (user) base44.functions.invoke('awardPoints', {
+        activity_type: 'blog_post_liked',
+        related_entity_id: post.id,
+        related_entity_title: post.title,
+      }).catch(() => {});
+    }).catch(() => {});
   };
 
   const handleComment = async (e) => {
@@ -46,6 +62,13 @@ export default function BlogPostView({ post, onBack, onSelectPost, relatedPosts 
     if (!newComment.trim() || !commentName.trim()) return;
     setSubmitting(true);
     await base44.entities.Comment.create({ blog_post_id: post.id, author_name: commentName, content: newComment });
+    base44.auth.me().then(user => {
+      if (user) base44.functions.invoke('awardPoints', {
+        activity_type: 'blog_post_commented',
+        related_entity_id: post.id,
+        related_entity_title: post.title,
+      }).catch(() => {});
+    }).catch(() => {});
     setNewComment('');
     setCommentName('');
     await loadComments();
