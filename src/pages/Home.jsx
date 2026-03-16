@@ -154,7 +154,7 @@ export default function Home() {
           <div className="flex flex-col md:flex-row items-center gap-12 mb-16">
             <div className="md:w-1/3">
               <div className="aspect-square rounded-2xl overflow-hidden shadow-2xl border-4 border-white">
-                <img src="https://i.ibb.co/TDC35Hqf/Emanoel-Silva-de-Amorim.jpg" alt="Emanoel Amorim" className="w-full h-full object-cover" />
+                <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69b4f78756902b494e56bda9/82107f70e_EmanoelAmorim.jpg" alt="Emanoel Amorim" className="w-full h-full object-cover" />
               </div>
             </div>
             <div className="md:w-2/3">
