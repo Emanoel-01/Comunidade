@@ -296,6 +296,17 @@ export default function CommunityForum({ user, profile }) {
               onChange={urls => setForm({ ...form, media_urls: urls })}
               label="Adicionar mídias (foto, vídeo ou áudio)"
             />
+            <div>
+              <label className="block text-xs font-bold text-slate-600 mb-1 flex items-center gap-1"><Link size={12} /> Link de vídeo social (YouTube, Instagram, LinkedIn)</label>
+              <input
+                type="url"
+                value={form.social_video_url}
+                onChange={e => setForm({ ...form, social_video_url: e.target.value })}
+                placeholder="https://youtube.com/watch?v=... ou instagram.com/reel/..."
+                className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              />
+              {form.social_video_url && <div className="mt-2"><SocialVideoEmbed url={form.social_video_url} /></div>}
+            </div>
             <div className="flex justify-end gap-3">
               <button type="button" onClick={() => setShowForm(false)} className="px-4 py-2 text-slate-600 font-bold hover:bg-slate-100 rounded-lg text-sm">Cancelar</button>
               <button
