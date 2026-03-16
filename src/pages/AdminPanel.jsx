@@ -400,11 +400,11 @@ function AdminBlogEditor({ post: initialPost, onBack }) {
             </div>
             <div>
               <label className="block text-xs font-bold text-slate-600 mb-1">
-                Meta Description <span className={`font-normal ${(form.meta_description || '').length > 160 ? 'text-red-500' : 'text-slate-400'}`}>({(form.meta_description || '').length}/160)</span>
+                Meta Description <span className={`font-normal ${(form.seo_description || '').length > 160 ? 'text-red-500' : 'text-slate-400'}`}>({(form.seo_description || '').length}/160)</span>
               </label>
               <textarea
-                value={form.meta_description || ''}
-                onChange={e => setForm({ ...form, meta_description: e.target.value })}
+                value={form.seo_description || ''}
+                onChange={e => setForm({ ...form, seo_description: e.target.value })}
                 placeholder="Descrição exibida no Google (máx 160 caracteres)..."
                 maxLength={160}
                 rows={3}
