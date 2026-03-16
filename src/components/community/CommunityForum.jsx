@@ -205,7 +205,7 @@ export default function CommunityForum({ user, profile }) {
       comments_count: 0,
       status: 'active',
     });
-    setForm({ title: '', content: '', forum_category: 'Geral', media_urls: [] });
+    setForm({ title: '', content: '', forum_category: 'Geral', media_urls: [], social_video_url: '' });
     setShowForm(false);
     setPosting(false);
     await loadPosts();
