@@ -15,7 +15,7 @@ import MediaUploader from '../components/shared/MediaUploader';
 import BlogAnalyticsDashboard from '../components/blog/BlogAnalyticsDashboard';
 import ReactQuill from 'react-quill';
 
-const BLANK_POST = { title: '', content: '', excerpt: '', cover_image: '', media_urls: [], category: 'Gestão 4.0', tags: [], author_name: 'Emanoel Amorim', author_role: 'CEO Amorim Tech', author_avatar: 'https://i.ibb.co/TDC35Hqf/Emanoel-Silva-de-Amorim.jpg', read_time: '5 min', status: 'draft', meta_description: '', keyword: '' };
+const BLANK_POST = { title: '', content: '', summary: '', cover_image: '', media_urls: [], video_link: '', category: 'Gestão 4.0', tags: [], author_name: 'Emanoel Amorim', author_role: 'CEO Amorim Tech', author_avatar: 'https://i.ibb.co/TDC35Hqf/Emanoel-Silva-de-Amorim.jpg', read_time: '5 min', status: 'draft', seo_description: '', seo_keyword: '' };
 
 export default function AdminPanel() {
   const [adminTab, setAdminTab] = useState('dashboard');
