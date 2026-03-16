@@ -29,7 +29,7 @@ export default function Blog() {
 
   const filteredPosts = posts.filter(p => {
     const matchCat = activeCategory === 'Todos' || p.category === activeCategory;
-    const matchSearch = !searchTerm || p.title?.toLowerCase().includes(searchTerm.toLowerCase()) || p.excerpt?.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchSearch = !searchTerm || p.title?.toLowerCase().includes(searchTerm.toLowerCase()) || p.summary?.toLowerCase().includes(searchTerm.toLowerCase());
     return matchCat && matchSearch;
   });
 
