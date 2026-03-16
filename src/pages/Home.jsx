@@ -289,6 +289,43 @@ export default function Home() {
 
       {/* INSTITUIÇÕES - seção removida daqui, movida para logo após o Hero */}
 
+      {/* HALL DA FAMA */}
+      <section className="bg-white py-16 border-b border-slate-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col lg:flex-row gap-8 items-start">
+            <div className="flex-grow">
+              <div className="mb-8">
+                <h2 className="text-3xl font-bold text-slate-900 mb-2">Hall da Fama</h2>
+                <p className="text-slate-600">Os membros mais ativos e influentes do ecossistema Business 4.0.</p>
+              </div>
+              <HallOfFame />
+            </div>
+            <div className="lg:w-80 shrink-0 bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-2xl p-6 border border-indigo-200">
+              <h3 className="text-lg font-bold text-indigo-900 mb-3">Como Ganhar Pontos?</h3>
+              <ul className="space-y-2.5 text-sm text-indigo-800">
+                {[
+                  { icon: '📖', action: 'Ler um artigo do blog', pts: '+5 pts' },
+                  { icon: '👍', action: 'Curtir um artigo', pts: '+3 pts' },
+                  { icon: '💬', action: 'Comentar em artigo', pts: '+10 pts' },
+                  { icon: '📥', action: 'Baixar um material', pts: '+5 pts' },
+                  { icon: '🗣️', action: 'Criar post no fórum', pts: '+20 pts' },
+                  { icon: '✍️', action: 'Responder no fórum', pts: '+10 pts' },
+                  { icon: '📝', action: 'Criar post na comunidade', pts: '+15 pts' },
+                ].map((item, i) => (
+                  <li key={i} className="flex items-center justify-between">
+                    <span className="flex items-center gap-2">{item.icon} {item.action}</span>
+                    <span className="font-extrabold text-indigo-600 text-xs">{item.pts}</span>
+                  </li>
+                ))}
+              </ul>
+              <Link to={createPageUrl('Comunidade')} className="mt-5 block text-center bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-4 py-2.5 rounded-lg text-sm transition-colors">
+                Entrar e Competir
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* BLOG - artigos recentes */}
       <RecentBlogPosts />
 

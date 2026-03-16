@@ -72,37 +72,47 @@ export default function Blog() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 py-10">
-        {/* Categorias */}
-        <div className="flex overflow-x-auto pb-4 mb-8 gap-2" style={{ scrollbarWidth: 'none' }}>
-          {blogCategories.map(cat => (
-            <button key={cat} onClick={() => setActiveCategory(cat)}
-              className={`px-5 py-2 rounded-full whitespace-nowrap font-bold text-sm transition-colors ${activeCategory === cat ? 'bg-indigo-600 text-white shadow-md' : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'}`}>
-              {cat}
-            </button>
-          ))}
-        </div>
+        <div className="flex flex-col lg:flex-row gap-8">
+          {/* Posts */}
+          <div className="flex-grow">
+            {/* Categorias */}
+            <div className="flex overflow-x-auto pb-4 mb-8 gap-2" style={{ scrollbarWidth: 'none' }}>
+              {blogCategories.map(cat => (
+                <button key={cat} onClick={() => setActiveCategory(cat)}
+                  className={`px-5 py-2 rounded-full whitespace-nowrap font-bold text-sm transition-colors ${activeCategory === cat ? 'bg-indigo-600 text-white shadow-md' : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'}`}>
+                  {cat}
+                </button>
+              ))}
+            </div>
 
-        {loading ? (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[1,2,3].map(i => (
-              <div key={i} className="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 animate-pulse">
-                <div className="aspect-[16/10] bg-slate-200"></div>
-                <div className="p-6 space-y-3"><div className="h-4 bg-slate-200 rounded w-3/4"></div><div className="h-3 bg-slate-200 rounded w-full"></div><div className="h-3 bg-slate-200 rounded w-2/3"></div></div>
+            {loading ? (
+              <div className="grid md:grid-cols-2 gap-8">
+                {[1,2,3].map(i => (
+                  <div key={i} className="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-200 animate-pulse">
+                    <div className="aspect-[16/10] bg-slate-200"></div>
+                    <div className="p-6 space-y-3"><div className="h-4 bg-slate-200 rounded w-3/4"></div><div className="h-3 bg-slate-200 rounded w-full"></div><div className="h-3 bg-slate-200 rounded w-2/3"></div></div>
+                  </div>
+                ))}
               </div>
-            ))}
+            ) : filteredPosts.length === 0 ? (
+              <div className="text-center py-24 text-slate-400">
+                <Search size={48} className="mx-auto mb-4 opacity-30" />
+                <p className="text-xl font-bold text-slate-600">Nenhum artigo encontrado.</p>
+              </div>
+            ) : (
+              <div className="grid md:grid-cols-2 gap-8">
+                {filteredPosts.map(post => (
+                  <BlogPostCard key={post.id} post={post} onClick={() => handleSelectPost(post)} />
+                ))}
+              </div>
+            )}
           </div>
-        ) : filteredPosts.length === 0 ? (
-          <div className="text-center py-24 text-slate-400">
-            <Search size={48} className="mx-auto mb-4 opacity-30" />
-            <p className="text-xl font-bold text-slate-600">Nenhum artigo encontrado.</p>
+
+          {/* Sidebar - Hall da Fama */}
+          <div className="lg:w-80 shrink-0">
+            <HallOfFame compact />
           </div>
-        ) : (
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredPosts.map(post => (
-              <BlogPostCard key={post.id} post={post} onClick={() => handleSelectPost(post)} />
-            ))}
-          </div>
-        )}
+        </div>
       </div>
     </div>
   );
