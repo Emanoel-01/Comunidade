@@ -299,6 +299,8 @@ export default function CommunityFeed({ user, profile, onViewProfile }) {
   const [loading, setLoading] = useState(true);
   const [newPostContent, setNewPostContent] = useState('');
   const [newPostMedia, setNewPostMedia] = useState([]);
+  const [newPostVideoUrl, setNewPostVideoUrl] = useState('');
+  const [showVideoInput, setShowVideoInput] = useState(false);
   const [posting, setPosting] = useState(false);
   const [focused, setFocused] = useState(false);
 
