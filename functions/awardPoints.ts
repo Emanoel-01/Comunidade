@@ -27,6 +27,21 @@ const BADGE_RULES = [
   { total_points: 1000, badge_name: 'Embaixador da Comunidade', icon: '🏆', color: 'bg-amber-100 text-amber-800', category: 'Interação Comunitária' },
 ];
 
+const LEVEL_THRESHOLDS = [
+  { min: 1000, level: 'Embaixador da Comunidade' },
+  { min: 500, level: 'Especialista 4.0' },
+  { min: 200, level: 'Colaborador Ativo' },
+  { min: 50, level: 'Membro Engajado' },
+  { min: 0, level: 'Membro Trainee' },
+];
+
+function getLevel(total) {
+  for (const t of LEVEL_THRESHOLDS) {
+    if (total >= t.min) return t.level;
+  }
+  return 'Membro Trainee';
+}
+
 Deno.serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
@@ -51,21 +66,20 @@ Deno.serve(async (req) => {
       category,
     });
 
-    // Buscar ou criar perfil de gamificação do usuário
+    // Buscar perfil de gamificação do usuário
     const profiles = await base44.entities.UserProfile.filter({ user_id: user.id });
     const profile = profiles[0];
 
+    const earnedBadges = [];
+
     if (profile) {
-      const newTotal = (profile.gamification_score_total || 0) + points;
+      const oldTotal = profile.gamification_score_total || 0;
+      const newTotal = oldTotal + points;
       const newWeekly = (profile.weekly_score || 0) + points;
       const newMonthly = (profile.monthly_score || 0) + points;
 
-      // Calcular nível
-      let newLevel = 'Membro Trainee';
-      if (newTotal >= 1000) newLevel = 'Embaixador da Comunidade';
-      else if (newTotal >= 500) newLevel = 'Especialista 4.0';
-      else if (newTotal >= 200) newLevel = 'Colaborador Ativo';
-      else if (newTotal >= 50) newLevel = 'Membro Engajado';
+      const oldLevel = getLevel(oldTotal);
+      const newLevel = getLevel(newTotal);
 
       await base44.entities.UserProfile.update(profile.id, {
         gamification_score_total: newTotal,
@@ -73,6 +87,26 @@ Deno.serve(async (req) => {
         monthly_score: newMonthly,
         current_level: newLevel,
       });
+
+      // Notificação de pontos ganhos (via serviço role para bypasser o RLS de criação)
+      await base44.asServiceRole.entities.Notification.create({
+        user_id: user.id,
+        type: 'gamification',
+        title: `+${points} pontos ganhos!`,
+        message: `Você ganhou ${points} pontos por "${activity_type.replace(/_/g, ' ')}"${related_entity_title ? ` em "${related_entity_title}"` : ''}.`,
+        read: false,
+      });
+
+      // Notificação de subida de nível
+      if (newLevel !== oldLevel) {
+        await base44.asServiceRole.entities.Notification.create({
+          user_id: user.id,
+          type: 'gamification',
+          title: `🎉 Novo nível desbloqueado!`,
+          message: `Parabéns! Você subiu para o nível "${newLevel}".`,
+          read: false,
+        });
+      }
 
       // Verificar badges
       const allActivities = await base44.entities.GamificationActivity.filter({ user_id: user.id });
@@ -100,11 +134,22 @@ Deno.serve(async (req) => {
             badge_category: rule.category,
             badge_color: rule.color,
           });
+
+          earnedBadges.push(rule);
+
+          // Notificação de novo badge
+          await base44.asServiceRole.entities.Notification.create({
+            user_id: user.id,
+            type: 'gamification',
+            title: `${rule.icon} Badge conquistado!`,
+            message: `Você desbloqueou o badge "${rule.badge_name}". Continue assim!`,
+            read: false,
+          });
         }
       }
     }
 
-    return Response.json({ success: true, points_awarded: points, category });
+    return Response.json({ success: true, points_awarded: points, category, earned_badges: earnedBadges });
   } catch (error) {
     return Response.json({ error: error.message }, { status: 500 });
   }
