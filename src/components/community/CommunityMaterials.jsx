@@ -194,6 +194,17 @@ export default function CommunityMaterials({ user }) {
               onChange={urls => setForm({ ...form, media_urls: urls })}
               label="Mídias de pré-visualização (foto, vídeo ou áudio)"
             />
+            <div>
+              <label className="block text-xs font-bold text-slate-600 mb-1 flex items-center gap-1"><Link size={12} /> Link de vídeo social (YouTube, Instagram, LinkedIn)</label>
+              <input
+                type="url"
+                value={form.social_video_url}
+                onChange={e => setForm({ ...form, social_video_url: e.target.value })}
+                placeholder="https://youtube.com/watch?v=... ou instagram.com/reel/..."
+                className="w-full border border-amber-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400"
+              />
+              {form.social_video_url && <div className="mt-2"><SocialVideoEmbed url={form.social_video_url} /></div>}
+            </div>
             <div className="flex justify-end gap-3">
               <button type="button" onClick={() => setShowForm(false)} className="px-4 py-2 text-slate-600 font-bold hover:bg-slate-100 rounded-lg text-sm">Cancelar</button>
               <button type="submit" disabled={saving || !form.file_url} className="px-6 py-2 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-lg text-sm disabled:opacity-50">{saving ? 'Publicando...' : 'Publicar'}</button>
