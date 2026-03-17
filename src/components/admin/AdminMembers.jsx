@@ -27,6 +27,7 @@ function isLicenseExpired(profile) {
 
 export default function AdminMembers() {
   const [profiles, setProfiles] = useState([]);
+  const [users, setUsers] = useState({});
   const [loading, setLoading] = useState(true);
   const [editingId, setEditingId] = useState(null);
   const [editForm, setEditForm] = useState({});
@@ -41,8 +42,14 @@ export default function AdminMembers() {
 
   const loadProfiles = async () => {
     setLoading(true);
-    const data = await base44.entities.UserProfile.list('-created_date');
-    setProfiles(data);
+    const [profileData, userData] = await Promise.all([
+      base44.entities.UserProfile.list('-created_date'),
+      base44.entities.User.list()
+    ]);
+    const userMap = {};
+    userData.forEach(u => { userMap[u.id] = u; });
+    setUsers(userMap);
+    setProfiles(profileData);
     setLoading(false);
   };
 
