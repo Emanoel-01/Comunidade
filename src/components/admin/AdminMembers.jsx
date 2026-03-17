@@ -77,7 +77,7 @@ export default function AdminMembers() {
   };
 
   const deleteProfile = async (profile) => {
-    if (!confirm(`Excluir o membro "${profile.role_label || profile.user_id}"? Esta ação não pode ser desfeita.`)) return;
+    if (!confirm(`Excluir o membro "${getDisplayName(profile)}"? Esta ação não pode ser desfeita.`)) return;
     await base44.entities.UserProfile.delete(profile.id);
     setProfiles(prev => prev.filter(p => p.id !== profile.id));
   };
