@@ -1,6 +1,105 @@
 import React, { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
-import { Users, Award, X, Trash2, Save, ChevronDown, ChevronUp, Shield, Clock, Star, Infinity } from 'lucide-react';
+import { Users, Award, X, Trash2, Save, ChevronDown, ChevronUp, Shield, Clock, Star, Infinity, BookOpen, MessageSquare, Pencil, GraduationCap, Info } from 'lucide-react';
+
+const BADGE_LEGEND = [
+  {
+    category: 'Consumo de Conhecimento',
+    icon: BookOpen,
+    color: 'text-blue-600',
+    bg: 'bg-blue-50',
+    border: 'border-blue-200',
+    badges: [
+      { name: 'Explorador do Saber', desc: 'Acessa muitos artigos e materiais' },
+      { name: 'Leitor Assíduo', desc: 'Interage com vários posts do blog' },
+      { name: 'Aspirante a Mestre', desc: 'Consome conteúdo técnico avançado' },
+      { name: 'Download Master', desc: 'Baixa materiais e planilhas úteis' },
+    ]
+  },
+  {
+    category: 'Interação Comunitária',
+    icon: MessageSquare,
+    color: 'text-emerald-600',
+    bg: 'bg-emerald-50',
+    border: 'border-emerald-200',
+    badges: [
+      { name: 'Voz Ativa', desc: 'Faz muitos comentários e perguntas' },
+      { name: 'Conector da Comunidade', desc: 'Curte, compartilha e engaja bastante' },
+      { name: 'Participante Engajado', desc: 'Participa de eventos e discussões' },
+      { name: 'Bem-Vindo à ESUDA', desc: 'Selo de boas-vindas para novos membros' },
+    ]
+  },
+  {
+    category: 'Produção de Conteúdo',
+    icon: Pencil,
+    color: 'text-violet-600',
+    bg: 'bg-violet-50',
+    border: 'border-violet-200',
+    badges: [
+      { name: 'Criador de Ideias', desc: 'Inicia novos tópicos no fórum' },
+      { name: 'Colaborador Inspirador', desc: 'Posta conteúdo relevante na comunidade' },
+      { name: 'Compartilhador de Valor', desc: 'Compartilha materiais e links úteis' },
+    ]
+  },
+  {
+    category: 'Evolução Profissional',
+    icon: GraduationCap,
+    color: 'text-amber-600',
+    bg: 'bg-amber-50',
+    border: 'border-amber-200',
+    badges: [
+      { name: 'Jornada de Aprendizagem', desc: 'Conclui módulos ou cursos' },
+      { name: 'Especialista BIM', desc: 'Expertise comprovada em BIM' },
+      { name: 'Especialista Gestão 4.0', desc: 'Expertise em Gestão 4.0' },
+      { name: 'Mentor ESUDA', desc: 'Ajuda outros membros com dúvidas' },
+      { name: 'Pioneiro ESUDA', desc: 'Membro fundador ou de longa data' },
+      { name: 'Presença Constante', desc: 'Acessa a plataforma regularmente' },
+      { name: 'Fiel à Comunidade', desc: 'Longo tempo de permanência ativo' },
+    ]
+  },
+];
+
+function BadgeLegendPanel() {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="bg-white border border-slate-200 rounded-xl overflow-hidden">
+      <button
+        onClick={() => setOpen(o => !o)}
+        className="w-full flex items-center justify-between px-4 py-3 hover:bg-slate-50 transition-colors"
+      >
+        <div className="flex items-center gap-2 text-slate-700 font-bold text-sm">
+          <Info size={15} className="text-indigo-500" />
+          Legenda de Selos Predefinidos
+        </div>
+        {open ? <ChevronUp size={14} className="text-slate-400" /> : <ChevronDown size={14} className="text-slate-400" />}
+      </button>
+      {open && (
+        <div className="border-t border-slate-100 p-4 grid sm:grid-cols-2 gap-4">
+          {BADGE_LEGEND.map(cat => {
+            const Icon = cat.icon;
+            return (
+              <div key={cat.category} className={`rounded-lg border ${cat.border} ${cat.bg} p-3`}>
+                <div className={`flex items-center gap-2 font-bold text-xs mb-2 ${cat.color}`}>
+                  <Icon size={13} /> {cat.category}
+                </div>
+                <div className="space-y-1.5">
+                  {cat.badges.map(b => (
+                    <div key={b.name} className="flex items-start gap-1.5">
+                      <span className="inline-flex items-center gap-1 bg-white border border-amber-200 text-amber-700 text-[11px] font-bold px-2 py-0.5 rounded-full shrink-0">
+                        <Award size={9} />{b.name}
+                      </span>
+                      <span className="text-[11px] text-slate-500 mt-0.5">{b.desc}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
 
 const LICENSE_OPTIONS = [
   { value: 'teste', label: 'Teste', color: 'bg-slate-100 text-slate-600', icon: Clock },
