@@ -784,8 +784,8 @@ export default function AcademiaEsuda() {
                     </div>
                   </div>
 
-                  {/* Bônus Acelerador com Cronômetro */}
-                  <div className="bg-gradient-to-r from-amber-50 to-orange-50/50 border border-amber-200 rounded-2xl p-5 relative overflow-hidden mt-2">
+                  {/* Bônus Acelerador com Cronômetro — visível apenas para admins */}
+                  {isAdmin && <div className="bg-gradient-to-r from-amber-50 to-orange-50/50 border border-amber-200 rounded-2xl p-5 relative overflow-hidden mt-2">
                     <div className="absolute top-0 right-0 w-32 h-32 bg-amber-200/40 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>
                     <h4 className="text-amber-800 font-extrabold text-sm mb-2 flex items-center gap-1.5 relative z-10">
                       <Zap size={16} className="text-amber-600" fill="currentColor" /> Bônus Acelerador: Início Imediato
