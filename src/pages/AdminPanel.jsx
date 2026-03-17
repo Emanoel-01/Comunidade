@@ -102,7 +102,7 @@ export default function AdminPanel() {
           </div>
         )}
         {adminTab === 'community_forum' && <AdminForum />}
-        {adminTab === 'community_users' && <AdminUsers />}
+        {adminTab === 'community_users' && <AdminMembers />}
         {adminTab === 'community_jobs' && <AdminJobs />}
         {adminTab === 'community_materials' && <AdminMaterials />}
         {adminTab === 'community_events' && <AdminEvents />}
