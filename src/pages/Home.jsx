@@ -203,7 +203,7 @@ export default function Home() {
                 <h3 className="text-white font-bold text-base mb-3 text-left">Apresentação em Áudio</h3>
                 <iframe
                   style={{ borderRadius: '12px' }}
-                  src="https://open.spotify.com/embed/episode/1NXYnNIrKCwm3sVtjQRGlD?utm_source=generator&theme=0"
+                  src="https://open.spotify.com/embed/episode/1NXYnNIrKCwm3sVtjQRGlD?utm_source=generator&theme=0&autoplay=1"
                   width="100%"
                   height="152"
                   frameBorder="0"
