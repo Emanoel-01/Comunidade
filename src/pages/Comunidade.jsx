@@ -45,10 +45,15 @@ export default function Comunidade() {
     if (profiles.length > 0) {
       setProfile(profiles[0]);
     } else {
-      // Cria perfil padrão para novos usuários
+      // Busca o nome real da solicitação de acesso ou convite aprovado
+      let displayName = u.full_name || (u.role === 'admin' ? 'Docente & Mentor' : 'Membro da Comunidade');
+      const requests = await base44.entities.AccessRequest.filter({ email: u.email, status: 'approved' });
+      if (requests.length > 0 && requests[0].full_name) {
+        displayName = requests[0].full_name;
+      }
       const newProfile = await base44.entities.UserProfile.create({
         user_id: u.id,
-        role_label: u.role === 'admin' ? 'Docente & Mentor' : 'Membro da Comunidade',
+        role_label: displayName,
         badges: [],
         skills: [],
         followers: [],
