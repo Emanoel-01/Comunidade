@@ -277,7 +277,7 @@ function RoiExplainer() {
       {open && (
         <div className="px-5 pb-5 text-sm text-slate-300 space-y-4 border-t border-slate-700 pt-4 leading-relaxed animate-in slide-in-from-top-2">
           <p>
-            O <strong>ROI de 235%</strong> significa que a nossa rede gera muito mais dinheiro para os alunos do que o valor que investem na pós-graduação. Em média, <strong>o curso paga-se a si mesmo em poucos meses.</strong>
+            O <strong>ROI de 235%</strong> significa que a nossa rede gera, em média, muito mais dinheiro para os alunos do que o valor que investem na pós-graduação.
           </p>
           <div className="space-y-3 mt-2">
             <div className="flex items-start gap-3 bg-slate-800/50 p-3 rounded-lg border border-slate-700/50">
