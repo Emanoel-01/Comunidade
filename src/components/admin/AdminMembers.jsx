@@ -162,11 +162,11 @@ export default function AdminMembers() {
                 {/* Header */}
                 <div className="flex items-center gap-3 p-4">
                   <div className="w-11 h-11 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-base shrink-0 overflow-hidden">
-                    {profile.avatar_url ? <img src={profile.avatar_url} className="w-full h-full object-cover" alt="" /> : (profile.role_label || profile.user_id || '?').charAt(0).toUpperCase()}
+                    {profile.avatar_url ? <img src={profile.avatar_url} className="w-full h-full object-cover" alt="" /> : getDisplayName(profile).charAt(0).toUpperCase()}
                   </div>
                   <div className="flex-grow min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <p className="font-bold text-slate-900 truncate">{profile.role_label || 'Membro'}</p>
+                      <p className="font-bold text-slate-900 truncate">{getDisplayName(profile)}</p>
                       <LicenseBadge type={profile.license_type || 'teste'} />
                       {expired && <span className="text-[10px] font-bold bg-red-100 text-red-600 px-2 py-0.5 rounded-full">EXPIRADA</span>}
                     </div>
