@@ -1,5 +1,4 @@
 import { createClientFromRequest } from 'npm:@base44/sdk@0.8.20';
-import mammoth from 'npm:mammoth@1.8.0';
 
 Deno.serve(async (req) => {
   try {
@@ -16,27 +15,32 @@ Deno.serve(async (req) => {
       return Response.json({ error: 'file_url é obrigatório.' }, { status: 400 });
     }
 
-    // Baixar o arquivo da URL
+    const fileName = (file_name || '').toLowerCase();
+
+    // Para DOCX: usa InvokeLLM com o arquivo para extrair o conteúdo
+    if (fileName.endsWith('.docx') || fileName.endsWith('.doc')) {
+      const result = await base44.asServiceRole.integrations.Core.InvokeLLM({
+        prompt: `Você é um assistente de extração de conteúdo. 
+Extraia TODO o conteúdo textual deste documento Word e converta para HTML bem formatado.
+Use tags HTML apropriadas: <h1>, <h2>, <h3> para títulos, <p> para parágrafos, <ul>/<li> para listas, <strong> para negrito, <em> para itálico, <blockquote> para citações.
+Retorne APENAS o HTML do conteúdo, sem tags <html>, <head> ou <body>.
+Preserve toda a estrutura e formatação do documento original.`,
+        file_urls: [file_url],
+        model: 'claude_sonnet_4_6',
+      });
+
+      const html = typeof result === 'string' ? result : (result?.html || result?.content || '');
+      // Limpar possíveis marcadores de código
+      const cleanHtml = html.replace(/^```html\n?/, '').replace(/\n?```$/, '').trim();
+      return Response.json({ html: cleanHtml });
+    }
+
+    // Para TXT: baixa e converte em parágrafos HTML
     const fileResponse = await fetch(file_url);
     if (!fileResponse.ok) {
       return Response.json({ error: 'Não foi possível baixar o arquivo.' }, { status: 400 });
     }
-
-    const uint8Array = new Uint8Array(await fileResponse.arrayBuffer());
-    const fileName = (file_name || file_url).toLowerCase();
-
-    // Extração DOCX via mammoth — salva em /tmp e lê pelo path
-    if (fileName.endsWith('.docx') || fileName.endsWith('.doc')) {
-      const tmpPath = `/tmp/doc_${Date.now()}.docx`;
-      await Deno.writeFile(tmpPath, uint8Array);
-      const result = await mammoth.convertToHtml({ path: tmpPath });
-      await Deno.remove(tmpPath).catch(() => {});
-      const html = result.value || '';
-      return Response.json({ html });
-    }
-
-    // Extração de texto básico para outros formatos (txt, etc.)
-    const text = new TextDecoder().decode(uint8Array);
+    const text = await fileResponse.text();
     const html = text
       .split('\n')
       .filter(line => line.trim())
