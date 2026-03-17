@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { base44 } from '@/api/base44Client';
 import { motion } from 'framer-motion';
 import { 
   GraduationCap, ArrowRight, Briefcase, Target, TrendingUp, 
