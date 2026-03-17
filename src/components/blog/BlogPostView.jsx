@@ -6,9 +6,9 @@ import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import BlogPostCard from './BlogPostCard';
 import BlogShareButtons from './BlogShareButtons';
-import ReactMarkdown from 'react-markdown';
 import { usePostTracking } from './usePostTracking';
 import NewsletterSignup from './NewsletterSignup';
+import SocialVideoEmbed from '@/components/shared/SocialVideoEmbed';
 
 export default function BlogPostView({ post, onBack, onSelectPost, relatedPosts }) {
   const [comments, setComments] = useState([]);
