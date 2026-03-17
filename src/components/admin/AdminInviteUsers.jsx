@@ -38,7 +38,7 @@ const ROLE_LABELS = {
 export default function AdminInviteUsers() {
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [inviteForm, setInviteForm] = useState({ email: '', full_name: '', role_type: 'aluno', role_label: '' });
+  const [inviteForm, setInviteForm] = useState({ email: '', full_name: '', role_type: 'aluno', role_label: '', license_type: 'pleno', license_start_date: new Date().toISOString().split('T')[0], license_end_date: '' });
   const [inviting, setInviting] = useState(false);
   const [inviteSent, setInviteSent] = useState(false);
   const [processingId, setProcessingId] = useState(null);
@@ -57,17 +57,16 @@ export default function AdminInviteUsers() {
     setInviting(true);
     // Envia convite via SDK do Base44 (integra com dashboard)
     await base44.users.inviteUser(inviteForm.email, 'user');
-    // Cria perfil pré-preenchido aguardando login
     await base44.entities.AccessRequest.create({
       full_name: inviteForm.full_name,
       email: inviteForm.email,
       requested_role: inviteForm.role_type,
       status: 'approved',
-      admin_notes: `Convidado diretamente pelo admin. Perfil: ${inviteForm.role_label || ROLE_LABELS[inviteForm.role_type]}`
+      admin_notes: `Convidado. Perfil: ${inviteForm.role_label || ROLE_LABELS[inviteForm.role_type]}. Licença: ${inviteForm.license_type}`
     });
     setInviting(false);
     setInviteSent(true);
-    setInviteForm({ email: '', full_name: '', role_type: 'aluno', role_label: '' });
+    setInviteForm({ email: '', full_name: '', role_type: 'aluno', role_label: '', license_type: 'pleno', license_start_date: new Date().toISOString().split('T')[0], license_end_date: '' });
     setTimeout(() => setInviteSent(false), 4000);
   };
 
