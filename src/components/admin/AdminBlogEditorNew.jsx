@@ -68,7 +68,8 @@ export default function AdminBlogEditorNew({ onBack }) {
       if (fileData) {
         const formData = new FormData();
         formData.append('file', fileData);
-        const response = await fetch('/api/functions/extractDocx', {
+        const baseUrl = appParams.appBaseUrl || '';
+        const response = await fetch(`${baseUrl}/api/functions/extractDocx`, {
           method: 'POST',
           body: formData,
           credentials: 'include',
