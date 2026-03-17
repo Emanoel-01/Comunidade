@@ -52,22 +52,18 @@ export default function TrajetoriaPortfolio() {
   };
 
   useEffect(() => {
-    let animationFrameId;
-    if (isAutoScroll && !isHovering) {
-      const scroll = () => {
-        if (timelineRef.current) {
-          const { scrollLeft, scrollWidth, clientWidth } = timelineRef.current;
-          if (scrollLeft >= scrollWidth - clientWidth - 1) {
-            timelineRef.current.scrollTo({ left: 0, behavior: 'smooth' });
-          } else {
-            timelineRef.current.scrollLeft += 1;
-          }
+    if (!isAutoScroll || isHovering) return;
+    const interval = setInterval(() => {
+      if (timelineRef.current) {
+        const { scrollLeft, scrollWidth, clientWidth } = timelineRef.current;
+        if (scrollLeft >= scrollWidth - clientWidth - 2) {
+          timelineRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+          timelineRef.current.scrollLeft += 2;
         }
-        animationFrameId = requestAnimationFrame(scroll);
-      };
-      animationFrameId = requestAnimationFrame(scroll);
-    }
-    return () => { if (animationFrameId) cancelAnimationFrame(animationFrameId); };
+      }
+    }, 20);
+    return () => clearInterval(interval);
   }, [isAutoScroll, isHovering]);
 
   const getIconConfig = (iconType) => {
