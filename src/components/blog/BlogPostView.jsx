@@ -119,6 +119,13 @@ export default function BlogPostView({ post, onBack, onSelectPost, relatedPosts 
           <img src={post.cover_image} alt={post.title} className="w-full aspect-[21/9] rounded-2xl object-cover mb-12 shadow-lg" />
         )}
 
+        {/* Vídeo incorporado (YouTube, Instagram, LinkedIn) */}
+        {post.video_link && (
+          <div className="mb-12">
+            <SocialVideoEmbed url={post.video_link} />
+          </div>
+        )}
+
         {/* Conteúdo renderizado como HTML (React Quill) */}
         <div
           className="ql-content mb-10"
