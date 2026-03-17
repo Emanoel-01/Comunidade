@@ -565,8 +565,15 @@ function IncubadoraSection() {
 // --- PÁGINA PRINCIPAL ---
 export default function AcademiaEsuda() {
   const [selectedCourse, setSelectedCourse] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
   const cursosRef = useRef(null);
   const courseRefs = useRef({});
+
+  useEffect(() => {
+    base44.auth.me().then(user => {
+      if (user?.role === 'admin') setIsAdmin(true);
+    }).catch(() => {});
+  }, []);
 
   return (
     <div className="animate-in fade-in duration-500 bg-slate-50 min-h-screen pb-0 font-sans">
