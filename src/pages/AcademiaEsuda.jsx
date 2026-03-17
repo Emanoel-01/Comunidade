@@ -785,39 +785,37 @@ export default function AcademiaEsuda() {
                   </div>
 
                   {/* Bônus Acelerador com Cronômetro — visível apenas para admins */}
-                  {isAdmin && <div className="bg-gradient-to-r from-amber-50 to-orange-50/50 border border-amber-200 rounded-2xl p-5 relative overflow-hidden mt-2">
-
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-amber-200/40 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>
-                    <h4 className="text-amber-800 font-extrabold text-sm mb-2 flex items-center gap-1.5 relative z-10">
-                      <Zap size={16} className="text-amber-600" fill="currentColor" /> Bônus Acelerador: Início Imediato
-                    </h4>
-                    <p className="text-xs text-amber-900/80 font-medium mb-3 relative z-10 leading-relaxed text-justify">
-                      Fure a fila de espera. Ao garantir sua matrícula <strong>hoje</strong>, você assegura seu lugar para a próxima liberação deste bônus exclusivo. <strong>Bônus será ativado em breve:</strong>
-                    </p>
-
-                    <div className="mb-4 relative z-10">
-                      <p className="text-[10px] text-amber-700 font-bold uppercase tracking-wider mb-2">⏱ Tempo restante para ativação:</p>
-                      <CountdownTimer targetDate={new Date('2026-08-17T00:00:00')} />
+                  {isAdmin && (
+                    <div className="bg-gradient-to-r from-amber-50 to-orange-50/50 border border-amber-200 rounded-2xl p-5 relative overflow-hidden mt-2">
+                      <div className="absolute top-0 right-0 w-32 h-32 bg-amber-200/40 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>
+                      <h4 className="text-amber-800 font-extrabold text-sm mb-2 flex items-center gap-1.5 relative z-10">
+                        <Zap size={16} className="text-amber-600" fill="currentColor" /> Bônus Acelerador: Início Imediato
+                      </h4>
+                      <p className="text-xs text-amber-900/80 font-medium mb-3 relative z-10 leading-relaxed text-justify">
+                        Fure a fila de espera. Ao garantir sua matrícula <strong>hoje</strong>, você assegura seu lugar para a próxima liberação deste bônus exclusivo. <strong>Bônus será ativado em breve:</strong>
+                      </p>
+                      <div className="mb-4 relative z-10">
+                        <p className="text-[10px] text-amber-700 font-bold uppercase tracking-wider mb-2">⏱ Tempo restante para ativação:</p>
+                        <CountdownTimer targetDate={new Date('2026-08-17T00:00:00')} />
+                      </div>
+                      <ul className="space-y-2.5 relative z-10">
+                        <li className="flex items-start gap-2 text-xs text-amber-900">
+                          <CheckCircle2 size={16} className="text-amber-600 shrink-0" />
+                          <span>Acesso integral antecipado ao <strong className="font-extrabold">Bloco Digital (EAD)</strong>.</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-xs text-amber-900">
+                          <CheckCircle2 size={16} className="text-amber-600 shrink-0" />
+                          <span><strong className="font-extrabold">Masterplan de Carreira (Sessão 1-a-1 com Emanoel Amorim)</strong> para traçar seu plano de estudos e rota de sucesso no mercado.</span>
+                        </li>
+                        <li className="flex items-start gap-2 text-xs text-amber-900">
+                          <CheckCircle2 size={16} className="text-amber-600 shrink-0" />
+                          <span><strong className="font-extrabold">Mentoria de Destravamento e Implementação (Bônus Exclusivo)</strong> 30 dias após a conclusão do ciclo EAD para acelerar seus resultados.</span>
+                        </li>
+                      </ul>
                     </div>
+                  )}
 
-                    <ul className="space-y-2.5 relative z-10">
-                      <li className="flex items-start gap-2 text-xs text-amber-900">
-                        <CheckCircle2 size={16} className="text-amber-600 shrink-0" />
-                        <span>Acesso integral antecipado ao <strong className="font-extrabold">Bloco Digital (EAD)</strong>.</span>
-                      </li>
-                      <li className="flex items-start gap-2 text-xs text-amber-900">
-                        <CheckCircle2 size={16} className="text-amber-600 shrink-0" />
-                        <span><strong className="font-extrabold">Masterplan de Carreira (Sessão 1-a-1 com Emanoel Amorim)</strong> para traçar seu plano de estudos e rota de sucesso no mercado.</span>
-                      </li>
-                      <li className="flex items-start gap-2 text-xs text-amber-900">
-                        <CheckCircle2 size={16} className="text-amber-600 shrink-0" />
-                        <span><strong className="font-extrabold">Mentoria de Destravamento e Implementação (Bônus Exclusivo)</strong> 30 dias após a conclusão do ciclo EAD para acelerar seus resultados.</span>
-                      </li>
-                    </ul>
-                  </div>}
-
-                  <a href="https://wa.me/5581991298803"
- target="_blank" rel="noopener noreferrer" className="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-bold py-3 sm:py-4 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 text-base mt-2">
+                  <a href="https://wa.me/5581991298803" target="_blank" rel="noopener noreferrer" className="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-bold py-3 sm:py-4 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 text-base mt-2">
                     Garantir Minha Vaga no Whatsapp <ArrowRight size={20} />
                   </a>
                 </div>
