@@ -249,7 +249,7 @@ function RoiExplainer() {
               <Network size={20} className="text-emerald-400 shrink-0 mt-0.5" />
               <div>
                 <strong className="text-white block mb-0.5">Network Direto (Recolocação e Contratos)</strong>
-                <p className="text-xs text-slate-400">Alunos são contratados para obras, projetos e fiscalizações de alto valor através das conexões do ecossistema ESUDA.</p>
+                <p className="text-xs text-slate-400">Alunos são contratados para obras, projetos e fiscalizações de alto valor através das conexões do Comunidade Business 4.0.</p>
               </div>
             </div>
             <div className="flex items-start gap-3 bg-slate-800/50 p-3 rounded-lg border border-slate-700/50">
