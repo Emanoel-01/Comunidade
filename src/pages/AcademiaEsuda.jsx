@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { 
   GraduationCap, ArrowRight, Briefcase, Target, TrendingUp, 
@@ -227,7 +227,41 @@ const PROJETO_ATUAL = {
 
 const ICON_MAP = { FileText, Calendar, Award, Lightbulb, Users, ClipboardList, Cpu };
 
-// --- COMPONENTES DA INCUBADORA ---
+// --- CRONÔMETRO DINÂMICO ---
+function CountdownTimer({ targetDate }) {
+  const calculateTimeLeft = () => {
+    const difference = +new Date(targetDate) - +new Date();
+    if (difference <= 0) return { dias: 0, horas: 0, minutos: 0, segundos: 0 };
+    return {
+      dias: Math.floor(difference / (1000 * 60 * 60 * 24)),
+      horas: Math.floor((difference / (1000 * 60 * 60)) % 24),
+      minutos: Math.floor((difference / 1000 / 60) % 60),
+      segundos: Math.floor((difference / 1000) % 60),
+    };
+  };
+
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+
+  useEffect(() => {
+    const timer = setInterval(() => setTimeLeft(calculateTimeLeft()), 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  return (
+    <div className="flex items-center gap-2 flex-wrap">
+      {Object.entries(timeLeft).map(([interval, value]) => (
+        <div key={interval} className="flex flex-col items-center bg-white/70 border border-amber-300 rounded-lg p-2 min-w-[52px] shadow-sm">
+          <span className="text-xl font-extrabold text-amber-700 leading-none tabular-nums">
+            {String(value).padStart(2, '0')}
+          </span>
+          <span className="text-[9px] uppercase font-bold text-amber-800/70 mt-1">{interval}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// --- ROI EXPLAINER ---
 function RoiExplainer() {
   const [open, setOpen] = useState(false);
   return (
@@ -742,15 +776,21 @@ export default function AcademiaEsuda() {
                     </div>
                   </div>
 
-                  {/* Bônus de Antecipação */}
+                  {/* Bônus Acelerador com Cronômetro */}
                   <div className="bg-gradient-to-r from-amber-50 to-orange-50/50 border border-amber-200 rounded-2xl p-5 relative overflow-hidden mt-2">
                     <div className="absolute top-0 right-0 w-32 h-32 bg-amber-200/40 rounded-full blur-3xl -mr-10 -mt-10 pointer-events-none"></div>
                     <h4 className="text-amber-800 font-extrabold text-sm mb-2 flex items-center gap-1.5 relative z-10">
                       <Zap size={16} className="text-amber-600" fill="currentColor" /> Bônus Acelerador: Início Imediato
                     </h4>
-                    <p className="text-xs text-amber-900/80 font-medium mb-4 relative z-10 leading-relaxed text-justify">
-                      Fure a fila de espera. Ao garantir sua matrícula <strong>hoje</strong>, você não precisa esperar o início das aulas da turma para evoluir. Você libera imediatamente:
+                    <p className="text-xs text-amber-900/80 font-medium mb-3 relative z-10 leading-relaxed text-justify">
+                      Fure a fila de espera. Ao garantir sua matrícula <strong>hoje</strong>, você assegura seu lugar para a próxima liberação deste bônus exclusivo, que será <strong>ativado em breve</strong>:
                     </p>
+
+                    <div className="mb-4 relative z-10">
+                      <p className="text-[10px] text-amber-700 font-bold uppercase tracking-wider mb-2">⏱ Tempo restante para ativação:</p>
+                      <CountdownTimer targetDate={new Date('2026-08-17T00:00:00')} />
+                    </div>
+
                     <ul className="space-y-2.5 relative z-10">
                       <li className="flex items-start gap-2 text-xs text-amber-900">
                         <CheckCircle2 size={16} className="text-amber-600 shrink-0" />
