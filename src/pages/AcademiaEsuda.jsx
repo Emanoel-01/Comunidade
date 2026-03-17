@@ -813,7 +813,7 @@ export default function AcademiaEsuda() {
                         <span><strong className="font-extrabold">Mentoria de Destravamento e Implementação (Bônus Exclusivo)</strong> 30 dias após a conclusão do ciclo EAD para acelerar seus resultados.</span>
                       </li>
                     </ul>
-                  </div>
+                  </div>}
 
                   <a href="https://wa.me/5581991298803" target="_blank" rel="noopener noreferrer" className="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-900 font-bold py-3 sm:py-4 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 text-base mt-2">
                     Garantir Minha Vaga no Whatsapp <ArrowRight size={20} />
