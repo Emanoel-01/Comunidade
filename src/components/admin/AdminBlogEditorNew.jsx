@@ -65,17 +65,15 @@ export default function AdminBlogEditorNew({ onBack }) {
       let htmlContent = extractedContent;
 
       if (fileData) {
-        const formData = new FormData();
-        formData.append('file', fileData);
-        const baseUrl = appParams.appBaseUrl || '';
-        const response = await fetch(`${baseUrl}/api/functions/extractDocx`, {
-          method: 'POST',
-          body: formData,
-          credentials: 'include',
+        // 1. Faz upload do arquivo para obter a URL pública
+        const { file_url } = await base44.integrations.Core.UploadFile({ file: fileData });
+        // 2. Chama a função de backend passando a URL do arquivo
+        const response = await base44.functions.invoke('extractDocx', {
+          file_url,
+          file_name: fileData.name,
         });
-        const result = await response.json();
-        if (result?.html) {
-          htmlContent = result.html;
+        if (response?.data?.html) {
+          htmlContent = response.data.html;
         } else {
           htmlContent = '<p>Cole ou edite o conteúdo do artigo aqui...</p>';
         }
