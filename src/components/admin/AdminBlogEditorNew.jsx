@@ -65,14 +65,17 @@ export default function AdminBlogEditorNew({ onBack }) {
       let htmlContent = extractedContent;
 
       if (fileData) {
-        try {
-          const response = await base44.functions.invoke('extractDocx', { fileName: fileData.name });
-          // Se houver endpoint real, usar o resultado
-          if (response?.data?.html) {
-            htmlContent = response.data.html;
-          }
-        } catch {
-          // fallback: conteúdo vazio para edição manual
+        const formData = new FormData();
+        formData.append('file', fileData);
+        const response = await fetch('/api/functions/extractDocx', {
+          method: 'POST',
+          body: formData,
+          credentials: 'include',
+        });
+        const result = await response.json();
+        if (result?.html) {
+          htmlContent = result.html;
+        } else {
           htmlContent = '<p>Cole ou edite o conteúdo do artigo aqui...</p>';
         }
       }
