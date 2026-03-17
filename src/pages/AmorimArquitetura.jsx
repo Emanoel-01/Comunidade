@@ -145,8 +145,8 @@ export default function AmorimArquitetura() {
 
       {/* PORTFÓLIO POR TIPOLOGIA */}
       <div className="mb-16">
-        <h3 className="text-2xl font-bold text-slate-900 mb-2">Portfólio de Projetos</h3>
-        <p className="text-slate-600 mb-10">Mais de 15 anos de projetos executados para órgãos públicos, instituições e empreendimentos privados em Pernambuco e no Brasil.</p>
+        <h3 className="text-2xl font-bold text-slate-900 mb-2">Portfólio</h3>
+        <p className="text-slate-600 mb-10">Mais de 15 anos de serviços executados para órgãos públicos, instituições e empreendimentos privados em Pernambuco e no Brasil.</p>
         <div className="grid md:grid-cols-3 gap-8">
           {portfolioTipologias.map((tip, i) => (
             <div key={i} className="flex flex-col gap-4">
