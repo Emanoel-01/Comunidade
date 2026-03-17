@@ -249,6 +249,9 @@ export default function AdminMembers() {
         })}
       </div>
 
+      {/* Legenda de Selos */}
+      <BadgeLegendPanel />
+
       {loading ? (
         <div className="space-y-3">{[1,2,3].map(i => <div key={i} className="bg-white rounded-xl h-20 animate-pulse border border-slate-200"></div>)}</div>
       ) : (
