@@ -123,6 +123,22 @@ export default function AdminInviteUsers() {
             <label className="block text-xs font-bold text-slate-600 mb-1">Título Customizado (opcional)</label>
             <input value={inviteForm.role_label} onChange={e => setInviteForm({ ...inviteForm, role_label: e.target.value })} placeholder={`Ex: ${ROLE_LABELS[inviteForm.role_type]}`} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
           </div>
+          <div>
+            <label className="block text-xs font-bold text-slate-600 mb-1">Licença *</label>
+            <select required value={inviteForm.license_type} onChange={e => setInviteForm({ ...inviteForm, license_type: e.target.value })} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">
+              {LICENSE_OPTIONS.map(l => <option key={l.value} value={l.value}>{l.label}</option>)}
+            </select>
+          </div>
+          <div>
+            <label className="block text-xs font-bold text-slate-600 mb-1">Início da Licença</label>
+            <input type="date" value={inviteForm.license_start_date} onChange={e => setInviteForm({ ...inviteForm, license_start_date: e.target.value })} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
+          </div>
+          {inviteForm.license_type !== 'vitalicio' && (
+            <div>
+              <label className="block text-xs font-bold text-slate-600 mb-1">Expiração da Licença</label>
+              <input type="date" value={inviteForm.license_end_date} onChange={e => setInviteForm({ ...inviteForm, license_end_date: e.target.value })} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
+            </div>
+          )}
           <div className="sm:col-span-2 flex justify-end">
             <button type="submit" disabled={inviting} className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-6 py-2.5 rounded-lg text-sm disabled:opacity-50">
               <Send size={15} /> {inviting ? 'Enviando...' : 'Enviar Convite por E-mail'}

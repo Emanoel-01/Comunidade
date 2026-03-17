@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import AdminInviteUsers from '../components/admin/AdminInviteUsers';
+import AdminMembers from '../components/admin/AdminMembers';
 import AdminForum from '../components/admin/AdminForum';
 import MediaUploader from '../components/shared/MediaUploader';
 import BlogAnalyticsDashboard from '../components/blog/BlogAnalyticsDashboard';
