@@ -27,7 +27,8 @@ Deno.serve(async (req) => {
 
     // Extração DOCX via mammoth
     if (fileName.endsWith('.docx') || fileName.endsWith('.doc')) {
-      const result = await mammoth.convertToHtml({ arrayBuffer });
+      const buffer = Buffer.from(arrayBuffer);
+      const result = await mammoth.convertToHtml({ buffer });
       const html = result.value || '';
       return Response.json({ html });
     }
