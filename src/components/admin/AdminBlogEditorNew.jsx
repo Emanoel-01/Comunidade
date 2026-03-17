@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { base44 } from '@/api/base44Client';
+import { appParams } from '@/lib/app-params';
 import {
   ArrowLeft, UploadCloud, FileText, FileType2, CheckCircle2, Loader2,
   Image as ImageIcon, Check, Eye, PlusSquare, Sparkles, Video,
