@@ -1,0 +1,304 @@
+import React, { useState, useEffect } from 'react';
+import { base44 } from '@/api/base44Client';
+import { Users, Award, X, Trash2, Save, ChevronDown, ChevronUp, Shield, Clock, Star, Infinity } from 'lucide-react';
+
+const LICENSE_OPTIONS = [
+  { value: 'teste', label: 'Teste', color: 'bg-slate-100 text-slate-600', icon: Clock },
+  { value: 'estudantil', label: 'Estudantil', color: 'bg-blue-100 text-blue-700', icon: Star },
+  { value: 'pleno', label: 'Pleno', color: 'bg-indigo-100 text-indigo-700', icon: Shield },
+  { value: 'vitalicio', label: 'Vitalício', color: 'bg-amber-100 text-amber-700', icon: Infinity },
+];
+
+function LicenseBadge({ type }) {
+  const opt = LICENSE_OPTIONS.find(o => o.value === type) || LICENSE_OPTIONS[0];
+  const Icon = opt.icon;
+  return (
+    <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-bold ${opt.color}`}>
+      <Icon size={10} /> {opt.label}
+    </span>
+  );
+}
+
+function isLicenseExpired(profile) {
+  if (profile.license_type === 'vitalicio') return false;
+  if (!profile.license_end_date) return false;
+  return new Date(profile.license_end_date) < new Date();
+}
+
+export default function AdminMembers() {
+  const [profiles, setProfiles] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [editingId, setEditingId] = useState(null);
+  const [editForm, setEditForm] = useState({});
+  const [saving, setSaving] = useState(false);
+  const [badgeInput, setBadgeInput] = useState({});
+  const [search, setSearch] = useState('');
+  const [filterLicense, setFilterLicense] = useState('all');
+
+  useEffect(() => {
+    loadProfiles();
+  }, []);
+
+  const loadProfiles = async () => {
+    setLoading(true);
+    const data = await base44.entities.UserProfile.list('-created_date');
+    setProfiles(data);
+    setLoading(false);
+  };
+
+  const startEdit = (profile) => {
+    setEditingId(profile.id);
+    setEditForm({
+      license_type: profile.license_type || 'teste',
+      license_start_date: profile.license_start_date || '',
+      license_end_date: profile.license_end_date || '',
+      role_label: profile.role_label || '',
+      role_type: profile.role_type || 'aluno',
+    });
+  };
+
+  const saveEdit = async (profile) => {
+    setSaving(true);
+    const updates = { ...editForm };
+    if (updates.license_type === 'vitalicio') {
+      updates.license_end_date = '';
+    }
+    await base44.entities.UserProfile.update(profile.id, updates);
+    setProfiles(prev => prev.map(p => p.id === profile.id ? { ...p, ...updates } : p));
+    setEditingId(null);
+    setSaving(false);
+  };
+
+  const deleteProfile = async (profile) => {
+    if (!confirm(`Excluir o membro "${profile.role_label || profile.user_id}"? Esta ação não pode ser desfeita.`)) return;
+    await base44.entities.UserProfile.delete(profile.id);
+    setProfiles(prev => prev.filter(p => p.id !== profile.id));
+  };
+
+  const addBadge = async (profile) => {
+    const badge = badgeInput[profile.id]?.trim();
+    if (!badge) return;
+    const newBadges = [...(profile.badges || []), badge];
+    await base44.entities.UserProfile.update(profile.id, { badges: newBadges });
+    setProfiles(prev => prev.map(p => p.id === profile.id ? { ...p, badges: newBadges } : p));
+    setBadgeInput(prev => ({ ...prev, [profile.id]: '' }));
+  };
+
+  const removeBadge = async (profile, idx) => {
+    const newBadges = profile.badges.filter((_, i) => i !== idx);
+    await base44.entities.UserProfile.update(profile.id, { badges: newBadges });
+    setProfiles(prev => prev.map(p => p.id === profile.id ? { ...p, badges: newBadges } : p));
+  };
+
+  const filtered = profiles.filter(p => {
+    const matchSearch = !search || (p.role_label || p.user_id || '').toLowerCase().includes(search.toLowerCase());
+    const matchLicense = filterLicense === 'all' || p.license_type === filterLicense;
+    return matchSearch && matchLicense;
+  });
+
+  return (
+    <div className="animate-in fade-in space-y-5">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <h2 className="text-2xl font-bold text-slate-900">Membros da Comunidade</h2>
+        <div className="flex gap-2 flex-wrap">
+          <input
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            placeholder="Buscar membro..."
+            className="border border-slate-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 w-44"
+          />
+          <select
+            value={filterLicense}
+            onChange={e => setFilterLicense(e.target.value)}
+            className="border border-slate-300 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+          >
+            <option value="all">Todas as licenças</option>
+            {LICENSE_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+          </select>
+        </div>
+      </div>
+
+      {/* Resumo */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        {LICENSE_OPTIONS.map(opt => {
+          const count = profiles.filter(p => (p.license_type || 'teste') === opt.value).length;
+          const Icon = opt.icon;
+          return (
+            <div key={opt.value} className={`rounded-xl border p-3 flex items-center gap-3 cursor-pointer ${filterLicense === opt.value ? 'ring-2 ring-indigo-400' : ''} bg-white border-slate-200`} onClick={() => setFilterLicense(filterLicense === opt.value ? 'all' : opt.value)}>
+              <div className={`w-9 h-9 rounded-lg flex items-center justify-center ${opt.color}`}>
+                <Icon size={16} />
+              </div>
+              <div>
+                <p className="text-xl font-extrabold text-slate-900 leading-none">{count}</p>
+                <p className="text-[11px] text-slate-500 font-bold uppercase tracking-wide">{opt.label}</p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {loading ? (
+        <div className="space-y-3">{[1,2,3].map(i => <div key={i} className="bg-white rounded-xl h-20 animate-pulse border border-slate-200"></div>)}</div>
+      ) : (
+        <div className="space-y-3">
+          {filtered.map(profile => {
+            const expired = isLicenseExpired(profile);
+            const isEditing = editingId === profile.id;
+            return (
+              <div key={profile.id} className={`bg-white rounded-xl border shadow-sm overflow-hidden ${expired ? 'border-red-200' : 'border-slate-200'}`}>
+                {/* Header */}
+                <div className="flex items-center gap-3 p-4">
+                  <div className="w-11 h-11 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-base shrink-0 overflow-hidden">
+                    {profile.avatar_url ? <img src={profile.avatar_url} className="w-full h-full object-cover" alt="" /> : (profile.role_label || profile.user_id || '?').charAt(0).toUpperCase()}
+                  </div>
+                  <div className="flex-grow min-w-0">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <p className="font-bold text-slate-900 truncate">{profile.role_label || 'Membro'}</p>
+                      <LicenseBadge type={profile.license_type || 'teste'} />
+                      {expired && <span className="text-[10px] font-bold bg-red-100 text-red-600 px-2 py-0.5 rounded-full">EXPIRADA</span>}
+                    </div>
+                    <p className="text-xs text-slate-400 truncate">ID: {profile.user_id}</p>
+                    {profile.license_end_date && profile.license_type !== 'vitalicio' && (
+                      <p className="text-[11px] text-slate-500">Expira: {new Date(profile.license_end_date).toLocaleDateString('pt-BR')}</p>
+                    )}
+                  </div>
+                  <div className="flex gap-1.5 shrink-0">
+                    <button
+                      onClick={() => isEditing ? setEditingId(null) : startEdit(profile)}
+                      className="px-3 py-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold rounded-lg text-xs flex items-center gap-1"
+                    >
+                      {isEditing ? <ChevronUp size={13} /> : <ChevronDown size={13} />}
+                      {isEditing ? 'Fechar' : 'Editar'}
+                    </button>
+                    <button onClick={() => deleteProfile(profile)} className="p-1.5 text-red-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors">
+                      <Trash2 size={15} />
+                    </button>
+                  </div>
+                </div>
+
+                {/* Painel de Edição */}
+                {isEditing && (
+                  <div className="border-t border-slate-100 bg-slate-50 p-4 space-y-4">
+                    <h4 className="text-sm font-bold text-slate-700">Editar Licença e Perfil</h4>
+
+                    <div className="grid sm:grid-cols-2 gap-4">
+                      {/* Tipo de Licença */}
+                      <div>
+                        <label className="block text-xs font-bold text-slate-600 mb-1.5">Tipo de Licença</label>
+                        <div className="grid grid-cols-2 gap-2">
+                          {LICENSE_OPTIONS.map(opt => {
+                            const Icon = opt.icon;
+                            return (
+                              <button
+                                key={opt.value}
+                                type="button"
+                                onClick={() => setEditForm(f => ({ ...f, license_type: opt.value }))}
+                                className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-sm font-bold transition-all ${editForm.license_type === opt.value ? 'border-indigo-500 bg-indigo-50 text-indigo-700 ring-1 ring-indigo-400' : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300'}`}
+                              >
+                                <Icon size={14} /> {opt.label}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+
+                      {/* Datas */}
+                      <div className="space-y-3">
+                        <div>
+                          <label className="block text-xs font-bold text-slate-600 mb-1">Data de Início</label>
+                          <input
+                            type="date"
+                            value={editForm.license_start_date}
+                            onChange={e => setEditForm(f => ({ ...f, license_start_date: e.target.value }))}
+                            className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                          />
+                        </div>
+                        {editForm.license_type !== 'vitalicio' && (
+                          <div>
+                            <label className="block text-xs font-bold text-slate-600 mb-1">Data de Expiração</label>
+                            <input
+                              type="date"
+                              value={editForm.license_end_date}
+                              onChange={e => setEditForm(f => ({ ...f, license_end_date: e.target.value }))}
+                              className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                            />
+                          </div>
+                        )}
+                        {editForm.license_type === 'vitalicio' && (
+                          <div className="flex items-center gap-2 text-amber-600 text-xs font-bold bg-amber-50 p-3 rounded-lg border border-amber-200">
+                            <Infinity size={14} /> Sem data de expiração
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Título/Cargo */}
+                    <div className="grid sm:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-xs font-bold text-slate-600 mb-1">Título / Nome do Membro</label>
+                        <input
+                          value={editForm.role_label}
+                          onChange={e => setEditForm(f => ({ ...f, role_label: e.target.value }))}
+                          className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-bold text-slate-600 mb-1">Tipo de Perfil</label>
+                        <select
+                          value={editForm.role_type}
+                          onChange={e => setEditForm(f => ({ ...f, role_type: e.target.value }))}
+                          className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                        >
+                          {['aluno','engenheiro','arquiteto','docente','parceiro','gestor_condominial','consultor_bim','perito_judicial','corretor','investidor','admin'].map(r => (
+                            <option key={r} value={r}>{r}</option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+
+                    <div className="flex justify-end gap-2 pt-1">
+                      <button onClick={() => setEditingId(null)} className="px-4 py-2 text-slate-600 font-bold hover:bg-slate-100 rounded-lg text-sm">Cancelar</button>
+                      <button onClick={() => saveEdit(profile)} disabled={saving} className="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg text-sm flex items-center gap-2 disabled:opacity-50">
+                        <Save size={13} /> {saving ? 'Salvando...' : 'Salvar'}
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* Selos */}
+                <div className="px-4 pb-4">
+                  <div className="flex flex-wrap gap-1.5 mb-2">
+                    {(profile.badges || []).map((badge, idx) => (
+                      <span key={idx} className="flex items-center gap-1 bg-amber-50 border border-amber-200 text-amber-700 text-xs font-bold px-2 py-0.5 rounded-full">
+                        <Award size={10} />{badge}
+                        <button onClick={() => removeBadge(profile, idx)} className="ml-0.5 hover:text-red-500"><X size={9} /></button>
+                      </span>
+                    ))}
+                  </div>
+                  <div className="flex gap-2">
+                    <input
+                      value={badgeInput[profile.id] || ''}
+                      onChange={e => setBadgeInput(prev => ({ ...prev, [profile.id]: e.target.value }))}
+                      onKeyDown={e => e.key === 'Enter' && addBadge(profile)}
+                      placeholder="Adicionar selo..."
+                      className="border border-slate-200 rounded-lg px-3 py-1 text-xs focus:outline-none focus:ring-1 focus:ring-amber-400 w-36"
+                    />
+                    <button onClick={() => addBadge(profile)} className="px-2.5 py-1 bg-amber-500 hover:bg-amber-600 text-white rounded-lg text-xs font-bold">
+                      <Award size={11} />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+          {filtered.length === 0 && (
+            <div className="text-center py-12 text-slate-400 bg-white rounded-xl border border-slate-200">
+              <Users size={36} className="mx-auto mb-2 opacity-30" />
+              <p>Nenhum membro encontrado.</p>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}

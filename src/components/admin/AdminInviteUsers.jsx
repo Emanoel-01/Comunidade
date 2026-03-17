@@ -2,6 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
 import { Send, CheckCircle2, Clock, X, UserCheck, UserX, Mail, Phone, RefreshCw } from 'lucide-react';
 
+const LICENSE_OPTIONS = [
+  { value: 'teste', label: 'Teste' },
+  { value: 'estudantil', label: 'Estudantil' },
+  { value: 'pleno', label: 'Pleno' },
+  { value: 'vitalicio', label: 'Vitalício' },
+];
+
 const ROLE_OPTIONS = [
   { value: 'aluno', label: 'Aluno / Estudante' },
   { value: 'engenheiro', label: 'Engenheiro Civil' },
