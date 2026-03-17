@@ -25,15 +25,18 @@ Deno.serve(async (req) => {
     const uint8Array = new Uint8Array(await fileResponse.arrayBuffer());
     const fileName = (file_name || file_url).toLowerCase();
 
-    // Extração DOCX via mammoth
+    // Extração DOCX via mammoth — salva em /tmp e lê pelo path
     if (fileName.endsWith('.docx') || fileName.endsWith('.doc')) {
-      const result = await mammoth.convertToHtml({ arrayBuffer: uint8Array.buffer });
+      const tmpPath = `/tmp/doc_${Date.now()}.docx`;
+      await Deno.writeFile(tmpPath, uint8Array);
+      const result = await mammoth.convertToHtml({ path: tmpPath });
+      await Deno.remove(tmpPath).catch(() => {});
       const html = result.value || '';
       return Response.json({ html });
     }
 
     // Extração de texto básico para outros formatos (txt, etc.)
-    const text = new TextDecoder().decode(new Uint8Array(arrayBuffer));
+    const text = new TextDecoder().decode(uint8Array);
     const html = text
       .split('\n')
       .filter(line => line.trim())
