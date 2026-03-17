@@ -58,10 +58,6 @@ export default function AdminBlogEditorNew({ onBack }) {
     if (!fileData && !extractedContent) return;
     setIsProcessing(true);
     try {
-      // Extração real via backend (mammoth.js)
-      const formData = new FormData();
-      formData.append('file', fileData);
-
       let htmlContent = extractedContent;
 
       if (fileData) {
