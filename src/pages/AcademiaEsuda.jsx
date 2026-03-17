@@ -783,7 +783,7 @@ export default function AcademiaEsuda() {
                       <Zap size={16} className="text-amber-600" fill="currentColor" /> Bônus Acelerador: Início Imediato
                     </h4>
                     <p className="text-xs text-amber-900/80 font-medium mb-3 relative z-10 leading-relaxed text-justify">
-                      Fure a fila de espera. Ao garantir sua matrícula <strong>hoje</strong>, você assegura seu lugar para a próxima liberação deste bônus exclusivo, que será <strong>ativado em breve</strong>:
+                      Fure a fila de espera. Ao garantir sua matrícula <strong>hoje</strong>, você assegura seu lugar para a próxima liberação deste bônus exclusivo. <strong>Bônus será ativado em breve:</strong>
                     </p>
 
                     <div className="mb-4 relative z-10">
