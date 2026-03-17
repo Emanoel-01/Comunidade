@@ -541,8 +541,8 @@ function IncubadoraSection() {
         <div className="mt-20 pt-16 border-t border-slate-800 text-center relative">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-1 bg-gradient-to-r from-transparent via-emerald-500 to-transparent"></div>
           <h3 className="text-3xl md:text-5xl font-extrabold text-white mb-6 tracking-tight">Pronto para ser o próximo caso de sucesso?</h3>
-          <p className="text-slate-400 mb-10 max-w-2xl mx-auto text-base sm:text-lg leading-relaxed">
-            Não fique apenas a assistir enquanto o mercado absorve os líderes 4.0. Fale com a nossa equipa de consultores e descubra como acelerar a sua carreira e multiplicar os seus ganhos hoje mesmo.
+          <p className="text-slate-400 mb-10 max-w-2xl mx-auto text-base sm:text-lg leading-relaxed">Não fique apenas a assistir enquanto o mercado absorve os líderes 4.0. Fale com a nossa equipe de consultores e descubra como acelerar a sua carreira e multiplicar os seus ganhos hoje mesmo.
+
           </p>
           <a
             href="https://wa.me/5581991298803"
