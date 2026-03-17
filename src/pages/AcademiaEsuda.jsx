@@ -414,8 +414,8 @@ function IncubadoraSection() {
 
           {/* Coluna Direita: Feed de Sucesso */}
           <div className="lg:col-span-6 space-y-6">
-            <h3 className="text-xl font-bold flex items-center gap-2 text-white border-b border-slate-800 pb-4">
-              <Award strokeWidth={2} className="text-indigo-400" /> Prova Social: O que está a acontecer agora
+            <h3 className="text-xl font-bold flex items-center gap-2 text-white border-b border-slate-800 pb-4">Prova Social: O que está acontecendo agora:
+
             </h3>
 
             <div className="bg-slate-800/30 rounded-3xl p-2 max-h-[700px] overflow-y-auto border border-slate-700">
