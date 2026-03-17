@@ -115,7 +115,7 @@ export default function TrajetoriaPortfolio() {
 
           <div
             ref={timelineRef}
-            className="overflow-x-auto flex gap-6 pb-12 pt-4 snap-x snap-mandatory"
+            className="overflow-x-auto flex gap-6 pb-12 pt-4"
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
             {timeline.map((item, index) => {
