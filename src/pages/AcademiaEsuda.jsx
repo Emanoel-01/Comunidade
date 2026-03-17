@@ -1,141 +1,122 @@
 import React, { useState, useRef } from 'react';
-import { motion } from 'framer-motion';
-import { 
-  GraduationCap, ArrowRight, Briefcase, Target, TrendingUp, 
-  CheckCircle, CheckCircle2, X, ChevronDown, BookOpen, 
-  Monitor, Calendar, Clock, Timer, CalendarCheck, Star,
-  BarChart3, Award, FileText, Lightbulb, Users, Info,
-  Network, ClipboardList, Cpu, Zap,
-  Building, Laptop, Settings, Scale, Brain, Palette, Volume2
-} from 'lucide-react';
+import { GraduationCap, ArrowRight, Briefcase, Target, TrendingUp, CheckCircle, CheckCircle2, X, ChevronDown, BookOpen, Monitor, Calendar, Clock, Timer, CalendarCheck, Star } from 'lucide-react';
 import IncubadoraSection from '@/components/academia/IncubadoraSection';
 
 const esudaCourses = [
   {
     id: 'gpo', title: 'Gestão de Projetos e Obras', profile: 'O Perfil Business',
-    status: 'Turma Iniciada (Aceitando novos alunos)', statusType: 'iniciada',
+    status: 'Turma Iniciada', statusType: 'iniciada',
     color: 'indigo', duration: '10 meses', hours: '360h',
-    format: 'Presencial, Remoto (ao vivo)',
+    format: 'Presencial, Remoto (ao vivo), Gravadas',
     dias: 'Sáb', horario: '08:00 - 17:00',
-    inscricoes: '15/12/25 até 28/03/26', inicioAulas: '30/01/26',
+    inscricoes: '30/08/2025', inicioAulas: '30/08/2025',
     pagamentos: [
       { label: '10 x R$ 249,00 no cartão de crédito', melhor: true },
       { label: '05 x R$ 499,00 no boleto', melhor: false },
       { label: '10 x R$ 373,00 no boleto', melhor: false },
     ],
     description: 'Focado em Dinheiro e Prazo. Seja o gestor que protege a margem de lucro, domina os pleitos (claims) e garante o equilíbrio financeiro da obra.',
-    specificCycle: ['Técnicas de Orçamentos, Cobranças e Custos de Projetos', 'Técnicas de Orçamentos, Cobranças e Custos de Obras', 'Técnicas de Coordenação e Compatibilização de Projetos', 'Técnicas de Planejamento e Coordenação de Obras', 'Eficiência Energética e Sustentabilidade na Construção Civil', 'Lean Construction, Last Planner System e Logística de Canteiro', 'Engenharia de Segurança e Normas de Desempenho', 'Administração Contratual, Medições e Gestão de Pleitos (Claims)', 'Sistemas Informatizados de Gestão Integrada e BI (ERP, CDE e Power BI)']
+    specificCycle: ['Técnicas de Orçamentos, Cobranças e Custos de Projetos', 'Técnicas de Orçamentos, Cobranças e Custos de Obras (Integração BIM 5D)', 'Técnicas de Coordenação e Compatibilização de Projetos', 'Técnicas de Planejamento e Coordenação de Obras (PERT/CPM e LOB)', 'Gestão de Riscos, Eficiência Energética e Sustentabilidade', 'Lean Construction, Last Planner System e Logística de Canteiro', 'Engenharia de Segurança e Normas de Desempenho (NBR 15.575)', 'Administração Contratual, Medições e Gestão de Pleitos (Claims)', 'Sistemas Informatizados de Gestão Integrada e BI (ERP, CDE e Power BI)']
   },
   {
     id: 'manutencao', title: 'Engenharia e Gestão da Manutenção Predial 4.0', profile: 'O Perfil Operações',
-    status: 'Turma Iniciada (Aceitando novos alunos)', statusType: 'iniciada',
+    status: 'Turma Iniciada', statusType: 'iniciada',
     color: 'indigo', duration: '10 meses', hours: '360h',
-    format: 'Presencial, Remoto (ao vivo)',
+    format: 'Presencial, Remoto (ao vivo), Gravadas',
     dias: 'Sáb', horario: '08:00 - 17:00',
-    inscricoes: '15/12/25 até 28/03/26', inicioAulas: '30/01/26',
+    inscricoes: '30/08/2025', inicioAulas: '30/08/2025',
     pagamentos: [
       { label: '10 x R$ 249,00 no cartão de crédito', melhor: true },
       { label: '05 x R$ 499,00 no boleto', melhor: false },
       { label: '10 x R$ 373,00 no boleto', melhor: false },
     ],
     description: 'Focado em Vida Útil e Gestão de Ativos. Lidere a era da Gestão de Facilities utilizando IoT, Drones e BIM FM para valorizar o patrimônio.',
-    specificCycle: ['Engenharia Diagnóstica: Terapia Predial e Plano de Intervenção', 'Patologias Construtivas em Estruturas e Sistemas de Envoltória', 'Manutenção Avançada em Instalações Prediais (Elétrica, Hidráulica, HVAC)', 'CMMS/GMAO: Implementação de Sistemas de Gestão da Manutenção', 'Manutenção Preditiva: IoT, Sensores Inteligentes e Automação Predial', 'Termografia Infravermelha e Drones na Inspeção de Ativos', 'Gestão de Ativos com BIM 7D (FM) e Orçamentação Preditiva', 'Engenharia Condominial e Gestão de Sistemas de Segurança e Transporte', 'Gestão da Manutenção: Planejamento, KPIs e Conformidade Operacional']
+    specificCycle: ['Engenharia Diagnóstica e Intervenção para Manutenção (NBR 16.747)', 'Patologias Construtivas em Estruturas e Sistemas de Envoltória', 'Manutenção Avançada em Instalações Prediais e PMOC', 'CMMS/GMAO: Implementação de Sistemas de Gestão da Manutenção', 'Manutenção Preditiva: IoT, Sensores Inteligentes e Automação Predial', 'Termografia Infravermelha e Drones na Inspeção de Ativos', 'Gestão de Ativos com BIM 7D (FM) e Orçamentação Preditiva', 'Gestão de Contratos e Fornecedores de Facilities (SLA/KPIs)', 'Gestão da Manutenção: Planejamento, KPIs e Conformidade Operacional']
   },
   {
     id: 'bim', title: 'Tecnologia BIM na Construção Civil', profile: 'O Perfil Tech',
-    status: 'Turma Iniciada (Aceitando novos alunos)', statusType: 'iniciada',
+    status: 'Turma Iniciada', statusType: 'iniciada',
     color: 'indigo', duration: '10 meses', hours: '360h',
-    format: 'Presencial, Remoto (ao vivo)',
+    format: 'Presencial, Remoto (ao vivo), Gravadas',
     dias: 'Sáb', horario: '08:00 - 17:00',
-    inscricoes: '15/12/25 até 28/03/26', inicioAulas: '30/01/26',
+    inscricoes: '31/01/2026', inicioAulas: '31/01/2026',
     pagamentos: [
       { label: '10 x R$ 249,00 no cartão de crédito', melhor: true },
       { label: '05 x R$ 499,00 no boleto', melhor: false },
       { label: '10 x R$ 373,00 no boleto', melhor: false },
     ],
     description: 'Focado no Método Virtual. Seja o BIM Manager que coordena dados, interoperabilidade e simulações complexas de construção.',
-    specificCycle: ['BIM Arquitetura I: Modelagem Estratégica e Documentação', 'BIM Arquitetura II: Parametrização, Lógica de Projeto e Geração de Dados', 'BIM Estrutural: Detalhamento de Fabricação e Industrialização (LOD 400)', 'BIM Instalações I: Modelagem de Sistemas e Normatização', 'BIM Instalações II: Coordenação 3D e Resolução de Interferências', 'Análise BIM 4D/5D: Simulação de Custos, Cronograma e Venda', 'CDE e Normatização: Implementação da ISO 19650 e Interoperabilidade', 'BIM 6D e 7D: Desempenho, Sustentabilidade e Gestão de Ativos (FM)', 'BIM Estratégico: Gêmeos Digitais, IA e Business Intelligence (BI)']
+    specificCycle: ['BIM Arquitetura I: Modelagem Estratégica e Documentação', 'BIM Arquitetura II: Parametrização, Lógica de Projeto e Dados', 'BIM Estrutural: Detalhamento de Fabricação (LOD 400)', 'BIM Instalações I: Modelagem de Sistemas e Normatização', 'BIM Instalações II: Coordenação 3D e Clash Detection', 'Análise BIM 4D/5D: Simulação de Custos e Cronograma', 'CDE e Normatização: Implementação da ISO 19650 e BEP', 'BIM 6D e 7D: Desempenho, Sustentabilidade e Gestão de Ativos', 'BIM Estratégico: Gêmeos Digitais, IA e Business Intelligence']
   },
   {
     id: 'legal', title: 'Engenharia Legal e Perícias: Avaliações', profile: 'O Perfil Legal/Finanças',
     status: 'Matrículas Abertas', statusType: 'abertas',
     color: 'emerald', duration: '10 meses', hours: '360h',
-    format: 'Presencial, Remoto (ao vivo)',
+    format: 'Presencial, Remoto (ao vivo), Gravadas',
     dias: 'Sáb', horario: '08:00 - 17:00',
-    inscricoes: '15/12/25 até 28/03/26', inicioAulas: '28/03/26',
+    inscricoes: '15/12/2025', inicioAulas: '31/01/2026',
     pagamentos: [
       { label: '10 x R$ 249,00 no cartão de crédito', melhor: true },
       { label: '05 x R$ 499,00 no boleto', melhor: false },
       { label: '10 x R$ 373,00 no boleto', melhor: false },
     ],
     description: 'Focado em Valor e Prova. Torne-se a autoridade que o judiciário respeita. Domine regularização, auditoria e avaliação de ativos imobiliários.',
-    specificCycle: ['Patologia das Construções, Investigação e Responsabilidade Civil', 'Auditoria Predial e NBR 16.747: Classificação de Risco e Laudos', 'Avaliação de Imóveis I: Método Comparativo (Foco Urbano e Inferência Estatística)', 'Avaliação de Imóveis II: Renda, Rurais e Laudos Complexos', 'Perícias Judiciais e Vistorias Cautelares de Vizinhança', 'Perícia em Desempenho: Verificação Judicial da NBR 15.575', 'Simulação Computacional (BIM 6D) e Análise de Ciclo de Vida (ACV) Legal', 'Certificações e Auditoria de Compliance Técnico-Legal', 'Engenharia Legal Aplicada: Responsabilidade Civil, Ética e Fiscalização']
+    specificCycle: ['Patologia das Construções, Investigação e Responsabilidade', 'Auditoria Predial e NBR 16.747: Classificação de Risco', 'Avaliação de Imóveis I: Método Comparativo (Foco Urbano)', 'Avaliação de Imóveis II: Renda, Rurais e Laudos Complexos', 'Perícias Judiciais e Vistorias Cautelares de Vizinhança', 'Perícia em Desempenho: Verificação Judicial da NBR 15.575', 'Simulação Computacional (BIM 6D) e Análise de Ciclo de Vida', 'Certificações e Auditoria de Compliance Técnico-Legal', 'Engenharia Legal Aplicada: Responsabilidade Civil e Ética']
   },
   {
     id: 'neuroarquitetura', title: 'Neuroarquitetura', profile: 'O Perfil Human-Centric',
-    status: 'Matrículas Abertas', statusType: 'abertas',
-    color: 'emerald', duration: '10 meses', hours: '360h',
-    format: 'Presencial, Remoto (ao vivo)',
+    status: 'Inscrições para Próxima Turma', statusType: 'proxima',
+    color: 'indigo', duration: '10 meses', hours: '360h',
+    format: 'Presencial, Remoto (ao vivo), Gravadas',
     dias: 'Sáb', horario: '08:00 - 17:00',
-    inscricoes: '15/12/25 até 28/03/26', inicioAulas: '28/03/26',
+    inscricoes: 'Em breve', inicioAulas: 'Em breve',
     pagamentos: [
       { label: '10 x R$ 249,00 no cartão de crédito', melhor: true },
       { label: '05 x R$ 499,00 no boleto', melhor: false },
       { label: '10 x R$ 373,00 no boleto', melhor: false },
     ],
     description: 'Focado em Comportamento e Bem-estar. Use a neurociência para projetar espaços que otimizam a saúde mental e a produtividade.',
-    specificCycle: ['Neurociência Aplicada à Arquitetura', 'Ritmo Biológico e Fatores Humanos', 'Neuroarquitetura e Design Cognitivo', 'Espaços Residenciais e Comerciais: Aplicações e Princípios da Neurarquitetura', 'Espaços Coorporativos: Aplicações e Princípios da Neurarquitetura', 'Estímulos e Percepções: Neuroarquitetura em Espaços Verdes', 'Neuroiluminação', 'Design Biofílico', 'Neurourbanismo']
+    specificCycle: ['Neurociência Aplicada à Arquitetura', 'Ritmo Biológico e Fatores Humanos', 'Neuroarquitetura e Design Cognitivo', 'Espaços Residenciais e Comerciais: Aplicações da Neuroarquitetura', 'Espaços Corporativos: Aplicações e Princípios', 'Estímulos e Percepções: Neuroarquitetura em Espaços Verdes', 'Neuroiluminação', 'Design Biofílico', 'Neurourbanismo']
   },
   {
     id: 'interiores', title: 'Design de Interiores Contemporâneo', profile: 'O Perfil Inovação/Estética',
-    status: 'Matrículas Abertas', statusType: 'abertas',
-    color: 'emerald', duration: '10 meses', hours: '360h',
-    format: 'Presencial, Remoto (ao vivo)',
+    status: 'Inscrições para Próxima Turma', statusType: 'proxima',
+    color: 'indigo', duration: '10 meses', hours: '360h',
+    format: 'Presencial, Remoto (ao vivo), Gravadas',
     dias: 'Sáb', horario: '08:00 - 17:00',
-    inscricoes: '15/12/25 até 28/03/26', inicioAulas: '28/03/26',
+    inscricoes: 'Em breve', inicioAulas: 'Em breve',
     pagamentos: [
       { label: '10 x R$ 249,00 no cartão de crédito', melhor: true },
       { label: '05 x R$ 499,00 no boleto', melhor: false },
       { label: '10 x R$ 373,00 no boleto', melhor: false },
     ],
     description: 'Focado em Inovação e Funcionalidade. Crie ambientes modernos que representam novas tendências em materiais, tecnologia e estética.',
-    specificCycle: ['Design de Surpefícies', 'Iluminação de Interiores: Comerciais e Residenciais', 'Automação, Internet das Coisas e Eficiência dos Ambientes de Interiores', 'Inclusão e Ergonomia', 'Antropologia do Espaço', 'Design do Mobiliário', 'Design Aplicado para Ambientes Residenciais', 'Design Aplicado para Ambientes Comerciais e Coorporativos', 'Design de Interores para o Mercado de Luxo']
+    specificCycle: ['Design de Superfícies', 'Iluminação de Interiores: Comerciais e Residenciais', 'Automação, Internet das Coisas e Eficiência dos Ambientes', 'Inclusão e Ergonomia', 'Antropologia do Espaço', 'Design do Mobiliário', 'Design Aplicado para Ambientes Residenciais', 'Design Aplicado para Ambientes Comerciais e Corporativos', 'Design de Interiores para o Mercado de Luxo']
   },
   {
     id: 'acustica', title: 'Acústica Arquitetônica e Iluminação', profile: 'O Perfil Comfort/Performance',
-    status: 'Matrículas Abertas', statusType: 'abertas',
-    color: 'emerald', duration: '10 meses', hours: '360h',
-    format: 'Presencial, Remoto (ao vivo)',
+    status: 'Inscrições para Próxima Turma', statusType: 'proxima',
+    color: 'indigo', duration: '10 meses', hours: '360h',
+    format: 'Presencial, Remoto (ao vivo), Gravadas',
     dias: 'Sáb', horario: '08:00 - 17:00',
-    inscricoes: '15/12/25 até 28/03/26', inicioAulas: '28/03/26',
+    inscricoes: 'Em breve', inicioAulas: 'Em breve',
     pagamentos: [
       { label: '10 x R$ 249,00 no cartão de crédito', melhor: true },
       { label: '05 x R$ 499,00 no boleto', melhor: false },
       { label: '10 x R$ 373,00 no boleto', melhor: false },
     ],
     description: 'Focado em Conforto Ambiental e Alta Performance. Domine as variáveis físicas do ambiente para projetos de excelência.',
-    specificCycle: ['Acústica Gráfica e Normas', 'Estudo das Tipologias Internas I: Ambientes Residenciais e Comerciais', 'Estudo das Tipologias Internas II: Estúdios, Teatros e Cinemas', 'Estudo das Tipologias Internas III: Grandes Ambientes', 'Acústica e Iluminação Urbana', 'Iluminação, Conceituação e Normas', 'Iluminação Residencial', 'Iluminação Comercial', 'Iluminação Externa: Jardins, Praças e Edificações Histórícas']
+    specificCycle: ['Acústica Gráfica e Normas', 'Estudo das Tipologias Internas I: Ambientes Residenciais e Comerciais', 'Estudo das Tipologias Internas II: Estúdios, Teatros e Cinemas', 'Estudo das Tipologias Internas III: Grandes Ambientes', 'Acústica e Iluminação Urbana', 'Iluminação, Conceituação e Normas', 'Iluminação Residencial', 'Iluminação Comercial', 'Iluminação Externa: Jardins, Praças e Edificações Históricas']
   },
 ];
 
-function AccordionCycle({ title, subtitle, color, items, groupedItems, defaultOpen = false }) {
+
+
+function AccordionCycle({ title, subtitle, color, items, defaultOpen = false }) {
   const [open, setOpen] = useState(defaultOpen);
   const borderColor = color === 'indigo' ? 'border-indigo-200' : 'border-emerald-200';
   const dotColor = color === 'indigo' ? 'bg-indigo-600' : 'bg-emerald-500';
   const titleColor = color === 'indigo' ? 'text-indigo-900' : 'text-emerald-900';
-
-  const renderItemText = (text) => {
-    if (text.includes('[EAD]')) {
-      const parts = text.split('[EAD]');
-      return (
-        <span>
-          {parts[0]} <span className="inline-block bg-slate-200 text-slate-700 text-[10px] font-bold px-1.5 py-0.5 rounded ml-1 tracking-wide">EAD</span> {parts[1]}
-        </span>
-      );
-    }
-    return text;
-  };
-
   return (
     <div className={`mb-4 relative pl-6 border-l-2 ${borderColor}`}>
       <div className={`absolute w-4 h-4 ${dotColor} rounded-full -left-[9px] top-3`}></div>
@@ -147,34 +128,13 @@ function AccordionCycle({ title, subtitle, color, items, groupedItems, defaultOp
         <ChevronDown size={20} className={`text-slate-400 transition-transform shrink-0 ml-2 ${open ? 'rotate-180' : ''}`} />
       </button>
       {open && (
-        <div className="pt-3 pb-2 animate-in slide-in-from-top-2 duration-300">
-          {groupedItems ? (
-            <div className="space-y-5">
-              {groupedItems.map((group, gIdx) => (
-                <div key={gIdx}>
-                  <h5 className={`text-[11px] font-bold uppercase tracking-wider mb-2 ${color === 'indigo' ? 'text-indigo-600' : 'text-emerald-600'}`}>{group.group}</h5>
-                  <ul className="space-y-3">
-                    {group.items.map((item, idx) => (
-                      <li key={idx} className="text-sm text-slate-700 text-justify flex items-start gap-2">
-                        <CheckCircle2 size={14} className={`${color === 'indigo' ? 'text-indigo-500' : 'text-emerald-500'} mt-1 shrink-0`} />
-                        <span>{renderItemText(item)}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <ul className="space-y-3">
-              {items.map((item, idx) => (
-                <li key={idx} className="text-sm text-slate-700 text-justify flex items-start gap-2">
-                  <CheckCircle2 size={14} className={`${color === 'indigo' ? 'text-indigo-500' : 'text-emerald-500'} mt-1 shrink-0`} />
-                  <span>{renderItemText(item)}</span>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
+        <ul className="space-y-3 pt-3 pb-2">
+          {items.map((item, idx) => (
+            <li key={idx} className="text-sm text-slate-700 text-justify flex items-start gap-2">
+              <CheckCircle2 size={14} className={`${color === 'indigo' ? 'text-indigo-500' : 'text-emerald-500'} mt-1 shrink-0`} /> {item}
+            </li>
+          ))}
+        </ul>
       )}
     </div>
   );
@@ -201,6 +161,7 @@ export default function AcademiaEsuda() {
       {/* 3 PILARES */}
       <section className="py-20 bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Intro */}
           <div className="text-center mb-14">
             <p className="text-sm font-bold uppercase tracking-widest text-emerald-600 mb-3">O Mercado Mudou</p>
             <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-5">3 Pilares que Tornam Esta Formação Imbatível</h2>
@@ -209,7 +170,9 @@ export default function AcademiaEsuda() {
             </p>
           </div>
 
+          {/* Cards dos 3 Pilares */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+
             {/* Pilar 1 */}
             <div className="bg-slate-50 rounded-2xl p-8 border border-slate-100 hover:shadow-md transition-shadow flex flex-col">
               <div className="w-16 h-16 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6"><Briefcase size={32} /></div>
@@ -267,9 +230,13 @@ export default function AcademiaEsuda() {
                 <p className="text-xs text-amber-700 font-semibold">do caminho já percorrido na 2ª certificação</p>
               </div>
             </div>
+
           </div>
         </div>
       </section>
+
+      {/* INCUBADORA */}
+      <IncubadoraSection />
 
       {/* CURSOS */}
       <section ref={cursosRef} className="py-20 bg-slate-50">
@@ -288,6 +255,7 @@ export default function AcademiaEsuda() {
                   <h3 className="text-lg font-bold text-slate-900 mb-1 group-hover:text-indigo-700 transition-colors leading-snug">{curso.title}</h3>
                   <p className="text-xs font-bold text-indigo-600 mb-3">{curso.profile}</p>
                   <p className="text-slate-500 text-xs leading-relaxed mb-4 flex-grow text-justify line-clamp-3">{curso.description}</p>
+
                   <div className="flex items-center justify-between pt-3 border-t border-slate-100 mt-auto text-indigo-600 font-bold text-sm group-hover:translate-x-1 transition-transform">Ver Ementa <ArrowRight size={16} /></div>
                 </div>
               );
@@ -296,15 +264,12 @@ export default function AcademiaEsuda() {
         </div>
       </section>
 
-      {/* INCUBADORA — movida para o final */}
-      <IncubadoraSection />
-
       {/* MODAL CURSO */}
       {selectedCourse && (
         <div className="fixed inset-0 z-[200] flex items-center justify-center p-0 sm:p-4 md:p-6 bg-slate-900/90 backdrop-blur-sm animate-in fade-in duration-200">
           <div className="bg-white rounded-none sm:rounded-3xl w-full h-full sm:h-auto max-w-4xl sm:max-h-[90vh] overflow-y-auto shadow-2xl relative flex flex-col">
-            <button onClick={() => setSelectedCourse(null)} className="absolute top-4 right-4 z-10 w-10 h-10 bg-slate-100/80 backdrop-blur hover:bg-red-100 text-slate-600 hover:text-red-600 rounded-full flex items-center justify-center transition-colors shadow-sm"><X size={20} /></button>
-            <div className="bg-slate-50 p-5 sm:p-8 md:p-12 border-b border-slate-200 mt-12 sm:mt-0">
+          <button onClick={() => setSelectedCourse(null)} className="absolute top-4 right-4 z-10 w-10 h-10 bg-slate-100/80 backdrop-blur hover:bg-red-100 text-slate-600 hover:text-red-600 rounded-full flex items-center justify-center transition-colors shadow-sm"><X size={20} /></button>
+          <div className="bg-slate-50 p-5 sm:p-8 md:p-12 border-b border-slate-200 mt-12 sm:mt-0">
               <span className={`inline-block px-3 py-1 rounded-full text-xs font-bold uppercase bg-${selectedCourse.color}-100 text-${selectedCourse.color}-700 mb-4`}>{selectedCourse.status}</span>
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">{selectedCourse.title}</h2>
               <p className="text-base sm:text-lg text-slate-600 text-justify">{selectedCourse.description}</p>
@@ -328,6 +293,7 @@ export default function AcademiaEsuda() {
                   />
                 </div>
                 <div className="flex flex-col gap-5">
+                  {/* Ficha técnica */}
                   <div className="bg-slate-50 border border-slate-200 rounded-2xl p-5">
                     <div className="grid grid-cols-2 gap-x-6 gap-y-3 text-sm">
                       <div className="flex items-start gap-2"><BookOpen size={15} className="text-blue-500 mt-0.5 shrink-0" /><div><p className="text-[10px] text-slate-400 uppercase font-bold tracking-wide">Carga Horária</p><p className="font-bold text-slate-800">{selectedCourse.hours}</p></div></div>
@@ -340,6 +306,7 @@ export default function AcademiaEsuda() {
                     </div>
                   </div>
 
+                  {/* Condições de Pagamento */}
                   <div>
                     <h3 className="text-base font-bold text-slate-700 mb-3 flex items-center gap-2">💲 Condições de Pagamento</h3>
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
