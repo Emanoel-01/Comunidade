@@ -323,8 +323,8 @@ function IncubadoraSection() {
             <TrendingUp size={16} strokeWidth={2} /> Mais do que um curso. Uma Aceleradora de Carreiras.
           </div>
           <h2 className="text-4xl md:text-6xl font-extrabold mb-6 tracking-tight">Incubadora Profissional</h2>
-          <p className="text-slate-400 text-base sm:text-lg max-w-3xl mx-auto leading-relaxed mb-6">
-            Não basta ter o diploma se não tem a oportunidade. Nossos alunos são inseridos ativamente no mercado, fecham contratos reais e publicam artigos durante a formação. <strong>Veja os resultados de quem já está connosco:</strong>
+          <p className="text-slate-400 text-base sm:text-lg max-w-3xl mx-auto leading-relaxed mb-6">Não basta ter o diploma se não tem a oportunidade. Nossos alunos são inseridos ativamente no mercado, fecham contratos reais e publicam artigos durante a formação. Veja os resultados de quem já está conosco:
+
           </p>
           <button
             onClick={() => setShowObjetivos(!showObjetivos)}
