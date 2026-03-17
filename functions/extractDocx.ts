@@ -22,13 +22,12 @@ Deno.serve(async (req) => {
       return Response.json({ error: 'Não foi possível baixar o arquivo.' }, { status: 400 });
     }
 
-    const arrayBuffer = await fileResponse.arrayBuffer();
+    const uint8Array = new Uint8Array(await fileResponse.arrayBuffer());
     const fileName = (file_name || file_url).toLowerCase();
 
     // Extração DOCX via mammoth
     if (fileName.endsWith('.docx') || fileName.endsWith('.doc')) {
-      const buffer = Buffer.from(arrayBuffer);
-      const result = await mammoth.convertToHtml({ buffer });
+      const result = await mammoth.convertToHtml({ arrayBuffer: uint8Array.buffer });
       const html = result.value || '';
       return Response.json({ html });
     }
