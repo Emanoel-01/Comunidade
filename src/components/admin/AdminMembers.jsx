@@ -97,8 +97,14 @@ export default function AdminMembers() {
     setProfiles(prev => prev.map(p => p.id === profile.id ? { ...p, badges: newBadges } : p));
   };
 
+  const getDisplayName = (profile) => {
+    const u = users[profile.user_id];
+    return u?.full_name || profile.role_label || profile.user_id || 'Membro';
+  };
+
   const filtered = profiles.filter(p => {
-    const matchSearch = !search || (p.role_label || p.user_id || '').toLowerCase().includes(search.toLowerCase());
+    const name = getDisplayName(p);
+    const matchSearch = !search || name.toLowerCase().includes(search.toLowerCase());
     const matchLicense = filterLicense === 'all' || p.license_type === filterLicense;
     return matchSearch && matchLicense;
   });
