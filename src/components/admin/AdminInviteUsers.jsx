@@ -53,17 +53,14 @@ export default function AdminInviteUsers() {
   };
 
   const createProfileForUser = async ({ user_id, full_name, role_type, role_label, license_type, license_start_date, license_end_date }) => {
-    // Verifica se já existe um UserProfile para este user_id ou email para não duplicar
-    const existing = await base44.entities.UserProfile.filter({ user_id });
-    if (existing && existing.length > 0) return; // já existe, não cria
-    await base44.entities.UserProfile.create({
-      user_id: user_id || full_name, // fallback enquanto o usuário não aceitou o convite
-      role_type: role_type || 'aluno',
+    await base44.functions.invoke('createUserProfile', {
+      user_id,
+      full_name,
+      role_type,
       role_label: role_label || ROLE_LABELS[role_type] || full_name,
-      license_type: license_type || 'pleno',
-      license_start_date: license_start_date || new Date().toISOString().split('T')[0],
-      license_end_date: license_type === 'vitalicio' ? '' : (license_end_date || ''),
-      is_approved: true,
+      license_type,
+      license_start_date,
+      license_end_date,
     });
   };
 
