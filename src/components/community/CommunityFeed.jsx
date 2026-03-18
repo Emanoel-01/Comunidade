@@ -30,13 +30,11 @@ function PostCard({ post, currentUser, currentProfile, onViewProfile }) {
 
   const handleLike = async () => {
     const likedBy = post.liked_by || [];
-    if (liked) {
-      setLiked(false); setLikesCount(l => l - 1);
-      await base44.entities.CommunityPost.update(post.id, { likes: likesCount - 1, liked_by: likedBy.filter(id => id !== currentUser.id) });
-    } else {
-      setLiked(true); setLikesCount(l => l + 1);
-      await base44.entities.CommunityPost.update(post.id, { likes: likesCount + 1, liked_by: [...likedBy, currentUser.id] });
-    }
+    const novoValor = liked ? likesCount - 1 : likesCount + 1;
+    const novaLista = liked ? likedBy.filter(id => id !== currentUser.id) : [...likedBy, currentUser.id];
+    setLiked(!liked);
+    setLikesCount(novoValor);
+    await base44.entities.CommunityPost.update(post.id, { likes: novoValor, liked_by: novaLista });
   };
 
   const handleToggleComments = () => {
@@ -156,8 +154,8 @@ function EventFeedCard({ event, user }) {
     const newRegs = willReg ? [...regs, user.id] : regs.filter(r => r !== user.id);
     await base44.entities.CommunityEvent.update(event.id, { registrations: newRegs });
     if (willReg) {
-      const allUsers = await base44.entities.User.list();
-      await Promise.all(allUsers.filter(u => u.role === 'admin').map(a =>
+      const admins = await base44.entities.User.filter({ role: 'admin' });
+      await Promise.all(admins.map(a =>
         base44.entities.Notification.create({ user_id: a.id, type: 'event', title: `Nova inscrição: ${event.title}`, message: `${user.full_name} se inscreveu.`, link: '/Comunidade', read: false })
       ));
     }
@@ -205,8 +203,8 @@ function JobFeedCard({ job, user }) {
     e.preventDefault();
     if (!msg.trim()) return;
     setApplying(true);
-    const allUsers = await base44.entities.User.list();
-    await Promise.all(allUsers.filter(u => u.role === 'admin').map(a =>
+    const admins = await base44.entities.User.filter({ role: 'admin' });
+    await Promise.all(admins.map(a =>
       base44.entities.Notification.create({ user_id: a.id, type: 'job', title: `Candidatura: ${job.title}`, message: `${user.full_name}: "${msg}"`, link: '/Comunidade', read: false })
     ));
     setApplied(true);
@@ -405,7 +403,6 @@ export default function CommunityFeed({ user, profile, onViewProfile }) {
                     <button type="button" onClick={() => setShowVideoInput(true)} className="flex items-center gap-2 text-xs font-medium text-slate-500 hover:text-indigo-600 hover:bg-indigo-50 px-3 py-1.5 rounded-lg transition-colors">
                       <Link size={13} /> Adicionar link de vídeo (YouTube / Instagram / LinkedIn)
                     </button>
-                  )}
                   )}
                   <div className="flex items-center justify-between">
                     <span className="text-xs text-slate-400 italic">Compartilhe experiências, dúvidas e conquistas!</span>
