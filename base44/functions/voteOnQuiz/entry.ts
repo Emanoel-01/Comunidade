@@ -11,8 +11,7 @@ Deno.serve(async (req) => {
       return Response.json({ error: 'post_id e option_index são obrigatórios' }, { status: 400 });
     }
 
-    const posts = await base44.asServiceRole.entities.CommunityPost.filter({ id: post_id });
-    const post = posts[0];
+    const post = await base44.asServiceRole.entities.CommunityPost.get(post_id);
     if (!post) return Response.json({ error: 'Post não encontrado' }, { status: 404 });
     if (!post.is_quiz) return Response.json({ error: 'Este post não é uma enquete' }, { status: 400 });
 
