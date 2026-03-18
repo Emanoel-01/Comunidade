@@ -48,8 +48,12 @@ function ForumPostCard({ post, currentUser, currentProfile }) {
     const hasVoted = Object.values(quizVotes).some(voters => voters.includes(currentUser.id));
     if (hasVoted || voting) return;
     setVoting(true);
-    const res = await base44.functions.invoke('voteOnQuiz', { post_id: post.id, option_index: optionIndex });
-    if (res.data?.quiz_votes) setQuizVotes(res.data.quiz_votes);
+    try {
+      const res = await base44.functions.invoke('voteOnQuiz', { post_id: post.id, option_index: optionIndex });
+      if (res.data?.quiz_votes) setQuizVotes(res.data.quiz_votes);
+    } catch (err) {
+      console.error('Erro ao votar:', err);
+    }
     setVoting(false);
   };
 
