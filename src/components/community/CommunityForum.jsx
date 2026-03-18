@@ -27,6 +27,8 @@ function ForumPostCard({ post, currentUser, currentProfile }) {
   const [liked, setLiked] = useState((post.liked_by || []).includes(currentUser?.id));
   const [likesCount, setLikesCount] = useState(post.likes || 0);
   const [commentsCount, setCommentsCount] = useState(post.comments_count || 0);
+  const [quizVotes, setQuizVotes] = useState(post.quiz_votes || {});
+  const [voting, setVoting] = useState(false);
 
   const loadComments = async () => {
     const data = await base44.entities.CommunityComment.filter({ post_id: post.id }, 'created_date');
@@ -35,15 +37,20 @@ function ForumPostCard({ post, currentUser, currentProfile }) {
 
   const handleLike = async () => {
     const likedBy = post.liked_by || [];
-    if (liked) {
-      setLiked(false);
-      setLikesCount(l => l - 1);
-      await base44.entities.CommunityPost.update(post.id, { likes: likesCount - 1, liked_by: likedBy.filter(id => id !== currentUser.id) });
-    } else {
-      setLiked(true);
-      setLikesCount(l => l + 1);
-      await base44.entities.CommunityPost.update(post.id, { likes: likesCount + 1, liked_by: [...likedBy, currentUser.id] });
-    }
+    const novoValor = liked ? likesCount - 1 : likesCount + 1;
+    const novaLista = liked ? likedBy.filter(id => id !== currentUser.id) : [...likedBy, currentUser.id];
+    setLiked(!liked);
+    setLikesCount(novoValor);
+    await base44.entities.CommunityPost.update(post.id, { likes: novoValor, liked_by: novaLista });
+  };
+
+  const handleVote = async (optionIndex) => {
+    const hasVoted = Object.values(quizVotes).some(voters => voters.includes(currentUser.id));
+    if (hasVoted || voting) return;
+    setVoting(true);
+    const res = await base44.functions.invoke('voteOnQuiz', { post_id: post.id, option_index: optionIndex });
+    if (res.data?.quiz_votes) setQuizVotes(res.data.quiz_votes);
+    setVoting(false);
   };
 
   const handleToggleComments = () => {
@@ -98,6 +105,45 @@ function ForumPostCard({ post, currentUser, currentProfile }) {
           <h3 className="font-bold text-slate-900 text-base mb-2">{post.forum_title}</h3>
         )}
         <p className="text-slate-700 text-sm leading-relaxed">{post.content}</p>
+
+        {/* Enquete */}
+        {post.is_quiz && post.quiz_options?.length > 0 && (
+          <div className="mt-4 space-y-2">
+            {post.quiz_options.map((option, index) => {
+              const optionVoters = quizVotes[index] || [];
+              const totalVotes = Object.values(quizVotes).reduce((acc, v) => acc + v.length, 0);
+              const percentage = totalVotes > 0 ? Math.round((optionVoters.length / totalVotes) * 100) : 0;
+              const hasVoted = Object.values(quizVotes).some(v => v.includes(currentUser?.id));
+              const isMyVote = optionVoters.includes(currentUser?.id);
+
+              return (
+                <div
+                  key={index}
+                  onClick={() => !hasVoted && handleVote(index)}
+                  className={`relative overflow-hidden rounded-xl border transition-all p-3 ${
+                    hasVoted ? 'cursor-default' : 'cursor-pointer hover:border-indigo-400 hover:bg-indigo-50'
+                  } ${isMyVote ? 'border-indigo-500 bg-indigo-50' : 'border-slate-200'}`}
+                >
+                  {hasVoted && (
+                    <div
+                      className={`absolute top-0 left-0 h-full opacity-10 transition-all ${isMyVote ? 'bg-indigo-600' : 'bg-slate-500'}`}
+                      style={{ width: `${percentage}%` }}
+                    />
+                  )}
+                  <div className="relative z-10 flex justify-between items-center text-sm">
+                    <span className={`font-medium ${isMyVote ? 'text-indigo-700 font-bold' : 'text-slate-700'}`}>
+                      {option} {isMyVote && '✓'}
+                    </span>
+                    {hasVoted && <span className="text-slate-500 font-bold text-xs">{percentage}%</span>}
+                  </div>
+                </div>
+              );
+            })}
+            <p className="text-xs text-slate-400 text-right">
+              {Object.values(quizVotes).reduce((acc, v) => acc + v.length, 0)} votos
+            </p>
+          </div>
+        )}
 
         {post.image_url && !post.media_urls?.length && (
           <div className="mt-3 rounded-xl overflow-hidden border border-slate-100">
@@ -166,7 +212,7 @@ export default function CommunityForum({ user, profile }) {
   const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState('Todos');
   const [showForm, setShowForm] = useState(false);
-  const [form, setForm] = useState({ title: '', content: '', forum_category: 'Geral', media_urls: [], social_video_url: '' });
+  const [form, setForm] = useState({ title: '', content: '', forum_category: 'Geral', media_urls: [], social_video_url: '', is_quiz: false, quiz_options: ['', ''] });
   const [posting, setPosting] = useState(false);
 
   useEffect(() => {
@@ -189,6 +235,11 @@ export default function CommunityForum({ user, profile }) {
   const handlePost = async (e) => {
     e.preventDefault();
     if (!form.content.trim()) return;
+    const validOptions = form.quiz_options.filter(opt => opt.trim() !== '');
+    if (form.is_quiz && validOptions.length < 2) {
+      alert('Uma enquete precisa de pelo menos 2 opções válidas.');
+      return;
+    }
     setPosting(true);
     const newPost = await base44.entities.CommunityPost.create({
       author_id: user.id,
@@ -200,6 +251,9 @@ export default function CommunityForum({ user, profile }) {
       forum_category: form.forum_category,
       media_urls: form.media_urls || [],
       is_forum: true,
+      is_quiz: form.is_quiz,
+      quiz_options: form.is_quiz ? validOptions : [],
+      quiz_votes: {},
       likes: 0,
       liked_by: [],
       comments_count: 0,
@@ -210,7 +264,7 @@ export default function CommunityForum({ user, profile }) {
       related_entity_id: newPost?.id || '',
       related_entity_title: form.title || form.content.slice(0, 50),
     }).catch(() => {});
-    setForm({ title: '', content: '', forum_category: 'Geral', media_urls: [], social_video_url: '' });
+    setForm({ title: '', content: '', forum_category: 'Geral', media_urls: [], social_video_url: '', is_quiz: false, quiz_options: ['', ''] });
     setShowForm(false);
     setPosting(false);
     await loadPosts();
@@ -296,6 +350,56 @@ export default function CommunityForum({ user, profile }) {
                 className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 resize-none"
               />
             </div>
+            {/* Enquete */}
+            <div className="pt-2 border-t border-slate-100">
+              <button
+                type="button"
+                onClick={() => setForm({ ...form, is_quiz: !form.is_quiz })}
+                className={`text-xs font-bold px-3 py-1.5 rounded-lg border transition-colors ${form.is_quiz ? 'bg-indigo-50 border-indigo-200 text-indigo-700' : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'}`}
+              >
+                📊 {form.is_quiz ? 'Remover Enquete' : 'Adicionar Enquete'}
+              </button>
+
+              {form.is_quiz && (
+                <div className="mt-3 space-y-2 p-4 bg-slate-50 rounded-xl border border-slate-100">
+                  <label className="block text-xs font-bold text-slate-600">Opções da Enquete</label>
+                  {form.quiz_options.map((option, index) => (
+                    <div key={index} className="flex gap-2">
+                      <input
+                        type="text"
+                        value={option}
+                        placeholder={`Opção ${index + 1}`}
+                        onChange={(e) => {
+                          const newOptions = [...form.quiz_options];
+                          newOptions[index] = e.target.value;
+                          setForm({ ...form, quiz_options: newOptions });
+                        }}
+                        className="flex-grow border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                      />
+                      {form.quiz_options.length > 2 && (
+                        <button
+                          type="button"
+                          onClick={() => setForm({ ...form, quiz_options: form.quiz_options.filter((_, i) => i !== index) })}
+                          className="p-2 text-slate-400 hover:text-rose-500 transition-colors"
+                        >
+                          <X size={16} />
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                  {form.quiz_options.length < 5 && (
+                    <button
+                      type="button"
+                      onClick={() => setForm({ ...form, quiz_options: [...form.quiz_options, ''] })}
+                      className="text-xs font-bold text-indigo-600 hover:text-indigo-800 mt-1 flex items-center gap-1"
+                    >
+                      <Plus size={12} /> Adicionar Opção
+                    </button>
+                  )}
+                </div>
+              )}
+            </div>
+
             <MediaUploader
               mediaUrls={form.media_urls || []}
               onChange={urls => setForm({ ...form, media_urls: urls })}
