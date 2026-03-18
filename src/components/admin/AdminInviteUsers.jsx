@@ -102,6 +102,16 @@ export default function AdminInviteUsers() {
     // Atualiza status da solicitação
     await base44.entities.AccessRequest.update(req.id, { status: 'approved' });
     setRequests(prev => prev.map(r => r.id === req.id ? { ...r, status: 'approved' } : r));
+    // Cria UserProfile automaticamente para aparecer em Membros
+    await createProfileForUser({
+      user_id: req.email,
+      full_name: req.full_name,
+      role_type: req.requested_role,
+      role_label: ROLE_LABELS[req.requested_role] || req.full_name,
+      license_type: 'pleno',
+      license_start_date: new Date().toISOString().split('T')[0],
+      license_end_date: '',
+    });
     setProcessingId(null);
   };
 
