@@ -196,9 +196,11 @@ export default function AdminMembers() {
     setProfiles(prev => prev.map(p => p.id === profile.id ? { ...p, badges: newBadges } : p));
   };
 
+  const isEmailId = (user_id) => user_id && user_id.includes('@');
+
   const getDisplayName = (profile) => {
     const u = users[profile.user_id];
-    return u?.full_name || profile.role_label || profile.user_id || 'Membro';
+    return u?.full_name || profile.role_label || (isEmailId(profile.user_id) ? profile.user_id : profile.user_id) || 'Membro';
   };
 
   const filtered = profiles.filter(p => {
