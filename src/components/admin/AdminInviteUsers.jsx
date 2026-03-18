@@ -52,6 +52,21 @@ export default function AdminInviteUsers() {
     setLoading(false);
   };
 
+  const createProfileForUser = async ({ user_id, full_name, role_type, role_label, license_type, license_start_date, license_end_date }) => {
+    // Verifica se já existe um UserProfile para este user_id ou email para não duplicar
+    const existing = await base44.entities.UserProfile.filter({ user_id });
+    if (existing && existing.length > 0) return; // já existe, não cria
+    await base44.entities.UserProfile.create({
+      user_id: user_id || full_name, // fallback enquanto o usuário não aceitou o convite
+      role_type: role_type || 'aluno',
+      role_label: role_label || ROLE_LABELS[role_type] || full_name,
+      license_type: license_type || 'pleno',
+      license_start_date: license_start_date || new Date().toISOString().split('T')[0],
+      license_end_date: license_type === 'vitalicio' ? '' : (license_end_date || ''),
+      is_approved: true,
+    });
+  };
+
   const handleInvite = async (e) => {
     e.preventDefault();
     setInviting(true);
@@ -63,6 +78,16 @@ export default function AdminInviteUsers() {
       requested_role: inviteForm.role_type,
       status: 'approved',
       admin_notes: `Convidado. Perfil: ${inviteForm.role_label || ROLE_LABELS[inviteForm.role_type]}. Licença: ${inviteForm.license_type}`
+    });
+    // Cria UserProfile automaticamente para aparecer em Membros
+    await createProfileForUser({
+      user_id: inviteForm.email, // usa email como identificador temporário
+      full_name: inviteForm.full_name,
+      role_type: inviteForm.role_type,
+      role_label: inviteForm.role_label || ROLE_LABELS[inviteForm.role_type],
+      license_type: inviteForm.license_type,
+      license_start_date: inviteForm.license_start_date,
+      license_end_date: inviteForm.license_end_date,
     });
     setInviting(false);
     setInviteSent(true);
