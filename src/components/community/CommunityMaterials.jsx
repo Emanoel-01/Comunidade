@@ -61,7 +61,7 @@ function MaterialCard({ m, user, onDownloaded }) {
             <span className={`inline-block px-2 py-0.5 rounded text-[10px] font-bold mt-1 ${categoryColors[m.category] || 'bg-slate-100 text-slate-700'}`}>{m.category}</span>
           </div>
         </div>
-        {m.description && <p className="text-xs text-slate-600 mb-3 line-clamp-2 leading-relaxed">{m.description}</p>}
+        {m.description && <p className="text-xs text-slate-600 mb-3 leading-relaxed">{m.description}</p>}
         {m.social_video_url && (
           <div className="mb-3"><SocialVideoEmbed url={m.social_video_url} /></div>
         )}
