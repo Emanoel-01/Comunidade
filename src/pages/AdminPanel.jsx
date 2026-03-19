@@ -604,7 +604,8 @@ function AdminMaterials() {
   const [materials, setMaterials] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
-  const [form, setForm] = useState({ title: '', description: '', category: 'Planilhas', file_url: '', media_urls: [] });
+  const [form, setForm] = useState({ id: null, title: '', description: '', category: 'Planilhas', files: [], media_urls: [] });
+  const [customCategory, setCustomCategory] = useState('');
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
 
@@ -616,19 +617,68 @@ function AdminMaterials() {
   };
 
   const handleFileUpload = async (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+    const selectedFiles = Array.from(e.target.files);
+    if (!selectedFiles.length) return;
+    if ((form.files?.length || 0) + selectedFiles.length > 10) {
+      alert('O limite máximo é de 10 arquivos por postagem.');
+      return;
+    }
     setUploading(true);
-    const { file_url } = await base44.integrations.Core.UploadFile({ file });
-    setForm(prev => ({ ...prev, file_url }));
+    const uploadedFiles = [];
+    for (const file of selectedFiles) {
+      const { file_url } = await base44.integrations.Core.UploadFile({ file });
+      uploadedFiles.push({ name: file.name, url: file_url });
+    }
+    setForm(prev => ({ ...prev, files: [...(prev.files || []), ...uploadedFiles] }));
     setUploading(false);
+    e.target.value = null;
   };
 
-  const handleCreate = async (e) => {
+  const removeFile = (indexToRemove) => {
+    setForm(prev => ({ ...prev, files: prev.files.filter((_, idx) => idx !== indexToRemove) }));
+  };
+
+  const handleEdit = (material) => {
+    const materialFiles = material.files?.length > 0
+      ? material.files
+      : (material.file_url ? [{ name: 'Arquivo Principal', url: material.file_url }] : []);
+    setForm({
+      id: material.id,
+      title: material.title,
+      description: material.description || '',
+      category: material.category || 'Planilhas',
+      files: materialFiles,
+      media_urls: material.media_urls || []
+    });
+    setCustomCategory('');
+    setShowForm(true);
+    window.scrollTo(0, 0);
+  };
+
+  const handleSave = async (e) => {
     e.preventDefault();
+    if (!form.files || form.files.length === 0) {
+      alert('É necessário enviar pelo menos um arquivo.');
+      return;
+    }
     setSaving(true);
-    await base44.entities.Material.create({ ...form, downloads: 0 });
-    setForm({ title: '', description: '', category: 'Planilhas', file_url: '', media_urls: [] });
+    const finalCategory = form.category === 'Outros' && customCategory.trim()
+      ? customCategory.trim()
+      : form.category;
+    const dataToSave = {
+      title: form.title,
+      description: form.description,
+      category: finalCategory,
+      files: form.files,
+      media_urls: form.media_urls
+    };
+    if (form.id) {
+      await base44.entities.Material.update(form.id, dataToSave);
+    } else {
+      await base44.entities.Material.create({ ...dataToSave, downloads: 0 });
+    }
+    setForm({ id: null, title: '', description: '', category: 'Planilhas', files: [], media_urls: [] });
+    setCustomCategory('');
     setShowForm(false);
     await loadMaterials();
     setSaving(false);
@@ -644,7 +694,7 @@ function AdminMaterials() {
     <div className="animate-in fade-in space-y-5">
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold text-slate-900">Gerenciar Materiais</h2>
-        <button onClick={() => setShowForm(!showForm)} className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-4 py-2 rounded-lg text-sm shadow-sm">
+        <button onClick={() => { setForm({ id: null, title: '', description: '', category: 'Planilhas', files: [], media_urls: [] }); setCustomCategory(''); setShowForm(true); }} className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-4 py-2 rounded-lg text-sm shadow-sm">
           <Plus size={16} /> Novo Material
         </button>
       </div>
@@ -652,26 +702,36 @@ function AdminMaterials() {
       {showForm && (
         <div className="bg-white rounded-2xl border border-indigo-200 shadow-md p-6 relative">
           <button onClick={() => setShowForm(false)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-700"><X size={20} /></button>
-          <h3 className="font-bold text-slate-900 mb-4">Novo Material</h3>
-          <form onSubmit={handleCreate} className="space-y-4">
+          <h3 className="font-bold text-slate-900 mb-4">{form.id ? 'Editar Material' : 'Novo Material'}</h3>
+          <form onSubmit={handleSave} className="space-y-4">
             <div className="grid sm:grid-cols-2 gap-4">
               <div><label className="block text-xs font-bold text-slate-600 mb-1">Título *</label><input required value={form.title} onChange={e => setForm({ ...form, title: e.target.value })} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" /></div>
-              <div><label className="block text-xs font-bold text-slate-600 mb-1">Categoria</label>
+              <div>
+                <label className="block text-xs font-bold text-slate-600 mb-1">Categoria</label>
                 <select value={form.category} onChange={e => setForm({ ...form, category: e.target.value })} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400">
                   {['Planilhas', 'Normas ABNT', 'E-books', 'Apresentações', 'Modelos de Laudo', 'Outros'].map(c => <option key={c}>{c}</option>)}
                 </select>
+                {form.category === 'Outros' && (
+                  <input type="text" required placeholder="Nome da nova categoria..." value={customCategory} onChange={e => setCustomCategory(e.target.value)} className="mt-2 w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
+                )}
               </div>
             </div>
             <div>
-              <label className="block text-xs font-bold text-slate-600 mb-1">Arquivo *</label>
-              <div className="flex items-center gap-3">
-                <label className={`flex items-center gap-2 px-4 py-2 border-2 border-dashed border-indigo-300 text-indigo-600 rounded-lg text-sm font-bold cursor-pointer hover:bg-indigo-50 ${uploading ? 'opacity-50' : ''}`}>
-                  <Upload size={15} /> {uploading ? 'Enviando...' : 'Fazer Upload do Arquivo'}
-                  <input type="file" onChange={handleFileUpload} className="hidden" disabled={uploading} />
-                </label>
-                {form.file_url && <span className="text-xs text-emerald-600 font-bold flex items-center gap-1"><CheckCircle2 size={13} /> Arquivo enviado!</span>}
-              </div>
-              <input value={form.file_url} onChange={e => setForm({ ...form, file_url: e.target.value })} placeholder="Ou cole a URL do arquivo..." className="mt-2 w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
+              <label className="block text-xs font-bold text-slate-600 mb-1">Arquivos (máx. 10) *</label>
+              <label className={`inline-flex items-center gap-2 px-4 py-2 border-2 border-dashed border-indigo-300 text-indigo-600 rounded-lg text-sm font-bold cursor-pointer hover:bg-indigo-50 transition-colors ${uploading ? 'opacity-50' : ''}`}>
+                <Upload size={15} /> {uploading ? 'Enviando...' : 'Adicionar Arquivos'}
+                <input type="file" multiple onChange={handleFileUpload} className="hidden" disabled={uploading} />
+              </label>
+              {form.files && form.files.length > 0 && (
+                <div className="space-y-2 mt-3">
+                  {form.files.map((file, idx) => (
+                    <div key={idx} className="flex items-center justify-between bg-slate-50 border border-slate-200 p-2 rounded-lg">
+                      <span className="text-xs text-slate-700 font-medium truncate max-w-[85%]">{file.name}</span>
+                      <button type="button" onClick={() => removeFile(idx)} className="text-red-500 hover:text-red-700 p-1 rounded transition-colors"><X size={14} /></button>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
             <div><label className="block text-xs font-bold text-slate-600 mb-1">Descrição</label><textarea rows={2} value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 resize-none" /></div>
             <MediaUploader
@@ -681,7 +741,7 @@ function AdminMaterials() {
             />
             <div className="flex justify-end gap-3 pt-2">
               <button type="button" onClick={() => setShowForm(false)} className="px-4 py-2 text-slate-600 font-bold hover:bg-slate-100 rounded-lg text-sm">Cancelar</button>
-              <button type="submit" disabled={saving || uploading || !form.file_url} className="px-6 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg text-sm disabled:opacity-50 flex items-center gap-2"><Save size={14} />{saving ? 'Salvando...' : 'Publicar Material'}</button>
+              <button type="submit" disabled={saving || uploading} className="px-6 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg text-sm disabled:opacity-50 flex items-center gap-2"><Save size={14} />{saving ? 'Salvando...' : form.id ? 'Salvar Alterações' : 'Publicar Material'}</button>
             </div>
           </form>
         </div>
@@ -690,13 +750,19 @@ function AdminMaterials() {
       {loading ? <div className="h-32 bg-white rounded-xl animate-pulse border border-slate-200"></div> : (
         <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-x-auto">
           <table className="w-full text-sm min-w-[500px]">
-            <thead className="bg-slate-50 border-b border-slate-200 text-slate-600 font-bold"><tr><th className="px-5 py-3 text-left">Material</th><th className="px-5 py-3 text-center">Downloads</th><th className="px-5 py-3 text-center">Excluir</th></tr></thead>
+            <thead className="bg-slate-50 border-b border-slate-200 text-slate-600 font-bold"><tr><th className="px-5 py-3 text-left">Material</th><th className="px-5 py-3 text-center">Arquivos</th><th className="px-5 py-3 text-center">Downloads</th><th className="px-5 py-3 text-center">Ações</th></tr></thead>
             <tbody className="divide-y divide-slate-100">
               {materials.map(m => (
                 <tr key={m.id} className="hover:bg-slate-50">
                   <td className="px-5 py-3"><p className="font-medium text-slate-900">{m.title}</p><p className="text-xs text-slate-500">{m.category}</p></td>
+                  <td className="px-5 py-3 text-center text-slate-600">{m.files?.length || (m.file_url ? 1 : 0)}</td>
                   <td className="px-5 py-3 text-center font-bold text-slate-700">{m.downloads || 0}</td>
-                  <td className="px-5 py-3 text-center"><button onClick={() => deleteMaterial(m.id)} className="text-red-500 hover:text-red-700"><Trash2 size={16} /></button></td>
+                  <td className="px-5 py-3 text-center">
+                    <div className="flex items-center justify-center gap-3">
+                      <button onClick={() => handleEdit(m)} className="text-indigo-600 hover:text-indigo-800 font-bold text-xs">Editar</button>
+                      <button onClick={() => deleteMaterial(m.id)} className="text-red-500 hover:text-red-700"><Trash2 size={16} /></button>
+                    </div>
+                  </td>
                 </tr>
               ))}
             </tbody>
