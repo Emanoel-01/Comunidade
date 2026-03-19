@@ -627,8 +627,9 @@ function AdminMaterials() {
   const handleCreate = async (e) => {
     e.preventDefault();
     setSaving(true);
-    await base44.entities.Material.create({ ...form, downloads: 0 });
-    setForm({ title: '', description: '', category: 'Planilhas', file_url: '', media_urls: [] });
+    const finalCategory = form.category === 'Outros' && form.custom_category.trim() ? form.custom_category.trim() : form.category;
+    await base44.entities.Material.create({ ...form, category: finalCategory, downloads: 0 });
+    setForm({ title: '', description: '', category: 'Planilhas', custom_category: '', file_url: '', media_urls: [] });
     setShowForm(false);
     await loadMaterials();
     setSaving(false);
