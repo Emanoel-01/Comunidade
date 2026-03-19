@@ -122,7 +122,10 @@ export default function CommunityMaterials({ user }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving(true);
-    await base44.entities.Material.create({ ...form, downloads: 0 });
+    const finalCategory = form.category === 'Outros' && form.customCategory?.trim()
+      ? form.customCategory.trim()
+      : form.category;
+    await base44.entities.Material.create({ ...form, category: finalCategory, downloads: 0 });
     setForm({ title: '', description: '', category: 'Planilhas', file_url: '', media_urls: [], social_video_url: '' });
     setShowForm(false);
     const d = await base44.entities.Material.list('-created_date');
@@ -134,7 +137,7 @@ export default function CommunityMaterials({ user }) {
     setMaterials(prev => prev.map(m => m.id === id ? { ...m, downloads: newCount } : m));
   };
 
-  const categories = ['Todos', 'Planilhas', 'Normas ABNT', 'E-books', 'Apresentações', 'Modelos de Laudo', 'Outros'];
+  const categories = ['Todos', ...new Set(materials.map(m => m.category).filter(Boolean))];
   const filtered = materials
     .filter(m => activeFilter === 'Todos' || m.category === activeFilter)
     .filter(m => !search || m.title.toLowerCase().includes(search.toLowerCase()) || m.description?.toLowerCase().includes(search.toLowerCase()));
@@ -168,10 +171,21 @@ export default function CommunityMaterials({ user }) {
           <h3 className="font-bold text-slate-900 mb-4 text-lg">Novo Material</h3>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div><label className="block text-xs font-bold text-slate-600 mb-1">Título *</label><input required value={form.title} onChange={e => setForm({ ...form, title: e.target.value })} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400" /></div>
-            <div><label className="block text-xs font-bold text-slate-600 mb-1">Categoria</label>
+            <div>
+              <label className="block text-xs font-bold text-slate-600 mb-1">Categoria</label>
               <select value={form.category} onChange={e => setForm({ ...form, category: e.target.value })} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400">
                 {['Planilhas', 'Normas ABNT', 'E-books', 'Apresentações', 'Modelos de Laudo', 'Outros'].map(c => <option key={c}>{c}</option>)}
               </select>
+              {form.category === 'Outros' && (
+                <input
+                  type="text"
+                  required
+                  placeholder="Digite o nome da nova categoria..."
+                  value={form.customCategory || ''}
+                  onChange={e => setForm({ ...form, customCategory: e.target.value })}
+                  className="mt-2 w-full border border-amber-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400"
+                />
+              )}
             </div>
             <div>
               <label className="block text-xs font-bold text-slate-600 mb-1">Arquivo *</label>
