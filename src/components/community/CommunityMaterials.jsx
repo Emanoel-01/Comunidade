@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
-import { Download, FileText, Plus, X, Upload, Star, BookOpen, CheckCircle2, Search, Link } from 'lucide-react';
+import { Download, FileText, Plus, X, Upload, BookOpen, CheckCircle2, Search, Link, Eye } from 'lucide-react';
 import MediaUploader from '@/components/shared/MediaUploader';
 import MediaGallery from '@/components/shared/MediaGallery';
 import SocialVideoEmbed from '@/components/shared/SocialVideoEmbed';
@@ -25,26 +25,27 @@ const categoryIcons = {
 
 function MaterialCard({ m, user, onDownloaded }) {
   const [downloading, setDownloading] = useState(false);
-  const [downloaded, setDownloaded] = useState(false);
 
-  const handleDownload = async () => {
-    setDownloading(true);
-    const newCount = (m.downloads || 0) + 1;
-    await base44.entities.Material.update(m.id, { downloads: newCount });
+  const files = m.files?.length > 0
+    ? m.files
+    : (m.file_url ? [{ name: 'Arquivo Principal', url: m.file_url }] : []);
 
-    if (user) {
-      base44.functions.invoke('awardPoints', {
-        activity_type: 'material_downloaded',
-        related_entity_id: m.id,
-        related_entity_title: m.title,
-      }).catch(() => {});
+  const handleAction = async (file, actionType) => {
+    if (actionType === 'download') {
+      setDownloading(true);
+      const newCount = (m.downloads || 0) + 1;
+      await base44.entities.Material.update(m.id, { downloads: newCount });
+      if (user) {
+        base44.functions.invoke('awardPoints', {
+          activity_type: 'material_downloaded',
+          related_entity_id: m.id,
+          related_entity_title: m.title,
+        }).catch(() => {});
+      }
+      onDownloaded(m.id, newCount);
+      setDownloading(false);
     }
-
-    onDownloaded(m.id, newCount);
-    setDownloaded(true);
-    setDownloading(false);
-    window.open(m.file_url, '_blank');
-    setTimeout(() => setDownloaded(false), 3000);
+    window.open(file.url, '_blank');
   };
 
   return (
@@ -69,27 +70,27 @@ function MaterialCard({ m, user, onDownloaded }) {
             <MediaGallery mediaUrls={m.media_urls} />
           </div>
         )}
-        <div className="flex items-center justify-between pt-3 border-t border-slate-100">
-          <div className="flex items-center gap-3 text-xs text-slate-400">
-            <span className="flex items-center gap-1"><Download size={11} /> {m.downloads || 0} downloads</span>
+        <div className="pt-3 border-t border-slate-100">
+          <p className="text-xs text-slate-400 flex items-center gap-1 mb-2"><Download size={11} /> {m.downloads || 0} downloads</p>
+          <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Arquivos</p>
+          <div className="space-y-1.5">
+            {files.map((file, idx) => (
+              <div key={idx} className="flex items-center justify-between bg-slate-50 border border-slate-100 p-2 rounded-lg">
+                <div className="flex items-center gap-2 overflow-hidden">
+                  <FileText size={14} className="text-slate-400 shrink-0" />
+                  <span className="text-xs font-medium text-slate-700 truncate" title={file.name}>{file.name}</span>
+                </div>
+                <div className="flex items-center gap-1 shrink-0 ml-2">
+                  <button onClick={() => handleAction(file, 'view')} className="p-1.5 text-slate-500 hover:text-indigo-600 hover:bg-indigo-50 rounded-md transition-colors" title="Ver no navegador" disabled={downloading}>
+                    <Eye size={14} />
+                  </button>
+                  <button onClick={() => handleAction(file, 'download')} className="p-1.5 text-slate-500 hover:text-emerald-600 hover:bg-emerald-50 rounded-md transition-colors" title="Baixar arquivo" disabled={downloading}>
+                    <Download size={14} />
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
-          <button
-            onClick={handleDownload}
-            disabled={downloading}
-            className={`flex items-center gap-1.5 font-bold text-xs px-4 py-2 rounded-xl transition-all ${
-              downloaded
-                ? 'bg-emerald-100 text-emerald-700'
-                : 'bg-slate-900 hover:bg-indigo-600 text-white'
-            } disabled:opacity-60`}
-          >
-            {downloading ? (
-              <><div className="w-3 h-3 border-2 border-current border-t-transparent rounded-full animate-spin"></div> Baixando</>
-            ) : downloaded ? (
-              <><CheckCircle2 size={13} /> Baixado!</>
-            ) : (
-              <><Download size={13} /> Baixar</>
-            )}
-          </button>
         </div>
       </div>
     </div>
