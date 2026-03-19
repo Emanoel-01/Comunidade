@@ -604,7 +604,7 @@ function AdminMaterials() {
   const [materials, setMaterials] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
-  const [form, setForm] = useState({ title: '', description: '', category: 'Planilhas', custom_category: '', file_url: '', media_urls: [] });
+  const [form, setForm] = useState({ title: '', description: '', category: 'Planilhas', file_url: '', media_urls: [] });
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
 
@@ -627,9 +627,8 @@ function AdminMaterials() {
   const handleCreate = async (e) => {
     e.preventDefault();
     setSaving(true);
-    const finalCategory = form.category === 'Outros' && form.custom_category.trim() ? form.custom_category.trim() : form.category;
-    await base44.entities.Material.create({ ...form, category: finalCategory, downloads: 0 });
-    setForm({ title: '', description: '', category: 'Planilhas', custom_category: '', file_url: '', media_urls: [] });
+    await base44.entities.Material.create({ ...form, downloads: 0 });
+    setForm({ title: '', description: '', category: 'Planilhas', file_url: '', media_urls: [] });
     setShowForm(false);
     await loadMaterials();
     setSaving(false);
