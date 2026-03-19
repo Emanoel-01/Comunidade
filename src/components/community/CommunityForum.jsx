@@ -108,7 +108,7 @@ function ForumPostCard({ post, currentUser, currentProfile }) {
         {post.forum_title && (
           <h3 className="font-bold text-slate-900 text-base mb-2">{post.forum_title}</h3>
         )}
-        <p className="text-slate-700 text-sm leading-relaxed">{post.content}</p>
+        <div className="text-slate-700 text-sm leading-relaxed whitespace-pre-wrap">{post.content}</div>
 
         {/* Enquete */}
         {post.is_quiz && post.quiz_options?.length > 0 && (
