@@ -95,7 +95,7 @@ function ChatWindow({ conversation, currentUser, currentProfile, onBack }) {
               <div className={`max-w-[72%] px-4 py-2.5 rounded-2xl text-sm leading-relaxed shadow-sm ${isMe ? 'bg-indigo-600 text-white rounded-br-sm' : 'bg-slate-100 text-slate-800 rounded-bl-sm'}`}>
                 <p>{msg.content}</p>
                 <p className={`text-[10px] mt-1 ${isMe ? 'text-indigo-200' : 'text-slate-400'}`}>
-                  {msg.created_date ? format(new Date(msg.created_date), "HH:mm", { locale: ptBR }) : ''}
+                  {msg.created_date ? format(new Date(typeof msg.created_date === 'string' && !msg.created_date.endsWith('Z') ? msg.created_date + 'Z' : msg.created_date), "HH:mm", { locale: ptBR }) : ''}
                 </p>
               </div>
             </div>
@@ -233,7 +233,7 @@ export default function CommunityChat({ user, profile, initialConversation, onCl
                   </div>
                   {conv.last_message_at && (
                     <p className="text-[10px] text-slate-400 shrink-0">
-                      {format(new Date(conv.last_message_at), "dd/MM", { locale: ptBR })}
+                      {format(new Date(typeof conv.last_message_at === 'string' && !conv.last_message_at.endsWith('Z') ? conv.last_message_at + 'Z' : conv.last_message_at), "dd/MM HH:mm", { locale: ptBR })}
                     </p>
                   )}
                 </button>
