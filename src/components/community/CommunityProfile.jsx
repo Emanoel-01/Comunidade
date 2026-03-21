@@ -49,6 +49,7 @@ export default function CommunityProfile({ userId, currentUser, currentProfile, 
     ]);
     if (profiles.length > 0) { setProfile(profiles[0]); setEditForm(profiles[0]); }
     setPostCount(posts.length);
+    setMemberPosts(posts.filter(p => !p.is_forum).sort((a, b) => new Date(b.created_date) - new Date(a.created_date)));
 
     if (!isOwn) {
       const users = await base44.entities.User.list();
