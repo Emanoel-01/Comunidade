@@ -233,8 +233,7 @@ function TopMembersMini({ onViewProfile }) {
       <h4 className="font-bold text-slate-900 mb-4 text-sm">Membros Recentes</h4>
       <div className="space-y-2">
         {profiles.map(p => {
-          const u = userMap[p.user_id];
-          const name = p.display_name || u?.full_name || p.role_label || 'Membro';
+          const name = p.display_name || p.role_label || 'Membro';
           return (
             <button key={p.id} className="w-full flex items-center gap-3 cursor-pointer group hover:bg-slate-50 rounded-xl p-1.5 transition-colors text-left" onClick={() => onViewProfile(p.user_id)}>
               <div className="w-9 h-9 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-sm shrink-0 overflow-hidden">
