@@ -17,6 +17,7 @@ const navLinks = [
 
 export default function Layout({ children, currentPageName }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { theme, toggleTheme } = useTheme();
 
   const isAdmin = currentPageName === 'AdminPanel';
   const isComunidadeLogada = currentPageName === 'Comunidade';
