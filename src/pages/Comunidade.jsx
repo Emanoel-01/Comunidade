@@ -180,6 +180,13 @@ export default function Comunidade() {
           )}
         </div>
 
+        {/* Membros Recentes — visível no mobile */}
+        {activeTab === 'feed' && !viewingProfileId && (
+          <div className="lg:hidden">
+            <TopMembersMini onViewProfile={setViewingProfileId} />
+          </div>
+        )}
+
         {/* Sidebar Direita */}
         <aside className="lg:col-span-3 space-y-5 hidden lg:block">
           <div className="bg-gradient-to-br from-emerald-800 to-slate-900 rounded-2xl border border-emerald-700 p-5 text-white">
