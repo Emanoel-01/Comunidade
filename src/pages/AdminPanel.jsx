@@ -995,14 +995,21 @@ function AdminSendNotification() {
   const handleSend = async (e) => {
     e.preventDefault();
     setSending(true);
-    const targets = form.target === 'all' ? profiles.map(p => p.user_id) : [form.user_id];
-    await Promise.all(targets.map(uid => base44.entities.Notification.create({
-      user_id: uid,
-      type: form.type,
-      title: form.title,
-      message: form.message,
-      read: false
-    })));
+    if (form.target === 'all') {
+      await base44.functions.invoke('broadcastNotification', {
+        type: form.type,
+        title: form.title,
+        message: form.message,
+      });
+    } else {
+      await base44.entities.Notification.create({
+        user_id: form.user_id,
+        type: form.type,
+        title: form.title,
+        message: form.message,
+        read: false
+      });
+    }
     setSent(true);
     setSending(false);
     setForm({ target: 'all', user_id: '', type: 'admin', title: '', message: '' });
