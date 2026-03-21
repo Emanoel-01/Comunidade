@@ -226,17 +226,7 @@ function TopMembersMini({ onViewProfile }) {
   const [userMap, setUserMap] = useState({});
 
   useEffect(() => {
-    const load = async () => {
-      const [profs, users] = await Promise.all([
-        base44.entities.UserProfile.list('-created_date', 6),
-        base44.entities.User.list()
-      ]);
-      const map = {};
-      users.forEach(u => { map[u.id] = u; });
-      setUserMap(map);
-      setProfiles(profs);
-    };
-    load();
+    base44.entities.UserProfile.list('-created_date', 6).then(setProfiles);
   }, []);
 
   return (
