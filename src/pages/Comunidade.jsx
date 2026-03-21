@@ -184,7 +184,7 @@ export default function Comunidade() {
             <h4 className="font-bold mb-4 text-sm uppercase tracking-wider text-emerald-300">Próximos Eventos</h4>
             <RecentEventsMini />
           </div>
-          <HallOfFame compact />
+          <HallOfFame compact currentUserId={user?.id} onViewProfile={setViewingProfileId} />
           <TopMembersMini onViewProfile={setViewingProfileId} />
         </aside>
       </div>
