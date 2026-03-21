@@ -47,15 +47,17 @@ export default function CommunityProfile({ userId, currentUser, currentProfile, 
       base44.entities.UserProfile.filter({ user_id: userId }),
       base44.entities.CommunityPost.filter({ author_id: userId, status: 'active' }),
     ]);
-    if (profiles.length > 0) { setProfile(profiles[0]); setEditForm(profiles[0]); }
+    if (profiles.length > 0) {
+      const p = profiles[0];
+      setProfile(p);
+      setEditForm(p);
+      // Nome do usuário: usa display_name do perfil (acessível por todos), sem precisar listar User
+      if (!isOwn && !viewedUserName) {
+        setViewedUserName(p.display_name || p.role_label || 'Membro');
+      }
+    }
     setPostCount(posts.length);
     setMemberPosts(posts.filter(p => !p.is_forum).sort((a, b) => new Date(b.created_date) - new Date(a.created_date)));
-
-    if (!isOwn) {
-      const users = await base44.entities.User.list();
-      const found = users.find(u => u.id === userId);
-      if (found) setViewedUserName(found.full_name);
-    }
     setLoading(false);
   };
 
