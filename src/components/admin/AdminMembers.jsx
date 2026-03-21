@@ -169,7 +169,11 @@ export default function AdminMembers() {
   const saveEdit = async (profile) => {
     setSaving(true);
     const { user_role, ...profileUpdates } = editForm;
-    if (!profileUpdates.display_name?.trim()) profileUpdates.display_name = '';
+    // Se display_name vazio, usa o full_name do usuário como fallback automático
+    if (!profileUpdates.display_name?.trim()) {
+      const u = users[profile.user_id];
+      profileUpdates.display_name = u?.full_name || '';
+    }
     if (profileUpdates.license_type === 'vitalicio') {
       profileUpdates.license_end_date = '';
     }
