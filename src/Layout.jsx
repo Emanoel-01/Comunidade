@@ -3,8 +3,9 @@ import { Link, useLocation } from 'react-router-dom';
 import { createPageUrl } from '@/utils';
 import {
   Building2, Cpu, GraduationCap, BookOpen, Mail, Lock, Menu, X,
-  Instagram, Linkedin, Youtube, MessageCircle, Phone, MapPin, Settings, UserCircle
+  Instagram, Linkedin, Youtube, MessageCircle, Phone, MapPin, Settings, UserCircle, Sun, Moon
 } from 'lucide-react';
+import { useTheme } from '@/hooks/useTheme';
 
 const navLinks = [
   { label: 'Amorim Arquitetura', page: 'AmorimArquitetura', color: 'blue' },
