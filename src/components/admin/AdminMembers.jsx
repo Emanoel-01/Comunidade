@@ -314,6 +314,33 @@ export default function AdminMembers() {
         })}
       </div>
 
+      {/* Aprovados sem perfil ainda */}
+      {pendingRequests.length > 0 && (
+        <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 space-y-3">
+          <div className="flex items-center gap-2 text-amber-700 font-bold text-sm">
+            <Users size={15} className="text-amber-500" />
+            {pendingRequests.length} membro(s) aprovado(s) aguardando criação de perfil
+          </div>
+          <div className="space-y-2">
+            {pendingRequests.map(req => (
+              <div key={req.id} className="bg-white border border-amber-100 rounded-lg px-4 py-3 flex items-center justify-between gap-3">
+                <div className="min-w-0">
+                  <p className="font-bold text-slate-900 text-sm truncate">{req.full_name}</p>
+                  <p className="text-xs text-slate-400 truncate">✉ {req.email} • {req.requested_role || 'aluno'}</p>
+                </div>
+                <button
+                  onClick={() => createProfileForRequest(req)}
+                  disabled={saving}
+                  className="shrink-0 px-3 py-1.5 bg-amber-500 hover:bg-amber-600 text-white font-bold rounded-lg text-xs disabled:opacity-50 transition-colors"
+                >
+                  Criar Perfil
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Legenda de Selos */}
       <BadgeLegendPanel />
 
