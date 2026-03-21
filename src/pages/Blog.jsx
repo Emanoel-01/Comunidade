@@ -67,7 +67,7 @@ export default function Blog() {
         <div className="max-w-7xl mx-auto">
           <h1 className="text-4xl font-extrabold text-slate-900 mb-2">Blog Mundo 4.0</h1>
           <p className="text-lg text-slate-600 mb-6">Conteúdo aprofundado sobre Construção 4.0, Gestão e Tecnologia.</p>
-          <div className="relative max-w-xl">
+          <div className="relative max-w-xl mb-6">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-5 h-5" />
             <input
               type="text"
@@ -77,6 +77,7 @@ export default function Blog() {
               className="w-full pl-12 pr-4 py-3 border border-slate-200 rounded-xl bg-slate-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-800"
             />
           </div>
+          <NewsletterBlogBanner />
         </div>
       </div>
 
