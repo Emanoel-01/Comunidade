@@ -27,6 +27,8 @@ const tabsFull = [
 ];
 
 export default function CommunitySidebar({ user, profile, activeTab, onTabChange }) {
+  const displayName = profile?.display_name || user?.full_name || 'Membro da Comunidade';
+
   return (
     <>
       {/* SIDEBAR DESKTOP */}
@@ -42,10 +44,10 @@ export default function CommunitySidebar({ user, profile, activeTab, onTabChange
               {profile?.avatar_url ? (
                 <img src={profile.avatar_url} alt="" className="w-full h-full object-cover" />
               ) : (
-                user?.full_name?.charAt(0) || '?'
+                displayName?.charAt(0) || '?'
               )}
             </div>
-            <h3 className="font-bold text-slate-900 text-sm leading-tight">{user?.full_name}</h3>
+            <h3 className="font-bold text-slate-900 text-sm leading-tight">{displayName}</h3>
             <p className="text-xs font-bold text-indigo-600 uppercase tracking-wider mt-1">{profile?.role_label || user?.role}</p>
             <div className="flex justify-center gap-4 mt-3 pt-3 border-t border-slate-100 text-xs text-slate-500">
               <div className="text-center"><p className="font-bold text-slate-800">{profile?.followers?.length || 0}</p><p>Seguidores</p></div>
