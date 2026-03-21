@@ -797,6 +797,7 @@ function AdminEvents() {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
+  const [editingEvent, setEditingEvent] = useState(null);
   const [form, setForm] = useState({ title: '', description: '', event_date: '', location: '', type: 'Webinar', link: '', image_url: '', max_participants: '' });
   const [saving, setSaving] = useState(false);
 
@@ -807,13 +808,33 @@ function AdminEvents() {
     base44.entities.CommunityEvent.list('-event_date').then(data => { setEvents(data); setLoading(false); });
   };
 
-  const handleCreate = async (e) => {
+  const openCreateForm = () => {
+    setEditingEvent(null);
+    setForm({ title: '', description: '', event_date: '', location: '', type: 'Webinar', link: '', image_url: '', max_participants: '' });
+    setShowForm(true);
+  };
+
+  const openEditForm = (ev) => {
+    setEditingEvent(ev);
+    const dateStr = ev.event_date ? new Date(ev.event_date).toISOString().slice(0, 16) : '';
+    setForm({ title: ev.title, description: ev.description || '', event_date: dateStr, location: ev.location || '', type: ev.type, link: ev.link || '', image_url: ev.image_url || '', max_participants: ev.max_participants || '' });
+    setShowForm(true);
+  };
+
+  const handleSave = async (e) => {
     e.preventDefault();
     setSaving(true);
-    await base44.entities.CommunityEvent.create({ ...form, registrations: [], max_participants: form.max_participants ? Number(form.max_participants) : undefined });
+    const data = { ...form, max_participants: form.max_participants ? Number(form.max_participants) : undefined };
+    if (editingEvent) {
+      await base44.entities.CommunityEvent.update(editingEvent.id, data);
+      setEvents(prev => prev.map(ev => ev.id === editingEvent.id ? { ...ev, ...data } : ev));
+    } else {
+      await base44.entities.CommunityEvent.create({ ...data, registrations: [] });
+      await loadEvents();
+    }
     setForm({ title: '', description: '', event_date: '', location: '', type: 'Webinar', link: '', image_url: '', max_participants: '' });
+    setEditingEvent(null);
     setShowForm(false);
-    await loadEvents();
     setSaving(false);
   };
 
