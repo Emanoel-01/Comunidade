@@ -99,14 +99,14 @@ export default function Layout({ children, currentPageName }) {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden absolute top-20 left-0 w-full bg-white shadow-xl border-t border-slate-100 px-4 py-4 z-50 flex flex-col gap-2">
-            {navLinks.map(({ label, page, color }) => (
-              <Link
-                key={page}
-                to={createPageUrl(page)}
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={`p-3 text-left rounded-lg font-bold transition-colors ${currentPageName === page ? `bg-${color}-50 text-${color}-700` : 'text-slate-700 hover:bg-slate-50'}`}
-              >
+        <div className="lg:hidden absolute top-20 left-0 w-full bg-background shadow-xl border-t border-border px-4 py-4 z-50 flex flex-col gap-2">
+          {navLinks.map(({ label, page, color }) => (
+            <Link
+              key={page}
+              to={createPageUrl(page)}
+              onClick={() => setIsMobileMenuOpen(false)}
+              className={`p-3 text-left rounded-lg font-bold transition-colors ${currentPageName === page ? `bg-${color}-50 text-${color}-700` : 'text-foreground hover:bg-accent'}`}
+            >
                 {label}
               </Link>
             ))}
