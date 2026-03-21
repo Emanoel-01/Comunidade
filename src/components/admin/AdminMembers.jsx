@@ -167,12 +167,20 @@ export default function AdminMembers() {
 
   const saveEdit = async (profile) => {
     setSaving(true);
-    const updates = { ...editForm };
-    if (updates.license_type === 'vitalicio') {
-      updates.license_end_date = '';
+    const { user_role, ...profileUpdates } = editForm;
+    if (profileUpdates.license_type === 'vitalicio') {
+      profileUpdates.license_end_date = '';
     }
-    await base44.entities.UserProfile.update(profile.id, updates);
-    setProfiles(prev => prev.map(p => p.id === profile.id ? { ...p, ...updates } : p));
+    const promises = [base44.entities.UserProfile.update(profile.id, profileUpdates)];
+    const u = users[profile.user_id];
+    if (u && user_role !== u.role) {
+      promises.push(base44.entities.User.update(u.id, { role: user_role }));
+    }
+    await Promise.all(promises);
+    setProfiles(prev => prev.map(p => p.id === profile.id ? { ...p, ...profileUpdates } : p));
+    if (u && user_role !== u.role) {
+      setUsers(prev => ({ ...prev, [u.id]: { ...u, role: user_role } }));
+    }
     setEditingId(null);
     setSaving(false);
   };
