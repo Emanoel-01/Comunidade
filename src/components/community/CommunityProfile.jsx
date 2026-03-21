@@ -199,17 +199,21 @@ export default function CommunityProfile({ userId, currentUser, currentProfile, 
 
           {/* Stats */}
           <div className="grid grid-cols-3 gap-3 mt-5 pt-5 border-t border-slate-100">
-            {[
-              { icon: Users, label: 'Seguidores', value: (profile.followers || []).length, color: 'text-indigo-600' },
-              { icon: TrendingUp, label: 'Seguindo', value: (profile.following || []).length, color: 'text-emerald-600' },
-              { icon: FileText, label: 'Posts', value: postCount, color: 'text-amber-600' },
-            ].map(({ icon: Icon, label, value, color }) => (
-              <div key={label} className="bg-slate-50 rounded-xl p-3 text-center">
-                <Icon size={16} className={`${color} mx-auto mb-1`} />
-                <p className="font-extrabold text-slate-900 text-lg leading-none">{value}</p>
-                <p className="text-xs text-slate-500 mt-0.5">{label}</p>
-              </div>
-            ))}
+            <button onClick={() => setFollowersModal('followers')} className="bg-slate-50 hover:bg-indigo-50 rounded-xl p-3 text-center transition-colors group">
+              <Users size={16} className="text-indigo-600 mx-auto mb-1" />
+              <p className="font-extrabold text-slate-900 text-lg leading-none">{(profile.followers || []).length}</p>
+              <p className="text-xs text-slate-500 mt-0.5 group-hover:text-indigo-600">Seguidores</p>
+            </button>
+            <button onClick={() => setFollowersModal('following')} className="bg-slate-50 hover:bg-emerald-50 rounded-xl p-3 text-center transition-colors group">
+              <TrendingUp size={16} className="text-emerald-600 mx-auto mb-1" />
+              <p className="font-extrabold text-slate-900 text-lg leading-none">{(profile.following || []).length}</p>
+              <p className="text-xs text-slate-500 mt-0.5 group-hover:text-emerald-600">Seguindo</p>
+            </button>
+            <div className="bg-slate-50 rounded-xl p-3 text-center">
+              <FileText size={16} className="text-amber-600 mx-auto mb-1" />
+              <p className="font-extrabold text-slate-900 text-lg leading-none">{postCount}</p>
+              <p className="text-xs text-slate-500 mt-0.5">Posts</p>
+            </div>
           </div>
 
           {/* Info */}
