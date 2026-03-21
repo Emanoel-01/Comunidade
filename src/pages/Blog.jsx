@@ -3,6 +3,7 @@ import { base44 } from '@/api/base44Client';
 import { Eye, ThumbsUp, ChevronLeft, Linkedin, MessageCircle, Search, Tag, Clock, Share2, Send, X, ChevronRight } from 'lucide-react';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import { useParams, useNavigate } from 'react-router-dom';
 import BlogPostCard from '../components/blog/BlogPostCard';
 import BlogPostView from '../components/blog/BlogPostView';
 import HallOfFame from '../components/gamification/HallOfFame';
@@ -12,9 +13,11 @@ const blogCategories = ['Todos', 'Gestão 4.0', 'Manutenção Predial', 'Tecnolo
 export default function Blog() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedPost, setSelectedPost] = useState(null);
   const [activeCategory, setActiveCategory] = useState('Todos');
   const [searchTerm, setSearchTerm] = useState('');
+
+  const { postId } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     loadPosts();
@@ -34,17 +37,22 @@ export default function Blog() {
   });
 
   const handleSelectPost = async (post) => {
-    setSelectedPost(post);
-    // Incrementa views
     await base44.entities.BlogPost.update(post.id, { views: (post.views || 0) + 1 });
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    navigate(`/Blog/${post.id}`);
   };
+
+  const selectedPost = postId ? posts.find(p => p.id === postId) : null;
+
+  if (postId && loading) {
+    return <div className="min-h-screen flex items-center justify-center"><div className="w-8 h-8 border-4 border-slate-200 border-t-indigo-600 rounded-full animate-spin"></div></div>;
+  }
 
   if (selectedPost) {
     return (
       <BlogPostView
         post={selectedPost}
-        onBack={() => { setSelectedPost(null); loadPosts(); }}
+        onBack={() => { navigate('/Blog'); loadPosts(); }}
         onSelectPost={handleSelectPost}
         relatedPosts={posts.filter(p => p.id !== selectedPost.id && p.category === selectedPost.category).slice(0, 3)}
       />

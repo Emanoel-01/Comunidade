@@ -82,6 +82,33 @@ export default function BlogPostView({ post, onBack, onSelectPost, relatedPosts 
   // Detect if content is markdown (has ## or ** etc)
   const isMarkdown = post.content && (post.content.includes('##') || post.content.includes('**') || post.content.includes('- '));
 
+  const baseUrl = 'https://emanoelamorim.base44.app';
+  const postUrl = `${baseUrl}/Blog/${post.id}`;
+
+  // Inject Open Graph meta tags dynamically
+  useEffect(() => {
+    const setMeta = (property, content, isName = false) => {
+      if (!content) return;
+      const attr = isName ? 'name' : 'property';
+      let el = document.querySelector(`meta[${attr}="${property}"]`);
+      if (!el) { el = document.createElement('meta'); el.setAttribute(attr, property); document.head.appendChild(el); }
+      el.setAttribute('content', content);
+    };
+    const prevTitle = document.title;
+    document.title = `${post.title} | Emanoel Amorim`;
+    setMeta('og:title', post.title);
+    setMeta('og:description', post.summary);
+    setMeta('og:image', post.cover_image);
+    setMeta('og:url', postUrl);
+    setMeta('og:type', 'article');
+    setMeta('twitter:card', 'summary_large_image', true);
+    setMeta('twitter:title', post.title, true);
+    setMeta('twitter:description', post.summary, true);
+    setMeta('twitter:image', post.cover_image, true);
+    setMeta('description', post.summary, true);
+    return () => { document.title = prevTitle; };
+  }, [post.id]);
+
   return (
     <article className="bg-slate-50 min-h-screen pb-20">
       <div className="max-w-4xl mx-auto px-4 py-10">

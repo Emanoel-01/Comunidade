@@ -5,7 +5,9 @@ import { base44 } from '@/api/base44Client';
 export default function BlogShareButtons({ post, compact = false }) {
   const [copied, setCopied] = useState(false);
 
-  const url = encodeURIComponent(window.location.href);
+  const baseUrl = 'https://emanoelamorim.base44.app';
+  const postUrl = `${baseUrl}/Blog/${post.id}`;
+  const url = encodeURIComponent(postUrl);
   const text = encodeURIComponent(post.title);
 
   const handleShare = (platform) => {
@@ -13,7 +15,7 @@ export default function BlogShareButtons({ post, compact = false }) {
     if (platform === 'whatsapp') window.open(`https://wa.me/?text=${text}%20${url}`, '_blank');
     if (platform === 'twitter') window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
     if (platform === 'copy') {
-      navigator.clipboard.writeText(window.location.href);
+      navigator.clipboard.writeText(postUrl);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     }
