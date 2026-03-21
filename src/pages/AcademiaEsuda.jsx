@@ -291,7 +291,7 @@ function RoiExplainer() {
               <Scale size={20} className="text-emerald-400 shrink-0 mt-0.5" />
               <div>
                 <strong className="text-white block mb-0.5">Novas Linhas de Receita (Laudos e Perícias)</strong>
-                <p className="text-xs text-slate-400">Desenvolvem capacidade técnica para assinar laudos complexos e atuar em perícias, serviços de altíssimo valor acrescentado.</p>
+                <p className="text-xs text-slate-400">Desenvolvem capacidade técnica para assinar laudos complexos e atuar em perícias, serviços de altíssimo valor agregado.</p>
               </div>
             </div>
             <div className="flex items-start gap-3 bg-slate-800/50 p-3 rounded-lg border border-slate-700/50">
@@ -415,7 +415,7 @@ function IncubadoraSection() {
           {/* Coluna Direita: Feed de Sucesso */}
           <div className="lg:col-span-6 space-y-6">
             <h3 className="text-xl font-bold flex items-center gap-2 text-white border-b border-slate-800 pb-4">
-              <Award strokeWidth={2} className="text-indigo-400" /> Prova Social: O que está a acontecer agora
+              <Award strokeWidth={2} className="text-indigo-400" /> Prova Social: O que está acontecendo agora:
             </h3>
 
             <div className="bg-slate-800/30 rounded-3xl p-2 max-h-[700px] overflow-y-auto border border-slate-700">
@@ -473,7 +473,7 @@ function IncubadoraSection() {
                         <p className="text-white text-sm font-bold leading-snug">"Amorim Tech — Ecossistema para Gestão Inteligente de Edifícios"</p>
                       </div>
                       
-                      <p className="text-slate-400 text-[10px] font-bold uppercase tracking-wider mb-2">Equipa Desenvolvedora:</p>
+                      <p className="text-slate-400 text-[10px] font-bold uppercase tracking-wider mb-2">EQUIPE DESENVOLVEDORA:</p>
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 relative z-10">
                         {projeto.centelha.map((aluno, i) => (
                           <div key={i} className="flex items-center gap-3 bg-slate-900/50 rounded-lg p-2 border border-slate-700/50">
@@ -542,7 +542,7 @@ function IncubadoraSection() {
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-1 bg-gradient-to-r from-transparent via-emerald-500 to-transparent"></div>
           <h3 className="text-3xl md:text-5xl font-extrabold text-white mb-6 tracking-tight">Pronto para ser o próximo caso de sucesso?</h3>
           <p className="text-slate-400 mb-10 max-w-2xl mx-auto text-base sm:text-lg leading-relaxed">
-            Não fique apenas a assistir enquanto o mercado absorve os líderes 4.0. Fale com a nossa equipa de consultores e descubra como acelerar a sua carreira e multiplicar os seus ganhos hoje mesmo.
+            Não fique apenas assistindo enquanto o mercado absorve os líderes 4.0. Fale com a nossa equipe de consultores e descubra como acelerar a sua carreira e multiplicar os seus ganhos hoje mesmo.
           </p>
           <a
             href="https://wa.me/5581991298803"
@@ -614,7 +614,7 @@ export default function AcademiaEsuda() {
               <h3 className="text-xl font-bold text-slate-900 mb-2 text-center">1. A Base do Profissional Empreendedor</h3>
               <p className="text-xs font-bold text-blue-500 uppercase tracking-wide text-center mb-4">Ciclo Estratégias de Negócios, Liderança e Inteligência Competitiva</p>
               <p className="text-slate-600 text-sm leading-relaxed text-justify mb-4">
-                Enquanto outras escolas ensinam apenas teoria básica, nós entregamos ferramentas para você <strong>monetizar seu conhecimento</strong>. No ciclo comum, você domina:
+                Enquanto outras instituições ensinam apenas teoria básica, nós entregamos ferramentas para você <strong>monetizar seu conhecimento</strong>. No ciclo comum, você domina:
               </p>
               <ul className="space-y-2 mb-6">
                 <li className="flex items-start gap-2 text-sm text-slate-700"><CheckCircle size={14} className="text-blue-500 mt-0.5 shrink-0" /><span><strong>Bloco Presencial (Negócios):</strong> Branding, Precificação, Estruturação de CNPJ, Marketing Pessoal e IA Aplicada.</span></li>
