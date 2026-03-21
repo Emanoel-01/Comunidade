@@ -1,25 +1,78 @@
-import React, { Suspense, lazy } from 'react';
+import { Toaster } from "@/components/ui/toaster"
+import { QueryClientProvider } from '@tanstack/react-query'
+import { queryClientInstance } from '@/lib/query-client'
+import { pagesConfig } from './pages.config'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import PageNotFound from './lib/PageNotFound';
+import { AuthProvider, useAuth } from '@/lib/AuthContext';
+import UserNotRegisteredError from '@/components/UserNotRegisteredError';
+import EmDesenvolvimento from './pages/EmDesenvolvimento';
+import LinksBio from './pages/LinksBio';
 
-// Lazy load your pages here
-const pagesConfig = {
-  Home: lazy(() => import('./pages/Home')),
-  About: lazy(() => import('./pages/About')),
-  // Add more pages as needed
-};
+const { Pages, Layout, mainPage } = pagesConfig;
+const mainPageKey = mainPage ?? Object.keys(Pages)[0];
+const MainPage = mainPageKey ? Pages[mainPageKey] : () => <></>;
 
-const PageLoader = () => <div>Loading...</div>;
+const LayoutWrapper = ({ children, currentPageName }) => Layout ?
+  <Layout currentPageName={currentPageName}>{children}</Layout>
+  : <>{children}</>;
 
-const App = () => {
+const AuthenticatedApp = () => {
+  const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
+
+  if (isLoadingPublicSettings || isLoadingAuth) {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center">
+        <div className="w-8 h-8 border-4 border-slate-200 border-t-slate-800 rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
+  if (authError) {
+    if (authError.type === 'user_not_registered') {
+      return <UserNotRegisteredError />;
+    } else if (authError.type === 'auth_required') {
+      navigateToLogin();
+      return null;
+    }
+  }
+
   return (
-    <Suspense fallback={<PageLoader />}> 
-      {/* Route configuration here, use pagesConfig */}
-      <Switch>
-        {Object.entries(pagesConfig).map(([name, Component]) => (
-          <Route key={name} path={`/${name.toLowerCase()}`} component={Component} />
-        ))}
-      </Switch>
-    </Suspense>
+    <Routes>
+      <Route path="/" element={
+        <LayoutWrapper currentPageName={mainPageKey}>
+          <MainPage />
+        </LayoutWrapper>
+      } />
+      {Object.entries(Pages).map(([path, Page]) => (
+        <Route
+          key={path}
+          path={`/${path}`}
+          element={
+            <LayoutWrapper currentPageName={path}>
+              <Page />
+            </LayoutWrapper>
+          }
+        />
+      ))}
+      <Route path="/EmDesenvolvimento" element={<LayoutWrapper currentPageName="EmDesenvolvimento"><EmDesenvolvimento /></LayoutWrapper>} />
+      <Route path="/LinksBio" element={<LinksBio />} />
+      <Route path="*" element={<PageNotFound />} />
+    </Routes>
   );
 };
 
-export default App;
+function App() {
+  return (
+    <AuthProvider>
+      <QueryClientProvider client={queryClientInstance}>
+        <Router>
+          <AuthenticatedApp />
+        </Router>
+        <Toaster />
+      </QueryClientProvider>
+    </AuthProvider>
+  )
+}
+
+export default App
