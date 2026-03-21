@@ -52,6 +52,31 @@ export default function AdminForum() {
 
   return (
     <div className="animate-in fade-in space-y-5">
+      {/* Modal de edição */}
+      {editingPost && (
+        <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl shadow-xl w-full max-w-lg p-6 space-y-4">
+            <div className="flex items-center justify-between">
+              <h3 className="font-bold text-slate-900 text-lg">Editar Post</h3>
+              <button onClick={() => setEditingPost(null)} className="text-slate-400 hover:text-slate-700"><X size={20} /></button>
+            </div>
+            {editingPost.is_forum && (
+              <div>
+                <label className="block text-xs font-bold text-slate-600 mb-1">Título do Tópico</label>
+                <input value={editForm.forum_title} onChange={e => setEditForm({ ...editForm, forum_title: e.target.value })} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" />
+              </div>
+            )}
+            <div>
+              <label className="block text-xs font-bold text-slate-600 mb-1">Conteúdo</label>
+              <textarea rows={5} value={editForm.content} onChange={e => setEditForm({ ...editForm, content: e.target.value })} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400 resize-none" />
+            </div>
+            <div className="flex justify-end gap-3">
+              <button onClick={() => setEditingPost(null)} className="px-4 py-2 text-slate-600 font-bold hover:bg-slate-100 rounded-lg text-sm">Cancelar</button>
+              <button onClick={saveEdit} disabled={saving} className="px-5 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg text-sm flex items-center gap-2 disabled:opacity-50"><Save size={14} />{saving ? 'Salvando...' : 'Salvar'}</button>
+            </div>
+          </div>
+        </div>
+      )}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
           <h2 className="text-2xl font-bold text-slate-900">Moderação do Fórum</h2>
