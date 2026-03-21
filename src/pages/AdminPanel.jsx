@@ -3,7 +3,7 @@ import { base44 } from '@/api/base44Client';
 import {
   ShieldCheck, LayoutDashboard, Users, FileText,
   Plus, Bell, CheckCircle2, X, UserPlus, Award, PenTool, Upload, Send,
-  Briefcase, Download, Calendar, Trash2, Save, AlertTriangle, LogOut, MessagesSquare, MessageSquare, ThumbsUp, ThumbsDown, BarChart2
+  Briefcase, Download, Calendar, Trash2, Save, AlertTriangle, LogOut, MessagesSquare, MessageSquare, ThumbsUp, ThumbsDown, BarChart2, Mail
 } from 'lucide-react';
 import { createPageUrl } from '@/utils';
 import { Link } from 'react-router-dom';
