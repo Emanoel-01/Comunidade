@@ -110,6 +110,7 @@ export default function AdminPanel() {
         {adminTab === 'community_events' && <AdminEvents />}
         {adminTab === 'notifications_send' && <AdminSendNotification />}
         {adminTab === 'testimonials' && <AdminTestimonials />}
+        {adminTab === 'newsletter' && <AdminNewsletter />}
         {adminTab === 'invite_users' && <AdminInviteUsers />}
       </div>
     </div>
