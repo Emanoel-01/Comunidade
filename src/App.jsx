@@ -1,4 +1,5 @@
 import { Toaster } from "@/components/ui/toaster"
+import ErrorBoundary from '@/components/ErrorBoundary'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClientInstance } from '@/lib/query-client'
 import { pagesConfig } from './pages.config'
@@ -55,6 +56,7 @@ const AuthenticatedApp = () => {
           }
         />
       ))}
+      <Route path="/Blog/:postId" element={<LayoutWrapper currentPageName="Blog">{Pages['Blog'] ? React.createElement(Pages['Blog']) : <PageNotFound />}</LayoutWrapper>} />
       <Route path="/EmDesenvolvimento" element={<LayoutWrapper currentPageName="EmDesenvolvimento"><EmDesenvolvimento /></LayoutWrapper>} />
       <Route path="/LinksBio" element={<LinksBio />} />
       <Route path="*" element={<PageNotFound />} />
@@ -64,14 +66,16 @@ const AuthenticatedApp = () => {
 
 function App() {
   return (
-    <AuthProvider>
-      <QueryClientProvider client={queryClientInstance}>
-        <Router>
-          <AuthenticatedApp />
-        </Router>
-        <Toaster />
-      </QueryClientProvider>
-    </AuthProvider>
+    <ErrorBoundary>
+      <AuthProvider>
+        <QueryClientProvider client={queryClientInstance}>
+          <Router>
+            <AuthenticatedApp />
+          </Router>
+          <Toaster />
+        </QueryClientProvider>
+      </AuthProvider>
+    </ErrorBoundary>
   )
 }
 
