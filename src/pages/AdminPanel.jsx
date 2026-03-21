@@ -889,7 +889,7 @@ function AdminEvents() {
                 <td className="px-5 py-3"><p className="font-medium text-slate-900">{ev.title}</p><p className="text-xs text-slate-500">{ev.type}</p></td>
                 <td className="px-5 py-3 text-center text-xs text-slate-600">{ev.event_date ? format(new Date(ev.event_date), 'dd/MM/yy HH:mm', { locale: ptBR }) : '-'}</td>
                 <td className="px-5 py-3 text-center font-bold">{(ev.registrations || []).length}</td>
-                <td className="px-5 py-3 text-center"><button onClick={() => deleteEvent(ev.id)} className="text-red-500 hover:text-red-700"><Trash2 size={14} /></button></td>
+                <td className="px-5 py-3 text-center"><div className="flex items-center justify-center gap-2"><button onClick={() => openEditForm(ev)} className="text-indigo-600 hover:text-indigo-800 font-bold text-xs">Editar</button><button onClick={() => deleteEvent(ev.id)} className="text-red-500 hover:text-red-700"><Trash2 size={14} /></button></div></td>
               </tr>
             ))}
           </tbody>
