@@ -10,16 +10,12 @@ export default function FollowersModal({ title, userIds, onClose, onViewProfile 
     const load = async () => {
       if (!userIds || userIds.length === 0) { setLoading(false); return; }
       const allProfiles = await base44.entities.UserProfile.list();
-      const allUsers = await base44.entities.User.list();
-      const userMap = {};
-      allUsers.forEach(u => { userMap[u.id] = u; });
 
       const matched = userIds.map(id => {
         const p = allProfiles.find(pr => pr.user_id === id);
-        const u = userMap[id];
         return {
           user_id: id,
-          display_name: p?.display_name || u?.full_name || p?.role_label || 'Membro',
+          display_name: p?.display_name || p?.role_label || 'Membro',
           avatar_url: p?.avatar_url || '',
           role_label: p?.role_label || '',
         };
