@@ -22,7 +22,7 @@ const badgeColors = [
   'bg-rose-50 border-rose-200 text-rose-700',
 ];
 
-export default function CommunityProfile({ userId, currentUser, currentProfile, onBack, onProfileUpdate, onStartChat }) {
+export default function CommunityProfile({ userId, currentUser, currentProfile, onBack, onProfileUpdate, onStartChat, onViewProfile }) {
   const [profile, setProfile] = useState(null);
   const [viewedUserName, setViewedUserName] = useState('');
   const [loading, setLoading] = useState(true);
