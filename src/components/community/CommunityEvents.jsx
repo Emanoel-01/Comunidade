@@ -84,7 +84,7 @@ function EventCard({ ev, user, onRegistrationChange }) {
               )}
             </div>
             <h3 className="font-extrabold text-slate-900 text-lg leading-tight">{ev.title}</h3>
-            {ev.description && <p className="text-sm text-slate-600 mt-1 line-clamp-2 leading-relaxed">{ev.description}</p>}
+            {ev.description && <p className="text-sm text-slate-600 mt-1 leading-relaxed">{ev.description}</p>}
             <div className="flex flex-wrap gap-4 mt-3 text-xs text-slate-500 font-medium">
               {ev.event_date && <span className="flex items-center gap-1"><Calendar size={12} className="text-indigo-400" />{format(new Date(ev.event_date), "dd/MM/yyyy 'às' HH:mm", { locale: ptBR })}</span>}
               {ev.location && <span className="flex items-center gap-1"><MapPin size={12} className="text-rose-400" />{ev.location}</span>}

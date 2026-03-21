@@ -292,8 +292,12 @@ function MaterialFeedCard({ material, user }) {
   );
 }
 
+const PAGE_SIZE = 6;
+
 export default function CommunityFeed({ user, profile, onViewProfile }) {
-  const [feedItems, setFeedItems] = useState([]);
+  const [recentPosts, setRecentPosts] = useState([]);
+  const [extraItems, setExtraItems] = useState([]);
+  const [visibleExtra, setVisibleExtra] = useState(PAGE_SIZE);
   const [loading, setLoading] = useState(true);
   const [newPostContent, setNewPostContent] = useState('');
   const [newPostMedia, setNewPostMedia] = useState([]);
@@ -306,11 +310,11 @@ export default function CommunityFeed({ user, profile, onViewProfile }) {
     loadFeed();
     const unsub = base44.entities.CommunityPost.subscribe(event => {
       if (event.type === 'create' && !event.data?.is_forum && event.data?.status === 'active') {
-        setFeedItems(prev => [{ type: 'post', data: event.data, date: event.data.created_date }, ...prev]);
+        setRecentPosts(prev => [{ type: 'post', data: event.data, date: event.data.created_date }, ...prev]);
       } else if (event.type === 'update') {
-        setFeedItems(prev => prev.map(item => item.type === 'post' && item.data.id === event.id ? { ...item, data: event.data } : item));
+        setRecentPosts(prev => prev.map(item => item.type === 'post' && item.data.id === event.id ? { ...item, data: event.data } : item));
       } else if (event.type === 'delete') {
-        setFeedItems(prev => prev.filter(item => !(item.type === 'post' && item.data.id === event.id)));
+        setRecentPosts(prev => prev.filter(item => !(item.type === 'post' && item.data.id === event.id)));
       }
     });
     return unsub;
@@ -318,21 +322,32 @@ export default function CommunityFeed({ user, profile, onViewProfile }) {
 
   const loadFeed = async () => {
     setLoading(true);
-    const [posts, events, jobs, materials] = await Promise.all([
-      base44.entities.CommunityPost.filter({ status: 'active' }, '-created_date', 30),
-      base44.entities.CommunityEvent.list('-created_date', 8),
-      base44.entities.JobListing.filter({ status: 'active' }, '-created_date', 8),
-      base44.entities.Material.list('-created_date', 8),
+    const cutoff = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+    const [allPosts, events, jobs, materials] = await Promise.all([
+      base44.entities.CommunityPost.filter({ status: 'active' }, '-created_date', 100),
+      base44.entities.CommunityEvent.list('-created_date', 20),
+      base44.entities.JobListing.filter({ status: 'active' }, '-created_date', 20),
+      base44.entities.Material.list('-created_date', 20),
     ]);
 
-    const allItems = [
-      ...posts.filter(p => !p.is_forum).map(p => ({ type: 'post', data: p, date: p.created_date })),
+    const feedPosts = allPosts.filter(p => !p.is_forum);
+    const recent = feedPosts
+      .filter(p => p.created_date >= cutoff)
+      .map(p => ({ type: 'post', data: p, date: p.created_date }));
+
+    const olderPosts = feedPosts
+      .filter(p => p.created_date < cutoff)
+      .map(p => ({ type: 'post', data: p, date: p.created_date }));
+
+    const extra = [
+      ...olderPosts,
       ...events.map(e => ({ type: 'event', data: e, date: e.created_date })),
       ...jobs.map(j => ({ type: 'job', data: j, date: j.created_date })),
       ...materials.map(m => ({ type: 'material', data: m, date: m.created_date })),
     ].sort((a, b) => new Date(b.date) - new Date(a.date));
 
-    setFeedItems(allItems);
+    setRecentPosts(recent);
+    setExtraItems(extra);
     setLoading(false);
   };
 
