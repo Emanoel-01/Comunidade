@@ -214,26 +214,44 @@ function RecentEventsMini() {
 
 function TopMembersMini({ onViewProfile }) {
   const [profiles, setProfiles] = useState([]);
+  const [userMap, setUserMap] = useState({});
+
   useEffect(() => {
-    base44.entities.UserProfile.list('-created_date', 5).then(setProfiles);
+    const load = async () => {
+      const [profs, users] = await Promise.all([
+        base44.entities.UserProfile.list('-created_date', 6),
+        base44.entities.User.list()
+      ]);
+      const map = {};
+      users.forEach(u => { map[u.id] = u; });
+      setUserMap(map);
+      setProfiles(profs);
+    };
+    load();
   }, []);
 
   return (
     <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
       <h4 className="font-bold text-slate-900 mb-4 text-sm">Membros Recentes</h4>
-      <div className="space-y-3">
-        {profiles.map(p => (
-          <div key={p.id} className="flex items-center gap-3 cursor-pointer group" onClick={() => onViewProfile(p.user_id)}>
-            {p.avatar_url ? (
-              <img src={p.avatar_url} className="w-9 h-9 rounded-full object-cover" alt="" />
-            ) : (
-              <div className="w-9 h-9 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-sm">{p.user_id?.charAt(0)?.toUpperCase()}</div>
-            )}
-            <div className="flex-grow overflow-hidden">
-              <p className="text-sm font-bold text-slate-900 truncate group-hover:text-indigo-600">{p.role_label || 'Membro'}</p>
-            </div>
-          </div>
-        ))}
+      <div className="space-y-2">
+        {profiles.map(p => {
+          const u = userMap[p.user_id];
+          const name = p.display_name || u?.full_name || p.role_label || 'Membro';
+          return (
+            <button key={p.id} className="w-full flex items-center gap-3 cursor-pointer group hover:bg-slate-50 rounded-xl p-1.5 transition-colors text-left" onClick={() => onViewProfile(p.user_id)}>
+              <div className="w-9 h-9 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-sm shrink-0 overflow-hidden">
+                {p.avatar_url
+                  ? <img src={p.avatar_url} className="w-full h-full object-cover" alt="" />
+                  : name?.charAt(0)?.toUpperCase()
+                }
+              </div>
+              <div className="flex-grow overflow-hidden">
+                <p className="text-sm font-bold text-slate-900 truncate group-hover:text-indigo-600">{name}</p>
+                {p.role_label && <p className="text-xs text-slate-400 truncate">{p.role_label}</p>}
+              </div>
+            </button>
+          );
+        })}
       </div>
     </div>
   );

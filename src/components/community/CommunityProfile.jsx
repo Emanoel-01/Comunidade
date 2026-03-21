@@ -141,6 +141,14 @@ export default function CommunityProfile({ userId, currentUser, currentProfile, 
 
   return (
     <div className="animate-in fade-in space-y-4">
+      {followersModal && (
+        <FollowersModal
+          title={followersModal === 'followers' ? `Seguidores (${(profile.followers || []).length})` : `Seguindo (${(profile.following || []).length})`}
+          userIds={followersModal === 'followers' ? (profile.followers || []) : (profile.following || [])}
+          onClose={() => setFollowersModal(null)}
+          onViewProfile={(uid) => { setFollowersModal(null); if (uid !== userId) { /* navigate to profile */ window.dispatchEvent(new CustomEvent('viewProfile', { detail: uid })); } }}
+        />
+      )}
       {onBack && (
         <button onClick={onBack} className="flex items-center gap-2 text-indigo-600 font-bold hover:underline text-sm">
           <ChevronLeft size={16} /> Voltar ao Feed
