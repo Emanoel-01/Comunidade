@@ -303,7 +303,7 @@ export default function AdminMembers() {
                       {expired && <span className="text-[10px] font-bold bg-red-100 text-red-600 px-2 py-0.5 rounded-full">EXPIRADA</span>}
                       {isEmailId(profile.user_id) && <span className="text-[10px] font-bold bg-amber-100 text-amber-600 px-2 py-0.5 rounded-full">Aguardando 1º login</span>}
                     </div>
-                    <p className="text-xs text-slate-400 truncate">{isEmailId(profile.user_id) ? `✉ ${profile.user_id}` : `ID: ${profile.user_id}`}</p>
+                    <p className="text-xs text-slate-400 truncate">✉ {getEmail(profile) || profile.user_id}</p>
                     {profile.license_end_date && profile.license_type !== 'vitalicio' && (
                       <p className="text-[11px] text-slate-500">Expira: {new Date(profile.license_end_date).toLocaleDateString('pt-BR')}</p>
                     )}
