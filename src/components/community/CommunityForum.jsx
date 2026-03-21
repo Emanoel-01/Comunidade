@@ -71,9 +71,9 @@ function ForumPostCard({ post, currentUser, currentProfile }) {
       author_avatar: currentProfile?.avatar_url || '',
       content: newComment,
     });
-    const newCount = commentsCount + 1;
-    setCommentsCount(newCount);
-    await base44.entities.CommunityPost.update(post.id, { comments_count: newCount });
+    setCommentsCount(c => c + 1);
+    base44.functions.invoke('toggleLike', { post_id: post.id, increment_comments: true }).catch(() => {});
+    // Incrementa comments_count via função reutilizável
     setNewComment('');
     loadComments();
   };
