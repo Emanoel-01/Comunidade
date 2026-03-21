@@ -62,15 +62,10 @@ export default function HallOfFame({ compact = false, currentUserId, onViewProfi
     setLoading(true);
     try {
       const data = await base44.entities.UserProfile.list('-gamification_score_total', 20);
-      const allUsers = await base44.entities.User.list();
-      const userMap = {};
-      allUsers.forEach(u => { userMap[u.id] = u; });
-
       const enriched = data.map(p => ({
         ...p,
-        user_name: p.display_name || userMap[p.user_id]?.full_name || p.role_label || 'Membro',
+        user_name: p.display_name || p.role_label || 'Membro',
       }));
-
       setProfiles(enriched);
       if (currentUserId) {
         const mine = enriched.find(p => p.user_id === currentUserId);
