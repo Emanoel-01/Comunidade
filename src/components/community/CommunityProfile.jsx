@@ -6,6 +6,7 @@ import {
   MapPin, Link2, GraduationCap, Briefcase, Star, Trophy, Zap,
   FileText, Users, TrendingUp
 } from 'lucide-react';
+import FollowersModal from './FollowersModal';
 
 const roleEmojis = {
   aluno: '🎓', engenheiro: '⚙️', arquiteto: '🏛️', docente: '👨‍🏫',

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
-import { Trophy, Star, TrendingUp, Crown, Medal, Award } from 'lucide-react';
+import { Trophy, Star, TrendingUp, Crown, Medal, Award, User } from 'lucide-react';
 
 const LEVEL_COLORS = {
   'Membro Trainee': 'bg-slate-100 text-slate-600',
@@ -18,12 +18,15 @@ const RANK_STYLES = [
   { bg: 'bg-white border-slate-100', icon: <Star size={16} className="text-slate-300" />, label: '5°' },
 ];
 
-function RankingCard({ profile, rank, scoreKey, scoreLabel }) {
+function RankingCard({ profile, rank, scoreKey, scoreLabel, onViewProfile }) {
   const style = RANK_STYLES[rank] || RANK_STYLES[4];
   const score = profile[scoreKey] || 0;
 
   return (
-    <div className={`flex items-center gap-3 p-3 rounded-xl border ${style.bg} transition-all`}>
+    <button
+      onClick={() => onViewProfile && onViewProfile(profile.user_id)}
+      className={`w-full flex items-center gap-3 p-3 rounded-xl border ${style.bg} transition-all hover:opacity-80 text-left`}
+    >
       <div className="text-lg font-black w-7 text-center">{style.label}</div>
       <div className="w-10 h-10 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-sm shrink-0 overflow-hidden">
         {profile.avatar_url
@@ -41,33 +44,38 @@ function RankingCard({ profile, rank, scoreKey, scoreLabel }) {
         <p className="font-extrabold text-indigo-700 text-sm">{score.toLocaleString('pt-BR')}</p>
         <p className="text-[10px] text-slate-400">{scoreLabel}</p>
       </div>
-    </div>
+    </button>
   );
 }
 
-export default function HallOfFame({ compact = false }) {
+export default function HallOfFame({ compact = false, currentUserId, onViewProfile }) {
   const [profiles, setProfiles] = useState([]);
+  const [myProfile, setMyProfile] = useState(null);
   const [tab, setTab] = useState('weekly');
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     loadLeaderboard();
-  }, []);
+  }, [currentUserId]);
 
   const loadLeaderboard = async () => {
     setLoading(true);
     try {
       const data = await base44.entities.UserProfile.list('-gamification_score_total', 20);
-      // Enrich with user names
-      const enriched = await Promise.all(data.map(async (p) => {
-        try {
-          const users = await base44.entities.User.filter({ id: p.user_id });
-          return { ...p, user_name: users[0]?.full_name || p.role_label || 'Membro' };
-        } catch {
-          return { ...p, user_name: p.role_label || 'Membro' };
-        }
+      const allUsers = await base44.entities.User.list();
+      const userMap = {};
+      allUsers.forEach(u => { userMap[u.id] = u; });
+
+      const enriched = data.map(p => ({
+        ...p,
+        user_name: p.display_name || userMap[p.user_id]?.full_name || p.role_label || 'Membro',
       }));
+
       setProfiles(enriched);
+      if (currentUserId) {
+        const mine = enriched.find(p => p.user_id === currentUserId);
+        setMyProfile(mine || null);
+      }
     } catch (e) {
       setProfiles([]);
     }
@@ -77,6 +85,13 @@ export default function HallOfFame({ compact = false }) {
   const weeklyTop = [...profiles].sort((a, b) => (b.weekly_score || 0) - (a.weekly_score || 0)).slice(0, 5);
   const monthlyTop = [...profiles].sort((a, b) => (b.monthly_score || 0) - (a.monthly_score || 0)).slice(0, 5);
   const current = tab === 'weekly' ? weeklyTop : monthlyTop;
+
+  const scoreKey = tab === 'weekly' ? 'weekly_score' : 'monthly_score';
+  const myScore = myProfile?.[scoreKey] || 0;
+  const myRank = [...profiles].sort((a, b) => (b[scoreKey] || 0) - (a[scoreKey] || 0)).findIndex(p => p.user_id === currentUserId);
+  const leader = current[0];
+  const leaderScore = leader?.[scoreKey] || 0;
+  const diff = leaderScore - myScore;
 
   if (loading) {
     return (
@@ -89,7 +104,7 @@ export default function HallOfFame({ compact = false }) {
   }
 
   return (
-    <div className={`bg-white rounded-2xl border border-amber-200 shadow-sm overflow-hidden`}>
+    <div className="bg-white rounded-2xl border border-amber-200 shadow-sm overflow-hidden">
       {/* Header */}
       <div className="bg-gradient-to-r from-amber-500 to-orange-500 px-5 py-4">
         <div className="flex items-center justify-between">
@@ -132,10 +147,40 @@ export default function HallOfFame({ compact = false }) {
               key={profile.id}
               profile={profile}
               rank={idx}
-              scoreKey={tab === 'weekly' ? 'weekly_score' : 'monthly_score'}
+              scoreKey={scoreKey}
               scoreLabel={tab === 'weekly' ? 'pts semana' : 'pts mês'}
+              onViewProfile={onViewProfile}
             />
           ))
+        )}
+
+        {/* Comparação com o usuário logado */}
+        {currentUserId && myProfile && myRank >= 0 && (
+          <div className="mt-3 pt-3 border-t border-slate-100">
+            <div className="bg-indigo-50 border border-indigo-200 rounded-xl p-3 flex items-center gap-3">
+              <div className="w-9 h-9 rounded-full bg-indigo-200 text-indigo-700 flex items-center justify-center font-bold text-sm shrink-0 overflow-hidden">
+                {myProfile.avatar_url
+                  ? <img src={myProfile.avatar_url} className="w-full h-full object-cover" alt="" />
+                  : <User size={16} />
+                }
+              </div>
+              <div className="flex-grow min-w-0">
+                <p className="text-xs font-bold text-indigo-800 truncate">Você • {myRank + 1}° lugar</p>
+                <p className="text-[11px] text-indigo-500">
+                  {myRank === 0
+                    ? '🏆 Você está no topo!'
+                    : diff > 0
+                      ? `Faltam ${diff.toLocaleString('pt-BR')} pts para o 1° lugar`
+                      : 'Continue engajando!'
+                  }
+                </p>
+              </div>
+              <div className="text-right shrink-0">
+                <p className="font-extrabold text-indigo-700 text-sm">{myScore.toLocaleString('pt-BR')}</p>
+                <p className="text-[10px] text-slate-400">{tab === 'weekly' ? 'pts semana' : 'pts mês'}</p>
+              </div>
+            </div>
+          </div>
         )}
       </div>
     </div>
