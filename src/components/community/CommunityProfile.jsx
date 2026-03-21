@@ -33,6 +33,7 @@ export default function CommunityProfile({ userId, currentUser, currentProfile, 
   const [followLoading, setFollowLoading] = useState(false);
   const [uploadingAvatar, setUploadingAvatar] = useState(false);
   const [postCount, setPostCount] = useState(0);
+  const [memberPosts, setMemberPosts] = useState([]);
   const [followersModal, setFollowersModal] = useState(null); // 'followers' | 'following' | null
 
   const isOwn = userId === currentUser?.id;
