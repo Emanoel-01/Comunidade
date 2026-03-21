@@ -170,6 +170,7 @@ export default function Comunidade() {
           )}
           {activeTab === 'ranking' && !viewingProfileId && (
             <div className="space-y-5">
+              <HallOfFame currentUserId={user?.id} onViewProfile={setViewingProfileId} />
               <div className="bg-white rounded-2xl border border-slate-200 p-5">
                 <h2 className="text-xl font-bold text-slate-900 mb-1 flex items-center gap-2">🏆 Meu Painel de Gamificação</h2>
                 <p className="text-sm text-slate-500 mb-5">Acompanhe sua evolução, pontuação e medalhas conquistadas.</p>
