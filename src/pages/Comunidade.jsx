@@ -41,21 +41,10 @@ export default function Comunidade() {
   };
 
   const loadProfile = async (u) => {
-    const profiles = await base44.entities.UserProfile.filter({ user_id: u.id });
-    if (profiles.length > 0) {
-      setProfile(profiles[0]);
-    } else {
-      // Cria perfil padrão para novos usuários
-      const newProfile = await base44.entities.UserProfile.create({
-        user_id: u.id,
-        role_label: u.role === 'admin' ? 'Docente & Mentor' : 'Membro da Comunidade',
-        badges: [],
-        skills: [],
-        followers: [],
-        following: [],
-        is_approved: true
-      });
-      setProfile(newProfile);
+    // Sincroniza o perfil: migra perfil temporário (user_id=email) para ID real, ou cria se necessário
+    const res = await base44.functions.invoke('syncUserProfile', {});
+    if (res.data?.profile) {
+      setProfile(res.data.profile);
     }
   };
 
