@@ -223,7 +223,6 @@ function RecentEventsMini() {
 
 function TopMembersMini({ onViewProfile }) {
   const [profiles, setProfiles] = useState([]);
-  const [userMap, setUserMap] = useState({});
 
   useEffect(() => {
     base44.entities.UserProfile.list('-created_date', 6).then(setProfiles);
