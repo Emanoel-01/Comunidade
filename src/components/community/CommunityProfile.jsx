@@ -146,7 +146,7 @@ export default function CommunityProfile({ userId, currentUser, currentProfile, 
           title={followersModal === 'followers' ? `Seguidores (${(profile.followers || []).length})` : `Seguindo (${(profile.following || []).length})`}
           userIds={followersModal === 'followers' ? (profile.followers || []) : (profile.following || [])}
           onClose={() => setFollowersModal(null)}
-          onViewProfile={(uid) => { setFollowersModal(null); if (uid !== userId) { /* navigate to profile */ window.dispatchEvent(new CustomEvent('viewProfile', { detail: uid })); } }}
+          onViewProfile={(uid) => { setFollowersModal(null); if (onViewProfile) onViewProfile(uid); }}
         />
       )}
       {onBack && (
