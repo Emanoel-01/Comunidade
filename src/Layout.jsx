@@ -51,7 +51,7 @@ export default function Layout({ children, currentPageName }) {
         .ql-content .ql-indent-3 { padding-left: 6rem !important; }
       `}</style>
       {/* HEADER */}
-      <header className="bg-white shadow-sm sticky top-0 z-40">
+      <header className="bg-background shadow-sm sticky top-0 z-40 border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-20 items-center">
             <Link to={createPageUrl('Home')} className="flex items-center" onClick={() => setIsMobileMenuOpen(false)}>
