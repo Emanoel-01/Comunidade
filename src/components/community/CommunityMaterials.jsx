@@ -106,6 +106,7 @@ export default function CommunityMaterials({ user }) {
   const [activeFilter, setActiveFilter] = useState('Todos');
   const [search, setSearch] = useState('');
   const [uploading, setUploading] = useState(false);
+  const [notifyAll, setNotifyAll] = useState(true);
 
   useEffect(() => {
     base44.entities.Material.list('-created_date').then(d => { setMaterials(d); setLoading(false); });

@@ -124,6 +124,7 @@ export default function CommunityJobs({ user }) {
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState({ title: '', company: '', type: 'CLT', location: '', description: '', requirements: '', contact_link: '' });
   const [saving, setSaving] = useState(false);
+  const [notifyAll, setNotifyAll] = useState(true);
 
   useEffect(() => {
     base44.entities.JobListing.filter({ status: 'active' }, '-created_date').then(d => { setJobs(d); setLoading(false); });

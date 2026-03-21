@@ -109,6 +109,7 @@ export default function CommunityEvents({ user }) {
   const [form, setForm] = useState({ title: '', description: '', event_date: '', location: '', type: 'Webinar', link: '', max_participants: '' });
   const [saving, setSaving] = useState(false);
   const [filter, setFilter] = useState('proximos');
+  const [notifyAll, setNotifyAll] = useState(true);
 
   useEffect(() => {
     loadEvents();
