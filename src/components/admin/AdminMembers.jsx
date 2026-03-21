@@ -218,8 +218,17 @@ export default function AdminMembers() {
   const isEmailId = (user_id) => user_id && user_id.includes('@');
 
   const getDisplayName = (profile) => {
+    if (profile.display_name) return profile.display_name;
     const u = users[profile.user_id];
-    return u?.full_name || profile.role_label || (isEmailId(profile.user_id) ? profile.user_id : profile.user_id) || 'Membro';
+    if (u?.full_name) return u.full_name;
+    return profile.role_label || profile.user_id || 'Membro';
+  };
+
+  const getEmail = (profile) => {
+    const u = users[profile.user_id];
+    if (u?.email) return u.email;
+    if (isEmailId(profile.user_id)) return profile.user_id;
+    return '';
   };
 
   const filtered = profiles.filter(p => {
