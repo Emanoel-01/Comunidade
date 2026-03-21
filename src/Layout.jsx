@@ -77,6 +77,13 @@ export default function Layout({ children, currentPageName }) {
 
             {/* Actions */}
             <div className="flex items-center gap-3">
+              <button
+                onClick={toggleTheme}
+                className="p-2 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"
+                title={theme === 'dark' ? 'Modo claro' : 'Modo escuro'}
+              >
+                {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+              </button>
               <Link to={createPageUrl('AdminPanel')} className="hidden md:flex items-center gap-2 bg-indigo-900 text-white font-bold px-4 py-2 hover:bg-indigo-800 rounded-md shadow-sm transition-colors text-sm">
                 <Settings className="w-4 h-4" /> Admin
               </Link>
