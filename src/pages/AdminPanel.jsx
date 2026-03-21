@@ -592,7 +592,7 @@ function AdminJobs() {
             <div><label className="block text-xs font-bold text-slate-600 mb-1">Link / Contato</label><input value={form.contact_link} onChange={e => setForm({ ...form, contact_link: e.target.value })} placeholder="https://..." className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" /></div>
             <div className="flex justify-end gap-3 pt-2">
               <button type="button" onClick={() => setShowForm(false)} className="px-4 py-2 text-slate-600 font-bold hover:bg-slate-100 rounded-lg text-sm">Cancelar</button>
-              <button type="submit" disabled={saving} className="px-6 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg text-sm disabled:opacity-50 flex items-center gap-2"><Save size={14} />{saving ? 'Salvando...' : 'Publicar Vaga'}</button>
+              <button type="submit" disabled={saving} className="px-6 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg text-sm disabled:opacity-50 flex items-center gap-2"><Save size={14} />{saving ? 'Salvando...' : editingJob ? 'Salvar Alterações' : 'Publicar Vaga'}</button>
             </div>
           </form>
         </div>
