@@ -27,38 +27,10 @@ function EventCard({ ev, user, onRegistrationChange }) {
 
   const handleRegister = async () => {
     setRegistering(true);
-    const regs = ev.registrations || [];
-    const willRegister = !isReg;
-    const newRegs = willRegister ? [...regs, user.id] : regs.filter(r => r !== user.id);
-    await base44.entities.CommunityEvent.update(ev.id, { registrations: newRegs });
-
-    if (willRegister) {
-      // Notifica admins sobre nova inscrição
-      const allUsers = await base44.entities.User.list();
-      const adminUsers = allUsers.filter(u => u.role === 'admin');
-      await Promise.all(adminUsers.map(admin =>
-        base44.entities.Notification.create({
-          user_id: admin.id,
-          type: 'event',
-          title: `Nova inscrição: ${ev.title}`,
-          message: `${user.full_name} se inscreveu no evento "${ev.title}" (${format(new Date(ev.event_date), "dd/MM 'às' HH:mm", { locale: ptBR })}).`,
-          link: '/Comunidade',
-          read: false
-        })
-      ));
-      // Notifica o próprio usuário com confirmação
-      await base44.entities.Notification.create({
-        user_id: user.id,
-        type: 'event',
-        title: `Inscrição confirmada! 🎉`,
-        message: `Você está inscrito em "${ev.title}" — ${format(new Date(ev.event_date), "dd/MM/yyyy 'às' HH:mm", { locale: ptBR })}.`,
-        link: '/Comunidade',
-        read: false
-      });
-    }
-
-    setIsReg(willRegister);
-    onRegistrationChange(ev.id, newRegs);
+    const res = await base44.functions.invoke('toggleEventRegistration', { event_id: ev.id });
+    const { registered, registrations } = res.data;
+    setIsReg(registered);
+    onRegistrationChange(ev.id, registrations);
     setRegistering(false);
   };
 
