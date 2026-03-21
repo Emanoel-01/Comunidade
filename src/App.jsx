@@ -56,7 +56,7 @@ const AuthenticatedApp = () => {
           }
         />
       ))}
-      <Route path="/Blog/:postId" element={<LayoutWrapper currentPageName="Blog">{Pages['Blog'] ? <Pages.Blog /> : <PageNotFound />}</LayoutWrapper>} />
+      {Pages['Blog'] && <Route path="/Blog/:postId" element={<LayoutWrapper currentPageName="Blog"><Pages.Blog /></LayoutWrapper>} />}
       <Route path="/EmDesenvolvimento" element={<LayoutWrapper currentPageName="EmDesenvolvimento"><EmDesenvolvimento /></LayoutWrapper>} />
       <Route path="/LinksBio" element={<LinksBio />} />
       <Route path="*" element={<PageNotFound />} />
