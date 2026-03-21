@@ -848,7 +848,7 @@ function AdminEvents() {
     <div className="animate-in fade-in space-y-5">
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold text-slate-900">Gerenciar Eventos</h2>
-        <button onClick={() => setShowForm(!showForm)} className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-4 py-2 rounded-lg text-sm shadow-sm">
+        <button onClick={openCreateForm} className="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-4 py-2 rounded-lg text-sm shadow-sm">
           <Plus size={16} /> Novo Evento
         </button>
       </div>
@@ -856,8 +856,8 @@ function AdminEvents() {
       {showForm && (
         <div className="bg-white rounded-2xl border border-indigo-200 shadow-md p-6 relative">
           <button onClick={() => setShowForm(false)} className="absolute top-4 right-4 text-slate-400 hover:text-slate-700"><X size={20} /></button>
-          <h3 className="font-bold text-slate-900 mb-4">Novo Evento</h3>
-          <form onSubmit={handleCreate} className="space-y-4">
+          <h3 className="font-bold text-slate-900 mb-4">{editingEvent ? 'Editar Evento' : 'Novo Evento'}</h3>
+          <form onSubmit={handleSave} className="space-y-4">
             <div className="grid sm:grid-cols-2 gap-4">
               <div><label className="block text-xs font-bold text-slate-600 mb-1">Título *</label><input required value={form.title} onChange={e => setForm({ ...form, title: e.target.value })} className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400" /></div>
               <div><label className="block text-xs font-bold text-slate-600 mb-1">Tipo</label>
