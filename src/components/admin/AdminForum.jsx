@@ -33,6 +33,19 @@ export default function AdminForum() {
     setPosts(prev => prev.filter(p => p.id !== id));
   };
 
+  const startEdit = (post) => {
+    setEditingPost(post);
+    setEditForm({ content: post.content || '', forum_title: post.forum_title || '' });
+  };
+
+  const saveEdit = async () => {
+    setSaving(true);
+    await base44.entities.CommunityPost.update(editingPost.id, { content: editForm.content, forum_title: editForm.forum_title });
+    setPosts(prev => prev.map(p => p.id === editingPost.id ? { ...p, ...editForm } : p));
+    setEditingPost(null);
+    setSaving(false);
+  };
+
   const filtered = posts.filter(p =>
     !search || p.content?.toLowerCase().includes(search.toLowerCase()) || p.author_name?.toLowerCase().includes(search.toLowerCase())
   );
