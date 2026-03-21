@@ -64,16 +64,14 @@ export default function CommunityProfile({ userId, currentUser, currentProfile, 
   const handleFollowToggle = async () => {
     if (!currentProfile) return;
     setFollowLoading(true);
-    const currentFollowing = currentProfile.following || [];
-    const targetFollowers = profile.followers || [];
     const willFollow = !isFollowing;
-    const newFollowing = willFollow ? [...currentFollowing, userId] : currentFollowing.filter(id => id !== userId);
-    const newFollowers = willFollow ? [...targetFollowers, currentUser.id] : targetFollowers.filter(id => id !== currentUser.id);
-
-    await base44.entities.UserProfile.update(currentProfile.id, { following: newFollowing });
-    if (onProfileUpdate) onProfileUpdate({ ...currentProfile, following: newFollowing });
-    await base44.entities.UserProfile.update(profile.id, { followers: newFollowers });
-    setProfile(prev => ({ ...prev, followers: newFollowers }));
+    const res = await base44.functions.invoke('toggleFollow', {
+      myProfileId: currentProfile.id,
+      targetProfileId: profile.id,
+      action: willFollow ? 'follow' : 'unfollow',
+    });
+    if (onProfileUpdate) onProfileUpdate({ ...currentProfile, following: res.data.following });
+    setProfile(prev => ({ ...prev, followers: res.data.followers }));
     setFollowLoading(false);
   };
 
