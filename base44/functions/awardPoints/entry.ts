@@ -81,7 +81,7 @@ Deno.serve(async (req) => {
       const oldLevel = getLevel(oldTotal);
       const newLevel = getLevel(newTotal);
 
-      await base44.entities.UserProfile.update(profile.id, {
+      await base44.asServiceRole.entities.UserProfile.update(profile.id, {
         gamification_score_total: newTotal,
         weekly_score: newWeekly,
         monthly_score: newMonthly,
