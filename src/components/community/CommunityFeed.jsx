@@ -176,7 +176,7 @@ function EventFeedCard({ event, user }) {
       <div className="p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h3 className="font-extrabold text-slate-900">{event.title}</h3>
-          {event.description && <p className="text-sm text-slate-500 mt-1 line-clamp-1">{event.description}</p>}
+          {event.description && <p className="text-sm text-slate-500 mt-1">{event.description}</p>}
           <div className="flex flex-wrap gap-3 mt-2 text-xs text-slate-400">
             {event.event_date && <span className="flex items-center gap-1"><Calendar size={11} />{format(new Date(event.event_date), "dd/MM 'às' HH:mm", { locale: ptBR })}</span>}
             <span>👥 {(event.registrations || []).length} inscritos</span>
