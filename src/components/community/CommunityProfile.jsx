@@ -271,6 +271,32 @@ export default function CommunityProfile({ userId, currentUser, currentProfile, 
         </div>
       )}
 
+      {/* Posts do Membro */}
+      {!editing && (
+        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-5">
+          <h3 className="font-extrabold text-slate-900 mb-4 flex items-center gap-2 text-sm">
+            <FileText size={15} className="text-indigo-500" /> Postagens de {displayName}
+          </h3>
+          {memberPosts.length === 0 ? (
+            <p className="text-sm text-slate-400 text-center py-4">{isOwn ? 'Você ainda não fez nenhuma postagem.' : `${displayName} ainda não fez nenhuma postagem.`}</p>
+          ) : (
+            <div className="space-y-4">
+              {memberPosts.map(post => (
+                <div key={post.id} className="border border-slate-100 rounded-xl p-4 hover:bg-slate-50 transition-colors">
+                  <p className="text-sm text-slate-700 leading-relaxed whitespace-pre-wrap">{post.content}</p>
+                  {post.image_url && <img src={post.image_url} className="mt-3 rounded-lg object-cover max-h-48 w-full" alt="" />}
+                  <div className="flex items-center gap-4 mt-3 text-xs text-slate-400">
+                    <span>👍 {post.likes || 0}</span>
+                    <span>💬 {post.comments_count || 0}</span>
+                    <span className="ml-auto">{post.created_date ? new Date(post.created_date).toLocaleDateString('pt-BR') : ''}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
       {/* Formulário de Edição */}
       {editing && isOwn && (
         <div className="bg-white rounded-2xl border border-indigo-200 shadow-md p-6 space-y-6">
