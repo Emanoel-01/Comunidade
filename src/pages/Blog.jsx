@@ -7,6 +7,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import BlogPostCard from '../components/blog/BlogPostCard';
 import BlogPostView from '../components/blog/BlogPostView';
 import HallOfFame from '../components/gamification/HallOfFame';
+import NewsletterBlogBanner from '../components/blog/NewsletterBlogBanner';
 
 const blogCategories = ['Todos', 'Gestão 4.0', 'Manutenção Predial', 'Tecnologia BIM', 'Engenharia Legal', 'Carreira'];
 
