@@ -154,6 +154,13 @@ export default function AdminForum() {
                   {/* Ações */}
                   <div className="flex items-center gap-2 shrink-0">
                     <button
+                      onClick={() => startEdit(post)}
+                      title="Editar post"
+                      className="p-2 text-indigo-500 hover:bg-indigo-50 rounded-lg transition-colors"
+                    >
+                      <Pencil size={16} />
+                    </button>
+                    <button
                       onClick={() => toggleStatus(post)}
                       title={post.status === 'active' ? 'Ocultar post' : 'Reativar post'}
                       className={`p-2 rounded-lg transition-colors ${post.status === 'active' ? 'text-amber-600 hover:bg-amber-50' : 'text-emerald-600 hover:bg-emerald-50'}`}
