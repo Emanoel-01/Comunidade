@@ -512,6 +512,7 @@ function AdminJobs() {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
+  const [editingJob, setEditingJob] = useState(null);
   const [form, setForm] = useState({ title: '', company: '', type: 'CLT', location: '', description: '', requirements: '', contact_link: '' });
   const [saving, setSaving] = useState(false);
 

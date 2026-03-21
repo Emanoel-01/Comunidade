@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { base44 } from '@/api/base44Client';
-import { MessageSquare, Trash2, Eye, EyeOff, Search } from 'lucide-react';
+import { MessageSquare, Trash2, Eye, EyeOff, Search, Pencil, X, Save } from 'lucide-react';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 
