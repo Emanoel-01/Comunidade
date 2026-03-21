@@ -23,6 +23,7 @@ Deno.serve(async (req) => {
 
     const profile = await base44.asServiceRole.entities.UserProfile.create({
       user_id,
+      display_name: full_name || '',
       role_type: role_type || 'aluno',
       role_label: role_label || full_name || '',
       license_type: license_type || 'pleno',
