@@ -169,6 +169,7 @@ export default function AdminMembers() {
   const saveEdit = async (profile) => {
     setSaving(true);
     const { user_role, ...profileUpdates } = editForm;
+    if (!profileUpdates.display_name?.trim()) profileUpdates.display_name = '';
     if (profileUpdates.license_type === 'vitalicio') {
       profileUpdates.license_end_date = '';
     }
@@ -379,6 +380,18 @@ export default function AdminMembers() {
                           className="w-full border border-slate-200 bg-slate-100 rounded-lg px-3 py-2 text-sm text-slate-500 cursor-not-allowed"
                         />
                       </div>
+                    </div>
+
+                    {/* Nome de Exibição */}
+                    <div>
+                      <label className="block text-xs font-bold text-slate-600 mb-1">Nome de Exibição <span className="text-indigo-500">(aparece no perfil)</span></label>
+                      <input
+                        value={editForm.display_name}
+                        onChange={e => setEditForm(f => ({ ...f, display_name: e.target.value }))}
+                        placeholder={users[profile.user_id]?.full_name || 'Nome que aparecerá no perfil'}
+                        className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                      />
+                      <p className="text-[10px] text-slate-400 mt-1">Se vazio, usa o nome registrado na conta.</p>
                     </div>
 
                     {/* Título/Cargo */}
