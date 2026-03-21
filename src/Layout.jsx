@@ -57,8 +57,8 @@ export default function Layout({ children, currentPageName }) {
             <Link to={createPageUrl('Home')} className="flex items-center" onClick={() => setIsMobileMenuOpen(false)}>
               <div className="w-10 h-10 bg-indigo-900 rounded-lg flex items-center justify-center text-white font-bold text-xl mr-3 shadow-md">EA</div>
               <div>
-                <h1 className="text-xl font-bold text-slate-900 leading-tight">Emanoel Amorim</h1>
-                <p className="text-xs text-slate-500 font-medium tracking-wide uppercase">Ecossistema Digital</p>
+                <h1 className="text-xl font-bold text-foreground leading-tight">Emanoel Amorim</h1>
+                <p className="text-xs text-muted-foreground font-medium tracking-wide uppercase">Ecossistema Digital</p>
               </div>
             </Link>
 
