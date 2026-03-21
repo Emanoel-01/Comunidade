@@ -36,12 +36,11 @@ function ForumPostCard({ post, currentUser, currentProfile }) {
   };
 
   const handleLike = async () => {
-    const likedBy = post.liked_by || [];
-    const novoValor = liked ? likesCount - 1 : likesCount + 1;
-    const novaLista = liked ? likedBy.filter(id => id !== currentUser.id) : [...likedBy, currentUser.id];
-    setLiked(!liked);
-    setLikesCount(novoValor);
-    await base44.entities.CommunityPost.update(post.id, { likes: novoValor, liked_by: novaLista });
+    const willLike = !liked;
+    setLiked(willLike);
+    setLikesCount(c => willLike ? c + 1 : c - 1);
+    const res = await base44.functions.invoke('toggleLike', { post_id: post.id });
+    if (res.data?.likes !== undefined) setLikesCount(res.data.likes);
   };
 
   const handleVote = async (optionIndex) => {
