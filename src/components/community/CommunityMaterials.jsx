@@ -226,9 +226,15 @@ export default function CommunityMaterials({ user }) {
               />
               {form.social_video_url && <div className="mt-2"><SocialVideoEmbed url={form.social_video_url} /></div>}
             </div>
-            <div className="flex justify-end gap-3">
-              <button type="button" onClick={() => setShowForm(false)} className="px-4 py-2 text-slate-600 font-bold hover:bg-slate-100 rounded-lg text-sm">Cancelar</button>
-              <button type="submit" disabled={saving || !form.file_url} className="px-6 py-2 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-lg text-sm disabled:opacity-50">{saving ? 'Publicando...' : 'Publicar'}</button>
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-2 border-t border-slate-100">
+              <label className="flex items-center gap-2 text-sm text-slate-600 cursor-pointer select-none">
+                <input type="checkbox" checked={notifyAll} onChange={e => setNotifyAll(e.target.checked)} className="w-4 h-4 rounded accent-amber-600" />
+                Notificar todos os membros ao publicar
+              </label>
+              <div className="flex gap-3">
+                <button type="button" onClick={() => setShowForm(false)} className="px-4 py-2 text-slate-600 font-bold hover:bg-slate-100 rounded-lg text-sm">Cancelar</button>
+                <button type="submit" disabled={saving || !form.file_url} className="px-6 py-2 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-lg text-sm disabled:opacity-50">{saving ? 'Publicando...' : 'Publicar'}</button>
+              </div>
             </div>
           </form>
         </div>
