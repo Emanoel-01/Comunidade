@@ -126,6 +126,7 @@ function isLicenseExpired(profile) {
 
 export default function AdminMembers() {
   const [profiles, setProfiles] = useState([]);
+  const [pendingRequests, setPendingRequests] = useState([]); // aprovados sem UserProfile
   const [users, setUsers] = useState({});
   const [loading, setLoading] = useState(true);
   const [editingId, setEditingId] = useState(null);
@@ -141,17 +142,37 @@ export default function AdminMembers() {
 
   const loadProfiles = async () => {
     setLoading(true);
-    const [profileData, userData] = await Promise.all([
+    const [profileData, userData, accessRequests] = await Promise.all([
       base44.entities.UserProfile.list('-created_date'),
-      base44.entities.User.list()
+      base44.entities.User.list(),
+      base44.entities.AccessRequest.filter({ status: 'approved' })
     ]);
     const userMap = {};
     userData.forEach(u => {
       userMap[u.id] = u;
-      if (u.email) userMap[u.email] = u; // mapeia também por email para perfis pré-login
+      if (u.email) userMap[u.email] = u;
     });
     setUsers(userMap);
     setProfiles(profileData);
+
+    // Emails que já têm UserProfile (por user_id real ou por email como user_id)
+    const profileEmails = new Set(profileData.map(p => p.user_id?.toLowerCase()));
+    userData.forEach(u => {
+      if (u.email) profileEmails.add(u.email.toLowerCase());
+    });
+
+    // Solicitações aprovadas que NÃO têm UserProfile ainda
+    const withoutProfile = accessRequests.filter(req =>
+      req.email && !profileEmails.has(req.email.toLowerCase())
+    );
+    // Deduplica por email (mantém o mais recente)
+    const seen = new Set();
+    const deduped = [];
+    withoutProfile.forEach(req => {
+      const key = req.email.toLowerCase();
+      if (!seen.has(key)) { seen.add(key); deduped.push(req); }
+    });
+    setPendingRequests(deduped);
     setLoading(false);
   };
 
