@@ -383,7 +383,7 @@ export default function AdminMembers() {
                       <div>
                         <label className="block text-xs font-bold text-slate-600 mb-1">Nome</label>
                         <input
-                          value={users[profile.user_id]?.full_name || ''}
+                          value={users[profile.user_id]?.full_name || profile.display_name || '—'}
                           readOnly
                           className="w-full border border-slate-200 bg-slate-100 rounded-lg px-3 py-2 text-sm text-slate-500 cursor-not-allowed"
                         />
@@ -391,7 +391,7 @@ export default function AdminMembers() {
                       <div>
                         <label className="block text-xs font-bold text-slate-600 mb-1">E-mail</label>
                         <input
-                          value={users[profile.user_id]?.email || (isEmailId(profile.user_id) ? profile.user_id : '')}
+                          value={getEmail(profile) || '—'}
                           readOnly
                           className="w-full border border-slate-200 bg-slate-100 rounded-lg px-3 py-2 text-sm text-slate-500 cursor-not-allowed"
                         />
