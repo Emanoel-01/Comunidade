@@ -146,7 +146,10 @@ export default function AdminMembers() {
       base44.entities.User.list()
     ]);
     const userMap = {};
-    userData.forEach(u => { userMap[u.id] = u; });
+    userData.forEach(u => {
+      userMap[u.id] = u;
+      if (u.email) userMap[u.email] = u; // mapeia também por email para perfis pré-login
+    });
     setUsers(userMap);
     setProfiles(profileData);
     setLoading(false);
