@@ -236,6 +236,20 @@ export default function AdminMembers() {
     setProfiles(prev => prev.map(p => p.id === profile.id ? { ...p, badges: newBadges } : p));
   };
 
+  const createProfileForRequest = async (req) => {
+    setSaving(true);
+    await base44.functions.invoke('createUserProfile', {
+      user_id: req.email, // placeholder até o 1º login
+      full_name: req.full_name,
+      role_type: req.requested_role || 'aluno',
+      role_label: req.full_name,
+      license_type: 'pleno',
+      license_start_date: new Date().toISOString().split('T')[0],
+    });
+    await loadProfiles();
+    setSaving(false);
+  };
+
   const isEmailId = (user_id) => user_id && user_id.includes('@');
 
   const getDisplayName = (profile) => {
