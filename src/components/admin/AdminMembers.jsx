@@ -360,6 +360,26 @@ export default function AdminMembers() {
                       </div>
                     </div>
 
+                    {/* Identificação */}
+                    <div className="grid sm:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-xs font-bold text-slate-600 mb-1">Nome</label>
+                        <input
+                          value={users[profile.user_id]?.full_name || ''}
+                          readOnly
+                          className="w-full border border-slate-200 bg-slate-100 rounded-lg px-3 py-2 text-sm text-slate-500 cursor-not-allowed"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-xs font-bold text-slate-600 mb-1">E-mail</label>
+                        <input
+                          value={users[profile.user_id]?.email || (isEmailId(profile.user_id) ? profile.user_id : '')}
+                          readOnly
+                          className="w-full border border-slate-200 bg-slate-100 rounded-lg px-3 py-2 text-sm text-slate-500 cursor-not-allowed"
+                        />
+                      </div>
+                    </div>
+
                     {/* Título/Cargo */}
                     <div className="grid sm:grid-cols-2 gap-3">
                       <div>
@@ -371,17 +391,32 @@ export default function AdminMembers() {
                         />
                       </div>
                       <div>
-                        <label className="block text-xs font-bold text-slate-600 mb-1">Tipo de Perfil</label>
+                        <label className="block text-xs font-bold text-slate-600 mb-1">Papel (Sistema)</label>
                         <select
-                          value={editForm.role_type}
-                          onChange={e => setEditForm(f => ({ ...f, role_type: e.target.value }))}
+                          value={editForm.user_role}
+                          onChange={e => setEditForm(f => ({ ...f, user_role: e.target.value }))}
                           className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                          disabled={!users[profile.user_id]}
                         >
-                          {['aluno','engenheiro','arquiteto','docente','parceiro','gestor_condominial','consultor_bim','perito_judicial','corretor','investidor','admin'].map(r => (
-                            <option key={r} value={r}>{r}</option>
-                          ))}
+                          <option value="user">Usuário</option>
+                          <option value="admin">Administrador</option>
                         </select>
+                        {!users[profile.user_id] && <p className="text-[10px] text-slate-400 mt-1">Disponível após 1º login</p>}
                       </div>
+                    </div>
+
+                    {/* Tipo de Perfil */}
+                    <div>
+                      <label className="block text-xs font-bold text-slate-600 mb-1">Tipo de Perfil</label>
+                      <select
+                        value={editForm.role_type}
+                        onChange={e => setEditForm(f => ({ ...f, role_type: e.target.value }))}
+                        className="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-400"
+                      >
+                        {['aluno','engenheiro','arquiteto','docente','parceiro','gestor_condominial','consultor_bim','perito_judicial','corretor','investidor','admin'].map(r => (
+                          <option key={r} value={r}>{r}</option>
+                        ))}
+                      </select>
                     </div>
 
                     <div className="flex justify-end gap-2 pt-1">
