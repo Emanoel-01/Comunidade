@@ -607,7 +607,7 @@ function AdminJobs() {
                 <tr key={job.id} className="hover:bg-slate-50">
                   <td className="px-5 py-3"><p className="font-medium text-slate-900">{job.title}</p><p className="text-xs text-slate-500">{job.company} • {job.type}</p></td>
                   <td className="px-5 py-3 text-center"><span className={`px-2 py-1 rounded text-xs font-bold ${job.status === 'active' ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700'}`}>{job.status === 'active' ? 'Ativa' : 'Encerrada'}</span></td>
-                  <td className="px-5 py-3 text-center"><div className="flex items-center justify-center gap-2"><button onClick={() => toggleStatus(job)} className="text-amber-600 hover:text-amber-800 font-bold text-xs">{job.status === 'active' ? 'Encerrar' : 'Reativar'}</button><button onClick={() => deleteJob(job.id)} className="text-red-500 hover:text-red-700"><Trash2 size={14} /></button></div></td>
+                  <td className="px-5 py-3 text-center"><div className="flex items-center justify-center gap-2"><button onClick={() => openEditForm(job)} className="text-indigo-600 hover:text-indigo-800 font-bold text-xs">Editar</button><button onClick={() => toggleStatus(job)} className="text-amber-600 hover:text-amber-800 font-bold text-xs">{job.status === 'active' ? 'Encerrar' : 'Reativar'}</button><button onClick={() => deleteJob(job.id)} className="text-red-500 hover:text-red-700"><Trash2 size={14} /></button></div></td>
                 </tr>
               ))}
             </tbody>
