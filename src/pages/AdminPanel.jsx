@@ -523,13 +523,31 @@ function AdminJobs() {
     base44.entities.JobListing.list('-created_date').then(data => { setJobs(data); setLoading(false); });
   };
 
-  const handleCreate = async (e) => {
+  const openCreateForm = () => {
+    setEditingJob(null);
+    setForm({ title: '', company: '', type: 'CLT', location: '', description: '', requirements: '', contact_link: '' });
+    setShowForm(true);
+  };
+
+  const openEditForm = (job) => {
+    setEditingJob(job);
+    setForm({ title: job.title, company: job.company, type: job.type, location: job.location, description: job.description || '', requirements: job.requirements || '', contact_link: job.contact_link || '' });
+    setShowForm(true);
+  };
+
+  const handleSave = async (e) => {
     e.preventDefault();
     setSaving(true);
-    await base44.entities.JobListing.create({ ...form, status: 'active' });
+    if (editingJob) {
+      await base44.entities.JobListing.update(editingJob.id, form);
+      setJobs(prev => prev.map(j => j.id === editingJob.id ? { ...j, ...form } : j));
+    } else {
+      await base44.entities.JobListing.create({ ...form, status: 'active' });
+      await loadJobs();
+    }
     setForm({ title: '', company: '', type: 'CLT', location: '', description: '', requirements: '', contact_link: '' });
+    setEditingJob(null);
     setShowForm(false);
-    await loadJobs();
     setSaving(false);
   };
 

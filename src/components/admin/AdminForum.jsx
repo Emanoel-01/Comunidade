@@ -8,6 +8,9 @@ export default function AdminForum() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
+  const [editingPost, setEditingPost] = useState(null);
+  const [editForm, setEditForm] = useState({ content: '', forum_title: '' });
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => { loadPosts(); }, []);
 
