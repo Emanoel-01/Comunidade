@@ -162,6 +162,7 @@ export default function Comunidade() {
               onBack={viewingProfileId ? () => setViewingProfileId(null) : null}
               onProfileUpdate={setProfile}
               onStartChat={(conv) => { setChatConversation(conv); setViewingProfileId(null); setActiveTab('chat'); }}
+              onViewProfile={(uid) => setViewingProfileId(uid)}
             />
           )}
           {activeTab === 'notificacoes' && !viewingProfileId && (
