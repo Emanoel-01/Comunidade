@@ -79,7 +79,7 @@ export default function Layout({ children, currentPageName }) {
             <div className="flex items-center gap-3">
               <button
                 onClick={toggleTheme}
-                className="p-2 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"
+                className="p-2 rounded-lg text-muted-foreground hover:bg-accent transition-colors"
                 title={theme === 'dark' ? 'Modo claro' : 'Modo escuro'}
               >
                 {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
