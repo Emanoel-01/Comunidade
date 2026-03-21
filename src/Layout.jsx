@@ -24,7 +24,7 @@ export default function Layout({ children, currentPageName }) {
   const showFooter = !isAdmin;
 
   return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-800 flex flex-col relative">
+    <div className="min-h-screen bg-background font-sans text-foreground flex flex-col relative">
       <style>{`
         .ql-content { font-size: 1.0625rem; color: #334155; line-height: 1.8; }
         .ql-content h1 { font-size: 2rem !important; font-weight: 800 !important; margin: 1.5rem 0 0.75rem !important; color: #0f172a !important; line-height: 1.2 !important; }
