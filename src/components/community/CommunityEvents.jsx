@@ -130,7 +130,16 @@ export default function CommunityEvents({ user }) {
     e.preventDefault();
     setSaving(true);
     await base44.entities.CommunityEvent.create({ ...form, registrations: [], max_participants: form.max_participants ? Number(form.max_participants) : undefined });
+    if (notifyAll) {
+      base44.functions.invoke('broadcastNotification', {
+        type: 'event',
+        title: `📅 Novo Evento: ${form.title}`,
+        message: `Um novo evento foi agendado: "${form.title}". Acesse a comunidade e garanta sua vaga!`,
+        link: '/Comunidade',
+      }).catch(() => {});
+    }
     setForm({ title: '', description: '', event_date: '', location: '', type: 'Webinar', link: '', max_participants: '' });
+    setNotifyAll(true);
     setShowForm(false);
     await loadEvents();
     setSaving(false);

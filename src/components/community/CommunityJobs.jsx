@@ -134,7 +134,16 @@ export default function CommunityJobs({ user }) {
     e.preventDefault();
     setSaving(true);
     await base44.entities.JobListing.create({ ...form, status: 'active' });
+    if (notifyAll) {
+      base44.functions.invoke('broadcastNotification', {
+        type: 'job',
+        title: `💼 Nova Vaga: ${form.title}`,
+        message: `Uma nova vaga foi publicada: "${form.title}" em ${form.company} (${form.type}). Confira no Mural de Vagas!`,
+        link: '/Comunidade',
+      }).catch(() => {});
+    }
     setForm({ title: '', company: '', type: 'CLT', location: '', description: '', requirements: '', contact_link: '' });
+    setNotifyAll(true);
     setShowForm(false);
     const d = await base44.entities.JobListing.filter({ status: 'active' }, '-created_date');
     setJobs(d);

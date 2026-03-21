@@ -128,7 +128,16 @@ export default function CommunityMaterials({ user }) {
       ? form.customCategory.trim()
       : form.category;
     await base44.entities.Material.create({ ...form, category: finalCategory, downloads: 0 });
+    if (notifyAll) {
+      base44.functions.invoke('broadcastNotification', {
+        type: 'material',
+        title: `📚 Novo Material Disponível!`,
+        message: `O material "${form.title}" foi adicionado à Biblioteca. Acesse e baixe agora!`,
+        link: '/Comunidade',
+      }).catch(() => {});
+    }
     setForm({ title: '', description: '', category: 'Planilhas', file_url: '', media_urls: [], social_video_url: '' });
+    setNotifyAll(true);
     setShowForm(false);
     const d = await base44.entities.Material.list('-created_date');
     setMaterials(d);
