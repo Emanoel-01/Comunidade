@@ -15,7 +15,7 @@ Deno.serve(async (req) => {
       return Response.json({ error: 'user_id is required' }, { status: 400 });
     }
 
-    // Verifica se já existe UserProfile para esse user_id (real)
+    // Verifica se já existe UserProfile para esse user_id (real ou email)
     const existingById = await base44.asServiceRole.entities.UserProfile.filter({ user_id });
     if (existingById && existingById.length > 0) {
       return Response.json({ created: false, message: 'Profile already exists', profile: existingById[0] });
