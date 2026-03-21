@@ -153,6 +153,7 @@ export default function AdminMembers() {
   };
 
   const startEdit = (profile) => {
+    const u = users[profile.user_id];
     setEditingId(profile.id);
     setEditForm({
       license_type: profile.license_type || 'teste',
@@ -160,6 +161,7 @@ export default function AdminMembers() {
       license_end_date: profile.license_end_date || '',
       role_label: profile.role_label || '',
       role_type: profile.role_type || 'aluno',
+      user_role: u?.role || 'user',
     });
   };
 
