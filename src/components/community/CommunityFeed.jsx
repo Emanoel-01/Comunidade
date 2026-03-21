@@ -452,20 +452,35 @@ export default function CommunityFeed({ user, profile, onViewProfile }) {
         <div className="space-y-4">
           {[1,2,3].map(i => <div key={i} className="bg-white rounded-2xl border border-slate-200 h-44 animate-pulse"></div>)}
         </div>
-      ) : feedItems.length === 0 ? (
+      ) : recentPosts.length === 0 && extraItems.length === 0 ? (
         <div className="bg-white rounded-2xl border border-slate-200 p-12 text-center text-slate-400">
           <div className="text-5xl mb-3">💬</div>
           <p className="text-lg font-bold text-slate-600 mb-2">O feed ainda está vazio!</p>
           <p className="text-sm">Seja o primeiro a compartilhar algo.</p>
         </div>
       ) : (
-        feedItems.map((item) => {
-          if (item.type === 'post') return <PostCard key={`post-${item.data.id}`} post={item.data} currentUser={user} currentProfile={profile} onViewProfile={onViewProfile} />;
-          if (item.type === 'event') return <EventFeedCard key={`event-${item.data.id}`} event={item.data} user={user} />;
-          if (item.type === 'job') return <JobFeedCard key={`job-${item.data.id}`} job={item.data} user={user} />;
-          if (item.type === 'material') return <MaterialFeedCard key={`material-${item.data.id}`} material={item.data} user={user} />;
-          return null;
-        })
+        <>
+          {recentPosts.map((item) => (
+            <PostCard key={`post-${item.data.id}`} post={item.data} currentUser={user} currentProfile={profile} onViewProfile={onViewProfile} />
+          ))}
+
+          {extraItems.slice(0, visibleExtra).map((item) => {
+            if (item.type === 'post') return <PostCard key={`post-${item.data.id}`} post={item.data} currentUser={user} currentProfile={profile} onViewProfile={onViewProfile} />;
+            if (item.type === 'event') return <EventFeedCard key={`event-${item.data.id}`} event={item.data} user={user} />;
+            if (item.type === 'job') return <JobFeedCard key={`job-${item.data.id}`} job={item.data} user={user} />;
+            if (item.type === 'material') return <MaterialFeedCard key={`material-${item.data.id}`} material={item.data} user={user} />;
+            return null;
+          })}
+
+          {visibleExtra < extraItems.length && (
+            <button
+              onClick={() => setVisibleExtra(v => v + PAGE_SIZE)}
+              className="w-full py-3 border-2 border-dashed border-indigo-200 text-indigo-600 font-bold rounded-2xl hover:bg-indigo-50 transition-colors text-sm"
+            >
+              Ver mais do feed da comunidade ({extraItems.length - visibleExtra} restantes)
+            </button>
+          )}
+        </>
       )}
     </div>
   );
