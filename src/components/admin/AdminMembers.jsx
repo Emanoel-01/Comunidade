@@ -156,6 +156,7 @@ export default function AdminMembers() {
     const u = users[profile.user_id];
     setEditingId(profile.id);
     setEditForm({
+      display_name: profile.display_name || '',
       license_type: profile.license_type || 'teste',
       license_start_date: profile.license_start_date || '',
       license_end_date: profile.license_end_date || '',

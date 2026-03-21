@@ -134,7 +134,7 @@ export default function CommunityProfile({ userId, currentUser, currentProfile, 
   );
   if (!profile) return <div className="bg-white rounded-2xl border border-slate-200 p-8 text-center text-slate-500">Perfil não encontrado.</div>;
 
-  const displayName = isOwn ? currentUser?.full_name : (viewedUserName || 'Membro');
+  const displayName = profile?.display_name || (isOwn ? currentUser?.full_name : (viewedUserName || 'Membro'));
   const roleEmoji = roleEmojis[profile.role_type] || '👤';
 
   return (
