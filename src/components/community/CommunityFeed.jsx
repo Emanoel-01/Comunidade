@@ -50,7 +50,6 @@ function PostCard({ post, currentUser, currentProfile, onViewProfile }) {
       author_avatar: currentProfile?.avatar_url || '',
       content: newComment
     });
-    await base44.entities.CommunityPost.update(post.id, { comments_count: (post.comments_count || 0) + 1 });
     setNewComment('');
     loadComments();
   };
