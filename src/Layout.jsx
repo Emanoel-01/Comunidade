@@ -68,7 +68,7 @@ export default function Layout({ children, currentPageName }) {
                 <Link
                   key={page}
                   to={createPageUrl(page)}
-                  className={`px-4 py-2 rounded-md transition-colors ${currentPageName === page ? `bg-${color}-50 text-${color}-700` : 'text-slate-600 hover:bg-slate-100'}`}
+                  className={`px-4 py-2 rounded-md transition-colors ${currentPageName === page ? `bg-${color}-50 text-${color}-700` : 'text-muted-foreground hover:bg-accent'}`}
                 >
                   {label}
                 </Link>
