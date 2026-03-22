@@ -41,10 +41,17 @@ export default function Comunidade() {
   };
 
   const loadProfile = async (u) => {
-    // Sincroniza o perfil: migra perfil temporário (user_id=email) para ID real, ou cria se necessário
-    const res = await base44.functions.invoke('syncUserProfile', {});
-    if (res.data?.profile) {
-      setProfile(res.data.profile);
+    try {
+      const res = await base44.functions.invoke('syncUserProfile', {});
+      if (res.data?.profile) {
+        setProfile(res.data.profile);
+      }
+    } catch (err) {
+      // Fallback: tenta buscar o perfil diretamente pelo user_id
+      const profiles = await base44.entities.UserProfile.filter({ user_id: u.id });
+      if (profiles.length > 0) {
+        setProfile(profiles[0]);
+      }
     }
   };
 
