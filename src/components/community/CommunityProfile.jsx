@@ -66,7 +66,6 @@ export default function CommunityProfile({ userId, currentUser, currentProfile, 
     setFollowLoading(true);
     const willFollow = !isFollowing;
     const res = await base44.functions.invoke('toggleFollow', {
-      myProfileId: currentProfile.id,
       targetProfileId: profile.id,
       action: willFollow ? 'follow' : 'unfollow',
     });
