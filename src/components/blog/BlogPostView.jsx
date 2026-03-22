@@ -169,7 +169,7 @@ export default function BlogPostView({ post, onBack, onSelectPost, relatedPosts 
         {/* Conteúdo renderizado como HTML (React Quill) */}
         <div
           className="ql-content mb-10"
-          dangerouslySetInnerHTML={{ __html: post.content || '' }}
+          dangerouslySetInnerHTML={{ __html: sanitizedContent }}
         />
 
         {/* Vídeo incorporado (YouTube, Instagram, LinkedIn) — após o texto */}
