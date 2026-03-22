@@ -259,18 +259,20 @@ function MaterialFeedCard({ material, user }) {
 
   const handleDownload = async () => {
     setDownloading(true);
-    await base44.entities.Material.update(material.id, { downloads: (material.downloads || 0) + 1 });
-    if (user) {
-      await base44.entities.Notification.create({
-        user_id: user.id, type: 'material',
-        title: `Download: +5 pontos 🏆`, message: `Você baixou "${material.title}". Continue aprendendo!`,
-        link: '/Comunidade', read: false
+    try {
+      await base44.functions.invoke('incrementMaterialDownload', {
+        material_id: material.id,
       });
+
+      setDownloaded(true);
+      window.open(material.file_url, '_blank');
+      setTimeout(() => setDownloaded(false), 3000);
+    } catch (err) {
+      console.error('Erro ao registrar download:', err);
+      alert('Não foi possível registrar o download.');
+    } finally {
+      setDownloading(false);
     }
-    setDownloading(false);
-    setDownloaded(true);
-    window.open(material.file_url, '_blank');
-    setTimeout(() => setDownloaded(false), 3000);
   };
 
   return (
