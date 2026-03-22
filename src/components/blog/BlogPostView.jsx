@@ -9,6 +9,7 @@ import BlogShareButtons from './BlogShareButtons';
 import { usePostTracking } from './usePostTracking';
 import NewsletterSignup from './NewsletterSignup';
 import SocialVideoEmbed from '@/components/shared/SocialVideoEmbed';
+import DOMPurify from 'dompurify';
 
 export default function BlogPostView({ post, onBack, onSelectPost, relatedPosts }) {
   const [comments, setComments] = useState([]);
