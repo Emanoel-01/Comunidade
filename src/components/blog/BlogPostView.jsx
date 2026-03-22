@@ -43,18 +43,33 @@ export default function BlogPostView({ post, onBack, onSelectPost, relatedPosts 
 
   const handleLike = async () => {
     if (liked) return;
-    const newCount = likesCount + 1;
-    setLikesCount(newCount);
+
     setLiked(true);
     localStorage.setItem(`liked_post_${post.id}`, '1');
-    await base44.entities.BlogPost.update(post.id, { likes: newCount });
-    base44.auth.me().then(user => {
-      if (user) base44.functions.invoke('awardPoints', {
-        activity_type: 'blog_post_liked',
-        related_entity_id: post.id,
-        related_entity_title: post.title,
+
+    try {
+      const res = await base44.functions.invoke('toggleBlogLike', {
+        post_id: post.id,
+      });
+
+      if (res.data?.likes !== undefined) {
+        setLikesCount(res.data.likes);
+      }
+
+      base44.auth.me().then(user => {
+        if (user) {
+          base44.functions.invoke('awardPoints', {
+            activity_type: 'blog_post_liked',
+            related_entity_id: post.id,
+            related_entity_title: post.title,
+          }).catch(() => {});
+        }
       }).catch(() => {});
-    }).catch(() => {});
+    } catch (err) {
+      console.error('Erro ao curtir artigo:', err);
+      setLiked(false);
+      localStorage.removeItem(`liked_post_${post.id}`);
+    }
   };
 
   const handleComment = async (e) => {
