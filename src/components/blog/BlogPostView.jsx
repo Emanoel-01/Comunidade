@@ -95,6 +95,10 @@ export default function BlogPostView({ post, onBack, onSelectPost, relatedPosts 
     ? format(new Date(post.created_date), "dd 'de' MMMM 'de' yyyy", { locale: ptBR })
     : '';
 
+  const sanitizedContent = DOMPurify.sanitize(post.content || '', {
+    USE_PROFILES: { html: true },
+  });
+
   // Detect if content is markdown (has ## or ** etc)
   const isMarkdown = post.content && (post.content.includes('##') || post.content.includes('**') || post.content.includes('- '));
 
