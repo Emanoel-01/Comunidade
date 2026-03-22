@@ -10,7 +10,7 @@ export default function BlogShareButtons({ post, compact = false }) {
   const url = encodeURIComponent(postUrl);
   const text = encodeURIComponent(post.title);
 
-  const handleShare = (platform) => {
+  const handleShare = async (platform) => {
     if (platform === 'linkedin') window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, '_blank');
     if (platform === 'whatsapp') window.open(`https://wa.me/?text=${text}%20${url}`, '_blank');
     if (platform === 'twitter') window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
@@ -19,7 +19,14 @@ export default function BlogShareButtons({ post, compact = false }) {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     }
-    base44.entities.BlogPost.update(post.id, { shares: (post.shares || 0) + 1 });
+
+    try {
+      await base44.functions.invoke('incrementBlogShare', {
+        post_id: post.id,
+      });
+    } catch (err) {
+      console.error('Erro ao incrementar compartilhamento:', err);
+    }
   };
 
   if (compact) {
