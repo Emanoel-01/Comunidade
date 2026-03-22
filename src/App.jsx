@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Toaster } from "@/components/ui/toaster"
 import ErrorBoundary from '@/components/ErrorBoundary'
 import { QueryClientProvider } from '@tanstack/react-query'
@@ -14,12 +15,18 @@ const { Pages, Layout, mainPage } = pagesConfig;
 const mainPageKey = mainPage ?? Object.keys(Pages)[0];
 const MainPage = mainPageKey ? Pages[mainPageKey] : () => <></>;
 
-const LayoutWrapper = ({ children, currentPageName }) => Layout ?
-  <Layout currentPageName={currentPageName}>{children}</Layout>
+const LayoutWrapper = ({ children, currentPageName }) => Layout
+  ? <Layout currentPageName={currentPageName}>{children}</Layout>
   : <>{children}</>;
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
+
+  useEffect(() => {
+    if (authError?.type === 'auth_required') {
+      navigateToLogin();
+    }
+  }, [authError, navigateToLogin]);
 
   if (isLoadingPublicSettings || isLoadingAuth) {
     return (
@@ -32,8 +39,9 @@ const AuthenticatedApp = () => {
   if (authError) {
     if (authError.type === 'user_not_registered') {
       return <UserNotRegisteredError />;
-    } else if (authError.type === 'auth_required') {
-      navigateToLogin();
+    }
+
+    if (authError.type === 'auth_required') {
       return null;
     }
   }
@@ -56,8 +64,24 @@ const AuthenticatedApp = () => {
           }
         />
       ))}
-      {Pages['Blog'] && <Route path="/Blog/:postId" element={<LayoutWrapper currentPageName="Blog"><Pages.Blog /></LayoutWrapper>} />}
-      <Route path="/EmDesenvolvimento" element={<LayoutWrapper currentPageName="EmDesenvolvimento"><EmDesenvolvimento /></LayoutWrapper>} />
+      {Pages['Blog'] && (
+        <Route
+          path="/Blog/:postId"
+          element={
+            <LayoutWrapper currentPageName="Blog">
+              <Pages.Blog />
+            </LayoutWrapper>
+          }
+        />
+      )}
+      <Route
+        path="/EmDesenvolvimento"
+        element={
+          <LayoutWrapper currentPageName="EmDesenvolvimento">
+            <EmDesenvolvimento />
+          </LayoutWrapper>
+        }
+      />
       <Route path="/LinksBio" element={<LinksBio />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
