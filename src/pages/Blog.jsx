@@ -38,7 +38,14 @@ export default function Blog() {
   });
 
   const handleSelectPost = async (post) => {
-    await base44.entities.BlogPost.update(post.id, { views: (post.views || 0) + 1 });
+    try {
+      await base44.functions.invoke('incrementBlogView', {
+        post_id: post.id,
+      });
+    } catch (err) {
+      console.error('Erro ao incrementar visualização:', err);
+    }
+
     window.scrollTo({ top: 0, behavior: 'smooth' });
     navigate(`/Blog/${post.id}`);
   };
