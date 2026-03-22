@@ -134,7 +134,6 @@ export default function Layout({ children, currentPageName }) {
               <div className="md:col-span-1">
                 <h4 className="text-white text-lg font-bold mb-3">Emanoel Amorim</h4>
                 <p className="text-sm mb-2">Amorim - Serviços de Engenharia LTDA</p>
-                <p className="text-xs font-mono text-slate-500">CNPJ: 35.673.731/0001-82</p>
               </div>
               <div className="md:col-span-1">
                 <h4 className="text-white font-bold mb-3">Pilares</h4>
@@ -166,7 +165,7 @@ export default function Layout({ children, currentPageName }) {
                       </div>
                     </a>
                   </li>
-                  <li className="flex items-start gap-2"><Mail size={14} className="text-indigo-400 mt-0.5 shrink-0" /> <a href="mailto:emanoel@amorimarquitetura.com.br" className="break-all hover:text-indigo-300 transition-colors text-xs">emanoel@amorimarquitetura.com.br</a></li>
+                  <li className="flex items-start gap-2"><Mail size={14} className="text-indigo-400 mt-0.5 shrink-0" /> <a href="mailto:emanoel.s.amorim@gmail.com" className="hover:text-indigo-300 transition-colors text-xs">Enviar e-mail</a></li>
                 </ul>
               </div>
               <div className="md:col-span-1">
