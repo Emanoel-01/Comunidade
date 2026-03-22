@@ -146,19 +146,22 @@ function EventFeedCard({ event, user }) {
 
   const handleRegister = async () => {
     if (isPast || !user) return;
+
     setRegistering(true);
-    const regs = event.registrations || [];
-    const willReg = !isReg;
-    const newRegs = willReg ? [...regs, user.id] : regs.filter(r => r !== user.id);
-    await base44.entities.CommunityEvent.update(event.id, { registrations: newRegs });
-    if (willReg) {
-      const admins = await base44.entities.User.filter({ role: 'admin' });
-      await Promise.all(admins.map(a =>
-        base44.entities.Notification.create({ user_id: a.id, type: 'event', title: `Nova inscrição: ${event.title}`, message: `${user.full_name} se inscreveu.`, link: '/Comunidade', read: false })
-      ));
+    try {
+      const res = await base44.functions.invoke('toggleEventRegistration', {
+        event_id: event.id,
+      });
+
+      if (res.data?.registered !== undefined) {
+        setIsReg(res.data.registered);
+      }
+    } catch (err) {
+      console.error('Erro ao alterar inscrição no evento:', err);
+      alert('Não foi possível atualizar sua inscrição neste evento.');
+    } finally {
+      setRegistering(false);
     }
-    setIsReg(willReg);
-    setRegistering(false);
   };
 
   const timeUntil = !isPast && event.event_date
