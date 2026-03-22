@@ -24,7 +24,7 @@ export default function Layout({ children, currentPageName }) {
   const showFooter = !isAdmin;
 
   return (
-    <div className="min-h-screen bg-background font-sans text-foreground flex flex-col relative">
+    <div className="min-h-screen bg-slate-50 font-sans text-slate-800 flex flex-col relative">
       <style>{`
         .ql-content { font-size: 1.0625rem; color: #334155; line-height: 1.8; }
         .ql-content h1 { font-size: 2rem !important; font-weight: 800 !important; margin: 1.5rem 0 0.75rem !important; color: #0f172a !important; line-height: 1.2 !important; }
@@ -51,14 +51,14 @@ export default function Layout({ children, currentPageName }) {
         .ql-content .ql-indent-3 { padding-left: 6rem !important; }
       `}</style>
       {/* HEADER */}
-      <header className="bg-background shadow-sm sticky top-0 z-40 border-b border-border">
+      <header className="bg-white shadow-sm sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-20 items-center">
             <Link to={createPageUrl('Home')} className="flex items-center" onClick={() => setIsMobileMenuOpen(false)}>
               <div className="w-10 h-10 bg-indigo-900 rounded-lg flex items-center justify-center text-white font-bold text-xl mr-3 shadow-md">EA</div>
               <div>
-                <h1 className="text-xl font-bold text-foreground leading-tight">Emanoel Amorim</h1>
-                <p className="text-xs text-muted-foreground font-medium tracking-wide uppercase">Ecossistema Digital</p>
+                <h1 className="text-xl font-bold text-slate-900 leading-tight">Emanoel Amorim</h1>
+                <p className="text-xs text-slate-500 font-medium tracking-wide uppercase">Ecossistema Digital</p>
               </div>
             </Link>
 
@@ -68,7 +68,7 @@ export default function Layout({ children, currentPageName }) {
                 <Link
                   key={page}
                   to={createPageUrl(page)}
-                  className={`px-4 py-2 rounded-md transition-colors ${currentPageName === page ? `bg-${color}-50 text-${color}-700` : 'text-muted-foreground hover:bg-accent'}`}
+                  className={`px-4 py-2 rounded-md transition-colors ${currentPageName === page ? `bg-${color}-50 text-${color}-700` : 'text-slate-600 hover:bg-slate-100'}`}
                 >
                   {label}
                 </Link>
@@ -79,7 +79,7 @@ export default function Layout({ children, currentPageName }) {
             <div className="flex items-center gap-3">
               <button
                 onClick={toggleTheme}
-                className="p-2 rounded-lg text-muted-foreground hover:bg-accent transition-colors"
+                className="p-2 rounded-lg text-slate-500 hover:bg-slate-100 transition-colors"
                 title={theme === 'dark' ? 'Modo claro' : 'Modo escuro'}
               >
                 {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
@@ -99,14 +99,14 @@ export default function Layout({ children, currentPageName }) {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-        <div className="lg:hidden absolute top-20 left-0 w-full bg-background shadow-xl border-t border-border px-4 py-4 z-50 flex flex-col gap-2">
-          {navLinks.map(({ label, page, color }) => (
-            <Link
-              key={page}
-              to={createPageUrl(page)}
-              onClick={() => setIsMobileMenuOpen(false)}
-              className={`p-3 text-left rounded-lg font-bold transition-colors ${currentPageName === page ? `bg-${color}-50 text-${color}-700` : 'text-foreground hover:bg-accent'}`}
-            >
+          <div className="lg:hidden absolute top-20 left-0 w-full bg-white shadow-xl border-t border-slate-100 px-4 py-4 z-50 flex flex-col gap-2">
+            {navLinks.map(({ label, page, color }) => (
+              <Link
+                key={page}
+                to={createPageUrl(page)}
+                onClick={() => setIsMobileMenuOpen(false)}
+                className={`p-3 text-left rounded-lg font-bold transition-colors ${currentPageName === page ? `bg-${color}-50 text-${color}-700` : 'text-slate-700 hover:bg-slate-50'}`}
+              >
                 {label}
               </Link>
             ))}
