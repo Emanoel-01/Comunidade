@@ -4,6 +4,7 @@ import { Download, FileText, Plus, X, Upload, BookOpen, CheckCircle2, Search, Li
 import MediaUploader from '@/components/shared/MediaUploader';
 import MediaGallery from '@/components/shared/MediaGallery';
 import SocialVideoEmbed from '@/components/shared/SocialVideoEmbed';
+import PdfViewer from '@/components/shared/PdfViewer';
 
 const categoryColors = {
   'Planilhas': 'bg-emerald-100 text-emerald-700',
