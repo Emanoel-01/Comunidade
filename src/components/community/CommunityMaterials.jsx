@@ -57,6 +57,10 @@ function MaterialCard({ m, user, onDownloaded }) {
   };
 
   return (
+    <>
+    {pdfToView && (
+      <PdfViewer url={pdfToView.url} title={pdfToView.name || m.title} onClose={() => setPdfToView(null)} />
+    )}
     <div className="bg-white rounded-2xl border border-slate-200 hover:border-indigo-300 hover:shadow-md transition-all overflow-hidden group">
       <div className={`h-2 ${m.category === 'Planilhas' ? 'bg-emerald-400' : m.category === 'Normas ABNT' ? 'bg-blue-400' : m.category === 'E-books' ? 'bg-purple-400' : m.category === 'Apresentações' ? 'bg-amber-400' : m.category === 'Modelos de Laudo' ? 'bg-rose-400' : 'bg-slate-400'}`}></div>
       <div className="p-5">
