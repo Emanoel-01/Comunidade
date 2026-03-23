@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { X, ZoomIn } from 'lucide-react';
+import { X, ZoomIn, FileText } from 'lucide-react';
+import PdfViewer from './PdfViewer';
 
 function getMediaType(url) {
   if (!url) return 'unknown';
   const lower = url.toLowerCase().split('?')[0];
   if (lower.match(/\.(mp4|webm|mov|avi)$/)) return 'video';
   if (lower.match(/\.(mp3|wav|ogg|aac|m4a)$/)) return 'audio';
+  if (lower.match(/\.pdf$/)) return 'pdf';
   if (lower.match(/\.(jpg|jpeg|png|gif|webp|svg)$/)) return 'image';
   return 'image'; // fallback tenta como imagem
 }
@@ -25,6 +27,7 @@ function LightboxModal({ url, type, onClose }) {
 
 export default function MediaGallery({ mediaUrls = [] }) {
   const [lightbox, setLightbox] = useState(null);
+  const [pdfViewer, setPdfViewer] = useState(null);
 
   if (!mediaUrls || mediaUrls.length === 0) return null;
 
