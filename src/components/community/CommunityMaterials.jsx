@@ -26,12 +26,19 @@ const categoryIcons = {
 
 function MaterialCard({ m, user, onDownloaded }) {
   const [downloading, setDownloading] = useState(false);
+  const [pdfToView, setPdfToView] = useState(null);
 
   const files = m.files?.length > 0
     ? m.files
     : (m.file_url ? [{ name: 'Arquivo Principal', url: m.file_url }] : []);
 
+  const isPdf = (url) => url?.toLowerCase().split('?')[0].endsWith('.pdf');
+
   const handleAction = async (file, actionType) => {
+    if (actionType === 'view' && isPdf(file.url)) {
+      setPdfToView(file);
+      return;
+    }
     if (actionType === 'download') {
       setDownloading(true);
       const newCount = (m.downloads || 0) + 1;
