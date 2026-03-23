@@ -93,6 +93,9 @@ export default function MediaGallery({ mediaUrls = [] }) {
       {lightbox && (
         <LightboxModal url={lightbox.url} type={lightbox.type} onClose={() => setLightbox(null)} />
       )}
+      {pdfViewer && (
+        <PdfViewer url={pdfViewer.url} title={pdfViewer.url.split('/').pop()?.split('?')[0]} onClose={() => setPdfViewer(null)} />
+      )}
     </>
   );
 }
