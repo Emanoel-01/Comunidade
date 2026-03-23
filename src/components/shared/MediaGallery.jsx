@@ -47,7 +47,7 @@ export default function MediaGallery({ mediaUrls = [] }) {
               key={idx}
               className={`relative rounded-xl overflow-hidden bg-slate-100 cursor-pointer group ${singles ? 'col-span-2' : ''} ${idx === 0 && mediaUrls.length === 3 ? 'row-span-2' : ''}`}
               style={{ aspectRatio: singles ? '16/9' : '1/1', maxHeight: singles ? 400 : 180 }}
-              onClick={() => setLightbox({ url, type })}
+              onClick={() => type === 'pdf' ? setPdfViewer({ url }) : setLightbox({ url, type })}
             >
               {type === 'image' && (
                 <img src={url} alt="" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
@@ -61,10 +61,17 @@ export default function MediaGallery({ mediaUrls = [] }) {
                   <span className="text-xs font-bold text-indigo-200 text-center truncate w-full">{url.split('/').pop()?.split('?')[0]}</span>
                 </div>
               )}
+              {type === 'pdf' && (
+                <div className="w-full h-full flex flex-col items-center justify-center bg-rose-50 text-rose-600 gap-2 p-4">
+                  <FileText size={32} />
+                  <span className="text-xs font-bold text-center truncate w-full">{url.split('/').pop()?.split('?')[0]}</span>
+                  <span className="text-[10px] font-bold bg-rose-100 px-2 py-0.5 rounded-full">PDF — Clique para visualizar</span>
+                </div>
+              )}
 
               {/* Overlay hover */}
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center">
-                {type !== 'audio' && <ZoomIn size={28} className="text-white opacity-0 group-hover:opacity-100 transition-opacity" />}
+                {type !== 'audio' && type !== 'pdf' && <ZoomIn size={28} className="text-white opacity-0 group-hover:opacity-100 transition-opacity" />}
               </div>
 
               {/* "+N mais" overlay */}
