@@ -111,6 +111,7 @@ function MaterialCard({ m, user, onDownloaded }) {
         </div>
       </div>
     </div>
+    </>
   );
 }
 
