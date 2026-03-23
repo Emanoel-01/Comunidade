@@ -93,7 +93,12 @@ function MaterialCard({ m, user, onDownloaded }) {
                   <span className="text-xs font-medium text-slate-700 truncate" title={file.name}>{file.name}</span>
                 </div>
                 <div className="flex items-center gap-1 shrink-0 ml-2">
-                  <button onClick={() => handleAction(file, 'view')} className="p-1.5 text-slate-500 hover:text-indigo-600 hover:bg-indigo-50 rounded-md transition-colors" title="Ver no navegador" disabled={downloading}>
+                  <button
+                    onClick={() => handleAction(file, 'view')}
+                    className="p-1.5 text-slate-500 hover:text-indigo-600 hover:bg-indigo-50 rounded-md transition-colors"
+                    title={isPdf(file.url) ? 'Visualizar PDF' : 'Ver no navegador'}
+                    disabled={downloading}
+                  >
                     <Eye size={14} />
                   </button>
                   <button onClick={() => handleAction(file, 'download')} className="p-1.5 text-slate-500 hover:text-emerald-600 hover:bg-emerald-50 rounded-md transition-colors" title="Baixar arquivo" disabled={downloading}>
