@@ -16,18 +16,26 @@ const POINTS_MAP = {
   curso_concluido: { points: 50, category: 'Evolução Acadêmica' },
 };
 
-// Regras de badges automáticos
+// Regras de badges automáticos — dados visuais (icon/color) vêm do banco Badge
 const BADGE_RULES = [
-  { activity_type: 'blog_post_read', count: 1, badge_name: 'Primeiro Artigo', icon: '📖', color: 'bg-blue-100 text-blue-700', category: 'Consumo de Conhecimento' },
-  { activity_type: 'blog_post_read', count: 10, badge_name: 'Leitor Assíduo', icon: '🎓', color: 'bg-indigo-100 text-indigo-700', category: 'Consumo de Conhecimento' },
-  { activity_type: 'material_downloaded', count: 1, badge_name: 'Explorador de Recursos', icon: '📥', color: 'bg-emerald-100 text-emerald-700', category: 'Consumo de Conhecimento' },
-  { activity_type: 'material_downloaded', count: 5, badge_name: 'Colecionador de Materiais', icon: '📚', color: 'bg-green-100 text-green-700', category: 'Consumo de Conhecimento' },
-  { activity_type: 'forum_post_created', count: 1, badge_name: 'Voz do Fórum', icon: '💬', color: 'bg-purple-100 text-purple-700', category: 'Produção de Conteúdo' },
-  { activity_type: 'forum_post_created', count: 5, badge_name: 'Especialista Técnico', icon: '🔧', color: 'bg-rose-100 text-rose-700', category: 'Produção de Conteúdo' },
-  { activity_type: 'blog_post_commented', count: 3, badge_name: 'Engajador de Conteúdo', icon: '✍️', color: 'bg-amber-100 text-amber-700', category: 'Interação Comunitária' },
-  { total_points: 100, badge_name: 'Membro Ativo', icon: '⭐', color: 'bg-yellow-100 text-yellow-700', category: 'Interação Comunitária' },
-  { total_points: 500, badge_name: 'Colaborador 4.0', icon: '🚀', color: 'bg-orange-100 text-orange-700', category: 'Interação Comunitária' },
-  { total_points: 1000, badge_name: 'Embaixador da Comunidade', icon: '🏆', color: 'bg-amber-100 text-amber-800', category: 'Interação Comunitária' },
+  // Consumo de Conhecimento
+  { activity_type: 'blog_post_read', count: 10, badge_name: 'Leitor Assíduo' },
+  { activity_type: 'material_downloaded', count: 5, badge_name: 'Download Master' },
+  // Interação Comunitária
+  { activity_type: 'forum_comment_created', count: 10, badge_name: 'Voz Ativa' },
+  { activity_type: 'community_post_created', count: 5, badge_name: 'Colaborador Inspirador' },
+  { activity_type: 'forum_post_created', count: 3, badge_name: 'Criador de Ideias' },
+  { total_points: 80, badge_name: 'Conector da Comunidade' },
+  { total_points: 150, badge_name: 'Participante Engajado' },
+  // Consumo de Conhecimento (pontos)
+  { total_points: 50, badge_name: 'Explorador do Saber' },
+  { total_points: 100, badge_name: 'Leitor Assíduo' },
+  { total_points: 200, badge_name: 'Aspirante a Mestre' },
+  // Evolução Acadêmica
+  { total_points: 100, badge_name: 'Jornada de Aprendizagem' },
+  { total_points: 200, badge_name: 'Presença Constante' },
+  { total_points: 300, badge_name: 'Mentor ESUDA' },
+  { total_points: 500, badge_name: 'Fiel à Comunidade' },
 ];
 
 const LEVEL_THRESHOLDS = [
