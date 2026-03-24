@@ -24,9 +24,44 @@ const categoryIcons = {
   'Outros': '📎',
 };
 
-function MaterialCard({ m, user, onDownloaded }) {
+// Converte qualquer URL do YouTube para formato embed
+function toYouTubeEmbed(url) {
+  if (!url) return null;
+  // Já é embed
+  if (url.includes('youtube.com/embed/')) return url;
+  // youtu.be/ID
+  const shortMatch = url.match(/youtu\.be\/([a-zA-Z0-9_-]+)/);
+  if (shortMatch) return `https://www.youtube.com/embed/${shortMatch[1]}`;
+  // youtube.com/watch?v=ID
+  const watchMatch = url.match(/[?&]v=([a-zA-Z0-9_-]+)/);
+  if (watchMatch) return `https://www.youtube.com/embed/${watchMatch[1]}`;
+  return null;
+}
+
+function YouTubePlayer({ url }) {
+  const embedUrl = toYouTubeEmbed(url);
+  if (!embedUrl) return <SocialVideoEmbed url={url} />;
+  return (
+    <div className="relative w-full rounded-xl overflow-hidden bg-black" style={{ paddingBottom: '56.25%' }}>
+      <iframe
+        src={embedUrl}
+        style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 0 }}
+        allowFullScreen
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        title="Vídeo exclusivo"
+      />
+    </div>
+  );
+}
+
+function MaterialCard({ m, user, onDownloaded, onLiked }) {
   const [downloading, setDownloading] = useState(false);
   const [pdfToView, setPdfToView] = useState(null);
+  const [likes, setLikes] = useState(m.likes || 0);
+  const [likedBy, setLikedBy] = useState(m.liked_by || []);
+  const [likingLoading, setLikingLoading] = useState(false);
+
+  const hasLiked = user && likedBy.includes(user.id);
 
   const files = m.files?.length > 0
     ? m.files
@@ -56,13 +91,42 @@ function MaterialCard({ m, user, onDownloaded }) {
     window.open(file.url, '_blank');
   };
 
+  const handleLike = async () => {
+    if (!user || likingLoading) return;
+    setLikingLoading(true);
+    let newLikedBy;
+    let newLikes;
+    if (hasLiked) {
+      newLikedBy = likedBy.filter(id => id !== user.id);
+      newLikes = Math.max(0, likes - 1);
+    } else {
+      newLikedBy = [...likedBy, user.id];
+      newLikes = likes + 1;
+    }
+    setLikes(newLikes);
+    setLikedBy(newLikedBy);
+    await base44.entities.Material.update(m.id, { likes: newLikes, liked_by: newLikedBy });
+    onLiked(m.id, newLikes, newLikedBy);
+    setLikingLoading(false);
+  };
+
+  const isYouTube = m.social_video_url && (
+    m.social_video_url.includes('youtube.com') || m.social_video_url.includes('youtu.be')
+  );
+
   return (
     <>
     {pdfToView && (
       <PdfViewer url={pdfToView.url} title={pdfToView.name || m.title} onClose={() => setPdfToView(null)} />
     )}
-    <div className="bg-white rounded-2xl border border-slate-200 hover:border-indigo-300 hover:shadow-md transition-all overflow-hidden group">
+    <div className="bg-white rounded-2xl border border-slate-200 hover:border-indigo-300 hover:shadow-md transition-all overflow-hidden">
       <div className={`h-2 ${m.category === 'Planilhas' ? 'bg-emerald-400' : m.category === 'Normas ABNT' ? 'bg-blue-400' : m.category === 'E-books' ? 'bg-purple-400' : m.category === 'Apresentações' ? 'bg-amber-400' : m.category === 'Modelos de Laudo' ? 'bg-rose-400' : 'bg-slate-400'}`}></div>
+
+      {/* Player de vídeo YouTube no topo do card */}
+      {m.social_video_url && isYouTube && (
+        <YouTubePlayer url={m.social_video_url} />
+      )}
+
       <div className="p-5">
         <div className="flex items-start gap-3 mb-3">
           <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-2xl shrink-0 ${m.category === 'Planilhas' ? 'bg-emerald-50' : m.category === 'Normas ABNT' ? 'bg-blue-50' : m.category === 'E-books' ? 'bg-purple-50' : m.category === 'Apresentações' ? 'bg-amber-50' : m.category === 'Modelos de Laudo' ? 'bg-rose-50' : 'bg-slate-50'}`}>
@@ -73,42 +137,73 @@ function MaterialCard({ m, user, onDownloaded }) {
             <span className={`inline-block px-2 py-0.5 rounded text-[10px] font-bold mt-1 ${categoryColors[m.category] || 'bg-slate-100 text-slate-700'}`}>{m.category}</span>
           </div>
         </div>
+
         {m.description && <p className="text-xs text-slate-600 mb-3 leading-relaxed">{m.description}</p>}
-        {m.social_video_url && (
+
+        {/* Vídeos não-YouTube via SocialVideoEmbed */}
+        {m.social_video_url && !isYouTube && (
           <div className="mb-3"><SocialVideoEmbed url={m.social_video_url} /></div>
         )}
+
         {m.media_urls?.length > 0 && (
           <div className="mb-3">
             <MediaGallery mediaUrls={m.media_urls} />
           </div>
         )}
-        <div className="pt-3 border-t border-slate-100">
-          <p className="text-xs text-slate-400 flex items-center gap-1 mb-2"><Download size={11} /> {m.downloads || 0} downloads</p>
-          <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Arquivos</p>
-          <div className="space-y-1.5">
-            {files.map((file, idx) => (
-              <div key={idx} className="flex items-center justify-between bg-slate-50 border border-slate-100 p-2 rounded-lg">
-                <div className="flex items-center gap-2 overflow-hidden">
-                  <FileText size={14} className="text-slate-400 shrink-0" />
-                  <span className="text-xs font-medium text-slate-700 truncate" title={file.name}>{file.name}</span>
-                </div>
-                <div className="flex items-center gap-1 shrink-0 ml-2">
-                  <button
-                    onClick={() => handleAction(file, 'view')}
-                    className="p-1.5 text-slate-500 hover:text-indigo-600 hover:bg-indigo-50 rounded-md transition-colors"
-                    title={isPdf(file.url) ? 'Visualizar PDF' : 'Ver no navegador'}
-                    disabled={downloading}
-                  >
-                    <Eye size={14} />
-                  </button>
-                  <button onClick={() => handleAction(file, 'download')} className="p-1.5 text-slate-500 hover:text-emerald-600 hover:bg-emerald-50 rounded-md transition-colors" title="Baixar arquivo" disabled={downloading}>
-                    <Download size={14} />
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
+
+        {/* Curtidas */}
+        <div className="flex items-center gap-3 py-2 mb-3 border-y border-slate-100">
+          <button
+            onClick={handleLike}
+            disabled={!user || likingLoading}
+            className={`flex items-center gap-1.5 text-sm font-bold transition-all px-3 py-1.5 rounded-full ${hasLiked ? 'bg-rose-50 text-rose-600' : 'text-slate-400 hover:text-rose-500 hover:bg-rose-50'} ${!user ? 'opacity-50 cursor-default' : 'cursor-pointer'}`}
+          >
+            <Heart size={15} className={hasLiked ? 'fill-rose-500 text-rose-500' : ''} />
+            <span>{likes}</span>
+          </button>
+          <span className="text-xs text-slate-400">{likes === 1 ? 'pessoa curtiu' : 'pessoas curtiram'}</span>
+          {!user && <span className="text-[10px] text-slate-400 ml-auto">Faça login para curtir</span>}
         </div>
+
+        {/* Aviso de exclusividade */}
+        {m.social_video_url && isYouTube && (
+          <div className="bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 mb-3 flex items-start gap-2">
+            <span className="text-amber-500 text-sm mt-0.5">🔒</span>
+            <p className="text-[10px] text-amber-700 leading-relaxed">
+              <strong>Conteúdo exclusivo para membros.</strong> O compartilhamento externo deste material resulta no bloqueio imediato da conta.
+            </p>
+          </div>
+        )}
+
+        {files.length > 0 && (
+          <div className="pt-2">
+            <p className="text-xs text-slate-400 flex items-center gap-1 mb-2"><Download size={11} /> {m.downloads || 0} downloads</p>
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Arquivos</p>
+            <div className="space-y-1.5">
+              {files.map((file, idx) => (
+                <div key={idx} className="flex items-center justify-between bg-slate-50 border border-slate-100 p-2 rounded-lg">
+                  <div className="flex items-center gap-2 overflow-hidden">
+                    <FileText size={14} className="text-slate-400 shrink-0" />
+                    <span className="text-xs font-medium text-slate-700 truncate" title={file.name}>{file.name}</span>
+                  </div>
+                  <div className="flex items-center gap-1 shrink-0 ml-2">
+                    <button
+                      onClick={() => handleAction(file, 'view')}
+                      className="p-1.5 text-slate-500 hover:text-indigo-600 hover:bg-indigo-50 rounded-md transition-colors"
+                      title={isPdf(file.url) ? 'Visualizar PDF' : 'Ver no navegador'}
+                      disabled={downloading}
+                    >
+                      <Eye size={14} />
+                    </button>
+                    <button onClick={() => handleAction(file, 'download')} className="p-1.5 text-slate-500 hover:text-emerald-600 hover:bg-emerald-50 rounded-md transition-colors" title="Baixar arquivo" disabled={downloading}>
+                      <Download size={14} />
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
     </>
