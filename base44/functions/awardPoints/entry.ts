@@ -120,8 +120,11 @@ Deno.serve(async (req) => {
       }
 
       // Verificar badges
-      const allActivities = await base44.entities.GamificationActivity.filter({ user_id: user.id });
-      const existingBadges = await base44.entities.UserBadge.filter({ user_id: user.id });
+      const [allActivities, existingBadges, allBadges] = await Promise.all([
+        base44.entities.GamificationActivity.filter({ user_id: user.id }),
+        base44.entities.UserBadge.filter({ user_id: user.id }),
+        base44.asServiceRole.entities.Badge.list(),
+      ]);
       const existingBadgeNames = existingBadges.map(b => b.badge_name);
 
       for (const rule of BADGE_RULES) {
@@ -136,23 +139,26 @@ Deno.serve(async (req) => {
         }
 
         if (earned) {
+          // Busca dados visuais do banco
+          const badgeData = allBadges.find(b => b.name === rule.badge_name) || {};
+
           await base44.entities.UserBadge.create({
             user_id: user.id,
             user_name: user.full_name,
-            badge_id: rule.badge_name.toLowerCase().replace(/ /g, '_'),
+            badge_id: badgeData.id || rule.badge_name.toLowerCase().replace(/ /g, '_'),
             badge_name: rule.badge_name,
-            badge_icon: rule.icon,
-            badge_category: rule.category,
-            badge_color: rule.color,
+            badge_icon: badgeData.icon || '🏅',
+            badge_category: badgeData.category || '',
+            badge_color: badgeData.color || 'bg-amber-100 text-amber-700',
           });
 
-          earnedBadges.push(rule);
+          earnedBadges.push({ ...rule, icon: badgeData.icon || '🏅' });
 
           // Notificação de novo badge
           await base44.asServiceRole.entities.Notification.create({
             user_id: user.id,
             type: 'gamification',
-            title: `${rule.icon} Badge conquistado!`,
+            title: `${badgeData.icon || '🏅'} Badge conquistado!`,
             message: `Você desbloqueou o badge "${rule.badge_name}". Continue assim!`,
             read: false,
           });
