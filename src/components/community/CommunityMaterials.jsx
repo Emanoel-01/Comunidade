@@ -261,6 +261,10 @@ export default function CommunityMaterials({ user }) {
     setMaterials(prev => prev.map(m => m.id === id ? { ...m, downloads: newCount } : m));
   };
 
+  const handleLiked = (id, newLikes, newLikedBy) => {
+    setMaterials(prev => prev.map(m => m.id === id ? { ...m, likes: newLikes, liked_by: newLikedBy } : m));
+  };
+
   const categories = ['Todos', ...new Set(materials.map(m => m.category).filter(Boolean))];
   const filtered = materials
     .filter(m => activeFilter === 'Todos' || m.category === activeFilter)
