@@ -48,7 +48,7 @@ function EventCard({ ev, user, onRegistrationChange }) {
               <span className={`px-2.5 py-1 rounded-lg text-[11px] font-bold border ${typeColors[ev.type] || 'bg-slate-100 text-slate-700 border-slate-200'}`}>
                 {typeIcons[ev.type]} {ev.type}
               </span>
-              {past && <span className="text-xs text-slate-400 bg-slate-100 px-2 py-0.5 rounded font-medium">Encerrado</span>}
+              {past && <span className="text-xs text-slate-400 bg-slate-100 px-2 py-0.5 rounded font-medium">Realizado</span>}
               {!past && timeUntil && (
                 <span className="flex items-center gap-1 text-[11px] font-bold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-lg">
                   <Clock size={10} /> {timeUntil}

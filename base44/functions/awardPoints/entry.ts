@@ -11,6 +11,9 @@ const POINTS_MAP = {
   forum_comment_created: { points: 10, category: 'Interação Comunitária' },
   community_post_created: { points: 15, category: 'Produção de Conteúdo' },
   community_post_liked: { points: 2, category: 'Interação Comunitária' },
+  aula_assistida: { points: 10, category: 'Evolução Acadêmica' },
+  trabalho_entregue: { points: 20, category: 'Evolução Acadêmica' },
+  curso_concluido: { points: 50, category: 'Evolução Acadêmica' },
 };
 
 // Regras de badges automáticos
