@@ -338,7 +338,7 @@ export default function CommunityMaterials({ user }) {
                 type="url"
                 value={form.social_video_url}
                 onChange={e => setForm({ ...form, social_video_url: e.target.value })}
-                placeholder="https://youtube.com/watch?v=... ou instagram.com/reel/..."
+                placeholder="https://youtu.be/ID ou https://youtube.com/watch?v=ID (Não Listado)"
                 className="w-full border border-amber-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-400"
               />
               {form.social_video_url && <div className="mt-2"><SocialVideoEmbed url={form.social_video_url} /></div>}
