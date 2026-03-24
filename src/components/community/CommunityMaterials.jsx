@@ -27,14 +27,21 @@ const categoryIcons = {
 // Converte qualquer URL do YouTube para formato embed
 function toYouTubeEmbed(url) {
   if (!url) return null;
-  // Já é embed
-  if (url.includes('youtube.com/embed/')) return url;
+  let videoId = null;
   // youtu.be/ID
-  const shortMatch = url.match(/youtu\.be\/([a-zA-Z0-9_-]+)/);
-  if (shortMatch) return `https://www.youtube.com/embed/${shortMatch[1]}`;
+  const shortMatch = url.match(/youtu\.be\/([a-zA-Z0-9_-]{11})/);
+  if (shortMatch) videoId = shortMatch[1];
   // youtube.com/watch?v=ID
-  const watchMatch = url.match(/[?&]v=([a-zA-Z0-9_-]+)/);
-  if (watchMatch) return `https://www.youtube.com/embed/${watchMatch[1]}`;
+  if (!videoId) {
+    const watchMatch = url.match(/[?&]v=([a-zA-Z0-9_-]{11})/);
+    if (watchMatch) videoId = watchMatch[1];
+  }
+  // já é embed
+  if (!videoId) {
+    const embedMatch = url.match(/youtube\.com\/embed\/([a-zA-Z0-9_-]{11})/);
+    if (embedMatch) videoId = embedMatch[1];
+  }
+  if (videoId) return `https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1`;
   return null;
 }
 

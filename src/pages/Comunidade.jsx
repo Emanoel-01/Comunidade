@@ -200,7 +200,11 @@ export default function Comunidade() {
 function RecentEventsMini() {
   const [events, setEvents] = useState([]);
   useEffect(() => {
-    base44.entities.CommunityEvent.list('-event_date', 2).then(setEvents);
+    base44.entities.CommunityEvent.list('event_date', 10).then(all => {
+      const now = new Date();
+      const upcoming = all.filter(ev => ev.event_date && new Date(ev.event_date) >= now).slice(0, 2);
+      setEvents(upcoming);
+    });
   }, []);
 
   if (events.length === 0) return <p className="text-emerald-300 text-sm">Nenhum evento em breve.</p>;
