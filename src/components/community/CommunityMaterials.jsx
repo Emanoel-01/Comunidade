@@ -384,7 +384,7 @@ export default function CommunityMaterials({ user }) {
         </div>
       ) : (
         <div className="grid sm:grid-cols-2 gap-4">
-          {filtered.map(m => <MaterialCard key={m.id} m={m} user={user} onDownloaded={handleDownloaded} />)}
+          {filtered.map(m => <MaterialCard key={m.id} m={m} user={user} onDownloaded={handleDownloaded} onLiked={handleLiked} />)}
         </div>
       )}
     </div>
