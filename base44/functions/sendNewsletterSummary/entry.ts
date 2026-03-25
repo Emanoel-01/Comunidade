@@ -53,16 +53,23 @@ Formate como HTML simples (use <h2>, <p>, <ul>, <li>, <strong>, <a>) pronto para
       return Response.json({ error: 'Nenhum assinante encontrado.' }, { status: 400 });
     }
 
-    // Envia e-mail para cada assinante
+    // Envia e-mails em lotes de 5, com pausa de 2s entre lotes para evitar rate limit
     let sent = 0;
-    for (const sub of subscribers) {
-      await base44.asServiceRole.integrations.Core.SendEmail({
-        to: sub.email,
-        subject,
-        body: htmlBody,
-        from_name: 'Emanoel Amorim | Blog Mundo 4.0'
-      });
-      sent++;
+    const BATCH_SIZE = 5;
+    for (let i = 0; i < subscribers.length; i += BATCH_SIZE) {
+      const batch = subscribers.slice(i, i + BATCH_SIZE);
+      await Promise.all(batch.map(sub =>
+        base44.asServiceRole.integrations.Core.SendEmail({
+          to: sub.email,
+          subject,
+          body: htmlBody,
+          from_name: 'Emanoel Amorim | Blog Mundo 4.0'
+        })
+      ));
+      sent += batch.length;
+      if (i + BATCH_SIZE < subscribers.length) {
+        await sleep(2000); // pausa 2s entre lotes
+      }
     }
 
     return Response.json({ success: true, sent, subject, posts_count: recentPosts.length });
