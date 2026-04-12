@@ -77,7 +77,7 @@ export default function Comunidade() {
               <LockKeyhole className="text-emerald-400 w-12 h-12 mb-6" />
               <h2 className="text-2xl font-extrabold mb-1">Comunidade Business 4.0</h2>
               <p className="text-emerald-400 font-semibold text-sm mb-3">Além do Diploma</p>
-              <p className="text-slate-300 mb-5 text-xs leading-relaxed">O ponto de encontro entre quem resolve e quem contrata na Construção Civil.</p>
+              <p className="text-slate-300 mb-5 text-xs leading-relaxed text-justify">O ponto de encontro entre quem resolve e quem contrata na Construção Civil.</p>
               <ul className="space-y-3 text-sm mb-6">
                 <li className="flex items-start gap-2"><CheckCircle2 size={16} className="text-emerald-400 shrink-0 mt-0.5" /> <span><strong className="text-white">Gestão Estratégica & Diagnóstica:</strong> Soluções em laudos, eficiência e segurança predial para profissionais que buscam autoridade técnica.</span></li>
                 <li className="flex items-start gap-2"><CheckCircle2 size={16} className="text-emerald-400 shrink-0 mt-0.5" /> <span><strong className="text-white">Ecossistema Digital SaaS:</strong> Tecnologia inteligente para a gestão de ativos e edifícios, integrando inovação ao dia a dia da construção.</span></li>
