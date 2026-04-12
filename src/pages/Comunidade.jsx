@@ -75,15 +75,15 @@ export default function Comunidade() {
             <div className="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1000')] bg-cover bg-center"></div>
             <div className="relative z-10">
               <LockKeyhole className="text-emerald-400 w-12 h-12 mb-6" />
-              <h2 className="text-3xl font-extrabold mb-4">Comunidade Business 4.0</h2>
-              <p className="text-slate-300 mb-5 text-sm leading-relaxed">Além do Diploma: O ponto de encontro entre quem resolve e quem contrata na Construção Civil.</p>
+              <h2 className="text-2xl font-extrabold mb-1">Comunidade Business 4.0</h2>
+              <p className="text-emerald-400 font-semibold text-sm mb-3">Além do Diploma</p>
+              <p className="text-slate-300 mb-5 text-xs leading-relaxed">O ponto de encontro entre quem resolve e quem contrata na Construção Civil.</p>
               <ul className="space-y-3 text-sm mb-6">
-                <li className="flex items-start gap-2"><CheckCircle2 size={16} className="text-emerald-400 shrink-0 mt-0.5" /> <span><strong className="text-white">Gestão Estratégica & Diagnóstica:</strong> Soluções em laudos, eficiência e segurança predial.</span></li>
-                <li className="flex items-start gap-2"><CheckCircle2 size={16} className="text-emerald-400 shrink-0 mt-0.5" /> <span><strong className="text-white">Ecossistema Digital SaaS:</strong> Tecnologia inteligente para a gestão de ativos e edifícios.</span></li>
-                <li className="flex items-start gap-2"><CheckCircle2 size={16} className="text-emerald-400 shrink-0 mt-0.5" /> <span><strong className="text-white">Liderança e Prática:</strong> Networking com os protagonistas que dominam a convergência tecnológica.</span></li>
-                <li className="flex items-start gap-2"><CheckCircle2 size={16} className="text-emerald-400 shrink-0 mt-0.5" /> <span><strong className="text-white">Hub de Oportunidades:</strong> Onde a engenharia consultiva encontra as parcerias de alto nível.</span></li>
+                <li className="flex items-start gap-2"><CheckCircle2 size={16} className="text-emerald-400 shrink-0 mt-0.5" /> <span><strong className="text-white">Gestão Estratégica & Diagnóstica:</strong> Soluções em laudos, eficiência e segurança predial para profissionais que buscam autoridade técnica.</span></li>
+                <li className="flex items-start gap-2"><CheckCircle2 size={16} className="text-emerald-400 shrink-0 mt-0.5" /> <span><strong className="text-white">Ecossistema Digital SaaS:</strong> Tecnologia inteligente para a gestão de ativos e edifícios, integrando inovação ao dia a dia da construção.</span></li>
+                <li className="flex items-start gap-2"><CheckCircle2 size={16} className="text-emerald-400 shrink-0 mt-0.5" /> <span><strong className="text-white">Liderança e Prática:</strong> Networking real com os protagonistas que dominam a convergência tecnológica no setor.</span></li>
+                <li className="flex items-start gap-2"><CheckCircle2 size={16} className="text-emerald-400 shrink-0 mt-0.5" /> <span><strong className="text-white">Hub de Oportunidades:</strong> Onde a engenharia consultiva encontra parcerias de alto nível e negócios reais.</span></li>
               </ul>
-
             </div>
           </div>
           <div className="md:w-1/2 flex flex-col justify-center">
@@ -104,7 +104,9 @@ export default function Comunidade() {
                 >
                   <Send size={15} /> Solicitar Acesso ao Administrador
                 </button>
-                <p className="text-xs text-slate-500 mt-4 text-center">Área restrita.</p>
+                <p className="text-xs text-slate-500 mt-4 text-center leading-relaxed">
+                  <strong>Já é membro?</strong> Se você já teve sua solicitação aprovada, basta clicar em "Entrar com minha conta" para acessar o feed, fóruns e materiais exclusivos.
+                </p>
               </div>
             )}
           </div>

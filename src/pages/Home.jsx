@@ -258,13 +258,13 @@ export default function Home() {
               <div className="inline-block mb-4 px-3 py-1 bg-emerald-500/20 border border-emerald-500/30 rounded-full text-emerald-400 text-sm font-bold tracking-wide">Acesso Restrito</div>
               <h2 className="text-3xl md:text-5xl font-bold mb-3 leading-tight">Comunidade Business 4.0</h2>
               <p className="text-emerald-400 font-semibold text-lg mb-5">Além do Diploma</p>
-              <p className="text-base text-slate-300 mb-6 leading-relaxed">O ponto de encontro entre quem resolve e quem contrata na Construção Civil.</p>
+              <p className="text-base text-slate-300 mb-6 leading-relaxed">Onde a expertise técnica encontra a oportunidade de mercado. A Comunidade Business 4.0 é o ponto de encontro definitivo entre quem resolve desafios complexos e quem contrata na Construção Civil. Mais do que uma plataforma de ensino, somos um organismo vivo focado em transformar conhecimento em resultados práticos e negócios reais.</p>
               <ul className="space-y-4 mb-10">
                 {[
-                  { label: 'Ecossistema 360°', desc: 'Conectando alunos, clientes e parceiros estratégicos.' },
-                  { label: 'Inteligência de Mercado', desc: 'Materiais exclusivos com foco em aplicação imediata e resultados.' },
-                  { label: 'Networking de Alto Nível', desc: 'Interação direta com grandes síndicos e gestores de manutenção.' },
-                  { label: 'Hub de Negócios', desc: 'Onde as vagas e as parcerias comerciais acontecem primeiro.' },
+                  { label: 'Ecossistema 360°', desc: 'Uma rede integrada que conecta alunos de todas as 7 verticais de especialização a clientes e parceiros estratégicos de forma orgânica.' },
+                  { label: 'Inteligência de Mercado', desc: 'Acesso prioritário a materiais exclusivos, estudos de caso e ferramentas com foco total em aplicação imediata no canteiro, no escritório ou na gestão predial.' },
+                  { label: 'Networking de Elite', desc: 'Interação direta e sem intermediários com grandes síndicos, gestores de facilities, indústrias, incorporadoras e fornecedores líderes do setor.' },
+                  { label: 'Hub de Oportunidades', desc: 'Um canal exclusivo onde a engenharia consultiva encontra parcerias de alto nível, vagas e prospecção de contratos que chegam primeiro para os nossos membros.' },
                 ].map((item, i) => (
                   <li key={i} className="flex items-start gap-3 text-slate-200">
                     <CheckCircle2 className="text-emerald-400 shrink-0 mt-0.5" size={20} />

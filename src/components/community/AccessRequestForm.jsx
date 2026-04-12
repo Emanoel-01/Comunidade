@@ -30,11 +30,31 @@ export default function AccessRequestForm({ onClose }) {
 
   if (sent) {
     return (
-      <div className="text-center py-10 px-6">
-        <CheckCircle2 className="w-16 h-16 text-emerald-500 mx-auto mb-4" />
-        <h3 className="text-xl font-bold text-slate-900 mb-2">Solicitação Enviada!</h3>
-        <p className="text-slate-500 text-sm mb-6">Sua solicitação foi enviada ao administrador. Você receberá um convite por e-mail assim que aprovado.</p>
-        <button onClick={onClose} className="px-6 py-2.5 bg-indigo-600 text-white rounded-lg font-bold hover:bg-indigo-700">Fechar</button>
+      <div className="py-8 px-6 max-w-lg">
+        <CheckCircle2 className="w-14 h-14 text-emerald-500 mx-auto mb-4" />
+        <h3 className="text-xl font-bold text-slate-900 mb-1 text-center">Solicitação Recebida com Sucesso! 🎉</h3>
+        <p className="text-slate-500 text-sm mb-5 text-center">Obrigado por buscar o próximo nível. Sua solicitação de acesso à Comunidade Business 4.0 foi enviada para nossa equipe técnica.</p>
+        <div className="bg-slate-50 rounded-xl border border-slate-200 p-4 mb-5 space-y-3">
+          <p className="text-xs font-bold text-slate-700 uppercase tracking-wide">Próximos Passos:</p>
+          <div className="flex items-start gap-2">
+            <span className="text-emerald-500 font-bold text-xs mt-0.5 shrink-0">1.</span>
+            <p className="text-xs text-slate-600"><strong>Validação:</strong> Verificaremos seu vínculo com os programas da Faculdade ESUDA, Amorim Tech ou Amorim Arquitetura.</p>
+          </div>
+          <div className="flex items-start gap-2">
+            <span className="text-emerald-500 font-bold text-xs mt-0.5 shrink-0">2.</span>
+            <p className="text-xs text-slate-600"><strong>Aprovação:</strong> Você receberá uma notificação assim que seu e-mail for liberado na lista de permissões.</p>
+          </div>
+        </div>
+        <div className="bg-indigo-50 rounded-xl border border-indigo-200 p-4 mb-5">
+          <p className="text-xs font-bold text-indigo-800 mb-2">Como entrar após a liberação?</p>
+          <ol className="space-y-1.5 text-xs text-indigo-700">
+            <li>1. Acesse: <a href="https://emanoelamorim.base44.app/Comunidade" target="_blank" rel="noreferrer" className="underline font-semibold">emanoelamorim.base44.app/Comunidade</a></li>
+            <li>2. Clique no botão verde: <strong>"Entrar com minha conta"</strong></li>
+            <li>3. Selecione: <strong>"Continue with Google"</strong> e use o e-mail cadastrado.</li>
+          </ol>
+        </div>
+        <p className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-lg px-3 py-2 mb-5">💡 <strong>Dica de Ouro:</strong> Membros engajados têm prioridade em mentorias exclusivas e ganham destaque no nosso Hall da Fama. Prepare seu perfil e comece a interagir!</p>
+        <button onClick={onClose} className="w-full px-6 py-2.5 bg-indigo-600 text-white rounded-lg font-bold hover:bg-indigo-700">Fechar</button>
       </div>
     );
   }
