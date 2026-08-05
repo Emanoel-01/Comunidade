@@ -10,6 +10,18 @@ const LEVEL_COLORS = {
   'Embaixador da Comunidade': 'bg-amber-100 text-amber-800',
 };
 
+// Membros fictícios para dar sensação de comunidade ativa no ranking público
+const FICTIONAL_PROFILES = [
+  { id: 'fake-1', user_id: 'fake-1', user_name: 'Rafael Mendes', role_label: 'Engenheiro Civil', current_level: 'Especialista 4.0', weekly_score: 285, monthly_score: 1120, gamification_score_total: 3480 },
+  { id: 'fake-2', user_id: 'fake-2', user_name: 'Juliana Carneiro', role_label: 'Arquiteta', current_level: 'Colaborador Ativo', weekly_score: 240, monthly_score: 980, gamification_score_total: 2950 },
+  { id: 'fake-3', user_id: 'fake-3', user_name: 'Bruno Tavares', role_label: 'Gestor Condominial', current_level: 'Membro Engajado', weekly_score: 195, monthly_score: 845, gamification_score_total: 2310 },
+  { id: 'fake-4', user_id: 'fake-4', user_name: 'Camila Rocha', role_label: 'Perita Judicial', current_level: 'Colaborador Ativo', weekly_score: 170, monthly_score: 730, gamification_score_total: 2040 },
+  { id: 'fake-5', user_id: 'fake-5', user_name: 'Diego Ferreira', role_label: 'Consultor BIM', current_level: 'Membro Engajado', weekly_score: 145, monthly_score: 620, gamification_score_total: 1780 },
+  { id: 'fake-6', user_id: 'fake-6', user_name: 'Larissa Nunes', role_label: 'Docente', current_level: 'Membro Trainee', weekly_score: 120, monthly_score: 510, gamification_score_total: 1390 },
+  { id: 'fake-7', user_id: 'fake-7', user_name: 'Otávio Lima', role_label: 'Corretor', current_level: 'Membro Trainee', weekly_score: 95, monthly_score: 430, gamification_score_total: 1080 },
+  { id: 'fake-8', user_id: 'fake-8', user_name: 'Patrícia Souza', role_label: 'Investidora', current_level: 'Membro Trainee', weekly_score: 80, monthly_score: 360, gamification_score_total: 870 },
+];
+
 const RANK_STYLES = [
   { bg: 'bg-amber-50 border-amber-200', icon: <Crown size={18} className="text-amber-500" />, label: '🥇' },
   { bg: 'bg-slate-50 border-slate-200', icon: <Medal size={18} className="text-slate-400" />, label: '🥈' },
@@ -66,7 +78,8 @@ export default function HallOfFame({ compact = false, currentUserId, onViewProfi
         ...p,
         user_name: p.display_name || p.role_label || 'Membro',
       }));
-      setProfiles(enriched);
+      // Mistura membros reais com fictícios para dar sensação de comunidade ativa
+      setProfiles([...enriched, ...FICTIONAL_PROFILES]);
       if (currentUserId) {
         const mine = enriched.find(p => p.user_id === currentUserId);
         setMyProfile(mine || null);
