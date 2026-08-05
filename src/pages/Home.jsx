@@ -161,7 +161,7 @@ export default function Home() {
             <div className="md:w-2/3">
               <h2 className="text-3xl font-bold text-slate-900 mb-3">Minha Missão e Propósito</h2>
               <p className="text-lg text-slate-600 mb-6 leading-relaxed text-justify">Tive o privilégio de atuar na gestão de empreendimentos em todo o ciclo de vida dos edifícios: desde a viabilidade, projeto e legalização, passando por obras, pós-obra, instalação, operação, até a manutenção e demolição seletiva. Essa trajetória me mostrou com clareza que a <strong>tecnologia e a educação</strong> são os caminhos definitivos para transformar a construção civil no Brasil.</p>
-              <p className="text-lg text-slate-600 mb-8 leading-relaxed text-justify">Hoje, atuo na linha de frente liderando a <strong>Amorim Arquitetura</strong> (consultoria técnica) e a <strong>Amorim Tech</strong> (ferramentas 4.0). No pilar educacional, dedico-me como <strong>Coordenador de Pós-Graduação na ESUDA</strong>, formando líderes e especialistas preparados para enfrentar e superar os desafios do mercado real.</p>
+              <p className="text-lg text-slate-600 mb-8 leading-relaxed text-justify">Hoje, atuo na linha de frente liderando a <strong>Amorim Arquitetura</strong> (consultoria técnica) e a <strong>Amorim Tech</strong> (ferramentas 4.0). No pilar educacional, dedico-me à <strong>Amorim Academy</strong>, formando líderes e especialistas preparados para enfrentar e superar os desafios do mercado real.</p>
               <button
                 onClick={() => setShowTrajetoriaModal(true)}
                 className="inline-flex items-center gap-2 bg-indigo-900 hover:bg-indigo-800 text-white font-bold px-6 py-3 rounded-lg transition-all shadow-md"
@@ -231,12 +231,14 @@ export default function Home() {
           <div className="grid md:grid-cols-3 gap-6">
             {[
               { logo: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69b4f78756902b494e56bda9/de9772ab4_AmorimArquitetura.JPG', title: 'Amorim Arquitetura', desc: 'Consultoria e Gestão estratégica, laudos e engenharia diagnóstica com foco em eficiência, segurança e preservação.', link: 'AmorimArquitetura', color: 'blue', logoClass: 'w-full h-16 object-contain object-left' },
-              { logo: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69b4f78756902b494e56bda9/8e18562d8_AmorimTech.PNG', title: 'Amorim Tech', desc: 'Desenvolvendo o ecossistema digital para gestão inteligente de edifícios (SaaS e EdTech).', link: 'EmDesenvolvimento', color: 'indigo', logoClass: 'w-full h-16 object-contain object-left' },
-              { logo: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69b4f78756902b494e56bda9/9eb749689_logo.png', title: 'Academia ESUDA', desc: 'Formando os protagonistas do futuro. Especialistas e líderes que dominam a convergência entre teoria, prática e tecnologia.', link: 'AcademiaEsuda', color: 'emerald', logoClass: 'w-full h-16 object-contain object-left' },
+              { logo: 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69b4f78756902b494e56bda9/8e18562d8_AmorimTech.PNG', title: 'Amorim Tech', desc: 'Desenvolvendo o ecossistema digital para gestão inteligente de edifícios (SaaS e EdTech).', link: 'AmorimTech', color: 'indigo', logoClass: 'w-full h-16 object-contain object-left' },
+              { logo: null, title: 'Amorim Academy', desc: 'Formação, mercado e mentoria em um só lugar: curso técnico, incubadora profissional e mentoria com corresponsabilidade técnica.', link: 'AmorimAcademy', color: 'emerald', logoClass: 'w-full h-16 object-contain object-left' },
             ].map((item, i) => (
               <div key={i} className="bg-white rounded-2xl shadow-sm border border-slate-200 p-8 hover:shadow-xl transition-all group flex flex-col">
                 <div className="mb-6 flex items-center">
-                  <img src={item.logo} alt={item.title} className={item.logoClass} />
+                  {item.logo
+                  ? <img src={item.logo} alt={item.title} className={item.logoClass} />
+                  : <div className="w-full h-16 flex items-center"><span className="text-2xl font-extrabold text-emerald-700">Amorim Academy</span></div>}
                 </div>
                 <h3 className="text-2xl font-bold mb-3 text-slate-900">{item.title}</h3>
                 <p className="text-slate-600 mb-8 flex-grow text-justify">{item.desc}</p>
