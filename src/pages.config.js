@@ -49,6 +49,7 @@
  */
 import AcademiaEsuda from './pages/AcademiaEsuda';
 import AdminPanel from './pages/AdminPanel';
+import AmorimAcademy from './pages/AmorimAcademy';
 import AmorimArquitetura from './pages/AmorimArquitetura';
 import AmorimTech from './pages/AmorimTech';
 import Blog from './pages/Blog';
@@ -61,6 +62,7 @@ import __Layout from './Layout.jsx';
 export const PAGES = {
     "AcademiaEsuda": AcademiaEsuda,
     "AdminPanel": AdminPanel,
+    "AmorimAcademy": AmorimAcademy,
     "AmorimArquitetura": AmorimArquitetura,
     "AmorimTech": AmorimTech,
     "Blog": Blog,
