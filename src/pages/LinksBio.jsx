@@ -73,26 +73,26 @@ export default function LinksBio() {
           </a>
 
           {/* Amorim Tech */}
-          <a href="https://emanoelamorim.base44.app/EmDesenvolvimento" target="_blank" rel="noopener noreferrer"
+          <a href="https://emanoelamorim.base44.app/AmorimTech" target="_blank" rel="noopener noreferrer"
              className="link-bio-btn w-full bg-white border-l-4 border-[#e87722] p-3 rounded-xl flex items-center text-left shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5">
             <div className="w-24 flex-shrink-0 mr-4 flex items-center justify-start">
               <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69b4f78756902b494e56bda9/8e18562d8_AmorimTech.PNG" alt="Logo Amorim Tech" className="w-full object-contain" />
             </div>
             <div className="flex-1">
               <h3 className="text-sm font-bold text-[#e87722] leading-tight mb-0.5">Amorim Tech</h3>
-              <p className="text-[11px] text-gray-500 leading-tight">Gestão inteligente de edifícios (SaaS e EdTech)</p>
+              <p className="text-[11px] text-gray-500 leading-tight">Predial 4.0 — copiloto técnico para vistorias e laudos</p>
             </div>
           </a>
 
           {/* Academia ESUDA */}
-          <a href="https://emanoelamorim.base44.app/AcademiaEsuda" target="_blank" rel="noopener noreferrer"
+          <a href="https://emanoelamorim.base44.app/AmorimAcademy" target="_blank" rel="noopener noreferrer"
              className="link-bio-btn w-full bg-white border-l-4 border-[#4a8251] p-3 rounded-xl flex items-center text-left shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-0.5">
-            <div className="w-24 flex-shrink-0 mr-4 flex items-center justify-start">
-              <img src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69b4f78756902b494e56bda9/9eb749689_logo.png" alt="Logo Academia ESUDA" className="w-full object-contain" />
+            <div className="w-24 h-16 flex-shrink-0 mr-4 flex items-center justify-start">
+              <span className="text-lg font-extrabold text-[#4a8251]">Amorim Academy</span>
             </div>
             <div className="flex-1">
-              <h3 className="text-sm font-bold text-[#4a8251] leading-tight mb-0.5">Academia ESUDA</h3>
-              <p className="text-[11px] text-gray-500 leading-tight">Formando os protagonistas do futuro.</p>
+              <h3 className="text-sm font-bold text-[#4a8251] leading-tight mb-0.5">Amorim Academy</h3>
+              <p className="text-[11px] text-gray-500 leading-tight">Curso, incubadora e mentoria técnica.</p>
             </div>
           </a>
 
