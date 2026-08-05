@@ -1,0 +1,109 @@
+{
+  "name": "BlogPost",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "string",
+      "description": "Resumo do post para exibi\u00e7\u00e3o nos cards"
+    },
+    "content": {
+      "type": "string",
+      "description": "Conte\u00fado HTML completo do artigo"
+    },
+    "cover_image": {
+      "type": "string"
+    },
+    "media_urls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "URLs de m\u00eddias adicionais do post (fotos, v\u00eddeos MP4, \u00e1udios MP3)"
+    },
+    "video_link": {
+      "type": "string",
+      "description": "Link de v\u00eddeo externo (YouTube, Vimeo, etc.)"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "Gest\u00e3o 4.0",
+        "Manuten\u00e7\u00e3o Predial",
+        "Tecnologia BIM",
+        "Engenharia Legal",
+        "Carreira"
+      ]
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "author_name": {
+      "type": "string"
+    },
+    "author_avatar": {
+      "type": "string"
+    },
+    "author_role": {
+      "type": "string"
+    },
+    "views": {
+      "type": "number",
+      "default": 0
+    },
+    "likes": {
+      "type": "number",
+      "default": 0
+    },
+    "shares": {
+      "type": "number",
+      "default": 0
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "published"
+      ],
+      "default": "draft"
+    },
+    "read_time": {
+      "type": "string"
+    },
+    "seo_keyword": {
+      "type": "string",
+      "description": "Palavra-chave principal para SEO"
+    },
+    "seo_description": {
+      "type": "string",
+      "description": "Meta description para SEO (m\u00e1x 160 caracteres)"
+    }
+  },
+  "required": [
+    "title",
+    "content"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {},
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

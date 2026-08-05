@@ -9,8 +9,8 @@ import { useTheme } from '@/hooks/useTheme';
 
 const navLinks = [
   { label: 'Amorim Arquitetura', page: 'AmorimArquitetura', color: 'blue' },
-  { label: 'Amorim Tech', page: 'EmDesenvolvimento', color: 'indigo' },
-  { label: 'Academia ESUDA', page: 'AcademiaEsuda', color: 'emerald' },
+  { label: 'Amorim Tech', page: 'AmorimTech', color: 'indigo' },
+  { label: 'Amorim Academy', page: 'AmorimAcademy', color: 'emerald' },
   { label: 'Blog', page: 'Blog', color: 'slate' },
   { label: 'Contato', page: 'Contato', color: 'amber' },
 ];
@@ -140,7 +140,8 @@ export default function Layout({ children, currentPageName }) {
                 <ul className="space-y-1.5 text-sm">
                   <li><Link to={createPageUrl('AmorimArquitetura')} className="hover:text-white transition-colors">Amorim Arquitetura</Link></li>
                   <li><Link to={createPageUrl('AmorimTech')} className="hover:text-white transition-colors">Amorim Tech</Link></li>
-                  <li><Link to={createPageUrl('AcademiaEsuda')} className="hover:text-white transition-colors">Academia ESUDA</Link></li>
+                  <li><Link to={createPageUrl('AmorimAcademy')} className="hover:text-white transition-colors">Amorim Academy</Link></li>
+                  <li><a href="https://predial40-app.netlify.app/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Acessar o App Predial 4.0</a></li>
                   <li><Link to={createPageUrl('Comunidade')} className="text-emerald-400 hover:text-emerald-300 transition-colors">Acesso Restrito (Comunidade)</Link></li>
                 </ul>
               </div>

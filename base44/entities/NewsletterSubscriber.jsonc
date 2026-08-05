@@ -1,0 +1,43 @@
+{
+  "name": "NewsletterSubscriber",
+  "type": "object",
+  "properties": {
+    "email": {
+      "type": "string",
+      "description": "E-mail do assinante"
+    },
+    "name": {
+      "type": "string",
+      "description": "Nome do assinante"
+    },
+    "source_post_id": {
+      "type": "string",
+      "description": "ID do post onde o usu\u00e1rio se inscreveu"
+    },
+    "source_post_title": {
+      "type": "string",
+      "description": "T\u00edtulo do post onde o usu\u00e1rio se inscreveu"
+    }
+  },
+  "required": [
+    "email"
+  ],
+  "rls": {
+    "create": {},
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

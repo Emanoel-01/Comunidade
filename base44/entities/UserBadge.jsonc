@@ -1,0 +1,47 @@
+{
+  "name": "UserBadge",
+  "type": "object",
+  "properties": {
+    "user_id": {
+      "type": "string"
+    },
+    "user_name": {
+      "type": "string"
+    },
+    "badge_id": {
+      "type": "string"
+    },
+    "badge_name": {
+      "type": "string"
+    },
+    "badge_icon": {
+      "type": "string"
+    },
+    "badge_category": {
+      "type": "string"
+    },
+    "badge_color": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "user_id",
+    "badge_id"
+  ],
+  "rls": {
+    "create": {
+      "data.user_id": "{{user.id}}"
+    },
+    "read": {},
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

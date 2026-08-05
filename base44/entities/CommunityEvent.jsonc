@@ -1,0 +1,67 @@
+{
+  "name": "CommunityEvent",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "event_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "location": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "Webinar",
+        "Visita T\u00e9cnica",
+        "Masterclass",
+        "Workshop",
+        "Evento Presencial"
+      ]
+    },
+    "link": {
+      "type": "string"
+    },
+    "image_url": {
+      "type": "string"
+    },
+    "registrations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "max_participants": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "title",
+    "event_date",
+    "type"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {},
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

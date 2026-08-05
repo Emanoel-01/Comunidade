@@ -1,0 +1,66 @@
+{
+  "name": "JobListing",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "company": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "CLT",
+        "PJ",
+        "Freelance",
+        "Est\u00e1gio",
+        "Remoto"
+      ]
+    },
+    "location": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "requirements": {
+      "type": "string"
+    },
+    "contact_link": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "closed"
+      ],
+      "default": "active"
+    }
+  },
+  "required": [
+    "title",
+    "company",
+    "type",
+    "location"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {},
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

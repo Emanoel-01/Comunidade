@@ -1,0 +1,57 @@
+{
+  "name": "Testimonial",
+  "type": "object",
+  "properties": {
+    "author_name": {
+      "type": "string"
+    },
+    "author_email": {
+      "type": "string"
+    },
+    "author_phone": {
+      "type": "string"
+    },
+    "author_photo": {
+      "type": "string"
+    },
+    "text": {
+      "type": "string"
+    },
+    "video_url": {
+      "type": "string"
+    },
+    "approved": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "author_name",
+    "text"
+  ],
+  "rls": {
+    "create": {},
+    "read": {
+      "$or": [
+        {
+          "data.approved": true
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

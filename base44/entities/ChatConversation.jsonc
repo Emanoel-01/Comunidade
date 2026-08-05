@@ -1,0 +1,51 @@
+{
+  "name": "ChatConversation",
+  "type": "object",
+  "properties": {
+    "participant_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "participant_names": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "participant_avatars": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "last_message": {
+      "type": "string"
+    },
+    "last_message_at": {
+      "type": "string"
+    },
+    "unread_by": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "participant_ids"
+  ],
+  "rls": {
+    "create": {},
+    "read": {
+      "data.participant_ids": "{{user.id}}"
+    },
+    "update": {},
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

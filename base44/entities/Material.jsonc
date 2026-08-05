@@ -1,0 +1,92 @@
+{
+  "name": "Material",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "file_url": {
+      "type": "string"
+    },
+    "files": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "Lista de arquivos do material (at\u00e9 10), cada um com name e url"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "Planilhas",
+        "Normas ABNT",
+        "E-books",
+        "Apresenta\u00e7\u00f5es",
+        "Modelos de Laudo",
+        "Outros"
+      ]
+    },
+    "thumbnail_url": {
+      "type": "string"
+    },
+    "media_urls": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "M\u00eddias de pr\u00e9-visualiza\u00e7\u00e3o do material (fotos, v\u00eddeos, \u00e1udios)"
+    },
+    "social_video_url": {
+      "type": "string",
+      "description": "Link embed do YouTube (N\u00e3o Listado) ou outro v\u00eddeo para incorpora\u00e7\u00e3o"
+    },
+    "downloads": {
+      "type": "number",
+      "default": 0
+    },
+    "likes": {
+      "type": "number",
+      "default": 0
+    },
+    "liked_by": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Lista de IDs de usu\u00e1rios que curtiram"
+    }
+  },
+  "required": [
+    "title",
+    "category"
+  ],
+  "rls": {
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "read": {},
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

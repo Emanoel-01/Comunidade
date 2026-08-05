@@ -1,0 +1,72 @@
+{
+  "name": "PostView",
+  "type": "object",
+  "properties": {
+    "post_id": {
+      "type": "string"
+    },
+    "post_titulo": {
+      "type": "string"
+    },
+    "visitor_id": {
+      "type": "string"
+    },
+    "user_email": {
+      "type": "string"
+    },
+    "user_nome": {
+      "type": "string"
+    },
+    "is_logged_in": {
+      "type": "boolean",
+      "default": false
+    },
+    "tipo_acesso": {
+      "type": "string",
+      "enum": [
+        "post",
+        "video",
+        "pdf",
+        "imagem",
+        "audio",
+        "link"
+      ],
+      "default": "post"
+    },
+    "midia_titulo": {
+      "type": "string"
+    },
+    "midia_url": {
+      "type": "string"
+    },
+    "referrer": {
+      "type": "string"
+    },
+    "user_agent": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "post_id",
+    "visitor_id",
+    "tipo_acesso"
+  ],
+  "rls": {
+    "create": {},
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
